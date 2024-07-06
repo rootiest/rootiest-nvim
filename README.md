@@ -1,6 +1,6 @@
 # Rootiest NVim Configuration
 
-```
+```none
 ██████╗  ██████╗  ██████╗ ████████╗██╗███████╗███████╗████████╗
 ██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝██║██╔════╝██╔════╝╚══██╔══╝
 ██████╔╝██║   ██║██║   ██║   ██║   ██║█████╗  ███████╗   ██║
@@ -18,7 +18,7 @@
 
 The rootiest neovim configuration you will ever see!
 
-### Installation
+## Installation
 
 1. Install [neovim](https://github.com/neovim/neovim/blob/master/INSTALL.md)
 
@@ -36,7 +36,7 @@ The rootiest neovim configuration you will ever see!
 
 4. Enjoy!
 
-### Features
+## Features
 
 - Comfortable keybindings and IDE-like features
 - Designed to be quick to load and easy to use without compromising on features
@@ -51,7 +51,7 @@ The rootiest neovim configuration you will ever see!
 - ToggleTerm, fzf, telescope, neotree, etc. for quick access to files and terminal
 - LSP support for many languages and automatic setup for many more
 
-### Credits
+## Credits
 
 - [Folke Lamaitre](https://github.com/folke)
 - [LazyVim](https://github.com/LazyVim/LazyVim)
