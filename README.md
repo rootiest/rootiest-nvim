@@ -20,20 +20,46 @@ The rootiest neovim configuration you will ever see!
 ## Installation
 
 1. Install [neovim](https://github.com/neovim/neovim/blob/master/INSTALL.md)
+2. Install Pre-requisites
 
-2. Backup your current nvim configuration (if you have one)
+   - Required
+
+     - [git](https://git-scm.com/) -
+       Version control system
+     - [luarocks](https://luarocks.org/) -
+       Lua package manager
+
+   - Optional (but recommended for the full experience)
+     - [ripgrep](https://github.com/BurntSushi/ripgrep) -
+       A faster grep
+     - [fzf](https://github.com/junegunn/fzf) -
+       A command-line fuzzy finder
+     - [fd](https://github.com/sharkdp/fd) -
+       A simple, fast and user-friendly alternative to 'find'
+     - [lazygit](https://github.com/jesseduffield/lazygit) -
+       A simple terminal UI for git commands
+     - [tree-sitter](https://github.com/tree-sitter/tree-sitter/) -
+       A parser generator tool and an incremental parsing library
+     - [kitty](https://sw.kovidgoyal.net/kitty/) -
+       A fast, featureful, GPU based terminal emulator
+     - [neovide](https://neovide.dev/) -
+       A simple, fast, featureful, and modern neovim GUI
+     - [fish](https://fishshell.com/) -
+       A smart and user-friendly command line shell
+
+3. Backup your current nvim configuration (if you have one)
 
    ```bash
    mv ~/.config/nvim ~/.config/nvim.bak
    ```
 
-3. Clone the repository
+4. Clone the repository
 
    ```bash
    git clone https://github.com/rootiest/rootiest-nvim.git ~/.config/nvim
    ```
 
-4. Enjoy!
+5. Enjoy! 🎉
 
 ## Features
 
@@ -54,6 +80,14 @@ The rootiest neovim configuration you will ever see!
 - Remotely spawn a neovim instance over ssh, in a container, or from a git repo
 - Dashboard logo adjusts to the size of the window
 - Codeium-powered AI completion
+
+## Companion Tools
+
+[Rootiest Kitty Conf](https://github.com/rootiest/rootiest-kitty) - A kitty configuration that is designed to work with this neovim configuration
+
+[Rootiest Fish Conf](https://github.com/rootiest/rootiest-fish-conf) - A fish configuration that pairs well with this neovim configuration
+
+[Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/) - A collection of fonts that include many icons and glyphs that are used in this configuration. The default font is Monaspace Krypton and kitty uses the Symbols Only Nerd Font.
 
 ## Credits
 
