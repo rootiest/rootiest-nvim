@@ -39,15 +39,17 @@ The rootiest neovim configuration you will ever see!
 
 - Comfortable keybindings and IDE-like features
 - Designed to be quick to load and easy to use without compromising on features
-- Leans heavily on lazy and luarocks for plugin management
+- Leans heavily on lazy and luarocks for plugin management and lazy-loading
 - Catppuccino theme is default but tokyonight is also included
 - Automatic light/dark mode switching based on system theme
 - Extensive special configurations for kitty, including theme matching
 - Image support for kitty when conditions are met
+- Kitty scrollback and keybinding support
 - Special configuration for neovide
 - Detects terminal client and adjusts accordingly
 - Detects SSH sessions and disables certain plugins for speed and compatibility
 - ToggleTerm, fzf, telescope, neotree, etc. for quick access to files and terminal
+- Many UI elements to enhance the experience
 - LSP support for many languages and automatic setup for many more
 - Remotely spawn a neovim instance over ssh, in a container, or from a git repo
 - Dashboard logo adjusts to the size of the window

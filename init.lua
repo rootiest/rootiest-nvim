@@ -19,14 +19,14 @@
 --          ██╔══██╗██║   ██║██║   ██║   ██║   ██║██╔══╝  ╚════██║   ██║
 --          ██║  ██║╚██████╔╝╚██████╔╝   ██║   ██║███████╗███████║   ██║
 --          ╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝╚══════╝╚══════╝   ╚═╝
---            [[                                                    ]]
---            [[ ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ]]
---            [[ ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ]]
---            [[ ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ]]
---            [[ ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ]]
---            [[ ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ]]
---            [[ ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ]]
---            [[                                                    ]]
+--
+--               ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+--               ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
+--               ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
+--               ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
+--               ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
+--               ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
+--
 -- ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 -- ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 -- ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ Rootiest NVim ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
@@ -34,6 +34,7 @@
 -- ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 -- ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 
+-- ---------------------------------- LAZY -------------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 -- Bootstrap lazy.nvim
 if not vim.uv.fs_stat(lazypath) then
@@ -48,6 +49,7 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
+-- --------------------------------- PLUGINS -----------------------------------
 require("lazy").setup({
   -- Setup lazy
   spec = {
@@ -102,12 +104,9 @@ require("lazy").setup({
 ]]
         end
         LOGO = string.rep("\n", 8) .. LOGO .. "\n\n"
-
         local opts = {
           theme = "doom",
           hide = {
-            -- this is taken care of by lualine
-            -- enabling this messes up the actual laststatus setting after loading a file
             statusline = false,
           },
           config = {
@@ -140,12 +139,10 @@ require("lazy").setup({
             end,
           },
         }
-
         for _, button in ipairs(opts.config.center) do
           button.desc = button.desc .. string.rep(" ", 43 - #button.desc)
           button.key_format = "  %s"
         end
-
         -- open dashboard after closing lazy
         if vim.o.filetype == "lazy" then
           vim.api.nvim_create_autocmd("WinClosed", {
@@ -158,7 +155,6 @@ require("lazy").setup({
             end,
           })
         end
-
         return opts
       end,
     },
@@ -214,8 +210,30 @@ require("lazy").setup({
     },
     {
       "folke/persistence.nvim",
-      event = "BufReadPre", -- this will only start session saving when an actual file was opened
+      event = "BufReadPre",
       opts = {},
+    },
+    {
+      "nvim-telescope/telescope.nvim",
+      dependencies = { "nvim-lua/plenary.nvim" },
+      config = function()
+        require("telescope").setup({
+          defaults = {
+            dynamic_preview_title = true,
+            prompt_prefix = " ",
+            selection_caret = " ",
+          },
+          extensions = {
+            fzf = {
+              fuzzy = true, -- false will only do exact matching
+              override_generic_sorter = true, -- override the generic sorter
+              override_file_sorter = true, -- override the file sorter
+              case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+              -- the default case_mode is "smart_case"
+            },
+          },
+        })
+      end,
     },
     {
       "gorbit99/codewindow.nvim",
@@ -292,7 +310,24 @@ require("lazy").setup({
         require("Comment").setup()
       end,
     },
-    { "shellRaining/hlchunk.nvim", lazy = true },
+    {
+      "shellRaining/hlchunk.nvim",
+      lazy = true,
+      config = function()
+        require("hlchunk").setup({
+          chunk = {
+            style = {
+              { fg = "#90FDA9" },
+            },
+            enable = true,
+          },
+          indent = {
+            enable = true,
+          },
+          line_num = { style = "#806d9c", enable = false },
+        })
+      end,
+    },
     {
       "akinsho/toggleterm.nvim",
       version = false,
@@ -494,6 +529,9 @@ require("lazy").setup({
     {
       "nvim-telescope/telescope-fzf-native.nvim",
       build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
+      config = function()
+        require("telescope").load_extension("fzf")
+      end,
     },
     {
       "amitds1997/remote-nvim.nvim",
@@ -504,6 +542,46 @@ require("lazy").setup({
         "nvim-telescope/telescope.nvim", -- For picking b/w different remote methods
       },
       config = true,
+    },
+    {
+      "folke/trouble.nvim",
+      config = function()
+        require("trouble").setup({
+          modes = {
+            preview_float = {
+              mode = "diagnostics",
+              preview = {
+                type = "float",
+                relative = "editor",
+                border = "rounded",
+                title = "Preview",
+                title_pos = "center",
+                position = { 0, -2 },
+                size = { width = 0.3, height = 0.3 },
+                zindex = 200,
+              },
+            },
+          },
+        })
+      end,
+    },
+    {
+      "Bekaboo/deadcolumn.nvim",
+      lazy = true,
+    },
+    {
+      "mikesmithgh/kitty-scrollback.nvim",
+      enabled = true,
+      lazy = true,
+      cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
+      event = { "User KittyScrollbackLaunch" },
+      -- version = '*', -- latest stable version, may have breaking changes if major version changed
+      -- version = '^5.0.0', -- pin major version, include fixes and features that do not have breaking changes
+      config = function()
+        if vim.env.KITTY_SCROLLBACK_NVIM == "true" then
+          require("kitty-scrollback").setup()
+        end
+      end,
     },
     {
       "mistricky/codesnap.nvim",
@@ -546,13 +624,9 @@ require("lazy").setup({
       },
     },
   },
-
   defaults = { lazy = false, version = false },
-
   install = { colorscheme = {} },
-
   checker = { enabled = true },
-
   performance = {
     rtp = {
       disabled_plugins = {
@@ -567,18 +641,75 @@ require("lazy").setup({
   },
 })
 
+-- ---------------------------------- STYLE ------------------------------------
+
 -- Apply the default colorscheme
 local kitty_theme = os.getenv("KITTY_THEME")
 vim.cmd.colorscheme(kitty_theme or "catppuccin-frappe")
+if vim.g.colors_name == "catppuccin-frappe" then
+  THEMEPALETTE = require("catppuccin.palettes").get_palette("frappe")
+elseif vim.g.colors_name == "catppuccin-latte" then
+  THEMEPALETTE = require("catppuccin.palettes").get_palette("latte")
+elseif vim.g.colors_name == "catppuccin-mocha" then
+  THEMEPALETTE = require("catppuccin.palettes").get_palette("mocha")
+elseif vim.g.colors_name == "catppuccin-macchiato" then
+  THEMEPALETTE = require("catppuccin.palettes").get_palette("macchiato")
+elseif vim.g.colors_name == "tokyonight-night" or "tokyonight" then
+  THEMEPALETTE = require("catppuccin.palettes").get_palette("mocha")
+elseif vim.g.colors_name == "tokyonight-day" then
+  THEMEPALETTE = require("catppuccin.palettes").get_palette("latte")
+else
+  THEMEPALETTE = {
+    bg = "#282c34",
+    fg = "#abb2bf",
+    overlay0 = "#abb2bf",
+    yellow = "#ECBE7B",
+    cyan = "#008080",
+    darkblue = "#081633",
+    green = "#98be65",
+    orange = "#FF8800",
+    violet = "#a9a1e1",
+    magenta = "#c678dd",
+    blue = "#51afef",
+    red = "#ec5f67",
+  }
+end
 
 -- Set GUI font
 vim.opt.guifont = "MonaspiceKr Nerd Font Mono:#e-subpixelantialias:h13"
 vim.g.have_nerd_font = true
 
--- Client Apps
+-- DeadColumn
+
+local dead_opts = {
+  scope = "line", ---@type string|fun(): integer
+  ---@type string[]|fun(mode: string): boolean
+  modes = function(mode)
+    return mode:find("^[ictRss\x13]") ~= nil
+  end,
+  blending = {
+    threshold = 0.9,
+    colorcode = THEMEPALETTE.overlay0,
+    hlgroup = { "Normal", "bg" },
+  },
+  warning = {
+    alpha = 0.4,
+    offset = 0,
+    colorcode = THEMEPALETTE.error,
+    hlgroup = { "Error", "bg" },
+  },
+  extra = {
+    ---@type string?
+    follow_tw = "80",
+  },
+}
+require("deadcolumn").setup(dead_opts)
+vim.cmd(":set colorcolumn=120")
+
+-- ------------------------------- CLIENT APPS ---------------------------------
 
 if vim.g.neovide then
-  -- Neovide
+  -- ----------------------- Neovide -------------------------
   -- refresh rate and translucency
   vim.g.neovide_refresh_rate = 170
   vim.g.neovide_transparency = 0.85
@@ -622,7 +753,7 @@ if vim.g.neovide then
   vim.cmd(":inoremap <silent> <C-c> <C-r>+")
 else
   if vim.env.TERM:find("kitty") then
-    --Kitty
+    -- ------------------------ Kitty --------------------------
     if not vim.env.SSH_TTY then
       -- Image Preview
       require("image").setup()
@@ -632,23 +763,14 @@ else
       -- SSH
       vim.cmd(":TransparentDisable")
     end
+    vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+    vim.cmd("let g:kitty_navigator_no_mappings = 1")
+    vim.cmd(":nnoremap <silent> {Left-Mapping} :KittyNavigateLeft<cr>")
+    vim.cmd(":nnoremap <silent> {Down-Mapping} :KittyNavigateDown<cr>")
+    vim.cmd(":nnoremap <silent> {Up-Mapping} :KittyNavigateUp<cr>")
+    vim.cmd(":nnoremap <silent> {Right-Mapping} :KittyNavigateRight<cr>")
   end
 end
-
--- --------------------------------- Hlchunk -----------------------------------
-require("hlchunk").setup({
-  chunk = {
-    style = {
-
-      { fg = "#90FDA9" },
-    },
-    enable = true,
-  },
-  indent = {
-    enable = true,
-  },
-  line_num = { style = "#806d9c", enable = false },
-})
 
 -- ------------------------------ KEY BINDINGS ---------------------------------
 
@@ -658,29 +780,29 @@ vim.api.nvim_create_user_command("Q", function()
   vim.cmd.qall()
 end, { force = true })
 
--- Navigate panels with Alt-direction like kitty
+-- Panel Navigation
 vim.api.nvim_set_keymap(
   "n",
   "<A-Left>",
-  [[<C-W>h]],
+  [[<Cmd>wincmd h<CR>]],
   { noremap = true, desc = " Go to Window Left" }
 )
 vim.api.nvim_set_keymap(
   "n",
   "<A-Up>",
-  [[<C-W>j]],
+  [[<Cmd>wincmd j<CR>]],
   { noremap = true, desc = " Go to Window Up" }
 )
 vim.api.nvim_set_keymap(
   "n",
   "<A-Down>",
-  [[<C-W>k]],
+  [[<Cmd>wincmd k<CR>]],
   { noremap = true, desc = " Go to Window Down" }
 )
 vim.api.nvim_set_keymap(
   "n",
   "<A-Right>",
-  [[<C-W>l]],
+  [[<Cmd>wincmd l<CR>]],
   { noremap = true, desc = " Go to Window Right" }
 )
 
@@ -695,41 +817,3 @@ function _G.set_terminal_keymaps()
   vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
   vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
 end
-
--- --------------------------------- Trouble -----------------------------------
-require("trouble").setup({
-  modes = {
-    preview_float = {
-      mode = "diagnostics",
-      preview = {
-        type = "float",
-        relative = "editor",
-        border = "rounded",
-        title = "Preview",
-        title_pos = "center",
-        position = { 0, -2 },
-        size = { width = 0.3, height = 0.3 },
-        zindex = 200,
-      },
-    },
-  },
-})
-
--- -------------------------------- Telescope ----------------------------------
-require("telescope").setup({
-  defaults = {
-    dynamic_preview_title = true,
-    prompt_prefix = " ",
-    selection_caret = " ",
-  },
-  extensions = {
-    fzf = {
-      fuzzy = true, -- false will only do exact matching
-      override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-      -- the default case_mode is "smart_case"
-    },
-  },
-})
-require("telescope").load_extension("fzf")
