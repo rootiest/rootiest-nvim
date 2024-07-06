@@ -1,4 +1,5 @@
 lazy-lock.json
 .luarc.json
 .neoconf.json
-lazyvim.j
+lazyvim.json
+debug/

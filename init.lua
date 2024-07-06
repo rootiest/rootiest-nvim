@@ -64,16 +64,44 @@ require("lazy").setup({
       "nvimdev/dashboard-nvim",
       lazy = false,
       opts = function()
-        local logo = [[
+        -- if line length is greater than 80, use fancy mode
+        if vim.fn.winwidth(0) >= 100 then
+          LOGO = [[
 ██████╗  ██████╗  ██████╗ ████████╗██╗███████╗███████╗████████╗    ███╗   ██╗██╗   ██╗██╗███╗   ███╗
 ██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝██║██╔════╝██╔════╝╚══██╔══╝    ████╗  ██║██║   ██║██║████╗ ████║
 ██████╔╝██║   ██║██║   ██║   ██║   ██║█████╗  ███████╗   ██║       ██╔██╗ ██║██║   ██║██║██╔████╔██║
 ██╔══██╗██║   ██║██║   ██║   ██║   ██║██╔══╝  ╚════██║   ██║       ██║╚██╗██║╚██╗ ██╔╝██║██║╚██╔╝██║
 ██║  ██║╚██████╔╝╚██████╔╝   ██║   ██║███████╗███████║   ██║       ██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║
 ╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝╚══════╝╚══════╝   ╚═╝       ╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
-        ]]
+]]
+        elseif vim.fn.winwidth(0) >= 80 then
+          LOGO = [[
+ ███████████                      █████     ███                    █████   
+░░███░░░░░███                    ░░███     ░░░                    ░░███    
+ ░███    ░███   ██████   ██████  ███████   ████   ██████   █████  ███████  
+ ░██████████   ███░░███ ███░░███░░░███░   ░░███  ███░░███ ███░░  ░░░███░   
+ ░███░░░░░███ ░███ ░███░███ ░███  ░███     ░███ ░███████ ░░█████   ░███    
+ ░███    ░███ ░███ ░███░███ ░███  ░███ ███ ░███ ░███░░░   ░░░░███  ░███ ███
+ █████   █████░░██████ ░░██████   ░░█████  █████░░██████  ██████   ░░█████ 
+░░░░░   ░░░░░  ░░░░░░   ░░░░░░     ░░░░░  ░░░░░  ░░░░░░  ░░░░░░     ░░░░░  
+ ██████   █████ █████   █████  ███                 
+░░██████ ░░███ ░░███   ░░███  ░░░                  
+ ░███░███ ░███  ░███    ░███  ████  █████████████  
+ ░███░░███░███  ░███    ░███ ░░███ ░░███░░███░░███ 
+ ░███ ░░██████  ░░███   ███   ░███  ░███ ░███ ░███ 
+ ░███  ░░█████   ░░░█████░    ░███  ░███ ░███ ░███ 
+ █████  ░░█████    ░░███      █████ █████░███ █████
+░░░░░    ░░░░░      ░░░      ░░░░░ ░░░░░ ░░░ ░░░░░ 
 
-        logo = string.rep("\n", 8) .. logo .. "\n\n"
+]]
+        else
+          LOGO = [[
+░█▀▄░█▀█░█▀█░▀█▀░▀█▀░█▀▀░█▀▀░▀█▀░░░█▀█░█░█░▀█▀░█▄█
+░█▀▄░█░█░█░█░░█░░░█░░█▀▀░▀▀█░░█░░░░█░█░▀▄▀░░█░░█░█
+░▀░▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀▀▀░▀▀▀░░▀░░░░▀░▀░░▀░░▀▀▀░▀░▀
+]]
+        end
+        LOGO = string.rep("\n", 8) .. LOGO .. "\n\n"
 
         local opts = {
           theme = "doom",
@@ -83,7 +111,7 @@ require("lazy").setup({
             statusline = false,
           },
           config = {
-            header = vim.split(logo, "\n"),
+            header = vim.split(LOGO, "\n"),
             -- stylua: ignore
             center = {
               { action = 'lua LazyVim.pick()()',                           desc = " Find File",       icon = " ", key = "f" },
@@ -135,6 +163,56 @@ require("lazy").setup({
       end,
     },
     {
+      "catppuccin/nvim",
+      name = "catppuccin",
+      priority = 1000,
+      config = function()
+        require("catppuccin").setup({
+          integrations = {
+            cmp = true,
+            diffview = true,
+            dashboard = true,
+            gitsigns = true,
+            nvimtree = true,
+            neotree = true,
+            treesitter = true,
+            markdown = true,
+            sandwich = true,
+            which_key = true,
+            telescope = { enabled = true, style = "nvchad" },
+            illuminate = { enabled = true, lsp = true },
+            notify = true,
+            notifier = true,
+            dap = true,
+            dap_ui = true,
+            ts_rainbow2 = true,
+            rainbow_delimiters = true,
+            lsp_trouble = true,
+            noice = true, -- codespell:ignore noice
+            native_lsp = {
+              enabled = true,
+              virtual_text = {
+                errors = { "italic" },
+                hints = { "italic" },
+                warnings = { "italic" },
+                information = { "italic" },
+                ok = { "italic" },
+              },
+              underlines = {
+                errors = { "underline" },
+                hints = { "underline" },
+                warnings = { "underline" },
+                information = { "underline" },
+                ok = { "underline" },
+              },
+              inlay_hints = { background = true },
+            },
+            mini = { enabled = true, indentscope_color = "mauve" },
+          },
+        })
+      end,
+    },
+    {
       "folke/persistence.nvim",
       event = "BufReadPre", -- this will only start session saving when an actual file was opened
       opts = {},
@@ -143,9 +221,30 @@ require("lazy").setup({
       "gorbit99/codewindow.nvim",
       version = false,
       config = function()
-        local codewindow = require("codewindow")
-        codewindow.setup()
-        codewindow.apply_default_keybinds()
+        require("codewindow").setup({
+          active_in_terminals = false, -- Should the minimap activate for terminal buffers
+          auto_enable = true, -- Automatically open the minimap when entering a (non-excluded) buffer (accepts a table of filetypes)
+          exclude_filetypes = { "help", "dashboard" }, -- Choose certain filetypes to not show minimap on
+          max_minimap_height = nil, -- The maximum height the minimap can take (including borders)
+          max_lines = nil, -- If auto_enable is true, don't open the minimap for buffers which have more than this many lines.
+          minimap_width = 10, -- The width of the text part of the minimap
+          use_lsp = true, -- Use the builtin LSP to show errors and warnings
+          use_treesitter = true, -- Use nvim-treesitter to highlight the code
+          use_git = true, -- Show small dots to indicate git additions and deletions
+          width_multiplier = 4, -- How many characters one dot represents
+          z_index = 1, -- The z-index the floating window will be on
+          show_cursor = true, -- Show the cursor position in the minimap
+          screen_bounds = "background", -- How the visible area is displayed, "lines": lines above and below, "background": background color
+          window_border = "none", -- The border style of the floating window (accepts all usual options)
+          relative = "win", -- What will be the minimap be placed relative to, "win": the curre
+          events = {
+            "TextChanged",
+            "InsertLeave",
+            "DiagnosticChanged",
+            "FileWritePost",
+          }, -- Events that update the code window
+        })
+        require("codewindow").apply_default_keybinds()
       end,
     },
     {
@@ -187,9 +286,61 @@ require("lazy").setup({
         end, { expr = true, silent = true })
       end,
     },
-    { "numToStr/Comment.nvim" },
+    {
+      "numToStr/Comment.nvim",
+      config = function()
+        require("Comment").setup()
+      end,
+    },
     { "shellRaining/hlchunk.nvim", lazy = true },
-    { "akinsho/toggleterm.nvim", version = false, lazy = false },
+    {
+      "akinsho/toggleterm.nvim",
+      version = false,
+      lazy = false,
+      config = function()
+        require("toggleterm").setup({
+          -- size can be a number or function which is passed the current terminal
+          size = function(term)
+            if term.direction == "horizontal" then
+              return 10
+            elseif term.direction == "vertical" then
+              return vim.o.columns * 0.4
+            end
+          end,
+          open_mapping = [[<c-\>]],
+          hide_numbers = true,
+          autochdir = true,
+          shade_terminals = false,
+          start_in_insert = true,
+          insert_mappings = true,
+          terminal_mappings = true,
+          persist_size = true,
+          persist_mode = true,
+          direction = "horizontal",
+          close_on_exit = true,
+          shell = vim.o.shell,
+          auto_scroll = true,
+          float_opts = {
+            border = "curved",
+            winblend = 3,
+            title_pos = "left",
+          },
+          winbar = {
+            enabled = true,
+            name_formatter = function(term) --  term: Terminal
+              return term.name
+            end,
+          },
+        })
+        -- Keybinds
+        vim.api.nvim_set_keymap(
+          "n",
+          "<c-/>",
+          ":ToggleTerm<cr>",
+          { noremap = true, desc = " Open Terminal" }
+        )
+      end,
+    },
     {
       "nvim-neo-tree/neo-tree.nvim",
       lazy = true,
@@ -198,6 +349,14 @@ require("lazy").setup({
         "nvim-lua/plenary.nvim",
         "MunifTanjim/nui.nvim",
       },
+      config = function()
+        require("neo-tree").setup({
+          source_selector = {
+            winbar = true,
+            statusline = false,
+          },
+        })
+      end,
     },
     { "lewis6991/gitsigns.nvim" },
     {
@@ -408,50 +567,6 @@ require("lazy").setup({
   },
 })
 
-require("catppuccin").setup({
-  integrations = {
-    cmp = true,
-    diffview = true,
-    dashboard = true,
-    gitsigns = true,
-    nvimtree = true,
-    neotree = true,
-    treesitter = true,
-    markdown = true,
-    sandwich = true,
-    which_key = true,
-    telescope = { enabled = true, style = "nvchad" },
-    illuminate = { enabled = true, lsp = true },
-    notify = true,
-    notifier = true,
-    dap = true,
-    dap_ui = true,
-    ts_rainbow2 = true,
-    rainbow_delimiters = true,
-    lsp_trouble = true,
-    noice = true, -- codespell:ignore noice
-    native_lsp = {
-      enabled = true,
-      virtual_text = {
-        errors = { "italic" },
-        hints = { "italic" },
-        warnings = { "italic" },
-        information = { "italic" },
-        ok = { "italic" },
-      },
-      underlines = {
-        errors = { "underline" },
-        hints = { "underline" },
-        warnings = { "underline" },
-        information = { "underline" },
-        ok = { "underline" },
-      },
-      inlay_hints = { background = true },
-    },
-    mini = { enabled = true, indentscope_color = "mauve" },
-  },
-})
-
 -- Apply the default colorscheme
 local kitty_theme = os.getenv("KITTY_THEME")
 vim.cmd.colorscheme(kitty_theme or "catppuccin-frappe")
@@ -517,47 +632,8 @@ else
       -- SSH
       vim.cmd(":TransparentDisable")
     end
-
-    -- Kitty Bindings
-    -- if you only want these mappings for toggle term use term://*toggleterm#* instead
-    vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-    vim.cmd("let g:kitty_navigator_no_mappings = 1")
-
-    vim.cmd(":nnoremap <silent> {Left-Mapping} :KittyNavigateLeft<cr>")
-    vim.cmd(":nnoremap <silent> {Down-Mapping} :KittyNavigateDown<cr>")
-    vim.cmd(":nnoremap <silent> {Up-Mapping} :KittyNavigateUp<cr>")
-    vim.cmd(":nnoremap <silent> {Right-Mapping} :KittyNavigateRight<cr>")
   end
 end
-
--- ------------------------------- CodeWindow ----------------------------------
-require("codewindow").setup({
-  active_in_terminals = false, -- Should the minimap activate for terminal buffers
-  auto_enable = true, -- Automatically open the minimap when entering a (non-excluded) buffer (accepts a table of filetypes)
-  exclude_filetypes = { "help" }, -- Choose certain filetypes to not show minimap on
-  max_minimap_height = nil, -- The maximum height the minimap can take (including borders)
-  max_lines = nil, -- If auto_enable is true, don't open the minimap for buffers which have more than this many lines.
-  minimap_width = 10, -- The width of the text part of the minimap
-  use_lsp = true, -- Use the builtin LSP to show errors and warnings
-  use_treesitter = true, -- Use nvim-treesitter to highlight the code
-  use_git = true, -- Show small dots to indicate git additions and deletions
-  width_multiplier = 4, -- How many characters one dot represents
-  z_index = 1, -- The z-index the floating window will be on
-  show_cursor = true, -- Show the cursor position in the minimap
-  screen_bounds = "background", -- How the visible area is displayed, "lines": lines above and below, "background": background color
-  window_border = "none", -- The border style of the floating window (accepts all usual options)
-  relative = "win", -- What will be the minimap be placed relative to, "win": the curre
-  events = {
-    "TextChanged",
-    "InsertLeave",
-    "DiagnosticChanged",
-    "FileWritePost",
-  }, -- Events that update the code window
-})
-require("codewindow").apply_default_keybinds()
-
--- --------------------------------- Comment -----------------------------------
-require("Comment").setup()
 
 -- --------------------------------- Hlchunk -----------------------------------
 require("hlchunk").setup({
@@ -581,14 +657,6 @@ vim.api.nvim_create_user_command("Q", function()
   vim.cmd.bdelete()
   vim.cmd.qall()
 end, { force = true })
-
--- Toggle Terminal
-vim.api.nvim_set_keymap(
-  "n",
-  "<c-/>",
-  ":ToggleTerm<cr>",
-  { noremap = true, desc = " Open Terminal" }
-)
 
 -- Navigate panels with Alt-direction like kitty
 vim.api.nvim_set_keymap(
@@ -647,42 +715,6 @@ require("trouble").setup({
   },
 })
 
--- ------------------------------- ToggleTerm ----------------------------------
-require("toggleterm").setup({
-  -- size can be a number or function which is passed the current terminal
-  size = function(term)
-    if term.direction == "horizontal" then
-      return 10
-    elseif term.direction == "vertical" then
-      return vim.o.columns * 0.4
-    end
-  end,
-  open_mapping = [[<c-\>]],
-  hide_numbers = true,
-  autochdir = true,
-  shade_terminals = false,
-  start_in_insert = true,
-  insert_mappings = true,
-  terminal_mappings = true,
-  persist_size = true,
-  persist_mode = true,
-  direction = "horizontal",
-  close_on_exit = true,
-  shell = vim.o.shell,
-  auto_scroll = true,
-  float_opts = {
-    border = "curved",
-    winblend = 3,
-    title_pos = "left",
-  },
-  winbar = {
-    enabled = true,
-    name_formatter = function(term) --  term: Terminal
-      return term.name
-    end,
-  },
-})
-
 -- -------------------------------- Telescope ----------------------------------
 require("telescope").setup({
   defaults = {
@@ -701,11 +733,3 @@ require("telescope").setup({
   },
 })
 require("telescope").load_extension("fzf")
-
--- -------------------------------- Neo-tree -----------------------------------
-require("neo-tree").setup({
-  source_selector = {
-    winbar = true,
-    statusline = false,
-  },
-})
