@@ -208,6 +208,7 @@ require("lazy").setup({
         })
       end,
     },
+    { "Shatur/neovim-ayu", lazy = true },
     {
       "folke/persistence.nvim",
       event = "BufReadPre",
@@ -303,7 +304,7 @@ require("lazy").setup({
     },
     {
       "shellRaining/hlchunk.nvim",
-      lazy = true,
+      lazy = false,
       config = function()
         require("hlchunk").setup({
           chunk = {
@@ -647,7 +648,11 @@ elseif vim.g.colors_name == "catppuccin-macchiato" then
   THEMEPALETTE = require("catppuccin.palettes").get_palette("macchiato")
 elseif vim.g.colors_name == "tokyonight-night" or "tokyonight" then
   THEMEPALETTE = require("catppuccin.palettes").get_palette("mocha")
-elseif vim.g.colors_name == "tokyonight-day" then
+elseif vim.g.colors_name == "ayu" then
+  THEMEPALETTE = require("catppuccin.palettes").get_palette("mocha")
+elseif vim.g.colors_name == "ayu-mirage" then
+  THEMEPALETTE = require("catppuccin.palettes").get_palette("frappe")
+elseif vim.g.colors_name == "tokyonight-day" or "ayu-light" then
   THEMEPALETTE = require("catppuccin.palettes").get_palette("latte")
 else
   THEMEPALETTE = {

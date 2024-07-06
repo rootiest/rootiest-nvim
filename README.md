@@ -66,7 +66,7 @@ The rootiest neovim configuration you will ever see!
 - Comfortable keybindings and IDE-like features
 - Designed to be quick to load and easy to use without compromising on features
 - Leans heavily on lazy and luarocks for plugin management and lazy-loading
-- Catppuccino theme is default but tokyonight is also included
+- Catppuccino theme is default but tokyonight and ayu are also included
 - Automatic light/dark mode switching based on system theme
 - Extensive special configurations for kitty, including theme matching
 - Image support for kitty when conditions are met
