@@ -53,6 +53,7 @@ The rootiest neovim configuration you will ever see!
 - LSP support for many languages and automatic setup for many more
 - Remotely spawn a neovim instance over ssh, in a container, or from a git repo
 - Dashboard logo adjusts to the size of the window
+- Codeium-powered AI completion
 
 ## Credits
 
