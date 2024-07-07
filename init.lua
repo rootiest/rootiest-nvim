@@ -402,9 +402,10 @@ require("lazy").setup({
     },
     {
       "3rd/image.nvim",
-      cond = function() -- Not Using SSH
+      cond = function() -- Not Using SSH or root
         local ssh = os.getenv("SSH_TTY")
-        return not ssh
+        local user = os.getenv("USER")
+        return not ssh and user ~= "root"
       end,
     },
     {
@@ -422,9 +423,10 @@ require("lazy").setup({
           vim.cmd.colorscheme(kitty_theme or "catppuccin-latte")
         end,
       },
-      cond = function() -- Not Using SSH
+      cond = function() -- Not Using SSH or root
         local ssh = os.getenv("SSH_TTY")
-        return not ssh
+        local user = os.getenv("USER")
+        return not ssh and user ~= "root"
       end,
     },
     {
@@ -752,8 +754,10 @@ else
   if vim.env.TERM:find("kitty") then
     -- ------------------------ Kitty --------------------------
     if not vim.env.SSH_TTY then
-      -- Image Preview
-      require("image").setup()
+      if vim.env.USER ~= "root" then
+        -- Image Preview
+        require("image").setup()
+      end
       -- Transparency
       vim.cmd(":TransparentEnable")
     else
