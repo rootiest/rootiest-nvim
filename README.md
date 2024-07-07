@@ -28,6 +28,7 @@ The rootiest neovim configuration you will ever see!
        Version control system
      - [luarocks](https://luarocks.org/) -
        Lua package manager
+     - A terminal with [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/) support
 
    - Optional (but recommended for the full experience)
      - [ripgrep](https://github.com/BurntSushi/ripgrep) -
@@ -81,13 +82,29 @@ The rootiest neovim configuration you will ever see!
 - Dashboard logo adjusts to the size of the window
 - Codeium-powered AI completion
 
+## Notes
+
+You may notice that some plugins or alternative colorschemes do not
+initially appear in the command list.
+
+This is expected. Neovim will load them on demand.  
+This allows for a leaner and faster-loading experience.
+
 ## Companion Tools
 
-[Rootiest Kitty Conf](https://github.com/rootiest/rootiest-kitty) - A kitty configuration that is designed to work with this neovim configuration
+[Rootiest Kitty Conf](https://github.com/rootiest/rootiest-kitty) -
+A kitty configuration that is designed to work with this neovim configuration
 
-[Rootiest Fish Conf](https://github.com/rootiest/rootiest-fish-conf) - A fish configuration that pairs well with this neovim configuration
+[Rootiest Fish Conf](https://github.com/rootiest/rootiest-fish-conf) -
+A fish configuration that pairs well with this neovim configuration
 
-[Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/) - A collection of fonts that include many icons and glyphs that are used in this configuration. The default font is Monaspace Krypton and kitty uses the Symbols Only Nerd Font.
+[Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/) -
+A collection of fonts that include many icons and glyphs that are used in this configuration.
+The default font used throughout the config is
+[Monaspace Krypton](https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Monaspace.zip).
+Further, kitty uses the
+[Symbols Only Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.zip)
+to ensure compatibility with any font.
 
 ## Credits
 

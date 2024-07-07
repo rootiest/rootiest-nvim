@@ -638,6 +638,7 @@ require("lazy").setup({
 -- Apply the default colorscheme
 local kitty_theme = os.getenv("KITTY_THEME")
 vim.cmd.colorscheme(kitty_theme or "catppuccin-frappe")
+-- Set the colorscheme palette
 if vim.g.colors_name == "catppuccin-frappe" then
   THEMEPALETTE = require("catppuccin.palettes").get_palette("frappe")
 elseif vim.g.colors_name == "catppuccin-latte" then
