@@ -13,6 +13,21 @@
     ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
     ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
 
+                  ________ ++     ________
+                /VVVVVVVV\++++  /VVVVVVVV\
+                \VVVVVVVV/++++++\VVVVVVVV/
+                  |VVVVVV|++++++++/VVVVV/'
+                  |VVVVVV|++++++/VVVVV/'
+                +|VVVVVV|++++/VVVVV/'+
+              +++|VVVVVV|++/VVVVV/'+++++
+            +++++|VVVVVV|/VVV___++++++++++
+              +++|VVVVVVVVVV/##/ +_+_+_+_
+                +|VVVVVVVVV___ +/#_#,#_#,\
+                  |VVVVVVV//##/+/#/+/#/'/#/
+                  |VVVVV/'+/#/+/#/+/#/ /#/
+                  |VVV/'++/#/+/#/ /#/ /#/
+                  'V/'  /##//##//##//###/
+                          ++
 ```
 
 The rootiest neovim configuration you will ever see!
