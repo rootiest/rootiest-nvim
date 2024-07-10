@@ -1,0 +1,24 @@
+          .ld,                     cc.          
+        ,oxxxxl.                   lxxl'        
+     .:dxxxxxddd;                  lddddo;.     
+   'lxxxxxxxxddddl.                cdddddddc.   
+ ':coxxxxxxxddddddd:               cdddddddddl, 
+ccccccoxxxxxddddddddo,             cdddddddddddo
+cccccc:lddddddddddddddc.           cdddddddddddo
+:ccccccc:ldddddddddddddo;          :oooooooooooo
+:cccccccc:codooooooooooool.        :oooooooooooo
+::::::::::::coooooooooooooo:       :oooooooooool
+::::::::::::'.coooooooooooool'     ;oooooooooool
+;:::::::::::'  ,looooooooooooo:.   ;llllllllllll
+;:::::::::::'    :oooooooooooool,  ;llllllllllll
+;;;;;;;;;;;;'     .coooooooooooooc.;llllllllllll
+;;;;;;;;;;;;'       ,llllllllllllllclllllllllllc
+;;;;;;;;;;;;.        .:lllllllllllloolcccccccccc
+,;;;;;;;;;;;.          'lllllllllllloolccccccccc
+,;;;;;;;;;;;.            ;llllllllllooollccccccc
+,,,,,,,,,,,,.             .:llllllllllllllccccc:
+ .',,,,,,,,,.               ,ccccccllllllllc:;' 
+   ..,,,,,,,.                .;ccccllllllll:.   
+      .',,,,.                  .ccccllllc,.     
+        ..''.                    ,cclc:.        
+           ..                     .:,.           
