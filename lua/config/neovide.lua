@@ -5,8 +5,6 @@
 vim.g.neovide_refresh_rate = 170
 vim.g.neovide_transparency = 0.85
 vim.g.neovide_window_blurred = true
--- Neovide has its own transparency
-vim.cmd(":TransparentDisable")
 -- cursor fx
 vim.g.neovide_cursor_vfx_mode = "railgun"
 vim.g.neovide_cursor_smooth_blink = true
