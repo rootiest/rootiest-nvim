@@ -62,12 +62,11 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
--- Disabled features
-require("config/disabled")
+-- -------------------------------- DISABLED -----------------------------------
+vim.g.loaded_perl_provider = 0
 
 -- --------------------------------- PLUGINS -----------------------------------
 require("lazy").setup({
-  -- Setup lazy{}
   spec = {
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     { import = "lazyvim.plugins.extras.dap.core" },
@@ -83,6 +82,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.coding.mini-surround" },
     { import = "lazyvim.plugins.extras.ui.mini-animate" },
     { import = "lazyvim.plugins.extras.util.gitui" },
+    { import = "lazyvim.plugins.extras.util.octo" },
     { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.lang.markdown" },
     { import = "lazyvim.plugins.extras.lang.toml" },
@@ -116,15 +116,7 @@ require("config/style")
 if vim.g.neovide then
   -- ----------------------- Neovide -------------------------
   require("config/neovide")
-else
-  if vim.env.TERM:find("kitty") then
-    -- ------------------------ Kitty --------------------------
-    require("config/kitty")
-  end
 end
 
 -- -------------------------------- KEYBINDS -----------------------------------
 require("config/keybinds")
-
--- -------------------------------- AUTO-CMDS ----------------------------------
-require("config/auto-cmds")
