@@ -26,19 +26,22 @@
 --               ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
 --               ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
 --               ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
---                         /VVVVVVVV\++++  /VVVVVVVV\
---                         \VVVVVVVV/++++++\VVVVVVVV/
---                          |VVVVVV|++++++++/VVVVV/'
---                          |VVVVVV|++++++/VVVVV/'
---                         +|VVVVVV|++++/VVVVV/'+
---                       +++|VVVVVV|++/VVVVV/'+++++
---                     +++++|VVVVVV|/VVV___++++++++++
---                       +++|VVVVVVVVVV/##/ +_+_+_+_
---                         +|VVVVVVVVV___ +/#_#,#_#,\
---                          |VVVVVVV//##/+/#/+/#/'/#/
---                          |VVVVV/'+/#/+/#/+/#/ /#/
---                          |VVV/'++/#/+/#/ /#/ /#/
---                          'V/'  /##//##//##//###/
+--
+--                ,l;             c,
+--             .:ooool'           loo:.        /VVVVVVVV\++++  /VVVVVVVV\
+--           .,oooooooo:.         looooc,      \VVVVVVVV/++++++\VVVVVVVV/
+--          ll:,loooooool,        looooool      |VVVVVV|++++++++/VVVVV/'
+--          llll,;ooooooooc.      looooooo      |VVVVVV|++++++/VVVVV/'
+--          lllllc,coooooooo;     looooooo     +|VVVVVV|++++/VVVVV/'+
+--          lllllll;,loooooool'   looooooo   +++|VVVVVV|++/VVVVV/'+++++
+--          lllllllc .:oooooooo:. looooooo +++++|VVVVVV|/VVV___++++++++++
+--          lllllllc   'loooooool,:ooooooo   +++|VVVVVVVVVV/##/ +_+_+_+
+--          lllllllc     ;ooooooooc,cooooo     +|VVVVVVVVV___ +/#_#,#_#,\
+--          lllllllc      .coooooooo;;looo      |VVVVVVV//##/+/#/+/#/'/#/
+--          lllllllc        ,loooooool,:ol      |VVVVV/'+/#/+/#/+/#/ /#/
+--           'cllllc         .:oooooooo;.       |VVV/'++/#/+/#/ /#/ /#/
+--             .;llc           .loooo:.         'V/'  /##//##//##//###/
+--                ,;             ;l;
 --
 -- ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 -- ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
@@ -81,6 +84,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.coding.yanky" },
     { import = "lazyvim.plugins.extras.coding.mini-surround" },
     { import = "lazyvim.plugins.extras.ui.mini-animate" },
+    --{ import = "lazyvim.plugins.extras.ui.alpha" },
     { import = "lazyvim.plugins.extras.util.gitui" },
     { import = "lazyvim.plugins.extras.util.octo" },
     { import = "lazyvim.plugins.extras.lang.json" },
