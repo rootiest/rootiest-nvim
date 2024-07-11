@@ -2,6 +2,14 @@
 -- -------------------------------- KEYBINDS -----------------------------------
 -- -----------------------------------------------------------------------------
 
+-- --------------------------------- Keymaps -----------------------------------
+vim.keymap.set( -- Explorer
+  "n",
+  "E",
+  "<cmd>lua require('neo-tree.command').execute({ toggle = true, dir = vim.uv.cwd() })<cr>"
+)
+
+-- -------------------------------- Commands -----------------------------------
 -- Make :Q close all of the buffers
 vim.api.nvim_create_user_command("Q", function()
   vim.cmd.bdelete()
