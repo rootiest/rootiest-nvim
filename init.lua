@@ -93,6 +93,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.toml" },
     { import = "lazyvim.plugins.extras.lang.yaml" },
+    { import = "lazyvim.plugins.extras.editor.fzf" },
     { import = "plugins" },
   },
   defaults = { lazy = false, version = false },
