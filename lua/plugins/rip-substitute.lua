@@ -12,7 +12,7 @@ return {
         require("rip-substitute").sub()
       end,
       mode = { "n", "x" },
-      desc = " rip substitute",
+      desc = "Rip Substitute",
     },
   },
 }
