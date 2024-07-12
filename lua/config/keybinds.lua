@@ -18,23 +18,15 @@ end, { force = true })
 
 -- ------------------------------- Leader Maps ---------------------------------
 local wk = require("which-key")
-wk.register({
-  ["<leader>"] = {
-    l = {
-      name = "󰒲 Lazy",
-      v = { "<cmd>Lazy<cr>", "󰒲 LazyVim" },
-      x = { "<cmd>LazyExtras<cr>", " LazyExtras" },
-    },
-    g = {
-      name = " Git",
-      S = { "<cmd>LazyGit<cr>", " LazyGit" },
-      n = {
-        name = " Gists",
-        c = { "<cmd>GistCreate<cr>", " Create Gist" },
-        f = { "<cmd>GistList<cr>", "󰮗 Find Gists" },
-      },
-    },
-  },
+wk.add({
+  { "<leader>g", group = " Git" },
+  { "<leader>gS", "<cmd>LazyGit<cr>", desc = " LazyGit" },
+  { "<leader>gn", group = " Gists" },
+  { "<leader>gnc", "<cmd>GistCreate<cr>", desc = " Create Gist" },
+  { "<leader>gnf", "<cmd>GistList<cr>", desc = "󰮗 Find Gists" },
+  { "<leader>l", group = "󰒲 Lazy" },
+  { "<leader>lv", "<cmd>Lazy<cr>", desc = "󰒲 LazyVim" },
+  { "<leader>lx", "<cmd>LazyExtras<cr>", desc = " LazyExtras" },
 })
 
 -- ------------------------------ Abbreviations --------------------------------
