@@ -16,25 +16,25 @@
       ,l;             c,
    .:ooool'           loo:.
  .,oooooooo:.         looooc,      /VVVVVVVV\++++  /VVVVVVVV\
-ll:,loooooool,        looooool     \VVVVVVVV/++++++\VVVVVVVV/ 
-llll,;ooooooooc.      looooooo      |VVVVVV|++++++++/VVVVV/'  
-lllllc,coooooooo;     looooooo      |VVVVVV|++++++/VVVVV/'    
-lllllll;,loooooool'   looooooo     +|VVVVVV|++++/VVVVV/'+     
-lllllllc .:oooooooo:. looooooo   +++|VVVVVV|++/VVVVV/'+++++   
-lllllllc   'loooooool,:ooooooo +++++|VVVVVV|/VVV___++++++++++ 
-lllllllc     ;ooooooooc,cooooo   +++|VVVVVVVVVV/##/ +_+_+_+   
-lllllllc      .coooooooo;;looo     +|VVVVVVVVV___ +/#_#,#_#,\ 
-lllllllc        ,loooooool,:ol      |VVVVVVV//##/+/#/+/#/'/#/ 
- 'cllllc         .:oooooooo;.       |VVVVV/'+/#/+/#/+/#/ /#/  
-   .;llc           .loooo:.         |VVV/'++/#/+/#/ /#/ /#/   
-      ,;             ;l;            'V/'  /##//##//##//###/  
+ll:,loooooool,        looooool     \VVVVVVVV/++++++\VVVVVVVV/
+llll,;ooooooooc.      looooooo      |VVVVVV|++++++++/VVVVV/'
+lllllc,coooooooo;     looooooo      |VVVVVV|++++++/VVVVV/'
+lllllll;,loooooool'   looooooo     +|VVVVVV|++++/VVVVV/'+
+lllllllc .:oooooooo:. looooooo   +++|VVVVVV|++/VVVVV/'+++++
+lllllllc   'loooooool,:ooooooo +++++|VVVVVV|/VVV___++++++++++
+lllllllc     ;ooooooooc,cooooo   +++|VVVVVVVVVV/##/ +_+_+_+
+lllllllc      .coooooooo;;looo     +|VVVVVVVVV___ +/#_#,#_#,\
+lllllllc        ,loooooool,:ol      |VVVVVVV//##/+/#/+/#/'/#/
+ 'cllllc         .:oooooooo;.       |VVVVV/'+/#/+/#/+/#/ /#/
+   .;llc           .loooo:.         |VVV/'++/#/+/#/ /#/ /#/
+      ,;             ;l;            'V/'  /##//##//##//###/
 ```
 
 The rootiest neovim configuration you will ever see!
 
 ## Installation
 
-1. Install [neovim](https://github.com/neovim/neovim/blob/master/INSTALL.md)
+1. Install [NeoVim](https://github.com/neovim/neovim/blob/master/INSTALL.md)
 2. Install Pre-requisites
 
    - Required
@@ -59,7 +59,7 @@ The rootiest neovim configuration you will ever see!
      - [kitty](https://sw.kovidgoyal.net/kitty/) -
        A fast, featureful, GPU based terminal emulator
      - [neovide](https://neovide.dev/) -
-       A simple, fast, featureful, and modern neovim GUI
+       A simple, fast, featureful, and modern NeoVim GUI
      - [fish](https://fishshell.com/) -
        A smart and user-friendly command line shell
 
@@ -82,44 +82,34 @@ The rootiest neovim configuration you will ever see!
 - Comfortable keybindings and IDE-like features
 - Designed to be quick to load and easy to use without compromising on features
 - Leans heavily on lazy and luarocks for plugin management and lazy-loading
-- Catppuccino theme is default but tokyonight and ayu are also included
+- Catppuccino theme is default but a selection of others are also included
 - Automatic light/dark mode switching based on system theme
 - Extensive special configurations for kitty, including theme matching
-- Image support for kitty when conditions are met
 - Kitty scrollback and keybinding support
 - Special configuration for neovide
 - Detects terminal client and adjusts accordingly
-- Detects SSH sessions and disables certain plugins for speed and compatibility
 - ToggleTerm, fzf, telescope, neotree, etc. for quick access to files and terminal
 - Many UI elements to enhance the experience
 - LSP support for many languages and automatic setup for many more
-- Remotely spawn a neovim instance over ssh, in a container, or from a git repo
+- Remotely spawn a NeoVim instance over ssh, in a container, or from a git repo
 - Dashboard logo adjusts to the size of the window
 - Codeium-powered AI completion
-
-## Notes
-
-You may notice that some plugins or alternative colorschemes do not
-initially appear in the command list.
-
-This is expected. Neovim will load them on demand.  
-This allows for a leaner and faster-loading experience.
+- Lean and fast while providing a complete professional experience
 
 ## Companion Tools
 
 [Rootiest Kitty Conf](https://github.com/rootiest/rootiest-kitty) -
-A kitty configuration that is designed to work with this neovim configuration
+A kitty configuration that is designed to work with this NeoVim configuration
 
 [Rootiest Fish Conf](https://github.com/rootiest/rootiest-fish-conf) -
-A fish configuration that pairs well with this neovim configuration
+A fish configuration that pairs well with this NeoVim configuration
 
 [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/) -
 A collection of fonts that include many icons and glyphs that are used in this configuration.
-The default font used throughout the config is
-[Monaspace Krypton](https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Monaspace.zip).
-Further, kitty uses the
-[Symbols Only Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.zip)
-to ensure compatibility with any font.
+
+## Dotfiles
+
+[Rootiest Dotfiles](https://github.com/rootiest/dotfiles)
 
 ## Credits
 
