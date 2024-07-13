@@ -6,3 +6,4 @@ return {
   event = "BufReadPre",
   opts = {},
 }
+

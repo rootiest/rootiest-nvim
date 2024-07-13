@@ -7,3 +7,4 @@ return {
     require("auto-save").setup({})
   end,
 }
+

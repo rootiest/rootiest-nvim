@@ -83,3 +83,4 @@ return {
     vim.fn.sign_define("smoothcursor_R", { text = "󰊄" })
   end,
 }
+

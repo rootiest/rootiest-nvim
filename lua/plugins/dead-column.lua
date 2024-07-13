@@ -29,3 +29,4 @@ return {
     vim.cmd(":set colorcolumn=120")
   end,
 }
+

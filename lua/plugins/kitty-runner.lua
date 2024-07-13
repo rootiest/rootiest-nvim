@@ -8,3 +8,4 @@ return {
     return term and string.find(term, "kitty")
   end,
 }
+
