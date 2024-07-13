@@ -95,9 +95,9 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.yaml" },
     { import = "lazyvim.plugins.extras.editor.telescope" },
     { import = "plugins" },
+    { import = "themes" },
   },
   defaults = { lazy = false, version = false },
-  install = { colorscheme = {} },
   checker = { enabled = true },
   performance = {
     rtp = {
