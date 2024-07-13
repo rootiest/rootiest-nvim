@@ -40,12 +40,5 @@ return {
         end,
       },
     })
-    -- Keybinds
-    vim.api.nvim_set_keymap(
-      "n",
-      "<c-/>",
-      ":ToggleTerm<cr>",
-      { noremap = true, desc = " Open Terminal" }
-    )
   end,
 }

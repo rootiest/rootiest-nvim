@@ -1,16 +1,27 @@
 -- -----------------------------------------------------------------------------
 -- ----------------------------- kitty-navigator -------------------------------
 -- -----------------------------------------------------------------------------
+-- return {
+--   "knubie/vim-kitty-navigator",
+--   build = {
+--     "cp ./*.py ~/.config/kitty/",
+--   },
+--   cond = function() -- Using Kitty
+--     local term = os.getenv("TERM") or ""
+--     local kit = string.find(term, "kitty")
+--     return kit ~= nil
+--   end,
+-- }
+
 return {
-  "knubie/vim-kitty-navigator",
-  cond = function() -- Using Kitty
-    local term = os.getenv("TERM")
-    return term and string.find(term, "kitty")
-  end,
-  keys = {
-    { "<c-h>", "<cmd>KittyNavigateLeft<cr>", desc = "KittyNavigateLeft" },
-    { "<c-j>", "<cmd>KittyNavigateDown<cr>", desc = "KittyNavigateDown" },
-    { "<c-k>", "<cmd>KittyNavigateUp<cr>", desc = "KittyNavigateUp" },
-    { "<c-l>", "<cmd>KittyNavigateRight<cr>", desc = "KittyNavigateRight" },
+  "MunsMan/kitty-navigator.nvim",
+  build = {
+    "cp navigate_kitty.py ~/.config/kitty",
+    "cp pass_keys.py ~/.config/kitty",
   },
+  cond = function() -- Using Kitty
+    local term = os.getenv("TERM") or ""
+    local kit = string.find(term, "kitty")
+    return kit ~= nil
+  end,
 }
