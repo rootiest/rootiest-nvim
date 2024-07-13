@@ -13,21 +13,21 @@
     ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
     ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
 
-                  ________ ++     ________
-                /VVVVVVVV\++++  /VVVVVVVV\
-                \VVVVVVVV/++++++\VVVVVVVV/
-                  |VVVVVV|++++++++/VVVVV/'
-                  |VVVVVV|++++++/VVVVV/'
-                +|VVVVVV|++++/VVVVV/'+
-              +++|VVVVVV|++/VVVVV/'+++++
-            +++++|VVVVVV|/VVV___++++++++++
-              +++|VVVVVVVVVV/##/ +_+_+_+_
-                +|VVVVVVVVV___ +/#_#,#_#,\
-                  |VVVVVVV//##/+/#/+/#/'/#/
-                  |VVVVV/'+/#/+/#/+/#/ /#/
-                  |VVV/'++/#/+/#/ /#/ /#/
-                  'V/'  /##//##//##//###/
-                          ++
+      ,l;             c,
+   .:ooool'           loo:.        /VVVVVVVV\++++  /VVVVVVVV\
+ .,oooooooo:.         looooc,      \VVVVVVVV/++++++\VVVVVVVV/
+ll:,loooooool,        looooool      |VVVVVV|++++++++/VVVVV/'
+llll,;ooooooooc.      looooooo      |VVVVVV|++++++/VVVVV/'
+lllllc,coooooooo;     looooooo     +|VVVVVV|++++/VVVVV/'+
+lllllll;,loooooool'   looooooo   +++|VVVVVV|++/VVVVV/'+++++
+lllllllc .:oooooooo:. looooooo +++++|VVVVVV|/VVV___++++++++++
+lllllllc   'loooooool,:ooooooo   +++|VVVVVVVVVV/##/ +_+_+_+
+lllllllc     ;ooooooooc,cooooo     +|VVVVVVVVV___ +/#_#,#_#,\
+lllllllc      .coooooooo;;looo      |VVVVVVV//##/+/#/+/#/'/#/
+lllllllc        ,loooooool,:ol      |VVVVV/'+/#/+/#/+/#/ /#/
+ 'cllllc         .:oooooooo;.       |VVV/'++/#/+/#/ /#/ /#/
+   .;llc           .loooo:.         'V/'  /##//##//##//###/
+      ,;             ;l;
 ```
 
 The rootiest neovim configuration you will ever see!
