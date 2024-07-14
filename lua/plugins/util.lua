@@ -28,7 +28,7 @@ return {
   },
   {
     "mikesmithgh/ugbi",
-    lazy = false,
+    event = "VeryLazy",
   },
   {
     "chrisgrieser/nvim-rip-substitute",
@@ -36,6 +36,7 @@ return {
   },
   {
     "Rawnly/gist.nvim",
+    event = "VeryLazy",
     cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
     config = true,
   },
@@ -48,12 +49,14 @@ return {
   },
   {
     "ziontee113/icon-picker.nvim",
+    event = "VeryLazy",
     config = function()
       require("icon-picker").setup({ disable_legacy_commands = true })
     end,
   },
   {
     "kdheepak/lazygit.nvim",
+    event = "VeryLazy",
     cmd = {
       "LazyGit",
       "LazyGitConfig",
@@ -67,6 +70,7 @@ return {
   },
   {
     "mistricky/codesnap.nvim",
+    event = "VeryLazy",
     build = "make",
     opts = {
       save_path = "~/Pictures/Screenshots/",
@@ -77,5 +81,12 @@ return {
       code_font_family = "Iosevka NF",
       code_font_size = 12,
     },
+  },
+  {
+    "mistweaverco/kulala.nvim",
+    lazy = true,
+    config = function()
+      require("kulala").setup()
+    end,
   },
 }

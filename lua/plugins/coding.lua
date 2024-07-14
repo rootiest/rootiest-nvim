@@ -24,7 +24,6 @@ return {
   },
   {
     "shellRaining/hlchunk.nvim",
-    lazy = false,
     config = function()
       require("hlchunk").setup({
         chunk = {

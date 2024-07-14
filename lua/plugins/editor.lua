@@ -61,6 +61,7 @@ return {
   },
   {
     "Bekaboo/deadcolumn.nvim",
+    event = "VeryLazy",
     config = function()
       require("deadcolumn").setup({
         scope = "line", ---@type string|fun(): integer
