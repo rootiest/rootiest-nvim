@@ -1,9 +1,19 @@
+-- -----------------------------------------------------------------------------
+-- --------------------------------- EDITOR ------------------------------------
+-- -----------------------------------------------------------------------------
+
 return {
   { import = "lazyvim.plugins.extras.editor.aerial" },
   { import = "lazyvim.plugins.extras.editor.dial" },
   { import = "lazyvim.plugins.extras.editor.illuminate" },
   { import = "lazyvim.plugins.extras.editor.outline" },
   { import = "lazyvim.plugins.extras.editor.telescope" },
+  {
+    "folke/which-key.nvim",
+    opts = {
+      preset = "modern",
+    },
+  },
   {
     "gorbit99/codewindow.nvim",
     version = false,
