@@ -2,4 +2,5 @@ lazy-lock.json
 .luarc.json
 .neoconf.json
 lazyvim.json
+.colorscheme
 debug/
