@@ -88,4 +88,8 @@ return {
       vim.cmd(":set colorcolumn=120")
     end,
   },
+  {
+    "tris203/precognition.nvim",
+    event = "VeryLazy",
+  },
 }

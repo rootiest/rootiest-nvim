@@ -26,11 +26,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 local wk = require("which-key")
 wk.add({
   {
-    "E",
-    "<cmd>lua require('neo-tree.command').execute({ toggle = true, dir = vim.uv.cwd() })<cr>",
-    desc = "Explorer (CWD)",
-  },
-  {
     "<c-/>",
     ":ToggleTerm<cr>",
     desc = "Toggle Terminal",
@@ -197,6 +192,13 @@ wk.add({
       local kit = string.find(term, "kitty")
       return kit ~= nil
     end,
+  },
+  {
+    "zk",
+    rhs = function()
+      require("precognition").toggle()
+    end,
+    desc = "Toggle Precognition",
   },
 })
 
