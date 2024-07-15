@@ -200,6 +200,19 @@ wk.add({
     end,
     desc = "Toggle Precognition",
   },
+  {
+    "<leader>a",
+    "<cmd>Alternate<cr>",
+    desc = "Toggle Alternate",
+    cond = function()
+      return (
+        vim.bo.filetype == "c"
+        or vim.bo.filetype == "h"
+        or vim.bo.filetype == "cpp"
+        or vim.bo.filetype == "hpp"
+      )
+    end,
+  },
 })
 
 -- ---------------------------- Spell Correction -------------------------------

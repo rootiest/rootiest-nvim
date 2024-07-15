@@ -17,18 +17,22 @@ return {
     lazy = true,
   },
   {
-    "numToStr/Comment.nvim",
-    config = function()
-      require("Comment").setup()
-    end,
-  },
-  {
     "shellRaining/hlchunk.nvim",
     config = function()
+      local cb = function()
+        if vim.g.colors_name == "tokyonight" then
+          return "#806d9c"
+        elseif vim.g.colors_name:find("catppuccin") then
+          local catpalette = require("catppuccin.palettes").get_palette()
+          return catpalette.rosewater
+        else
+          return "#90FDA9"
+        end
+      end
       require("hlchunk").setup({
         chunk = {
           style = {
-            { fg = "#90FDA9" },
+            { fg = cb },
           },
           enable = true,
         },
@@ -37,5 +41,9 @@ return {
         },
       })
     end,
+  },
+  {
+    "ton/vim-alternate",
+    event = "VeryLazy",
   },
 }
