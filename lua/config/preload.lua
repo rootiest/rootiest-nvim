@@ -1,13 +1,12 @@
 -- -----------------------------------------------------------------------------
 -- -------------------------------- PRE-LOAD -----------------------------------
 -- -----------------------------------------------------------------------------
+-- Set Default Leader Key
+vim.g.mapleader = " "
 -- Restore Leader Key
 if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.leader") == 1 then
   -- Load Stored Leader Key
   vim.g.mapleader = vim.fn.readfile(vim.fn.stdpath("config") .. "/.leader")[1]
-else
-  -- Set Default Leader Key
-  vim.g.mapleader = " "
 end
 
 -- Restore Colorscheme to variable
@@ -20,4 +19,3 @@ else
     KITTY_THEME = os.getenv("KITTY_THEME")
   end
 end
-
