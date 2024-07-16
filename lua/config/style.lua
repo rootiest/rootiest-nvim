@@ -19,3 +19,6 @@ vim.cmd.colorscheme(STORED_THEME or KITTY_THEME or "catppuccin-frappe")
 -- Set GUI font
 vim.opt.guifont = "Iosevka:#e-subpixelantialias:h12"
 vim.g.have_nerd_font = true
+
+-- Set Leader Key
+vim.g.mapleader = " "
