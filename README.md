@@ -34,7 +34,7 @@ The rootiest neovim configuration you will ever see!
 
 ## Installation
 
-1. Install [NeoVim](https://github.com/neovim/neovim/blob/master/INSTALL.md)
+1. Install [NeoVim](https://github.com/neovim/neovim/blob/master/INSTALL.md) (0.9+)
 2. Install Pre-requisites
 
    - Required
@@ -43,7 +43,8 @@ The rootiest neovim configuration you will ever see!
        Version control system
      - [luarocks](https://luarocks.org/) -
        Lua package manager
-     - A terminal with [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/) support
+     - A terminal that has
+       [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/) support
 
    - Optional (but recommended for the full experience)
      - [ripgrep](https://github.com/BurntSushi/ripgrep) -
@@ -57,9 +58,9 @@ The rootiest neovim configuration you will ever see!
      - [tree-sitter](https://github.com/tree-sitter/tree-sitter/) -
        A parser generator tool and an incremental parsing library
      - [kitty](https://sw.kovidgoyal.net/kitty/) -
-       A fast, featureful, GPU based terminal emulator
-     - [neovide](https://neovide.dev/) -
-       A simple, fast, featureful, and modern NeoVim GUI
+       A fast, feature-rich, GPU based terminal emulator
+     - [NeoVide](https://neovide.dev/) -
+       A fast, feature-rich, and modern NeoVim GUI
      - [fish](https://fishshell.com/) -
        A smart and user-friendly command line shell
 
@@ -77,18 +78,36 @@ The rootiest neovim configuration you will ever see!
 
 5. Enjoy! 🎉
 
+## Options
+
+There are some hidden files in the configuration directory that can be
+used to configure user options.
+
+- `.colorscheme` : **Set the colorscheme**  
+   This file facilitates restoring the colorscheme between sessions.  
+   This value is overwritten when the colorscheme is changed in the UI.
+
+- `.leader` : **Set the leader key**  
+   This file defines the leader key used in the mappings.  
+   It contains only a single space by default.
+
+- `.aitool` : **Set the AI tool**  
+   This file defines the AI plugin used for code completion.  
+   The options are `codeium` `copilot` `tabnine` or `none`.
+
 ## Features
 
 - Comfortable keybindings and IDE-like features
 - Designed to be quick to load and easy to use without compromising on features
 - Leans heavily on lazy and luarocks for plugin management and lazy-loading
-- Catppuccino theme is default but a selection of others are also included
+- Catppuccin theme is default but a selection of others are also included
 - Automatic light/dark mode switching based on system theme
 - Extensive special configurations for kitty, including theme matching
 - Kitty scrollback and keybinding support
 - Special configuration for neovide
 - Detects terminal client and adjusts accordingly
-- ToggleTerm, fzf, telescope, neotree, etc. for quick access to files and terminal
+- ToggleTerm, fzf, telescope, neotree, etc. for
+  quick access to files and terminal
 - Many UI elements to enhance the experience
 - LSP support for many languages and automatic setup for many more
 - Remotely spawn a NeoVim instance over ssh, in a container, or from a git repo
@@ -105,7 +124,7 @@ A kitty configuration that is designed to work with this NeoVim configuration
 A fish configuration that pairs well with this NeoVim configuration
 
 [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/) -
-A collection of fonts that include many icons and glyphs that are used in this configuration.
+A collection of fonts that includes many icons and glyphs used in this configuration.
 
 ## Dotfiles
 
