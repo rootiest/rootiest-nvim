@@ -218,6 +218,14 @@ wk.add({
     "<cmd>TransparentToggle<cr>",
     desc = "Toggle Transparency",
   },
+  {
+    mode = "x",
+    lhs = "<leader>r",
+    rhs = function()
+      require("substitute").visual()
+    end,
+    desc = "Substitute",
+  },
 })
 
 -- ---------------------------- Spell Correction -------------------------------

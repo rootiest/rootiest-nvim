@@ -113,6 +113,17 @@ return {
     end,
   },
   {
+    "gbprod/substitute.nvim",
+    event = "VeryLazy",
+    opts = {
+      yank_substituted_text = false,
+      preserve_cursor_position = true,
+      highlight_substituted_text = {
+        enabled = false,
+      },
+    },
+  },
+  {
     "vim-scripts/AnsiEsc.vim",
     lazy = true,
   },
