@@ -3,8 +3,45 @@
 -- -----------------------------------------------------------------------------
 
 return {
-  { import = "lazyvim.plugins.extras.coding.codeium" },
-  { import = "lazyvim.plugins.extras.coding.tabnine" },
+  {
+    import = "lazyvim.plugins.extras.coding.codeium",
+    cond = function()
+      if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.aitool") == 1 then
+        if
+          vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
+          == "codeium"
+        then
+          return true
+        end
+      end
+    end,
+  },
+  {
+    import = "lazyvim.plugins.extras.coding.copilot",
+    cond = function()
+      if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.aitool") == 1 then
+        if
+          vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
+          == "copilot"
+        then
+          return true
+        end
+      end
+    end,
+  },
+  {
+    import = "lazyvim.plugins.extras.coding.tabnine",
+    cond = function()
+      if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.aitool") == 1 then
+        if
+          vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
+          == "tabnine"
+        then
+          return true
+        end
+      end
+    end,
+  },
   { import = "lazyvim.plugins.extras.coding.yanky" },
   { import = "lazyvim.plugins.extras.coding.mini-surround" },
   { import = "lazyvim.plugins.extras.vscode" },
