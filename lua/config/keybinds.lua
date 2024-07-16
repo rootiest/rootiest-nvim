@@ -213,6 +213,11 @@ wk.add({
       )
     end,
   },
+  {
+    "<leader>wt",
+    "<cmd>TransparentToggle<cr>",
+    desc = "Toggle Transparency",
+  },
 })
 
 -- ---------------------------- Spell Correction -------------------------------
