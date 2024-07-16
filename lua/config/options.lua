@@ -1,8 +1,10 @@
 -- -----------------------------------------------------------------------------
--- -------------------------------- PRE-LOAD -----------------------------------
+-- --------------------------------- OPTIONS -----------------------------------
 -- -----------------------------------------------------------------------------
+
 -- Set Default Leader Key
 vim.g.mapleader = " "
+
 -- Restore Leader Key
 if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.leader") == 1 then
   -- Load Stored Leader Key
@@ -18,4 +20,14 @@ else
   if os.getenv("KITTY_THEME") then
     KITTY_THEME = os.getenv("KITTY_THEME")
   end
+end
+
+-- ----------------------------------- LSP --------------------------------------
+vim.g.loaded_perl_provider = 0
+vim.g.lazyvim_python_lsp = "basedpyright"
+
+-- ------------------------------- CLIENT APPS ---------------------------------
+if vim.g.neovide then
+  -- ----------------------- Neovide -------------------------
+  require("config.neovide")
 end
