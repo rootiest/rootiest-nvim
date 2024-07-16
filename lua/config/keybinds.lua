@@ -221,4 +221,4 @@ wk.add({
 })
 
 -- ---------------------------- Spell Correction -------------------------------
-require("config/spellcheck")
+require("config.spellcheck")

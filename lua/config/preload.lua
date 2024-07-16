@@ -1,8 +1,16 @@
 -- -----------------------------------------------------------------------------
--- ---------------------------------- Style ------------------------------------
+-- -------------------------------- PRE-LOAD -----------------------------------
 -- -----------------------------------------------------------------------------
+-- Restore Leader Key
+if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.leader") == 1 then
+  -- Load Stored Leader Key
+  vim.g.mapleader = vim.fn.readfile(vim.fn.stdpath("config") .. "/.leader")[1]
+else
+  -- Set Default Leader Key
+  vim.g.mapleader = " "
+end
 
--- Restore Colorscheme
+-- Restore Colorscheme to variable
 if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.colorscheme") == 1 then
   -- Load the stored colorscheme
   STORED_THEME = vim.fn.readfile(vim.fn.stdpath("config") .. "/.colorscheme")[1]
@@ -13,12 +21,3 @@ else
   end
 end
 
--- Apply the colorscheme
-vim.cmd.colorscheme(STORED_THEME or KITTY_THEME or "catppuccin-frappe")
-
--- Set GUI font
-vim.opt.guifont = "Iosevka:#e-subpixelantialias:h12"
-vim.g.have_nerd_font = true
-
--- Set Leader Key
-vim.g.mapleader = " "
