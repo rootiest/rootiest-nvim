@@ -19,9 +19,9 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require("lazy").setup({
   spec = {
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    { import = "ui" },
-    { import = "plugins" },
-    { import = "themes" },
+    { import = "ui" }, -- UI Plugins
+    { import = "plugins" }, -- General Plugins
+    { import = "themes" }, -- Theme Plugins
   },
   defaults = { lazy = false, version = false },
   checker = { enabled = true },
@@ -36,5 +36,10 @@ require("lazy").setup({
         "zipPlugin",
       },
     },
+  },
+  profiling = {
+    -- Track the time spent loading plugins
+    loader = true,
+    require = true,
   },
 })
