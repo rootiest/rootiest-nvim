@@ -108,4 +108,9 @@ return {
     "tris203/precognition.nvim",
     event = "VeryLazy",
   },
+  {
+    "folke/zen-mode.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
 }
