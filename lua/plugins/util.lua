@@ -47,9 +47,9 @@ return {
       vim.g.unception_block_while_host_edits = true
     end,
   },
-  {
+  { -- 🍎 Icon Picker
     "ziontee113/icon-picker.nvim",
-    event = "VeryLazy",
+    event = "InsertEnter",
     config = function()
       require("icon-picker").setup({ disable_legacy_commands = true })
     end,
@@ -70,7 +70,7 @@ return {
   },
   {
     "mistricky/codesnap.nvim",
-    event = "VeryLazy",
+    event = "InsertEnter",
     build = "make",
     opts = {
       save_path = "~/Pictures/Screenshots/",
@@ -84,7 +84,7 @@ return {
   },
   {
     "mistweaverco/kulala.nvim",
-    lazy = true,
+    event = "InsertEnter",
     config = function()
       require("kulala").setup()
     end,

@@ -3,10 +3,13 @@ return {
   { import = "lazyvim.plugins.extras.ui.mini-animate" },
   {
     "xiyaowong/transparent.nvim",
+    event = "VeryLazy",
     config = true,
   },
   {
     "gen740/SmoothCursor.nvim",
+    event = "InsertEnter",
+    lazy = true,
     config = function()
       require("smoothcursor").setup({
         type = "default",
@@ -90,7 +93,7 @@ return {
   {
     "akinsho/toggleterm.nvim",
     version = false,
-    lazy = false,
+    event = "VeryLazy",
     config = function()
       require("toggleterm").setup({
         -- size can be a number or function which is passed the current terminal

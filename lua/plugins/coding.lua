@@ -47,6 +47,7 @@ return {
   { import = "lazyvim.plugins.extras.vscode" },
   {
     "echasnovski/mini.align",
+    event = "InsertEnter",
     config = function()
       require("mini.align").setup()
     end,
@@ -90,13 +91,14 @@ return {
   },
   {
     "norcalli/nvim-colorizer.lua",
+    event = "InsertEnter",
     config = function()
       require("colorizer").setup()
     end,
   },
   {
     "gbprod/substitute.nvim",
-    event = "VeryLazy",
+    event = "InsertEnter",
     opts = {
       yank_substituted_text = false,
       preserve_cursor_position = true,
@@ -105,10 +107,10 @@ return {
       },
     },
   },
-  {
-    "vim-scripts/AnsiEsc.vim",
-    lazy = true,
-  },
+  -- {
+  --   "vim-scripts/AnsiEsc.vim",
+  --   event = "VeryLazy",
+  -- },
   {
     "shellRaining/hlchunk.nvim",
     event = "BufEnter",

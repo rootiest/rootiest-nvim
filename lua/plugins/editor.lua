@@ -33,6 +33,7 @@ return {
   {
     "gorbit99/codewindow.nvim",
     version = false,
+    event = "InsertEnter",
     config = function()
       require("codewindow").setup({
         active_in_terminals = false, -- Should the minimap activate for terminal buffers
@@ -67,6 +68,7 @@ return {
   },
   {
     "amitds1997/remote-nvim.nvim",
+    event = "VeryLazy",
     version = "*", -- Pin to GitHub releases
     dependencies = {
       "nvim-lua/plenary.nvim", -- For standard functions
