@@ -95,6 +95,10 @@ used to configure user options.
    This file defines the AI plugin used for code completion.  
    The options are `codeium` `copilot` `tabnine` or `none`.
 
+- `.wakatime` : **Enables WakaTime**  
+   This file defines whether the WakaTime plugin is enabled.  
+   The options are `true` or `false`.
+
 ## Features
 
 - Comfortable keybindings and IDE-like features
@@ -112,8 +116,10 @@ used to configure user options.
 - LSP support for many languages and automatic setup for many more
 - Remotely spawn a NeoVim instance over ssh, in a container, or from a git repo
 - Dashboard logo adjusts to the size of the window
-- Codeium-powered AI completion
+- User-selected AI completion tool: `codeium`, `copilot`, `tabnine`, or `none`
+- Colorscheme is remembered between sessions
 - Lean and fast while providing a complete professional experience
+- Achieves sub-75ms startup time on my laptop
 
 ## Companion Tools
 
