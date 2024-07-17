@@ -12,6 +12,19 @@ return {
   { import = "lazyvim.plugins.extras.util.gitui" },
   { import = "lazyvim.plugins.extras.util.octo" },
   {
+    "wakatime/vim-wakatime",
+    cond = function()
+      if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.wakatime") == 1 then
+        if
+          vim.fn.readfile(vim.fn.stdpath("config") .. "/.wakatime")[1]
+          == "true"
+        then
+          return true
+        end
+      end
+    end,
+  },
+  {
     "chrishrb/gx.nvim",
     cmd = { "Browse" },
     init = function()
