@@ -3,7 +3,6 @@
 -- -----------------------------------------------------------------------------
 return {
   "nvimdev/dashboard-nvim",
-  lazy = false,
   opts = function()
     if vim.fn.winheight(0) >= 80 and vim.fn.winwidth(0) >= 80 then
       LOGO = table.concat(

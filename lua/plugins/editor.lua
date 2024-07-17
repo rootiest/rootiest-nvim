@@ -32,7 +32,6 @@ return {
   },
   {
     "gorbit99/codewindow.nvim",
-    version = false,
     event = "InsertEnter",
     config = function()
       require("codewindow").setup({

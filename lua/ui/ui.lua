@@ -92,7 +92,6 @@ return {
   },
   {
     "akinsho/toggleterm.nvim",
-    version = false,
     event = "VeryLazy",
     config = function()
       require("toggleterm").setup({
