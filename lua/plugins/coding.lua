@@ -60,6 +60,7 @@ return {
       table.insert(opts.sources, { name = "dotenv" })
       table.insert(opts.sources, { name = "calc" })
       table.insert(opts.sources, { name = "conventionalcommits" })
+      table.insert(opts.sources, { name = "gitmoji" })
       local cmp = require("cmp")
       cmp.setup({
         mapping = {
@@ -84,6 +85,7 @@ return {
       "SergioRibera/cmp-dotenv",
       "hrsh7th/cmp-calc",
       "davidsierradz/cmp-conventionalcommits",
+      "Dynge/gitmoji.nvim",
     },
   },
   {
