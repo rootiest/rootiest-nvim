@@ -1,6 +1,7 @@
 -- -----------------------------------------------------------------------------
 -- ---------------------------------- LAZY -------------------------------------
 -- -----------------------------------------------------------------------------
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
@@ -19,9 +20,8 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require("lazy").setup({
   spec = {
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    { import = "ui" }, -- UI Plugins
+    { import = "config.ui" }, -- UI Plugins
     { import = "plugins" }, -- General Plugins
-    { import = "themes" }, -- Theme Plugins
   },
   defaults = { lazy = false, version = false },
   checker = { enabled = true },
