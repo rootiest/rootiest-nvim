@@ -1,6 +1,7 @@
 -- -----------------------------------------------------------------------------
--- --------------------------------- NeoVide -----------------------------------
+-- --------------------------------- NEOVIDE -----------------------------------
 -- -----------------------------------------------------------------------------
+
 -- Set GUI font
 vim.opt.guifont = "Iosevka:#e-subpixelantialias:h12"
 -- refresh rate and translucency
@@ -42,4 +43,3 @@ vim.cmd(":cnoremap <silent> <C-c> <C-r>+")
 -- and in insert mode
 vim.cmd(":inoremap <silent> <C-v> <C-r>+")
 vim.cmd(":inoremap <silent> <C-c> <C-r>+")
-
