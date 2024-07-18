@@ -99,6 +99,10 @@ used to configure user options.
    This file defines whether the WakaTime plugin is enabled.  
    The options are `true` or `false`.
 
+- `.useimage` : **Enables Image plugin**  
+   This file defines whether the Image plugin is enabled.  
+   The options are `true` or `false`.
+
 ## Features
 
 - Comfortable keybindings and IDE-like features
