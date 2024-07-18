@@ -101,4 +101,8 @@ return {
       require("kulala").setup()
     end,
   },
+  {
+    "jsongerber/thanks.nvim",
+    config = true,
+  },
 }
