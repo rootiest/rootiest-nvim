@@ -6,39 +6,33 @@ return {
   {
     import = "lazyvim.plugins.extras.coding.codeium",
     cond = function()
-      if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.aitool") == 1 then
-        if
-          vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
-          == "codeium"
-        then
-          return true
-        end
+      if
+        vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
+        == "codeium"
+      then
+        return true
       end
     end,
   },
   {
     import = "lazyvim.plugins.extras.coding.copilot",
     cond = function()
-      if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.aitool") == 1 then
-        if
-          vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
-          == "copilot"
-        then
-          return true
-        end
+      if
+        vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
+        == "copilot"
+      then
+        return true
       end
     end,
   },
   {
     import = "lazyvim.plugins.extras.coding.tabnine",
     cond = function()
-      if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.aitool") == 1 then
-        if
-          vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
-          == "tabnine"
-        then
-          return true
-        end
+      if
+        vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
+        == "tabnine"
+      then
+        return true
       end
     end,
   },
@@ -107,10 +101,6 @@ return {
       },
     },
   },
-  -- {
-  --   "vim-scripts/AnsiEsc.vim",
-  --   event = "VeryLazy",
-  -- },
   {
     "shellRaining/hlchunk.nvim",
     event = "BufEnter",

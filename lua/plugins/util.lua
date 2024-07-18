@@ -14,13 +14,11 @@ return {
   {
     "wakatime/vim-wakatime",
     cond = function()
-      if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.wakatime") == 1 then
-        if
-          vim.fn.readfile(vim.fn.stdpath("config") .. "/.wakatime")[1]
-          == "true"
-        then
-          return true
-        end
+      if
+        vim.fn.readfile(vim.fn.stdpath("config") .. "/.wakatime")[1]
+        == "true"
+      then
+        return true
       end
     end,
   },

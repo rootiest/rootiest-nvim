@@ -17,13 +17,15 @@ return {
       update_interval = 2000,
       set_dark_mode = function()
         vim.o.background = "dark"
-        local kitty_theme = os.getenv("KITTY_THEME")
-        vim.cmd.colorscheme(kitty_theme or "catppuccin-frappe")
+        vim.cmd.colorscheme(
+          STORED_THEME or KITTY_THEME or "catppuccin-frappe" or "tokyonight"
+        )
       end,
       set_light_mode = function()
         vim.o.background = "light"
-        local kitty_theme = os.getenv("KITTY_THEME")
-        vim.cmd.colorscheme(kitty_theme or "catppuccin-latte")
+        vim.cmd.colorscheme(
+          STORED_THEME or KITTY_THEME or "catppuccin-frappe" or "tokyonight"
+        )
       end,
     },
     cond = function() -- Not Using SSH

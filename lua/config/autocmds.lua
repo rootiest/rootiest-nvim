@@ -9,6 +9,13 @@ vim.api.nvim_create_user_command("Q", function()
   vim.cmd.qall()
 end, { force = true })
 
+-- Restore Colorscheme
+vim.api.nvim_create_user_command("RestoreColorscheme", function()
+  vim.cmd.colorscheme(
+    STORED_THEME or KITTY_THEME or "catppuccin-frappe" or "tokyonight"
+  )
+end, { force = true })
+
 -- ------------------------------ Auto-Commands --------------------------------
 -- Autosave Colorscheme
 -- When the colorscheme changes, store the name in .colorscheme
