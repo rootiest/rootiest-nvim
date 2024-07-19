@@ -96,9 +96,14 @@ return {
           vim.fn.readfile(vim.fn.stdpath("config") .. "/.useimage")[1]
           == "true"
         then
-          local term = os.getenv("TERM") or ""
-          local kit = string.find(term, "kitty")
-          return kit ~= nil
+          local wterm = os.getenv("TERM_PROGRAM")
+          local kterm = os.getenv("TERM") or ""
+          local kit = string.find(kterm, "kitty")
+          if wterm and string.find(wterm, "WezTerm") then
+            return true -- Using WezTerm
+          else
+            return kit ~= nil -- Using Kitty
+          end
         end
       end
     end,
@@ -107,8 +112,8 @@ return {
     "willothy/wezterm.nvim",
     config = true,
     cond = function() -- Using WezTerm
-      local term = os.getenv("TERM_PROGRAM")
-      return term and string.find(term, "WezTerm")
+      local wterm = os.getenv("TERM_PROGRAM")
+      return wterm and string.find(wterm, "WezTerm")
     end,
   },
   {
@@ -117,9 +122,13 @@ return {
       return require("tmux").setup()
     end,
     cond = function() -- Using Tmux
-      local term = os.getenv("TERM")
-      if term and string.find(term, "screen") then
+      local tterm = os.getenv("TERM")
+      if tterm and string.find(tterm, "screen") then
         if os.getenv("TMUX") then
+          return true
+        end
+      else
+        if tterm and string.find(tterm, "tmux") then
           return true
         end
       end
@@ -137,6 +146,9 @@ return {
           return true
         end
       else
+        if tterm and string.find(tterm, "tmux") then
+          return true
+        end
         local wterm = os.getenv("TERM_PROGRAM")
         return wterm and string.find(wterm, "WezTerm")
       end
