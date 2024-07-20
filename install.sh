@@ -20,7 +20,7 @@ ask_question() {
 }
 
 # Welcome message
-show_message "Welcome to the Rootiest Neovim Installer"
+show_message "Welcome to the Rootiest Neovim Installer!"
 
 # Look for neovim executable
 if ! command -v nvim &>/dev/null; then
@@ -30,7 +30,9 @@ if ! command -v nvim &>/dev/null; then
   else
     # Download neovim appimage
     mkdir -p ~/AppImages
-    wget https://github.com/neovim/neovim/releases/latest/download/nvim.appimage ~/AppImages/nvim.appimage
+    wget \
+      https://github.com/neovim/neovim/releases/latest/download/nvim.appimage \
+      -o ~/AppImages/nvim.appimage
     chmod +x ~/AppImages/nvim.appimage
     # Add neovim appimage to PATH
     export PATH=\"\$HOME/AppImages:\$PATH
@@ -43,15 +45,25 @@ if ! command -v nvim &>/dev/null; then
   fi
 fi
 
+# Verify neovim executable
+if ! command -v nvim &>/dev/null; then
+  show_message "Neovim installation failed.
+Please install it manually and re-run the installer."
+  exit 1
+fi
+
 # Initial prompt to proceed with installation
-if ! ask_question "Do you want to install the Rootiest Neovim configuration?"; then
+if ! ask_question \
+  "Do you want to install the Rootiest Neovim configuration?"; then
   show_message "Installation aborted by the user."
   exit 1
 fi
 
 # Check if existing config is present and move to backup if confirmed
 if [ -d ~/.config/nvim ]; then
-  if ask_question "Existing Neovim configuration found. Do you want to backup and replace it?"; then
+  if ask_question \
+    "Existing Neovim configuration found.
+Do you want to backup and replace it?"; then
     mv ~/.config/nvim ~/.config/nvim.bkp
     show_message "Existing configuration has been backed up to ~/.config/nvim.bkp"
   else
