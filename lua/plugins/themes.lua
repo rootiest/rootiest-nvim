@@ -4,6 +4,14 @@
 
 return {
   {
+    "folke/tokyonight.nvim",
+    lazy = false, -- Override
+  },
+  {
+    "catppuccin/nvim",
+    lazy = false, -- Override
+  },
+  {
     "Shatur/neovim-ayu",
   },
   {
