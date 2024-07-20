@@ -100,6 +100,11 @@ return {
     end,
   },
   {
+    "tpope/vim-fugitive",
+    event = "InsertEnter",
+    dependencies = { "tpope/vim-rhubarb" },
+  },
+  {
     "jsongerber/thanks.nvim",
     config = true,
   },
