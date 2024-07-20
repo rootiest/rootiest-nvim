@@ -206,6 +206,11 @@ wk.add({
     end,
     desc = "Substitute",
   },
+  {
+    "yo",
+    "<cmd>YankLine<cr>",
+    desc = "Yank Line-text",
+  },
 })
 
 -- ---------------------------- Spell Correction -------------------------------

@@ -9,6 +9,12 @@ vim.api.nvim_create_user_command("Q", function()
   vim.cmd.qall()
 end, { force = true })
 
+-- Yank line without leading/trailing whitespace
+vim.api.nvim_create_user_command("YankLine", function()
+  -- Yank line without leading/trailing whitespace
+  vim.api.nvim_feedkeys("_v$hy$", "n", true)
+end, { force = true, desc = "Yank line without leading whitespace" })
+
 -- Restore Colorscheme
 vim.api.nvim_create_user_command("RestoreColorscheme", function()
   vim.cmd.colorscheme(
