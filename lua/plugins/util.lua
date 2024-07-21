@@ -106,6 +106,8 @@ return {
   },
   {
     "jsongerber/thanks.nvim",
-    config = true,
+    config = {
+      star_on_install = false,
+    },
   },
 }
