@@ -93,7 +93,7 @@ used to configure user options.
 
 - `.aitool` : **Set the AI tool**  
    This file defines the AI plugin used for code completion.  
-   The options are `codeium` `copilot` `tabnine` or `none`.
+   The options are `codeium` `copilot` `tabnine` `minuet` or `none`.
 
 - `.wakatime` : **Enables WakaTime**  
    This file defines whether the WakaTime plugin is enabled.  

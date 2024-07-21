@@ -36,6 +36,21 @@ return {
       end
     end,
   },
+  {
+    "milanglacier/minuet-ai.nvim",
+    dependencies = { { "nvim-lua/plenary.nvim" }, { "hrsh7th/nvim-cmp" } },
+    config = function()
+      require("minuet").setup({ provider = "openai" })
+    end,
+    cond = function()
+      if
+        vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
+        == "minuet"
+      then
+        return true
+      end
+    end,
+  },
   { import = "lazyvim.plugins.extras.coding.yanky" },
   { import = "lazyvim.plugins.extras.coding.mini-surround" },
   { import = "lazyvim.plugins.extras.vscode" },
