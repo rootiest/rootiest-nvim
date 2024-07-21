@@ -3,7 +3,7 @@
 -- -----------------------------------------------------------------------------
 
 return {
-  {
+  { -- Codeium
     import = "lazyvim.plugins.extras.coding.codeium",
     cond = function()
       if
@@ -14,7 +14,7 @@ return {
       end
     end,
   },
-  {
+  { -- Copilot
     import = "lazyvim.plugins.extras.coding.copilot",
     cond = function()
       if
@@ -25,7 +25,7 @@ return {
       end
     end,
   },
-  {
+  { -- Tabnine
     import = "lazyvim.plugins.extras.coding.tabnine",
     cond = function()
       if
@@ -36,7 +36,7 @@ return {
       end
     end,
   },
-  {
+  { -- Minuet-AI
     "milanglacier/minuet-ai.nvim",
     dependencies = { { "nvim-lua/plenary.nvim" }, { "hrsh7th/nvim-cmp" } },
     config = function()
@@ -51,10 +51,16 @@ return {
       end
     end,
   },
-  { import = "lazyvim.plugins.extras.coding.yanky" },
-  { import = "lazyvim.plugins.extras.coding.mini-surround" },
-  { import = "lazyvim.plugins.extras.vscode" },
-  {
+  { -- Yanky
+    import = "lazyvim.plugins.extras.coding.yanky",
+  },
+  { -- Mini Surround
+    import = "lazyvim.plugins.extras.coding.mini-surround",
+  },
+  { -- VSCode
+    import = "lazyvim.plugins.extras.vscode",
+  },
+  { -- Mini Align
     "echasnovski/mini.align",
     event = "InsertEnter",
     config = function()
@@ -103,14 +109,14 @@ return {
       "Dynge/gitmoji.nvim",
     },
   },
-  {
+  { -- Colorizer
     "norcalli/nvim-colorizer.lua",
     event = "InsertEnter",
     config = function()
       require("colorizer").setup()
     end,
   },
-  {
+  { -- Substitute
     "gbprod/substitute.nvim",
     event = "InsertEnter",
     opts = {

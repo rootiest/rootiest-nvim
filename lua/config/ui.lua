@@ -3,14 +3,18 @@
 -- -----------------------------------------------------------------------------
 
 return {
-  { import = "lazyvim.plugins.extras.ui.edgy" },
-  { import = "lazyvim.plugins.extras.ui.mini-animate" },
-  {
+  { -- Edgy
+    import = "lazyvim.plugins.extras.ui.edgy",
+  },
+  { -- Mini-animate
+    import = "lazyvim.plugins.extras.ui.mini-animate",
+  },
+  { -- Transparent
     "xiyaowong/transparent.nvim",
     event = "VeryLazy",
     config = true,
   },
-  {
+  { -- Auto Dark Mode
     "f-person/auto-dark-mode.nvim",
     lazy = true,
     opts = {
@@ -33,7 +37,7 @@ return {
       return not ssh
     end,
   },
-  {
+  { -- Hlchunk
     "shellRaining/hlchunk.nvim",
     event = "BufEnter",
     config = function()
@@ -113,7 +117,7 @@ return {
       require("hlchunk").setup(common_config)
     end,
   },
-  {
+  { -- Alternate
     "ton/vim-alternate",
     event = "VeryLazy",
   },

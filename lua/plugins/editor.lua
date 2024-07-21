@@ -3,12 +3,22 @@
 -- -----------------------------------------------------------------------------
 
 return {
-  { import = "lazyvim.plugins.extras.editor.aerial" },
-  { import = "lazyvim.plugins.extras.editor.dial" },
-  { import = "lazyvim.plugins.extras.editor.illuminate" },
-  { import = "lazyvim.plugins.extras.editor.outline" },
-  { import = "lazyvim.plugins.extras.editor.telescope" },
-  {
+  { -- Aerial
+    import = "lazyvim.plugins.extras.editor.aerial",
+  },
+  { -- Dial
+    import = "lazyvim.plugins.extras.editor.dial",
+  },
+  { -- Illuminate
+    import = "lazyvim.plugins.extras.editor.illuminate",
+  },
+  { -- Outline
+    import = "lazyvim.plugins.extras.editor.outline",
+  },
+  { -- Telescope
+    import = "lazyvim.plugins.extras.editor.telescope",
+  },
+  { -- Which-Key
     "folke/which-key.nvim",
     opts = {
       preset = "modern",
@@ -19,7 +29,7 @@ return {
       },
     },
   },
-  {
+  { -- CodeWindow
     "gorbit99/codewindow.nvim",
     event = "InsertEnter",
     config = function()
@@ -49,12 +59,12 @@ return {
       require("codewindow").apply_default_keybinds()
     end,
   },
-  {
+  { -- Persistence
     "folke/persistence.nvim",
     event = "BufReadPre",
     opts = {},
   },
-  {
+  { -- Remote-nvim
     "amitds1997/remote-nvim.nvim",
     event = "VeryLazy",
     version = "*", -- Pin to GitHub releases
@@ -65,7 +75,7 @@ return {
     },
     config = true,
   },
-  {
+  { -- DeadColumn
     "Bekaboo/deadcolumn.nvim",
     event = "VeryLazy",
     config = function()
@@ -94,16 +104,16 @@ return {
       vim.cmd(":set colorcolumn=120")
     end,
   },
-  {
+  { -- Precognition
     "tris203/precognition.nvim",
     event = "VeryLazy",
   },
-  {
+  { -- Zen Mode
     "folke/zen-mode.nvim",
     event = "VeryLazy",
     opts = {},
   },
-  {
+  { -- SmoothCursor
     "gen740/SmoothCursor.nvim",
     event = "InsertEnter",
     lazy = true,

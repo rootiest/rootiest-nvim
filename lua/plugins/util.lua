@@ -3,15 +3,23 @@
 -- -----------------------------------------------------------------------------
 
 return {
-  {
+  { -- Project management
     import = "lazyvim.plugins.extras.util.project",
     opts = { manual_mode = false },
   },
-  { import = "lazyvim.plugins.extras.util.chezmoi" },
-  { import = "lazyvim.plugins.extras.util.dot" },
-  { import = "lazyvim.plugins.extras.util.gitui" },
-  { import = "lazyvim.plugins.extras.util.octo" },
-  {
+  { -- Chezmoi
+    import = "lazyvim.plugins.extras.util.chezmoi",
+  },
+  { -- Dotfiles plugins
+    import = "lazyvim.plugins.extras.util.dot",
+  },
+  { -- Git UI
+    import = "lazyvim.plugins.extras.util.gitui",
+  },
+  { -- Octo plugin
+    import = "lazyvim.plugins.extras.util.octo",
+  },
+  { -- Wakatime
     "wakatime/vim-wakatime",
     cond = function()
       if
@@ -22,7 +30,7 @@ return {
       end
     end,
   },
-  {
+  { -- Link following
     "chrishrb/gx.nvim",
     cmd = { "Browse" },
     init = function()
@@ -31,27 +39,27 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     config = true,
   },
-  {
+  { -- Auto-save
     "Pocco81/auto-save.nvim",
     config = function()
       require("auto-save").setup({})
     end,
   },
-  {
+  { -- User is bored
     "mikesmithgh/ugbi",
     event = "VeryLazy",
   },
-  {
+  { -- Ripgrep substitute
     "chrisgrieser/nvim-rip-substitute",
     cmd = "RipSubstitute",
   },
-  {
+  { -- Gist Tools
     "Rawnly/gist.nvim",
     event = "VeryLazy",
     cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
     config = true,
   },
-  {
+  { -- Unception
     "samjwill/nvim-unception",
     init = function()
       vim.g.unception_block_while_host_edits = true
@@ -64,7 +72,7 @@ return {
       require("icon-picker").setup({ disable_legacy_commands = true })
     end,
   },
-  {
+  { -- LazyGit
     "kdheepak/lazygit.nvim",
     event = "VeryLazy",
     cmd = {
@@ -78,7 +86,7 @@ return {
       "nvim-lua/plenary.nvim",
     },
   },
-  {
+  { -- Codesnap
     "mistricky/codesnap.nvim",
     event = "InsertEnter",
     build = "make",
@@ -92,22 +100,35 @@ return {
       code_font_size = 12,
     },
   },
-  {
+  { -- Kulala
     "mistweaverco/kulala.nvim",
     event = "InsertEnter",
     config = function()
       require("kulala").setup()
     end,
   },
-  {
+  { -- Fugitive
     "tpope/vim-fugitive",
     event = "InsertEnter",
     dependencies = { "tpope/vim-rhubarb" },
   },
-  {
+  { -- Thanks/github-stars
     "jsongerber/thanks.nvim",
     config = {
       star_on_install = false,
     },
+  },
+  { -- Hardtime
+    "m4xshen/hardtime.nvim",
+    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    opts = {},
+    cond = function()
+      if
+        vim.fn.readfile(vim.fn.stdpath("config") .. "/.hardtime")[1]
+        == "true"
+      then
+        return true
+      end
+    end,
   },
 }

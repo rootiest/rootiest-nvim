@@ -41,3 +41,8 @@ end
 if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.wakatime") ~= 1 then
   vim.fn.writefile({ "true" }, vim.fn.stdpath("config") .. "/.wakatime")
 end
+
+-- Check if the .hardtime file exists
+if vim.fn.filereadable(vim.fn.stdpath("config") .. "/.hardtime") ~= 1 then
+  vim.fn.writefile({ "false" }, vim.fn.stdpath("config") .. "/.hardtime")
+end

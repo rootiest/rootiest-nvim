@@ -12,7 +12,7 @@ package.path = package.path
   .. "/.luarocks/share/lua/5.1/?.lua"
 
 return {
-  {
+  { -- ToggleTerm
     "akinsho/toggleterm.nvim",
     event = "VeryLazy",
     config = function()
@@ -52,7 +52,7 @@ return {
       })
     end,
   },
-  {
+  { -- Kitty-Navigator
     "MunsMan/kitty-navigator.nvim",
     build = {
       "cp navigate_kitty.py ~/.config/kitty",
@@ -64,7 +64,7 @@ return {
       return kit ~= nil
     end,
   },
-  {
+  { -- Kitty-Runner
     "jghauser/kitty-runner.nvim",
     cond = function() -- Using Kitty
       local term = os.getenv("TERM") or ""
@@ -72,7 +72,7 @@ return {
       return kit ~= nil
     end,
   },
-  {
+  { -- Kitty-Scrollback
     "mikesmithgh/kitty-scrollback.nvim",
     enabled = true,
     lazy = true,
@@ -85,7 +85,7 @@ return {
       end
     end,
   },
-  {
+  { -- Image Renderer
     "3rd/image.nvim",
     config = function()
       require("image").setup()
@@ -108,7 +108,7 @@ return {
       end
     end,
   },
-  {
+  { -- WezTerm
     "willothy/wezterm.nvim",
     config = true,
     cond = function() -- Using WezTerm
@@ -116,7 +116,7 @@ return {
       return wterm and string.find(wterm, "WezTerm")
     end,
   },
-  {
+  { -- Tmux
     "aserowy/tmux.nvim",
     config = function()
       return require("tmux").setup()
@@ -134,7 +134,7 @@ return {
       end
     end,
   },
-  {
+  { -- Navigator (wezterm/tmux)
     "numToStr/Navigator.nvim",
     config = function()
       require("Navigator").setup()

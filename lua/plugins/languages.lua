@@ -3,22 +3,41 @@
 -- -----------------------------------------------------------------------------
 
 return {
-  { import = "lazyvim.plugins.extras.lang.json" },
-  { import = "lazyvim.plugins.extras.lang.markdown" },
-  { import = "lazyvim.plugins.extras.lang.toml" },
-  { import = "lazyvim.plugins.extras.lang.git" },
-  { import = "lazyvim.plugins.extras.lang.python" },
-  { import = "lazyvim.plugins.extras.lang.toml" },
-  {
+  { -- JSON
+    import = "lazyvim.plugins.extras.lang.json",
+  },
+  { -- Markdown
+    import = "lazyvim.plugins.extras.lang.markdown",
+  },
+  { -- Toml
+    import = "lazyvim.plugins.extras.lang.toml",
+  },
+  { -- Git
+    import = "lazyvim.plugins.extras.lang.git",
+  },
+  { -- Python
+    import = "lazyvim.plugins.extras.lang.python",
+  },
+  { -- Yaml
+    import = "lazyvim.plugins.extras.lang.yaml",
+  },
+  { -- clangd
+    import = "lazyvim.plugins.extras.lang.clangd",
+  },
+  { -- cmake
+    import = "lazyvim.plugins.extras.lang.cmake",
+  },
+  { -- Docker
+    import = "lazyvim.plugins.extras.lang.docker",
+  },
+  { -- Java
+    import = "lazyvim.plugins.extras.lang.java",
+  },
+  { -- Markdown-Preview
     "iamcco/markdown-preview.nvim",
     build = "cd app && yarn install",
     init = function()
       vim.g.mkdp_filetypes = { "markdown" }
     end,
   },
-  { import = "lazyvim.plugins.extras.lang.yaml" },
-  { import = "lazyvim.plugins.extras.lang.clangd" },
-  { import = "lazyvim.plugins.extras.lang.cmake" },
-  { import = "lazyvim.plugins.extras.lang.docker" },
-  { import = "lazyvim.plugins.extras.lang.java" },
 }

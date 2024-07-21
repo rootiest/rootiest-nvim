@@ -2,7 +2,7 @@
 -- -------------------------------- DASHBOARD ----------------------------------
 -- -----------------------------------------------------------------------------
 
-return {
+return { -- Dashboard
   "nvimdev/dashboard-nvim",
   opts = function()
     if vim.fn.winheight(0) >= 80 and vim.fn.winwidth(0) >= 80 then
