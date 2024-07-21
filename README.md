@@ -103,6 +103,10 @@ used to configure user options.
    This file defines whether the Image plugin is enabled.  
    The options are `true` or `false`.
 
+- `.hardtime` : **Enables Hardtime plugin**  
+   This file defines whether the Hardtime plugin is enabled.  
+   The options are `true` or `false`.
+
 ## Features
 
 - Comfortable keybindings and IDE-like features
@@ -114,13 +118,15 @@ used to configure user options.
 - Kitty scrollback and keybinding support
 - Special configuration for neovide
 - Detects terminal client and adjusts accordingly
-- ToggleTerm, fzf, telescope, neotree, etc. for
-  quick access to files and terminal
+- ToggleTerm, fzf, telescope, neotree, etc. for quick access to files and terminal
 - Many UI elements to enhance the experience
 - LSP support for many languages and automatic setup for many more
 - Remotely spawn a NeoVim instance over ssh, in a container, or from a git repo
 - Dashboard logo adjusts to the size of the window
-- User-selected AI completion tool: `codeium`, `copilot`, `tabnine`, or `none`
+- User-selected AI completion tool:
+  `codeium`, `copilot`, `tabnine`, `minuet`, or `none`
+- WakaTime integration: Tracking time spent on code
+- Hardtime integration: Trains better use of vim motions and shortcuts
 - Colorscheme is remembered between sessions
 - Lean and fast while providing a complete professional experience
 - Achieves sub-75ms startup time on my laptop
