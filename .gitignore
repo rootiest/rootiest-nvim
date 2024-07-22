@@ -2,5 +2,10 @@ lazy-lock.json
 .luarc.json
 .neoconf.json
 lazyvim.json
+.aitool
 .colorscheme
+.hardtime
+.leader
+.useimage
+.wakatime
 debug/
