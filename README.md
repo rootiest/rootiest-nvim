@@ -34,6 +34,9 @@ The rootiest neovim configuration you will ever see!
 
 ## Installation
 
+This is the traditional method to install a NeoVim configuration.  
+You will need to manually install NeoVim if you do not already have it.
+
 1. Install [NeoVim](https://github.com/neovim/neovim/blob/master/INSTALL.md) (0.9+)
 2. Install Pre-requisites
 
@@ -77,6 +80,22 @@ The rootiest neovim configuration you will ever see!
    ```
 
 5. Enjoy! 🎉
+
+## Alternative Install
+
+This is a more automatic method to install the Rootiest NeoVim configuration.  
+This method will automatically download the NeoVim AppImage if required.  
+It will then automatically install the Rootiest NeoVim configuration.
+
+1. Run the install script
+
+   ```bash
+   curl -sL https://raw.githubusercontent.com/rootiest/rootiest-nvim/main/install.sh | bash
+   ```
+
+2. Install pre-requisites
+
+3. Enjoy! 🎉
 
 ## Options
 
