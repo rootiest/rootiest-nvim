@@ -54,6 +54,7 @@ wk.add({
     icon = { icon = "", color = "orange" },
   },
   {
+    mode = { "n", "x" },
     "<leader>gnc",
     "<cmd>GistCreate<cr>",
     desc = "Create Gist",
@@ -210,6 +211,14 @@ wk.add({
     "yo",
     "<cmd>YankLine<cr>",
     desc = "Yank Line-text",
+  },
+  { -- Toggle Hardmode with Hints
+    "<leader>h",
+    rhs = function()
+      vim.cmd("Hardtime toggle")
+      require("precognition").toggle()
+    end,
+    desc = "Toggle Hardmode",
   },
 })
 
