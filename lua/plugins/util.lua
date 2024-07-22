@@ -121,14 +121,34 @@ return {
   { -- Hardtime
     "m4xshen/hardtime.nvim",
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    opts = {},
-    cond = function()
+    opts = function()
       if
         vim.fn.readfile(vim.fn.stdpath("config") .. "/.hardtime")[1]
         == "true"
       then
-        return true
+        return { enabled = true }
+      else
+        return { enabled = false }
       end
     end,
+  },
+  { -- GitLinker
+    "linrongbin16/gitlinker.nvim",
+    cmd = "GitLink",
+    opts = {},
+    keys = {
+      {
+        "<leader>gy",
+        "<cmd>GitLink<cr>",
+        mode = { "n", "v" },
+        desc = "Yank git link",
+      },
+      {
+        "<leader>gY",
+        "<cmd>GitLink!<cr>",
+        mode = { "n", "v" },
+        desc = "Open git link",
+      },
+    },
   },
 }
