@@ -12,6 +12,9 @@ return {
   { -- Illuminate
     import = "lazyvim.plugins.extras.editor.illuminate",
   },
+  { -- Leap
+    import = "lazyvim.plugins.extras.editor.leap",
+  },
   { -- Outline
     import = "lazyvim.plugins.extras.editor.outline",
   },
