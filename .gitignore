@@ -3,3 +3,9 @@ lazy-lock.json
 .neoconf.json
 lazyvim.json
 debug/
+.aitool
+.colorscheme
+.hardtime
+.leader
+.useimage
+.wakatime
