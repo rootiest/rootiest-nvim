@@ -67,7 +67,11 @@ return {
       require("mini.align").setup()
     end,
   },
-  { -- Emoji completion
+  { -- Alternate
+    "ton/vim-alternate",
+    ft = { "cpp", "h", "hpp", "c" },
+  },
+  { -- Completion
     "hrsh7th/nvim-cmp",
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
@@ -122,9 +126,6 @@ return {
     opts = {
       yank_substituted_text = false,
       preserve_cursor_position = true,
-      highlight_substituted_text = {
-        enabled = false,
-      },
     },
   },
 }

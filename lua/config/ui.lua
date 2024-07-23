@@ -11,7 +11,7 @@ return {
   },
   { -- Transparent
     "xiyaowong/transparent.nvim",
-    event = "VeryLazy",
+    lazy = true,
     config = true,
   },
   { -- Auto Dark Mode
@@ -116,9 +116,5 @@ return {
       end
       require("hlchunk").setup(common_config)
     end,
-  },
-  { -- Alternate
-    "ton/vim-alternate",
-    event = "VeryLazy",
   },
 }

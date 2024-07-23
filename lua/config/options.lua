@@ -18,6 +18,11 @@ STORED_THEME = vim.fn.readfile(vim.fn.stdpath("config") .. "/.colorscheme")[1]
 vim.g.loaded_perl_provider = 0
 vim.g.lazyvim_python_lsp = "basedpyright"
 
+-- ----------------------------------- FOLDS --------------------------------------
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldlevelstart = 99 -- load buffers with folds open
+
 -- ------------------------------- CLIENT APPS ---------------------------------
 if vim.g.neovide then
   -- ----------------------- Neovide -------------------------

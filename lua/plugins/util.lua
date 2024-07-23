@@ -32,6 +32,7 @@ return {
   },
   { -- Link following
     "chrishrb/gx.nvim",
+    event = "VeryLazy",
     cmd = { "Browse" },
     init = function()
       vim.g.netrw_nogx = 1
@@ -41,21 +42,23 @@ return {
   },
   { -- Auto-save
     "Pocco81/auto-save.nvim",
+    event = "InsertEnter",
     config = function()
       require("auto-save").setup({})
     end,
   },
   { -- User is bored
     "mikesmithgh/ugbi",
-    event = "VeryLazy",
+    event = "InsertEnter",
   },
   { -- Ripgrep substitute
     "chrisgrieser/nvim-rip-substitute",
+    event = "InsertEnter",
     cmd = "RipSubstitute",
   },
   { -- Gist Tools
     "Rawnly/gist.nvim",
-    event = "VeryLazy",
+    event = "InsertEnter",
     cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
     config = true,
   },
@@ -114,6 +117,7 @@ return {
   },
   { -- Thanks/github-stars
     "jsongerber/thanks.nvim",
+    event = "VeryLazy",
     config = {
       star_on_install = false,
     },
@@ -134,6 +138,7 @@ return {
   },
   { -- GitLinker
     "linrongbin16/gitlinker.nvim",
+    lazy = true,
     cmd = "GitLink",
     opts = {},
     keys = {

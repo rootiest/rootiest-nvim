@@ -5,9 +5,8 @@
 -- -------------------------------- Commands -----------------------------------
 -- Make :Q close all of the buffers
 vim.api.nvim_create_user_command("Q", function()
-  vim.cmd.bdelete()
   vim.cmd.qall()
-end, { force = true })
+end, { force = true, desc = "Close all buffers" })
 
 -- Yank line without leading/trailing whitespace
 vim.api.nvim_create_user_command("YankLine", function()
@@ -22,6 +21,12 @@ vim.api.nvim_create_user_command("RestoreColorscheme", function()
   )
 end, { force = true })
 
+-- Load/start Remote
+vim.api.nvim_create_user_command("LoadRemote", function()
+  require("remote-nvim").setup()
+  vim.cmd("RemoteStart")
+end, { force = true, desc = "Load/start Remote" })
+
 -- ------------------------------ Auto-Commands --------------------------------
 -- Autosave Colorscheme
 -- When the colorscheme changes, store the name in .colorscheme
@@ -33,6 +38,30 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       { vim.g.colors_name },
       vim.fn.stdpath("config") .. "/.colorscheme"
     )
+  end,
+})
+
+-- Define cursor color/icon based on mode
+local autocmd = vim.api.nvim_create_autocmd
+autocmd({ "ModeChanged", "BufEnter" }, {
+  callback = function()
+    local current_mode = vim.fn.mode()
+    if current_mode == "n" then
+      vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#8aa8f3" })
+      vim.fn.sign_define("smoothcursor", { text = "" })
+    elseif current_mode == "v" then
+      vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#d298eb" })
+      vim.fn.sign_define("smoothcursor", { text = "" })
+    elseif current_mode == "V" then
+      vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#d298eb" })
+      vim.fn.sign_define("smoothcursor", { text = "" })
+    elseif current_mode == "�" then
+      vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#bf616a" })
+      vim.fn.sign_define("smoothcursor", { text = "" })
+    elseif current_mode == "i" then
+      vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#9bd482" })
+      vim.fn.sign_define("smoothcursor", { text = "" })
+    end
   end,
 })
 

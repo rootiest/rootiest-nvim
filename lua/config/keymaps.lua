@@ -45,7 +45,9 @@ wk.add({
   },
   {
     "<leader>gS",
-    "<cmd>LazyGit<cr>",
+    rhs = function()
+      require("lazygit").lazygit()
+    end,
     desc = "LazyGit",
   },
   {
@@ -196,7 +198,9 @@ wk.add({
   },
   {
     "<leader>wt",
-    "<cmd>TransparentToggle<cr>",
+    rhs = function()
+      require("transparent").toggle()
+    end,
     desc = "Toggle Transparency",
   },
   {
@@ -220,7 +224,21 @@ wk.add({
     end,
     desc = "Toggle Hardmode",
   },
+  { -- Toggle ZenMode
+    "<leader>z",
+    rhs = function()
+      require("zen-mode").toggle()
+    end,
+    desc = "Toggle ZenMode",
+  },
 })
+
+-- Substitute
+-- Define substitue mappings
+vim.keymap.set("n", "x", require("substitute").operator, { noremap = true })
+vim.keymap.set("n", "xx", require("substitute").line, { noremap = true })
+vim.keymap.set("n", "X", require("substitute").eol, { noremap = true })
+vim.keymap.set("x", "x", require("substitute").visual, { noremap = true })
 
 -- ---------------------------- Spell Correction -------------------------------
 require("config.spellcheck")

@@ -12,14 +12,50 @@ return {
   { -- Illuminate
     import = "lazyvim.plugins.extras.editor.illuminate",
   },
-  { -- Leap
-    import = "lazyvim.plugins.extras.editor.leap",
+  {
+    "folke/flash.nvim",
+    opts = {
+      modes = {
+        char = {
+          jump_labels = true,
+        },
+      },
+    },
   },
   { -- Outline
     import = "lazyvim.plugins.extras.editor.outline",
   },
   { -- Telescope
     import = "lazyvim.plugins.extras.editor.telescope",
+  },
+  { -- FoldNav
+    "domharries/foldnav.nvim",
+    keys = {
+      {
+        "<C-h>",
+        function()
+          require("foldnav").goto_start()
+        end,
+      },
+      {
+        "<C-j>",
+        function()
+          require("foldnav").goto_next()
+        end,
+      },
+      {
+        "<C-k>",
+        function()
+          require("foldnav").goto_prev_start()
+        end,
+      },
+      {
+        "<C-l>",
+        function()
+          require("foldnav").goto_end()
+        end,
+      },
+    },
   },
   { -- Which-Key
     "folke/which-key.nvim",
@@ -69,7 +105,7 @@ return {
   },
   { -- Remote-nvim
     "amitds1997/remote-nvim.nvim",
-    event = "VeryLazy",
+    lazy = true,
     version = "*", -- Pin to GitHub releases
     dependencies = {
       "nvim-lua/plenary.nvim", -- For standard functions
@@ -80,7 +116,7 @@ return {
   },
   { -- DeadColumn
     "Bekaboo/deadcolumn.nvim",
-    event = "VeryLazy",
+    event = "InsertEnter",
     config = function()
       require("deadcolumn").setup({
         scope = "line", ---@type string|fun(): integer
@@ -109,11 +145,13 @@ return {
   },
   { -- Precognition
     "tris203/precognition.nvim",
-    event = "VeryLazy",
+    lazy = true,
+    opts = {},
   },
   { -- Zen Mode
     "folke/zen-mode.nvim",
-    event = "VeryLazy",
+    --event = "VeryLazy",
+    lazy = true,
     opts = {},
   },
   { -- SmoothCursor
@@ -127,7 +165,7 @@ return {
         texthl = "SmoothCursor",
         fancy = {
           enable = true, -- enable fancy mode
-          head = { cursor = "", texthl = nil, linehl = nil },
+          head = { cursor = "" },
           body = {},
           tail = { false }, -- false to disable fancy tail
         },
@@ -137,7 +175,6 @@ return {
             texthl = {
               "SmoothCursor",
             },
-            linehl = nil, -- No line highlight for the head
           },
           body = {
             length = 6, -- Specifies the length of the cursor body
@@ -147,7 +184,6 @@ return {
             },
           },
           tail = {
-            cursor = nil,
             texthl = {
               "SmoothCursor",
             },
@@ -156,7 +192,7 @@ return {
         },
         autostart = true, -- Automatically start SmoothCursor
         always_redraw = true, -- Redraw the screen on each update
-        flyin_effect = nil, -- Choose "bottom" or "top" for flying effect
+        flyin_effect = "bottom", -- Choose "bottom" or "top" for flying effect
         speed = 25, -- Max speed is 100 to stick with your current position
         intervals = 35, -- Update intervals in milliseconds
         priority = 10, -- Set marker priority
@@ -164,32 +200,6 @@ return {
         threshold = 3, -- Animate only if cursor moves more than this many lines
         max_threshold = 2000, -- If you move more than this many lines, don't animate (if `nil`, deactivate check)
         disable_float_win = false, -- Disable in floating windows
-        enabled_filetypes = nil, -- Enable only for specific file types, e.g., { "lua", "vim" }
-        disabled_filetypes = nil, -- Disable for these file types
-        show_last_positions = nil,
-      })
-      -- Define cursor color/icon based on mode
-      local autocmd = vim.api.nvim_create_autocmd
-      autocmd({ "ModeChanged", "BufEnter" }, {
-        callback = function()
-          local current_mode = vim.fn.mode()
-          if current_mode == "n" then
-            vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#8aa8f3" })
-            vim.fn.sign_define("smoothcursor", { text = "" })
-          elseif current_mode == "v" then
-            vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#d298eb" })
-            vim.fn.sign_define("smoothcursor", { text = "" })
-          elseif current_mode == "V" then
-            vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#d298eb" })
-            vim.fn.sign_define("smoothcursor", { text = "" })
-          elseif current_mode == "�" then
-            vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#bf616a" })
-            vim.fn.sign_define("smoothcursor", { text = "" })
-          elseif current_mode == "i" then
-            vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#9bd482" })
-            vim.fn.sign_define("smoothcursor", { text = "" })
-          end
-        end,
       })
       -- Define last cursor position icon
       vim.fn.sign_define("smoothcursor_n", { text = "" })
