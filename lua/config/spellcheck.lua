@@ -2,7 +2,7 @@
 -- ------------------------------- SpellCheck ----------------------------------
 -- -----------------------------------------------------------------------------
 
--- Define dictionary corrections
+-- Define dictionary autocorrections
 vim.keymap.set("ia", "teh", "the")
 vim.keymap.set("ia", "accomodate", "accommodate")
 vim.keymap.set("ia", "acommodate", "accommodate")
