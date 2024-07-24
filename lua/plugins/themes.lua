@@ -10,6 +10,7 @@ return {
   { -- Catppuccin
     "catppuccin/nvim",
     lazy = false, -- Override
+    opts = { integrations = { grug_far = true } },
   },
   { -- Ayu
     "Shatur/neovim-ayu",
@@ -53,5 +54,9 @@ return {
   },
   { -- Umbra
     "LZDQ/umbra.nvim",
+  },
+  { -- Zenbones
+    "zenbones-theme/zenbones.nvim",
+    dependencies = { "rktjmp/lush.nvim" },
   },
 }
