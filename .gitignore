@@ -9,3 +9,4 @@ debug/
 .leader
 .useimage
 .wakatime
+.ignore-deps

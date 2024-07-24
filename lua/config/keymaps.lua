@@ -3,6 +3,13 @@
 -- -----------------------------------------------------------------------------
 
 -- --------------------------------- Keymaps -----------------------------------
+
+local substitute_loaded, substitute = pcall(require, "substitute")
+local codesnap_loaded = pcall(require, "codesnap")
+local icon_picker_loaded = pcall(require, "icon-picker")
+local gist_loaded = pcall(require, "gist")
+local rootiest = require("config.rootiest")
+
 local wk = require("which-key")
 wk.add({
   {
@@ -13,35 +20,52 @@ wk.add({
   {
     "<leader>gt",
     rhs = function()
-      local Terminal = require("toggleterm.terminal").Terminal
-      local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
-      lazygit:toggle()
+      rootiest.toggle_lazygit_term()
     end,
     desc = "LazyGit Terminal",
   },
+  -- Icon Picker group
   {
-    "<leader>I",
+    mode = "n",
+    lhs = "<leader>I",
     group = "IconPicker",
     icon = { icon = "󰥸", color = "orange" },
+    cond = function()
+      return icon_picker_loaded
+    end,
   },
+  -- Pick Icon
   {
-    "<Leader>Ii",
-    "<cmd>IconPickerNormal<cr>",
+    mode = "n",
+    lhs = "<leader>Ii",
+    rhs = "<cmd>IconPickerNormal<cr>",
     desc = "Pick Icon",
     group = "IconPicker",
+    cond = function()
+      return icon_picker_loaded
+    end,
   },
+  -- Yank Icon
   {
-    "<Leader>Iy",
-    "<cmd>IconPickerYank<cr>",
+    mode = "n",
+    lhs = "<leader>Iy",
+    rhs = "<cmd>IconPickerYank<cr>",
     desc = "Yank Icon",
     group = "IconPicker",
+    cond = function()
+      return icon_picker_loaded
+    end,
   },
+  -- Insert Icon in insert mode
   {
     mode = "i",
-    "<C-i>",
-    "<cmd>IconPickerInsert<cr>",
+    lhs = "<C-i>",
+    rhs = "<cmd>IconPickerInsert<cr>",
     desc = "Insert Icon",
     group = "IconPicker",
+    cond = function()
+      return icon_picker_loaded
+    end,
   },
   {
     "<leader>gS",
@@ -50,21 +74,35 @@ wk.add({
     end,
     desc = "LazyGit",
   },
+  -- Gists group
   {
-    "<leader>gn",
+    mode = "n",
+    lhs = "<leader>gn",
     group = "Gists",
     icon = { icon = "", color = "orange" },
+    cond = function()
+      return gist_loaded
+    end,
   },
+  -- Create Gist
   {
     mode = { "n", "x" },
-    "<leader>gnc",
-    "<cmd>GistCreate<cr>",
+    lhs = "<leader>gnc",
+    rhs = "<cmd>GistCreate<cr>",
     desc = "Create Gist",
+    cond = function()
+      return gist_loaded
+    end,
   },
+  -- Find Gists
   {
-    "<leader>gnf",
-    "<cmd>GistList<cr>",
+    mode = "n",
+    lhs = "<leader>gnf",
+    rhs = "<cmd>GistList<cr>",
     desc = "Find Gists",
+    cond = function()
+      return gist_loaded
+    end,
   },
   {
     "<leader>l",
@@ -85,29 +123,45 @@ wk.add({
     group = "MiniMap",
     icon = { icon = "", color = "yellow" },
   },
+  -- Save selected code snapshot into clipboard
   {
-    "<leader>cy",
-    "<cmd>CodeSnap<cr>",
     mode = "x",
+    lhs = "<leader>cy",
+    rhs = "<cmd>CodeSnap<cr>",
     desc = "Save selected code snapshot into clipboard",
+    cond = function()
+      return codesnap_loaded
+    end,
   },
+  -- Save selected code snapshot in ~/Pictures
   {
-    "<leader>cs",
-    "<cmd>CodeSnapSave<cr>",
     mode = "x",
+    lhs = "<leader>cs",
+    rhs = "<cmd>CodeSnapSave<cr>",
     desc = "Save selected code snapshot in ~/Pictures",
+    cond = function()
+      return codesnap_loaded
+    end,
   },
+  -- Highlight and snapshot selected code into clipboard
   {
-    "<leader>ch",
-    "<cmd>CodeSnapHighlight<cr>",
     mode = "x",
+    lhs = "<leader>ch",
+    rhs = "<cmd>CodeSnapHighlight<cr>",
     desc = "Highlight and snapshot selected code into clipboard",
+    cond = function()
+      return codesnap_loaded
+    end,
   },
+  -- Save ASCII code snapshot into clipboard
   {
-    "<leader>ci",
-    "<cmd>CodeSnapASCII<cr>",
     mode = "x",
+    lhs = "<leader>ci",
+    rhs = "<cmd>CodeSnapASCII<cr>",
     desc = "Save ASCII code snapshot into clipboard",
+    cond = function()
+      return codesnap_loaded
+    end,
   },
   {
     "gx",
@@ -135,9 +189,7 @@ wk.add({
     end,
     desc = "KittyNavigateLeft",
     cond = function() -- Using Kitty
-      local term = os.getenv("TERM") or ""
-      local kit = string.find(term, "kitty")
-      return kit ~= nil
+      return rootiest.using_kitty()
     end,
   },
   {
@@ -147,9 +199,7 @@ wk.add({
     end,
     desc = "KittyNavigateDown",
     cond = function() -- Using Kitty
-      local term = os.getenv("TERM") or ""
-      local kit = string.find(term, "kitty")
-      return kit ~= nil
+      return rootiest.using_kitty()
     end,
   },
   {
@@ -159,9 +209,7 @@ wk.add({
     end,
     desc = "KittyNavigateUp",
     cond = function() -- Using Kitty
-      local term = os.getenv("TERM") or ""
-      local kit = string.find(term, "kitty")
-      return kit ~= nil
+      return rootiest.using_kitty()
     end,
   },
   {
@@ -171,15 +219,13 @@ wk.add({
     end,
     desc = "KittyNavigateRight",
     cond = function() -- Using Kitty
-      local term = os.getenv("TERM") or ""
-      local kit = string.find(term, "kitty")
-      return kit ~= nil
+      return rootiest.using_kitty()
     end,
   },
   {
     "zk",
     rhs = function()
-      require("precognition").toggle()
+      rootiest.toggle_precognition()
     end,
     desc = "Toggle Precognition",
   },
@@ -213,14 +259,15 @@ wk.add({
   },
   {
     "yo",
-    "<cmd>YankLine<cr>",
+    rhs = function()
+      rootiest.yank_line()
+    end,
     desc = "Yank Line-text",
   },
   { -- Toggle Hardmode with Hints
     "<leader>h",
     rhs = function()
-      vim.cmd("Hardtime toggle")
-      require("precognition").toggle()
+      rootiest.toggle_hardmode()
     end,
     desc = "Toggle Hardmode",
   },
@@ -231,14 +278,55 @@ wk.add({
     end,
     desc = "Toggle ZenMode",
   },
+  -- Substitute operator in normal mode
+  {
+    mode = "n",
+    lhs = "x",
+    rhs = function()
+      substitute.operator()
+    end,
+    desc = "Substitute operator",
+    cond = function()
+      return substitute_loaded
+    end,
+  },
+  -- Substitute line in normal mode
+  {
+    mode = "n",
+    lhs = "xx",
+    rhs = function()
+      substitute.line()
+    end,
+    desc = "Substitute line",
+    cond = function()
+      return substitute_loaded
+    end,
+  },
+  -- Substitute end of line in normal mode
+  {
+    mode = "n",
+    lhs = "X",
+    rhs = function()
+      substitute.eol()
+    end,
+    desc = "Substitute end of line",
+    cond = function()
+      return substitute_loaded
+    end,
+  },
+  -- Substitute visual selection in visual mode
+  {
+    mode = "x",
+    lhs = "x",
+    rhs = function()
+      substitute.visual()
+    end,
+    desc = "Substitute visual selection",
+    cond = function()
+      return substitute_loaded
+    end,
+  },
 })
-
--- Substitute
--- Define substitue mappings
-vim.keymap.set("n", "x", require("substitute").operator, { noremap = true })
-vim.keymap.set("n", "xx", require("substitute").line, { noremap = true })
-vim.keymap.set("n", "X", require("substitute").eol, { noremap = true })
-vim.keymap.set("x", "x", require("substitute").visual, { noremap = true })
 
 -- ---------------------------- Spell Correction -------------------------------
 require("config.spellcheck")

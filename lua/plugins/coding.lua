@@ -1,39 +1,25 @@
 -- -----------------------------------------------------------------------------
 -- --------------------------------- CODING ------------------------------------
 -- -----------------------------------------------------------------------------
+local rootiest = require("config.rootiest")
 
 return {
   { -- Codeium
     import = "lazyvim.plugins.extras.coding.codeium",
     cond = function()
-      if
-        vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
-        == "codeium"
-      then
-        return true
-      end
+      return rootiest.using_aitool("codeium")
     end,
   },
   { -- Copilot
     import = "lazyvim.plugins.extras.coding.copilot",
     cond = function()
-      if
-        vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
-        == "copilot"
-      then
-        return true
-      end
+      return rootiest.using_aitool("copilot")
     end,
   },
   { -- Tabnine
     import = "lazyvim.plugins.extras.coding.tabnine",
     cond = function()
-      if
-        vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
-        == "tabnine"
-      then
-        return true
-      end
+      return rootiest.using_aitool("tabnine")
     end,
   },
   { -- Minuet-AI
@@ -43,12 +29,7 @@ return {
       require("minuet").setup({ provider = "openai" })
     end,
     cond = function()
-      if
-        vim.fn.readfile(vim.fn.stdpath("config") .. "/.aitool")[1]
-        == "minuet"
-      then
-        return true
-      end
+      return rootiest.using_aitool("minuet")
     end,
   },
   { -- Yanky

@@ -1,8 +1,16 @@
 -- -----------------------------------------------------------------------------
 -- --------------------------------- EDITOR ------------------------------------
 -- -----------------------------------------------------------------------------
+local rootiest = require("config.rootiest")
 
 return {
+  { -- Edgy
+    import = "lazyvim.plugins.extras.ui.edgy",
+  },
+  { -- Mini-animate
+    import = "lazyvim.plugins.extras.ui.mini-animate",
+  },
+
   { -- Aerial
     import = "lazyvim.plugins.extras.editor.aerial",
   },
@@ -159,48 +167,8 @@ return {
     event = "InsertEnter",
     lazy = true,
     config = function()
-      require("smoothcursor").setup({
-        type = "default",
-        cursor = "",
-        texthl = "SmoothCursor",
-        fancy = {
-          enable = true, -- enable fancy mode
-          head = { cursor = "" },
-          body = {},
-          tail = { false }, -- false to disable fancy tail
-        },
-        matrix = { -- Loaded when 'type' is set to "matrix"
-          head = {
-            cursor = require("smoothcursor.matrix_chars"),
-            texthl = {
-              "SmoothCursor",
-            },
-          },
-          body = {
-            length = 6, -- Specifies the length of the cursor body
-            cursor = require("smoothcursor.matrix_chars"),
-            texthl = {
-              "SmoothCursorGreen",
-            },
-          },
-          tail = {
-            texthl = {
-              "SmoothCursor",
-            },
-          },
-          unstop = false,
-        },
-        autostart = true, -- Automatically start SmoothCursor
-        always_redraw = true, -- Redraw the screen on each update
-        flyin_effect = "bottom", -- Choose "bottom" or "top" for flying effect
-        speed = 25, -- Max speed is 100 to stick with your current position
-        intervals = 35, -- Update intervals in milliseconds
-        priority = 10, -- Set marker priority
-        timeout = 3000, -- Timeout for animations in milliseconds
-        threshold = 3, -- Animate only if cursor moves more than this many lines
-        max_threshold = 2000, -- If you move more than this many lines, don't animate (if `nil`, deactivate check)
-        disable_float_win = false, -- Disable in floating windows
-      })
+      ---@diagnostic disable-next-line: missing-parameter
+      require("smoothcursor").setup()
       -- Define last cursor position icon
       vim.fn.sign_define("smoothcursor_n", { text = "" })
       vim.fn.sign_define("smoothcursor_v", { text = " " })
@@ -208,6 +176,86 @@ return {
       vim.fn.sign_define("smoothcursor_i", { text = "" })
       vim.fn.sign_define("smoothcursor_�", { text = "" })
       vim.fn.sign_define("smoothcursor_R", { text = "󰊄" })
+    end,
+  },
+  { -- Hlchunk
+    "shellRaining/hlchunk.nvim",
+    event = "BufEnter",
+    config = function()
+      local cb = function()
+        if vim.g.colors_name == "tokyonight" then
+          return "#806d9c"
+        elseif vim.g.colors_name:find("catppuccin") then
+          local catpalette = require("catppuccin.palettes").get_palette()
+          return catpalette.teal
+        elseif vim.g.colors_name == "monochrome" or "github_dark" then
+          return "#CCCCCC"
+        elseif vim.g.colors_name == "gruvbox" then
+          return "#a9b665"
+        elseif vim.g.colors_name == "dracula" or "eldritch" then
+          return "#50fa7b"
+        elseif vim.g.colors_name == "onedark" or "nightfox" then
+          return "#98C379"
+        elseif vim.g.colors_name == "nord" then
+          return "#81A1C1"
+        elseif vim.g.colors_name == "kanagawa" then
+          return "#73C8AD"
+        elseif vim.g.colors_name == "everforest" then
+          return "#8FBCBB"
+        elseif vim.g.colors_name == "github_light" or "paper" then
+          return "#3f3f5a"
+        elseif vim.g.colors_name == "neofusion" then
+          return "#420ADD"
+        else
+          return "#7581FF"
+        end
+      end
+      local common_config = {
+        chunk = {
+          style = {
+            { fg = cb },
+          },
+          enable = true,
+        },
+        indent = {
+          enable = true,
+          use_treesitter = true,
+          chars = {
+            "․․",
+            "⁚⁚",
+            "⁖⁖",
+            "⁘⁘",
+            "⁙⁙",
+            "󱗿󱗿",
+            "󱗽󱗽",
+            "󱗼󱗼",
+          },
+        },
+      }
+      if vim.o.background == "dark" then
+        common_config.indent.style = {
+          { fg = "#434437" },
+          { fg = "#2f4440" },
+          { fg = "#433054" },
+          { fg = "#284251" },
+          { fg = "#3e4451" },
+          { fg = "#565c64" },
+          { fg = "#6b737f" },
+          { fg = "#848a91" },
+        }
+      else
+        common_config.indent.style = {
+          { fg = "#d0b0b0" },
+          { fg = "#b0b0d0" },
+          { fg = "#b0d0b0" },
+          { fg = "#a0a0a0" },
+          { fg = "#c0c0c0" },
+          { fg = "#e0e0e0" },
+          { fg = "#f0f0f0" },
+          { fg = "#ffffff" },
+        }
+      end
+      require("hlchunk").setup(common_config)
     end,
   },
 }

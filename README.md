@@ -1,4 +1,9 @@
+
 # Rootiest NeoVim Configuration
+
+<a href="https://dotfyle.com/rootiest/rootiest-nvim"><img src="https://dotfyle.com/rootiest/rootiest-nvim/badges/plugins?style=flat" /></a>
+<a href="https://dotfyle.com/rootiest/rootiest-nvim"><img src="https://dotfyle.com/rootiest/rootiest-nvim/badges/leaderkey?style=flat" /></a>
+<a href="https://dotfyle.com/rootiest/rootiest-nvim"><img src="https://dotfyle.com/rootiest/rootiest-nvim/badges/plugin-manager?style=flat" /></a>
 
 ```none
 ██████╗  ██████╗  ██████╗ ████████╗██╗███████╗███████╗████████╗
@@ -32,70 +37,107 @@ lllllllc        ,loooooool,:ol       |VVVVVVV//##/+/#/+/#/'/#/
 
 The rootiest neovim configuration you will ever see!
 
-## Installation
+## Pre-requisites
 
-This is the traditional method to install a NeoVim configuration.  
-You will need to manually install NeoVim if you do not already have it.
+> Note:
+> While NeoVim may run without these prerequisites,
+> functionality will be limited.  
+> For the full experience, it is recommended to install the pre-requisites.
+
+### Required
+
+- [git](https://git-scm.com/) -
+       Version control system
+- [luarocks](https://luarocks.org/) -
+       Lua package manager
+- [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/) -
+      Font with extended glyphs
+
+Your terminal/client application ***must*** have a Nerd Font installed
+and support the Nerd Font glyphs.
+
+Kitty or NeoVide are recommended.
+
+### Optional
+
+- [ripgrep](https://github.com/BurntSushi/ripgrep) -
+       A faster grep
+- [fzf](https://github.com/junegunn/fzf) -
+       A command-line fuzzy finder
+- [fd](https://github.com/sharkdp/fd) -
+       A simple, fast and user-friendly alternative to 'find'
+- [lazygit](https://github.com/jesseduffield/lazygit) -
+       A simple terminal UI for git commands
+- [kitty](https://sw.kovidgoyal.net/kitty/) -
+       A fast, feature-rich, GPU based terminal emulator
+- [NeoVide](https://neovide.dev/) -
+       A fast, feature-rich, and modern NeoVim GUI
+- [fish](https://fishshell.com/) -
+       A smart and user-friendly command line shell
+
+## Installation
 
 1. Install [NeoVim](https://github.com/neovim/neovim/blob/master/INSTALL.md) (0.9+)
 2. Install Pre-requisites
-
-   - Required
-
-     - [git](https://git-scm.com/) -
-       Version control system
-     - [luarocks](https://luarocks.org/) -
-       Lua package manager
-     - A terminal that has
-       [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/) support
-
-   - Optional (but recommended for the full experience)
-     - [ripgrep](https://github.com/BurntSushi/ripgrep) -
-       A faster grep
-     - [fzf](https://github.com/junegunn/fzf) -
-       A command-line fuzzy finder
-     - [fd](https://github.com/sharkdp/fd) -
-       A simple, fast and user-friendly alternative to 'find'
-     - [lazygit](https://github.com/jesseduffield/lazygit) -
-       A simple terminal UI for git commands
-     - [tree-sitter](https://github.com/tree-sitter/tree-sitter/) -
-       A parser generator tool and an incremental parsing library
-     - [kitty](https://sw.kovidgoyal.net/kitty/) -
-       A fast, feature-rich, GPU based terminal emulator
-     - [NeoVide](https://neovide.dev/) -
-       A fast, feature-rich, and modern NeoVim GUI
-     - [fish](https://fishshell.com/) -
-       A smart and user-friendly command line shell
-
 3. Backup your current nvim configuration (if you have one)
 
-   ```bash
+   ```sh
    mv ~/.config/nvim ~/.config/nvim.bak
    ```
 
 4. Clone the repository
 
-   ```bash
-   git clone https://github.com/rootiest/rootiest-nvim.git ~/.config/nvim
+   ```sh
+   git clone git@github.com:rootiest/rootiest-nvim ~/.config/nvim
    ```
 
 5. Enjoy! 🎉
 
-## Alternative Install
+## Keep your current nvim configuration
 
-This is a more automatic method to install the Rootiest NeoVim configuration.  
-This method will automatically download the NeoVim AppImage if required.  
-It will then automatically install the Rootiest NeoVim configuration.
+This will download and open the Rootiest NeoVim configuration  
+without replacing your current NeoVim configuration.
 
-1. Run the install script
+1. Clone the repository
 
-   ```bash
-   curl -sL https://raw.githubusercontent.com/rootiest/rootiest-nvim/main/install.sh | bash
-   ```
+    ```sh
+    git clone git@github.com:rootiest/rootiest-nvim ~/.config/rootiest/rootiest-nvim
+    ```
 
-2. Install pre-requisites
+2. Open Neovim with this config:
+
+    ```sh
+    NVIM_APPNAME=rootiest/rootiest-nvim/ nvim
+    ```
 
 3. Enjoy! 🎉
+
+4. Fall in love and see [Installation](#installation)
+
+## Features
+
+- Comfortable keybindings and IDE-like features
+- Designed to be quick to load and easy to use without compromising on features
+- Leans heavily on lazy and luarocks for plugin management and lazy-loading
+- Catppuccin theme is default but a selection of others are also included
+- Automatic light/dark mode switching based on system theme
+- Extensive special configurations for kitty, including theme matching
+- Kitty scrollback and keybinding support
+- Special configuration for neovide
+- Detects terminal client and adjusts accordingly
+- ToggleTerm, fzf, telescope, neotree, etc. for quick access to files and terminal
+- Many UI elements to enhance the experience
+- LSP support for many languages and automatic setup for many more
+- Remotely spawn a NeoVim instance over ssh, in a container, or from a git repo
+- Dashboard logo adjusts to the size of the window
+- Warnings for missing dependencies
+- User-selected AI completion tool:
+  `codeium`, `copilot`, `tabnine`, `minuet`, or `none`
+- WakaTime integration: Tracking time spent on code
+- Hardtime integration: Trains better use of vim motions and shortcuts
+- Colorscheme is remembered between sessions
+- Lean and fast while providing a complete professional experience
+- Achieves sub-75ms startup time on my laptop
 
 ## Options
 
@@ -126,29 +168,9 @@ used to configure user options.
    This file defines whether the Hardtime plugin is enabled.  
    The options are `true` or `false`.
 
-## Features
-
-- Comfortable keybindings and IDE-like features
-- Designed to be quick to load and easy to use without compromising on features
-- Leans heavily on lazy and luarocks for plugin management and lazy-loading
-- Catppuccin theme is default but a selection of others are also included
-- Automatic light/dark mode switching based on system theme
-- Extensive special configurations for kitty, including theme matching
-- Kitty scrollback and keybinding support
-- Special configuration for neovide
-- Detects terminal client and adjusts accordingly
-- ToggleTerm, fzf, telescope, neotree, etc. for quick access to files and terminal
-- Many UI elements to enhance the experience
-- LSP support for many languages and automatic setup for many more
-- Remotely spawn a NeoVim instance over ssh, in a container, or from a git repo
-- Dashboard logo adjusts to the size of the window
-- User-selected AI completion tool:
-  `codeium`, `copilot`, `tabnine`, `minuet`, or `none`
-- WakaTime integration: Tracking time spent on code
-- Hardtime integration: Trains better use of vim motions and shortcuts
-- Colorscheme is remembered between sessions
-- Lean and fast while providing a complete professional experience
-- Achieves sub-75ms startup time on my laptop
+- `.ignore-deps` : **Disables dependency check**  
+   This file defines whether the dependency check is enabled.  
+   The options are `true` or `false`.
 
 ## Companion Tools
 

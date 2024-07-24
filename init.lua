@@ -51,7 +51,9 @@
 -- ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 --                       The rootiest NeoVim configuration!
 -- ---------------------------------- LAZY -------------------------------------
+-- Load Lazy package manager and plugins
 require("config.lazy")
 
--- ---------------------------------- USER -------------------------------------
-require("config.user")
+-- -------------------------------- ROOTIEST -----------------------------------
+-- Load the rootiest configuration
+require("config.rootiest").setup()
