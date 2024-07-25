@@ -96,7 +96,6 @@ return {
         local content = vim.fn.readfile(useimage_file)[1] or ""
         content = content:lower():gsub("%s+", "") -- convert to lowercase and remove whitespace
         local enable_values = { ["true"] = true, ["1"] = true, ["yes"] = true }
-
         if enable_values[content] then
           local wterm = os.getenv("TERM_PROGRAM")
           local kterm = os.getenv("TERM") or ""

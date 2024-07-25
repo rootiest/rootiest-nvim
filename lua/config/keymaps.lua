@@ -8,7 +8,7 @@ local substitute_loaded, substitute = pcall(require, "substitute")
 local codesnap_loaded = pcall(require, "codesnap")
 local icon_picker_loaded = pcall(require, "icon-picker")
 local gist_loaded = pcall(require, "gist")
-local rootiest = require("config.rootiest")
+local rootiest = require("rootiest")
 
 local wk = require("which-key")
 wk.add({
@@ -327,6 +327,3 @@ wk.add({
     end,
   },
 })
-
--- ---------------------------- Spell Correction -------------------------------
-require("config.spellcheck")

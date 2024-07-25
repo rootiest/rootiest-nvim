@@ -2,62 +2,106 @@
 -- -------------------------------- DASHBOARD ----------------------------------
 -- -----------------------------------------------------------------------------
 
-return { -- Dashboard
+return {
+  -- Dashboard
   "nvimdev/dashboard-nvim",
   opts = function()
-    if vim.fn.winheight(0) >= 80 and vim.fn.winwidth(0) >= 80 then
-      LOGO = table.concat(
-        vim.fn.readfile(vim.fn.stdpath("config") .. "/logo/rootiest.txt"),
-        "\n"
-      )
-    elseif vim.fn.winheight(0) >= 48 and vim.fn.winwidth(0) >= 48 then
-      LOGO = table.concat(
-        vim.fn.readfile(vim.fn.stdpath("config") .. "/logo/nvim.txt"),
-        "\n"
-      )
-    elseif vim.fn.winwidth(0) >= 100 then
-      LOGO = table.concat(
-        vim.fn.readfile(vim.fn.stdpath("config") .. "/logo/long.txt"),
-        "\n"
-      )
-    elseif vim.fn.winwidth(0) >= 80 then
-      LOGO = table.concat(
-        vim.fn.readfile(vim.fn.stdpath("config") .. "/logo/tall.txt"),
-        "\n"
-      )
-    elseif vim.fn.winwidth(0) >= 50 then
-      LOGO = table.concat(
-        vim.fn.readfile(vim.fn.stdpath("config") .. "/logo/small.txt"),
-        "\n"
-      )
+    local logo_path = vim.fn.stdpath("config") .. "/logo/"
+    local height, width = vim.fn.winheight(0), vim.fn.winwidth(0)
+    local logo_file
+
+    if height >= 80 and width >= 80 then
+      logo_file = "rootiest.txt"
+    elseif height >= 48 and width >= 48 then
+      logo_file = "nvim.txt"
+    elseif width >= 100 then
+      logo_file = "long.txt"
+    elseif width >= 80 then
+      logo_file = "tall.txt"
+    elseif width >= 50 then
+      logo_file = "small.txt"
     else
-      LOGO = table.concat(
-        vim.fn.readfile(vim.fn.stdpath("config") .. "/logo/tiny.txt"),
-        "\n"
-      )
+      logo_file = "tiny.txt"
     end
-    LOGO = "\n\n" .. LOGO .. "\n\n"
+
+    local logo_content = vim.fn.readfile(logo_path .. logo_file)
+    local LOGO = "\n\n" .. table.concat(logo_content, "\n") .. "\n\n"
+
     local opts = {
       theme = "doom",
-      hide = {
-        statusline = false,
-      },
+      hide = { statusline = false },
       config = {
         header = vim.split(LOGO, "\n"),
-          -- stylua: ignore
-          center = {
-            { action = 'lua LazyVim.pick()()',                           desc = " Find File",       icon = " ", key = "f" },
-            { action = "ene | startinsert",                              desc = " New File",        icon = " ", key = "n" },
-            { action = 'lua LazyVim.pick("oldfiles")()',                 desc = " Recent Files",    icon = " ", key = "r" },
-            { action = 'lua LazyVim.pick("live_grep")()',                desc = " Find Text",       icon = " ", key = "g" },
-            { action = "LazyGit",                                        desc = " LazyGit",         icon = " ", key = "G" },
-            { action = 'lua LazyVim.pick.config_files()()',              desc = " Config",          icon = " ", key = "c" },
-            { action = 'lua require("persistence").load()',              desc = " Restore Session", icon = " ", key = "s" },
-            { action = 'LoadRemote',                                    desc = " Remote Session",  icon = "󰢹 ", key = "S" },
-            { action = "LazyExtras",                                     desc = " Lazy Extras",     icon = " ", key = "x" },
-            { action = "Lazy",                                           desc = " Lazy",            icon = "󰒲 ", key = "l" },
-            { action = function() vim.api.nvim_input("<cmd>qa<cr>") end, desc = " Quit",            icon = " ", key = "q" },
+        center = {
+          {
+            action = "lua LazyVim.pick()()",
+            desc = " Find File",
+            icon = " ",
+            key = "f",
           },
+          {
+            action = "ene | startinsert",
+            desc = " New File",
+            icon = " ",
+            key = "n",
+          },
+          {
+            action = 'lua LazyVim.pick("oldfiles")()',
+            desc = " Recent Files",
+            icon = " ",
+            key = "r",
+          },
+          {
+            action = 'lua LazyVim.pick("live_grep")()',
+            desc = " Find Text",
+            icon = " ",
+            key = "g",
+          },
+          {
+            action = "LazyGit",
+            desc = " LazyGit",
+            icon = " ",
+            key = "G",
+          },
+          {
+            action = "lua LazyVim.pick.config_files()()",
+            desc = " Config",
+            icon = " ",
+            key = "c",
+          },
+          {
+            action = 'lua require("persistence").load()',
+            desc = " Restore Session",
+            icon = " ",
+            key = "s",
+          },
+          {
+            action = "LoadRemote",
+            desc = " Remote Session",
+            icon = "󰢹 ",
+            key = "S",
+          },
+          {
+            action = "LazyExtras",
+            desc = " Lazy Extras",
+            icon = " ",
+            key = "x",
+          },
+          {
+            action = "Lazy",
+            desc = " Lazy",
+            icon = "󰒲 ",
+            key = "l",
+          },
+          {
+            action = function()
+              vim.api.nvim_input("<cmd>qa<cr>")
+            end,
+            desc = " Quit",
+            icon = " ",
+            key = "q",
+          },
+        },
         footer = function()
           local stats = require("lazy").stats()
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
@@ -73,11 +117,13 @@ return { -- Dashboard
         end,
       },
     }
+
     for _, button in ipairs(opts.config.center) do
       button.desc = button.desc .. string.rep(" ", 43 - #button.desc)
       button.key_format = "  %s"
     end
-    -- open dashboard after closing lazy
+
+    -- Open dashboard after closing lazy
     if vim.o.filetype == "lazy" then
       vim.api.nvim_create_autocmd("WinClosed", {
         pattern = tostring(vim.api.nvim_get_current_win()),
@@ -89,6 +135,7 @@ return { -- Dashboard
         end,
       })
     end
+
     return opts
   end,
 }

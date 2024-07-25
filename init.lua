@@ -53,7 +53,3 @@
 -- ---------------------------------- LAZY -------------------------------------
 -- Load Lazy package manager and plugins
 require("config.lazy")
-
--- -------------------------------- ROOTIEST -----------------------------------
--- Load the rootiest configuration
-require("config.rootiest").setup()
