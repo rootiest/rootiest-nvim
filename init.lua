@@ -53,3 +53,5 @@
 -- ---------------------------------- LAZY -------------------------------------
 -- Load Lazy package manager and plugins
 require("config.lazy")
+
+require("config.rootiest").setup()

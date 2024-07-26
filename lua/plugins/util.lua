@@ -21,20 +21,7 @@ return {
   },
   { -- Wakatime
     "wakatime/vim-wakatime",
-    cond = function()
-      local function is_wakatime_enabled()
-        local wakatime_file = vim.fn.stdpath("config") .. "/.wakatime"
-        local content = vim.fn.readfile(wakatime_file)[1] or ""
-        content = content:lower():gsub("%s+", "") -- convert to lowercase and remove whitespace
-        local enable_values = { ["true"] = true, ["1"] = true, ["yes"] = true }
-        if enable_values[content] then
-          return { enabled = true }
-        else
-          return { enabled = false }
-        end
-      end
-      return is_wakatime_enabled()
-    end,
+    cond = vim.g.usewakatime,
   },
   { -- Link following
     "chrishrb/gx.nvim",
@@ -129,18 +116,7 @@ return {
     "m4xshen/hardtime.nvim",
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
     opts = function()
-      local function is_hardtime_enabled()
-        local hardtime_file = vim.fn.stdpath("config") .. "/.hardtime"
-        local content = vim.fn.readfile(hardtime_file)[1] or ""
-        content = content:lower():gsub("%s+", "") -- convert to lowercase and remove whitespace
-        local enable_values = { ["true"] = true, ["1"] = true, ["yes"] = true }
-        if enable_values[content] then
-          return { enabled = true }
-        else
-          return { enabled = false }
-        end
-      end
-      return is_hardtime_enabled()
+      return { enabled = vim.g.usehardtime }
     end,
   },
   { -- GitLinker

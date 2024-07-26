@@ -1,7 +1,7 @@
 -- -----------------------------------------------------------------------------
 -- --------------------------------- THEMES ------------------------------------
 -- -----------------------------------------------------------------------------
-local rootiest = require("rootiest")
+local astral = require("astral")
 
 return {
   -- ----------------------- Themes --------------------------
@@ -12,6 +12,13 @@ return {
   { -- Catppuccin
     "catppuccin/nvim",
     lazy = false, -- Override
+    integrations = {
+      indent_blankline = {
+        enabled = true,
+        scope_color = "lavender",
+        colored_indent_levels = false,
+      },
+    },
   },
   { -- Ayu
     "Shatur/neovim-ayu",
@@ -74,13 +81,13 @@ return {
       set_dark_mode = function()
         vim.o.background = "dark"
         vim.cmd.colorscheme(
-          rootiest.colortheme or "catppuccin-frappe" or "tokyonight"
+          astral.colortheme or "catppuccin-frappe" or "tokyonight"
         )
       end,
       set_light_mode = function()
         vim.o.background = "light"
         vim.cmd.colorscheme(
-          rootiest.colortheme or "catppuccin-latte" or "tokyonight-day"
+          astral.colortheme or "catppuccin-latte" or "tokyonight-day"
         )
       end,
     },

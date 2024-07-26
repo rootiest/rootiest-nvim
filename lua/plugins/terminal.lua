@@ -90,25 +90,7 @@ return {
     config = function()
       require("image").setup()
     end,
-    cond = function()
-      local function is_useimage_enabled()
-        local useimage_file = vim.fn.stdpath("config") .. "/.useimage"
-        local content = vim.fn.readfile(useimage_file)[1] or ""
-        content = content:lower():gsub("%s+", "") -- convert to lowercase and remove whitespace
-        local enable_values = { ["true"] = true, ["1"] = true, ["yes"] = true }
-        if enable_values[content] then
-          local wterm = os.getenv("TERM_PROGRAM")
-          local kterm = os.getenv("TERM") or ""
-          if wterm and wterm:find("WezTerm") then
-            return true -- Using WezTerm
-          else
-            return kterm:find("kitty") ~= nil -- Using Kitty
-          end
-        end
-
-        return false
-      end
-    end,
+    cond = vim.g.useimage and not vim.g.neovide,
   },
   { -- WezTerm
     "willothy/wezterm.nvim",
