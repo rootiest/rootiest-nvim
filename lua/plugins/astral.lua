@@ -1,5 +1,15 @@
 return {
   "rootiest/astral.nvim",
-  version = "*",
-  --opts = { restore_colors = true },
+  version = "*", -- Pin to GitHub releases
+  opts = {
+    fallback_themes = {
+      "catppuccin-frappe",
+      "catppuccin-macchiato",
+      "tokyonight",
+      "kanagawa",
+      "monochrome",
+      "default",
+    },
+  },
+  --dev = true,
 }
