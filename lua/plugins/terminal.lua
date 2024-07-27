@@ -85,6 +85,18 @@ return {
       end
     end,
   },
+  {
+    "NeViRAIDE/nekifoch.nvim",
+    cmd = "Nekifoch",
+    opts = {
+      kitty_conf_path = vim.env.HOME .. "/.kittyoverrides",
+    },
+    cond = function() -- Using Kitty
+      local term = os.getenv("TERM") or ""
+      local kit = string.find(term, "kitty")
+      return kit ~= nil
+    end,
+  },
   { -- Image Renderer
     "3rd/image.nvim",
     config = function()

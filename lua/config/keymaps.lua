@@ -326,4 +326,25 @@ wk.add({
       return substitute_loaded
     end,
   },
+  { "<leader>u,", group = "Font" },
+  { "<leader>u,l", "<cmd>Nekifoch list<cr>", desc = "Fonts list" },
+  {
+    "<leader>u,c",
+    "<cmd>Nekifoch check<cr>",
+    desc = "Check current font settings",
+  },
+  {
+    "<leader>u,f",
+    rhs = function()
+      require("nekifoch.nui_set_font")()
+    end,
+    desc = "Set font family",
+  },
+  {
+    "<leader>u,s",
+    rhs = function()
+      require("nekifoch.nui_set_size")()
+    end,
+    desc = "Set font size",
+  },
 })
