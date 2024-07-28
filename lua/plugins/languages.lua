@@ -33,11 +33,4 @@ return {
   { -- Java
     import = "lazyvim.plugins.extras.lang.java",
   },
-  -- { -- Markdown-Preview
-  --   "iamcco/markdown-preview.nvim",
-  --   build = "cd app && yarn install",
-  --   init = function()
-  --     vim.g.mkdp_filetypes = { "markdown" }
-  --   end,
-  -- },
 }
