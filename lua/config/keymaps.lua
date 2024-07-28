@@ -347,4 +347,9 @@ wk.add({
     end,
     desc = "Set font size",
   },
+  { -- Yank buffer contents
+    "<leader>Y",
+    "<cmd>%y<cr>",
+    desc = "Yank buffer contents",
+  },
 })
