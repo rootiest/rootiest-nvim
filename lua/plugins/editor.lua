@@ -33,8 +33,18 @@ return {
     opts = {
       scope = { show_start = true, show_end = true },
       indent = {
-        char = "⋯",
-        tab_char = "⋯",
+        char = {
+          "󰎤",
+          "󰎧",
+          "󰎪",
+          "󰎭",
+          "󰎱",
+          "󰎳",
+          "󰎶",
+          "󰎹",
+          "󰎼",
+          "󰽽",
+        },
       },
     },
   },
