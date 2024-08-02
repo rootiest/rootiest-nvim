@@ -64,12 +64,50 @@ end
 
 -- Set cursor icons
 function M.set_cursor_icons()
-  vim.fn.sign_define("smoothcursor_n", { text = "" })
-  vim.fn.sign_define("smoothcursor_v", { text = "" })
-  vim.fn.sign_define("smoothcursor_V", { text = "" })
-  vim.fn.sign_define("smoothcursor_i", { text = "" })
-  vim.fn.sign_define("smoothcursor_c", { text = "" })
-  vim.fn.sign_define("smoothcursor_R", { text = "󰊄" })
+  local function rgb_to_hex(rgb)
+    return string.format("#%02x%02x%02x", rgb[1], rgb[2], rgb[3])
+  end
+
+  local function get_bg_color(hlgroup)
+    local hl = vim.api.nvim_get_hl(0, { name = hlgroup, link = false })
+    local bg = hl.bg
+    if bg then
+      return rgb_to_hex({
+        bit.rshift(bit.band(bg, 0xFF0000), 16),
+        bit.rshift(bit.band(bg, 0x00FF00), 8),
+        bit.band(bg, 0x0000FF),
+      })
+    end
+    return nil
+  end
+  local current_mode = vim.fn.mode()
+  local bg_color
+
+  if current_mode == "n" then
+    bg_color = get_bg_color("MiniStatuslineModeNormal")
+    vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
+    vim.fn.sign_define("smoothcursor", { text = "" })
+  elseif current_mode == "v" then
+    bg_color = get_bg_color("MiniStatuslineModeVisual")
+    vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
+    vim.fn.sign_define("smoothcursor", { text = "" })
+  elseif current_mode == "V" then
+    bg_color = get_bg_color("MiniStatuslineModeVisual")
+    vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
+    vim.fn.sign_define("smoothcursor", { text = "" })
+  elseif current_mode == "R" or current_mode == "r" then
+    bg_color = get_bg_color("MiniStatuslineModeReplace")
+    vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
+    vim.fn.sign_define("smoothcursor", { text = "" })
+  elseif current_mode == "i" then
+    bg_color = get_bg_color("MiniStatuslineModeInsert")
+    vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
+    vim.fn.sign_define("smoothcursor", { text = "" })
+  else
+    bg_color = get_bg_color("MiniStatuslineModeNormal")
+    vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
+    vim.fn.sign_define("smoothcursor", { text = "" })
+  end
 end
 
 -- Evaluate dependencies and print warnings if needed

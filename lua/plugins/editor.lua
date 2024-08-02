@@ -19,6 +19,14 @@ return {
     import = "lazyvim.plugins.extras.editor.illuminate",
   },
   {
+    "akinsho/bufferline.nvim",
+    opts = {
+      options = {
+        separator_style = "slant",
+      },
+    },
+  },
+  {
     "folke/flash.nvim",
     opts = {
       modes = {
@@ -28,25 +36,8 @@ return {
       },
     },
   },
-  {
+  { -- indent-blankline
     "lukas-reineke/indent-blankline.nvim",
-    opts = {
-      scope = { show_start = true, show_end = true },
-      indent = {
-        char = {
-          "󰎤",
-          "󰎧",
-          "󰎪",
-          "󰎭",
-          "󰎱",
-          "󰎳",
-          "󰎶",
-          "󰎹",
-          "󰎼",
-          "󰽽",
-        },
-      },
-    },
   },
   { -- Outline
     import = "lazyvim.plugins.extras.editor.outline",
@@ -96,7 +87,7 @@ return {
   },
   { -- CodeWindow
     "gorbit99/codewindow.nvim",
-    event = "InsertEnter",
+    event = "BufEnter",
     config = function()
       require("codewindow").setup({
         auto_enable = true,
@@ -128,32 +119,7 @@ return {
   },
   { -- DeadColumn
     "Bekaboo/deadcolumn.nvim",
-    event = "InsertEnter",
-    config = function()
-      require("deadcolumn").setup({
-        scope = "line", ---@type string|fun(): integer
-        ---@type string[]|fun(mode: string): boolean
-        modes = function(mode)
-          return mode:find("^[ictRss\x13]") ~= nil
-        end,
-        blending = {
-          threshold = 0.9,
-          colorcode = "#737895",
-          hlgroup = { "Normal", "bg" },
-        },
-        warning = {
-          alpha = 0.4,
-          offset = 0,
-          colorcode = "#f27b82",
-          hlgroup = { "Error", "bg" },
-        },
-        extra = {
-          ---@type string?
-          follow_tw = "80",
-        },
-      })
-      vim.cmd(":set colorcolumn=120")
-    end,
+    event = "BufEnter",
   },
   { -- Precognition
     "tris203/precognition.nvim",
@@ -168,11 +134,11 @@ return {
   },
   { -- SmoothCursor
     "gen740/SmoothCursor.nvim",
-    event = "InsertEnter",
-    lazy = true,
+    event = "BufEnter",
+    -- lazy = true,
     config = function()
-      ---@diagnostic disable-next-line: missing-parameter
-      require("smoothcursor").setup()
+      ---@diagnostic disable-next-line: missing-fields
+      require("smoothcursor").setup({})
     end,
   },
 }

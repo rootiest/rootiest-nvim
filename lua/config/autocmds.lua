@@ -47,3 +47,9 @@ vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained" }, {
     )
   end,
 })
+
+-- Set up autocommands and highlight settings
+local load_highlight = require("config.highlight")
+-- load_highlight.setup_indent_highlight()
+load_highlight.setup_autocommands()
+load_highlight.setup_dashboard_highlight()

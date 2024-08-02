@@ -16,3 +16,6 @@ vim.g.usewakatime = true
 vim.g.usehardtime = false
 vim.g.useimage = true
 vim.o.background = "dark"
+
+vim.g.DashboardHeaderColor = "#A6E3A1"
+vim.g.mousemoveevent = true
