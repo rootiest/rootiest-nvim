@@ -5,6 +5,9 @@
 return {
   { -- Codeium
     import = "lazyvim.plugins.extras.coding.codeium",
+    opts = {
+      enable_chat = true,
+    },
     cond = function()
       return vim.g.aitool == "codeium"
     end,
@@ -106,6 +109,15 @@ return {
     opts = {
       yank_substituted_text = false,
       preserve_cursor_position = true,
+    },
+  },
+  { -- mini.splitjoin
+    "echasnovski/mini.splitjoin",
+    event = "InsertEnter",
+    opts = {
+      mappings = {
+        toggle = "gJ",
+      },
     },
   },
 }
