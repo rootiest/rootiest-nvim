@@ -100,15 +100,10 @@ return {
       require("kulala").setup()
     end,
   },
-  { -- Fugitive
-    "tpope/vim-fugitive",
-    event = "InsertEnter",
-    dependencies = { "tpope/vim-rhubarb" },
-  },
   { -- Thanks/github-stars
     "jsongerber/thanks.nvim",
     event = "VeryLazy",
-    config = {
+    opts = {
       star_on_install = false,
     },
   },
@@ -137,6 +132,25 @@ return {
         mode = { "n", "v" },
         desc = "Open git link",
       },
+    },
+  },
+  {
+    "dmtrKovalenko/caps-word.nvim",
+    lazy = true,
+    opts = {},
+    keys = {
+      {
+        mode = { "i", "n" },
+        "<C-s>",
+        "<cmd>lua require('caps-word').toggle()<CR>",
+      },
+    },
+  },
+  {
+    "AntonVanAssche/music-controls.nvim",
+    dependencies = { "rcarriga/nvim-notify" },
+    opts = {
+      default_player = "YoutubeMusic",
     },
   },
 }
