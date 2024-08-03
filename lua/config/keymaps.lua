@@ -345,3 +345,7 @@ wk.add({
     desc = "Yank buffer contents",
   },
 })
+
+-- ---------------------------------- POST -------------------------------------
+-- Post-plugin configuration
+require("config.post")
