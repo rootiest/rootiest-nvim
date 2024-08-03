@@ -44,4 +44,22 @@ function M.get_icon()
   end
 end
 
+function M.get_total_minutes()
+  local wakatime_string = M.get_today()
+  if not wakatime_string or wakatime_string:match("Error:") then
+    return 0 -- Return 0 if there's an error in the wakatime string
+  end
+
+  local hours, mins = wakatime_string:match("(%d+)%s*hrs?%s*(%d+)%s*mins?")
+  if not hours then
+    mins = wakatime_string:match("(%d+)%s*mins?")
+    hours = 0
+  end
+
+  hours = tonumber(hours) or 0
+  mins = tonumber(mins) or 0
+
+  return (hours * 60) + mins
+end
+
 return M
