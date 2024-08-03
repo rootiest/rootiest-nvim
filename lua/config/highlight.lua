@@ -1,3 +1,6 @@
+-- -----------------------------------------------------------------------------
+-- -------------------------------- HIGHLIGHT ----------------------------------
+-- -----------------------------------------------------------------------------
 local M = {}
 
 -- Function to convert RGB to hexadecimal
@@ -83,7 +86,7 @@ function M.setup_indent_highlight()
         "IndentsScopeHighlight",
         "IndentsScopeHighlight",
       },
-      char = "┋",
+      char = "",
     },
     whitespace = {
       remove_blankline_trail = true,
