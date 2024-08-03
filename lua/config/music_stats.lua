@@ -1,6 +1,6 @@
 -- -----------------------------------------------------------------------------
--- ------------------------------ MUSIC-CURREN ---------------------------------
--- -----------------------------------------------------------------------------T
+-- ------------------------------ MUSIC-STATS ----------------------------------
+-- -----------------------------------------------------------------------------
 
 local M = {}
 local cache = {
@@ -29,12 +29,7 @@ local function get_music_current()
 
   local result = vim.call("system", cmd)
 
-  if not result then
-    return "" -- Return empty string for no music
-  end
-
-  -- Check for "No players found" message
-  if result:match("No players found") then
+  if not result or result:match("No players found") then
     return "" -- Return empty string for no music
   end
 
@@ -65,6 +60,41 @@ local function get_music_icon()
   end
 end
 
+local function get_music_metadata(field)
+  local ignored_players_str = get_ignored_players_string()
+  local cmd = string.format(
+    "playerctl --ignore-player %s metadata --format '{{ %s }}' 2>/dev/null",
+    ignored_players_str,
+    field
+  )
+
+  local result = vim.call("system", cmd)
+
+  if not result or result:match("No players found") then
+    return "" -- Return empty string for no music or missing metadata
+  end
+
+  local metadata = result:match("^(.-)%s*$") -- Trim any whitespace
+  return metadata or "" -- Return empty string if no metadata
+end
+
+local function get_player_property(property)
+  local ignored_players_str = get_ignored_players_string()
+  local cmd = string.format(
+    "playerctl --ignore-player %s %s 2>/dev/null",
+    ignored_players_str,
+    property
+  )
+
+  local result = vim.call("system", cmd)
+
+  if not result then
+    return nil -- Return nil for no property value
+  end
+
+  return result:match("^(.-)%s*$") -- Trim any whitespace
+end
+
 function M.get_current()
   local current_time = os.time()
   if current_time - cache.timestamp > cache_duration then
@@ -76,6 +106,26 @@ end
 
 function M.get_icon()
   return get_music_icon()
+end
+
+function M.get_title()
+  return get_music_metadata("title")
+end
+
+function M.get_artist()
+  return get_music_metadata("artist")
+end
+
+function M.get_album()
+  return get_music_metadata("album")
+end
+
+function M.is_shuffle()
+  return get_player_property("shuffle") == "on"
+end
+
+function M.is_loop()
+  return get_player_property("loop") == "true"
 end
 
 return M
