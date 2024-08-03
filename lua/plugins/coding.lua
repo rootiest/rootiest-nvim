@@ -3,6 +3,12 @@
 -- -----------------------------------------------------------------------------
 
 return {
+  { -- Mason-lspconfig
+    "williamboman/mason-lspconfig.nvim",
+    opts = {
+      automatic_installation = true,
+    },
+  },
   { -- Codeium
     import = "lazyvim.plugins.extras.coding.codeium",
     opts = {
