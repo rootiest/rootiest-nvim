@@ -134,7 +134,7 @@ return {
       },
     },
   },
-  {
+  { -- CapsWord
     "dmtrKovalenko/caps-word.nvim",
     lazy = true,
     opts = {},
@@ -146,11 +146,15 @@ return {
       },
     },
   },
-  {
+  { -- Music Controls
     "AntonVanAssche/music-controls.nvim",
     dependencies = { "rcarriga/nvim-notify" },
     opts = {
       default_player = "YoutubeMusic",
     },
+  },
+  { -- Git Blame
+    "f-person/git-blame.nvim",
+    event = "VeryLazy",
   },
 }
