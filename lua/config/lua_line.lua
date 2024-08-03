@@ -47,10 +47,28 @@ local function trunc_front(trunc_width, trunc_len, hide_width, no_ellipsis)
   end
 end
 
+-- Function to convert RGB to hexadecimal
+local function rgb_to_hex(rgb)
+  return string.format("#%02x%02x%02x", rgb[1], rgb[2], rgb[3])
+end
+
+local function get_fg_color(hlgroup)
+  local hl = vim.api.nvim_get_hl(0, { name = hlgroup, link = false })
+  local fg = hl.fg
+  if fg then
+    return rgb_to_hex({
+      bit.rshift(bit.band(fg, 0xFF0000), 16),
+      bit.rshift(bit.band(fg, 0x00FF00), 8),
+      bit.band(fg, 0x0000FF),
+    })
+  end
+  return nil
+end
+
 -- Ensure the function is called only once
 local lualine_updated = false
 
--- Function to add WakaTime and Music Current data to lualine
+-- Function to add custom sections to lualine
 local function add_custom_sections_to_lualine()
   if lualine_updated then
     return
@@ -59,7 +77,7 @@ local function add_custom_sections_to_lualine()
 
   -- Require the dependencies
   local wakatime_cache = require("config.wakatime_cache")
-  local music_current = require("config.music_current")
+  local music_current = require("config.music_stats")
   local git_blame = require("gitblame")
 
   -- Get the current lualine configuration
@@ -86,6 +104,7 @@ local function add_custom_sections_to_lualine()
     git_blame.get_current_blame_text,
     fmt = trunc_front(160, 40, 120, true),
     cond = git_blame.is_blame_text_available,
+    color = { fg = get_fg_color("GitSignsCurrentLineBlame") },
   })
 
   -- Add the WakaTime data to the lualine_x section
@@ -95,6 +114,15 @@ local function add_custom_sections_to_lualine()
     end,
     icon = wakatime_cache.get_icon(),
     fmt = trunc(120, 20, 120, true),
+    color = function()
+      if wakatime_cache.get_total_minutes() >= 60 then
+        return { fg = get_fg_color("diffAdded") }
+      elseif wakatime_cache.get_total_minutes() >= 30 then
+        return { fg = get_fg_color("diffOldFile") }
+      else
+        return { fg = get_fg_color("diffRemoved") }
+      end
+    end,
     on_click = function(button)
       if button == "left" then
         vim.cmd(":WakaTimeToday")
@@ -139,10 +167,13 @@ local function add_custom_sections_to_lualine()
     fmt = trunc(120, 20, 120, true),
   })
 
-  -- Add search count to the lualine_y section
-  table.insert(config.sections.lualine_y, 1, {
+  -- Add search count to the lualine_z section
+  table.insert(config.sections.lualine_z, 1, {
     "searchcount",
     fmt = trunc(80, 20, 80, true),
+    color = "CurSearch",
+    separator = { left = "", right = "" },
+    icon = "󰍉 ",
   })
 
   -- Apply the new configuration
