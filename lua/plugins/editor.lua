@@ -15,9 +15,13 @@ return {
   { -- Dial
     import = "lazyvim.plugins.extras.editor.dial",
   },
+  { -- Fzf
+    import = "lazyvim.plugins.extras.editor.fzf",
+  },
   { -- Illuminate
     import = "lazyvim.plugins.extras.editor.illuminate",
   },
+
   {
     "akinsho/bufferline.nvim",
     opts = {
@@ -105,17 +109,6 @@ return {
     "folke/persistence.nvim",
     event = "BufReadPre",
     opts = {},
-  },
-  { -- Remote-nvim
-    "amitds1997/remote-nvim.nvim",
-    lazy = true,
-    version = "*", -- Pin to GitHub releases
-    dependencies = {
-      "nvim-lua/plenary.nvim", -- For standard functions
-      "MunifTanjim/nui.nvim", -- To build the plugin UI
-      "nvim-telescope/telescope.nvim", -- For picking b/w different remote methods
-    },
-    config = true,
   },
   { -- DeadColumn
     "Bekaboo/deadcolumn.nvim",

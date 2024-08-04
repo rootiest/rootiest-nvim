@@ -5,6 +5,7 @@
 return {
   -- Dashboard
   "nvimdev/dashboard-nvim",
+  event = "UIEnter",
   opts = function()
     local logo_path = vim.fn.stdpath("config") .. "/logo/"
     local height, width = vim.fn.winheight(0), vim.fn.winwidth(0)
@@ -61,7 +62,7 @@ return {
             action = "LazyGit",
             desc = " LazyGit",
             icon = " ",
-            key = "G",
+            key = "z",
           },
           {
             action = "lua LazyVim.pick.config_files()()",
@@ -74,18 +75,6 @@ return {
             desc = " Restore Session",
             icon = " ",
             key = "s",
-          },
-          {
-            action = "LoadRemote",
-            desc = " Remote Session",
-            icon = "󰢹 ",
-            key = "S",
-          },
-          {
-            action = "LazyExtras",
-            desc = " Lazy Extras",
-            icon = " ",
-            key = "x",
           },
           {
             action = "Lazy",
@@ -106,7 +95,8 @@ return {
           local stats = require("lazy").stats()
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
           return {
-            "⚡ Neovim loaded "
+            -- "⚡ Neovim loaded "
+            "󱐋  Neovim loaded "
               .. stats.loaded
               .. "/"
               .. stats.count
