@@ -72,13 +72,37 @@ return {
     "hrsh7th/nvim-cmp",
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
-      table.insert(opts.sources, { name = "emoji" })
-      table.insert(opts.sources, { name = "cmp_yanky" })
-      table.insert(opts.sources, { name = "dotenv" })
-      table.insert(opts.sources, { name = "calc" })
-      table.insert(opts.sources, { name = "conventionalcommits" })
-      table.insert(opts.sources, { name = "gitmoji" })
       local cmp = require("cmp")
+
+      -- Global sources
+      opts.sources = {
+        { name = "emoji" },
+        { name = "cmp_yanky" },
+        { name = "dotenv" },
+        { name = "calc" },
+        { name = "conventionalcommits" },
+        { name = "gitmoji" },
+      }
+
+      -- General setup
+      cmp.setup(opts)
+
+      -- Filetype-specific setup
+      cmp.setup.filetype("config", {
+        sources = vim.tbl_filter(function(source)
+          return source.name ~= "emoji" and source.name ~= "gitmoji"
+        end, opts.sources),
+      })
+
+      -- List of filetypes to disable completion
+      local disabled_filetypes = { "dashboard", "qalc" }
+      for _, filetype in ipairs(disabled_filetypes) do
+        cmp.setup.filetype(filetype, {
+          sources = {},
+        })
+      end
+
+      -- Key mappings
       cmp.setup({
         mapping = {
           ["<C-p>"] = cmp.mapping.select_prev_item(),
