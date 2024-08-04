@@ -1,18 +1,24 @@
 -- -----------------------------------------------------------------------------
--- ----------------------------- WAKATIME-CACHE --------------------------------
+-- ----------------------------- WAKATIME-STATS --------------------------------
 -- -----------------------------------------------------------------------------
 
 local M = {}
-local cache = {
-  value = nil,
-  timestamp = 0,
-}
-local cache_duration = 60 -- Cache duration in seconds
+local cache_file = os.getenv("HOME") .. "/.cache/wakatime_cache.txt"
+
+local function read_cache()
+  local file = io.open(cache_file, "r")
+  if file then
+    local content = file:read("*a")
+    file:close()
+    return content
+  end
+  return "Error: Cache file not found"
+end
 
 local function get_wakatime_today()
-  local result = vim.call("system", "~/.wakatime/wakatime-cli --today 2>&1")
+  local result = read_cache()
   if not result or result == "" then
-    return "Error: Unable to read wakatime-cli output"
+    return ""
   end
 
   -- Handle common error messages
@@ -27,12 +33,7 @@ local function get_wakatime_today()
 end
 
 function M.get_today()
-  local current_time = os.time()
-  if current_time - cache.timestamp > cache_duration then
-    cache.value = get_wakatime_today()
-    cache.timestamp = current_time
-  end
-  return cache.value
+  return get_wakatime_today()
 end
 
 function M.get_icon()
@@ -42,6 +43,10 @@ function M.get_icon()
   else
     return "󱦺 " -- Default icon
   end
+end
+
+function M.get_icon_with_text()
+  return M.get_icon() .. " " .. (M.get_today() or "Loading...")
 end
 
 function M.get_total_minutes()
