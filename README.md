@@ -1,9 +1,8 @@
-
 # Rootiest NeoVim Configuration
 
-<a href="https://dotfyle.com/rootiest/rootiest-nvim"><img src="https://dotfyle.com/rootiest/rootiest-nvim/badges/plugins?style=flat" /></a>
-<a href="https://dotfyle.com/rootiest/rootiest-nvim"><img src="https://dotfyle.com/rootiest/rootiest-nvim/badges/leaderkey?style=flat" /></a>
-<a href="https://dotfyle.com/rootiest/rootiest-nvim"><img src="https://dotfyle.com/rootiest/rootiest-nvim/badges/plugin-manager?style=flat" /></a>
+[![Plugins](https://dotfyle.com/rootiest/rootiest-nvim/badges/plugins?style=flat)](https://dotfyle.com/rootiest/rootiest-nvim)
+[![Leaderkey](https://dotfyle.com/rootiest/rootiest-nvim/badges/leaderkey?style=flat)](https://dotfyle.com/rootiest/rootiest-nvim)
+[![Plugin Manager](https://dotfyle.com/rootiest/rootiest-nvim/badges/plugin-manager?style=flat)](https://dotfyle.com/rootiest/rootiest-nvim)
 
 ```none
 ██████╗  ██████╗  ██████╗ ████████╗██╗███████╗███████╗████████╗
@@ -47,13 +46,13 @@ The rootiest neovim configuration you will ever see!
 ### Required
 
 - [git](https://git-scm.com/) -
-       Version control system
+  Version control system
 - [luarocks](https://luarocks.org/) -
-       Lua package manager
+  Lua package manager
 - [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/) -
-      Font with extended glyphs
+  Font with extended glyphs
 
-Your terminal/client application ***must*** have a Nerd Font installed
+Your terminal/client application **_must_** have a Nerd Font installed
 and support the Nerd Font glyphs.
 
 Kitty or NeoVide are recommended.
@@ -61,19 +60,19 @@ Kitty or NeoVide are recommended.
 ### Optional
 
 - [ripgrep](https://github.com/BurntSushi/ripgrep) -
-       A faster grep
+  A faster grep
 - [fzf](https://github.com/junegunn/fzf) -
-       A command-line fuzzy finder
+  A command-line fuzzy finder
 - [fd](https://github.com/sharkdp/fd) -
-       A simple, fast and user-friendly alternative to 'find'
+  A simple, fast and user-friendly alternative to 'find'
 - [lazygit](https://github.com/jesseduffield/lazygit) -
-       A simple terminal UI for git commands
+  A simple terminal UI for git commands
 - [kitty](https://sw.kovidgoyal.net/kitty/) -
-       A fast, feature-rich, GPU based terminal emulator
+  A fast, feature-rich, GPU based terminal emulator
 - [NeoVide](https://neovide.dev/) -
-       A fast, feature-rich, and modern NeoVim GUI
+  A fast, feature-rich, and modern NeoVim GUI
 - [fish](https://fishshell.com/) -
-       A smart and user-friendly command line shell
+  A smart and user-friendly command line shell
 
 ## Installation
 
@@ -100,15 +99,15 @@ without replacing your current NeoVim configuration.
 
 1. Clone the repository
 
-    ```sh
-    git clone git@github.com:rootiest/rootiest-nvim ~/.config/rootiest/rootiest-nvim
-    ```
+   ```sh
+   git clone git@github.com:rootiest/rootiest-nvim ~/.config/rootiest/rootiest-nvim
+   ```
 
 2. Open Neovim with this config:
 
-    ```sh
-    NVIM_APPNAME=rootiest/rootiest-nvim/ nvim
-    ```
+   ```sh
+   NVIM_APPNAME=rootiest/rootiest-nvim/ nvim
+   ```
 
 3. Enjoy! 🎉
 
@@ -125,19 +124,55 @@ without replacing your current NeoVim configuration.
 - Kitty scrollback and keybinding support
 - Special configuration for neovide
 - Detects terminal client and adjusts accordingly
-- ToggleTerm, fzf, telescope, neotree, etc. for quick access to files and terminal
+- ToggleTerm, fzf-lua, neotree, etc. for quick access to files and terminal
 - Many UI elements to enhance the experience
 - LSP support for many languages and automatic setup for many more
 - Remotely spawn a NeoVim instance over ssh, in a container, or from a git repo
-- Dashboard logo adjusts to the size of the window
-- Warnings for missing dependencies
+- Dashboard logo adjusts to the size of the windowa
+- Beautiful, unique, and feature-rich lualine statusline
+- When available, git-blame, WakaTime and music player stats components displayed
+  in lualine ![Lualine](.screenshots/lualine.png)
+- Warning system for missing dependencies
 - User-selected AI completion tool:
   `codeium`, `copilot`, `tabnine`, `minuet`, or `none`
 - WakaTime integration: Tracking time spent on code
 - Hardtime integration: Trains better use of vim motions and shortcuts
-- Colorscheme is remembered between sessions
+- Colorscheme is remembered between sessions with [astral.nvim](https://github.com/rootiest/astral.nvim)
+- Highlight group customizations that are colorscheme-compliant
 - Lean and fast while providing a complete professional experience
-- Achieves sub-75ms startup time on my laptop
+- Achieves sub-75ms startup time on my personal laptop, goal to never exceed 100ms
+
+## Screenshots
+
+Features and
+
+<details>
+   <summary>Main NeoVim PDE</summary>
+
+![NeoVim UI](.screenshots/nvim-ui.png)
+
+</details>
+
+<details>
+   <summary>Dashboard</summary>
+
+![NeoVim Dashboard](.screenshots/dashboard.png)
+
+</details>
+
+<details>
+   <summary>Markdown view with inline images</summary>
+
+![NeoVim Markdown](.screenshots/markdown.png)
+
+</details>
+
+<details>
+   <summary>Neovide Transparency</summary>
+
+![NeoVide Features](.screenshots/neovide.png)
+
+</details>
 
 ## Options
 
