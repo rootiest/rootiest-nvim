@@ -282,4 +282,18 @@ return {
       require("lualine").setup(config)
     end,
   },
+  { -- Qalc
+    "Apeiros-46B/qalc.nvim",
+    cmd = {
+      "Qalc",
+      "QalcAttach",
+      "QalcYank",
+    },
+    keys = {
+      { "<leader>qc", "<cmd>Qalc<cr>", desc = "Qalc" },
+    },
+    opts = {
+      set_ft = "qalc",
+    },
+  },
 }
