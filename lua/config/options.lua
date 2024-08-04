@@ -15,9 +15,13 @@ vim.g.lazyvim_python_lsp = "basedpyright"
 vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
 
 -- --------------------------------- ROOTIEST -----------------------------------
-vim.g.aitool = "codeium"
-vim.g.usewakatime = true
-vim.g.usehardtime = false
-vim.g.useimage = true
+-- stylua: ignore start
+vim.g.aitool      = "codeium" --Options:  codeium, copilot, tabnine, minuet, none
+vim.g.usewakatime = true      --Options:  true, false
+vim.g.usehardtime = false     --Options:  true, false
+vim.g.useimage    = true      --Options:  true, false
+-- stylua: ignore end
+
+-- ----------------------------------- USER -------------------------------------
 vim.o.background = "dark"
 vim.g.DashboardHeaderColor = "#A6E3A1"
