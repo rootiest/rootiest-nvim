@@ -99,6 +99,7 @@ return {
   },
   { -- Image Renderer
     "3rd/image.nvim",
+    ft = "markdown",
     config = function()
       require("image").setup()
     end,
