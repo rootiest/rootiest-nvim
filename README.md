@@ -176,36 +176,17 @@ Features and
 
 ## Options
 
-There are some hidden files in the configuration directory that can be
-used to configure user options.
+Options are configured in the `config/options.lua` file under the `ROOTIEST` header.
 
-- `.colorscheme` : **Set the colorscheme**  
-   This file facilitates restoring the colorscheme between sessions.  
-   This value is overwritten when the colorscheme is changed in the UI.
+The default values are:
 
-- `.leader` : **Set the leader key**  
-   This file defines the leader key used in the mappings.  
-   It contains only a single space by default.
-
-- `.aitool` : **Set the AI tool**  
-   This file defines the AI plugin used for code completion.  
-   The options are `codeium` `copilot` `tabnine` `minuet` or `none`.
-
-- `.wakatime` : **Enables WakaTime**  
-   This file defines whether the WakaTime plugin is enabled.  
-   The options are `true` or `false`.
-
-- `.useimage` : **Enables Image plugin**  
-   This file defines whether the Image plugin is enabled.  
-   The options are `true` or `false`.
-
-- `.hardtime` : **Enables Hardtime plugin**  
-   This file defines whether the Hardtime plugin is enabled.  
-   The options are `true` or `false`.
-
-- `.ignore-deps` : **Disables dependency check**  
-   This file defines whether the dependency check is enabled.  
-   The options are `true` or `false`.
+```lua
+-- --------------------------------- ROOTIEST -----------------------------------
+vim.g.aitool      = "codeium" --Options:  codeium, copilot, tabnine, minuet, none
+vim.g.usewakatime = true      --Options:  true, false
+vim.g.usehardtime = false     --Options:  true, false
+vim.g.useimage    = true      --Options:  true, false
+```
 
 ## Companion Tools
 
