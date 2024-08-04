@@ -182,23 +182,51 @@ end
 function M.setup_autocommands()
   local autogrp = vim.api.nvim_create_augroup
   local autocmd = vim.api.nvim_create_autocmd
-  -- Autocommand to trigger setup on InsertEnter
   autogrp("IndentHighlight", { clear = true })
-  autocmd("InsertEnter", {
+  -- Autocommand to trigger setup on FileType
+  -- autocmd("FileType", {
+  --   pattern = "*",
+  --   group = "IndentHighlight",
+  --   callback = function()
+  --     M.setup_indent_highlight()
+  --     M.setup_dashboard_highlight()
+  --   end,
+  -- })
+
+  -- List of filetypes to exclude
+  local excluded_filetypes = {
+    "help",
+    "alpha",
+    "dashboard",
+    "neo-tree",
+    "Trouble",
+    "trouble",
+    "lazy",
+    "mason",
+    "notify",
+    "toggleterm",
+    "lazyterm",
+  }
+
+  -- Autocommand to trigger setup on FileType
+  vim.api.nvim_create_autocmd("FileType", {
     group = "IndentHighlight",
     callback = function()
-      M.setup_indent_highlight()
+      local filetype = vim.bo.filetype
+      if not vim.tbl_contains(excluded_filetypes, filetype) then
+        M.setup_indent_highlight()
+      end
     end,
   })
 
   -- Autocommand to trigger setup on ColorScheme
   autocmd("ColorScheme", {
+    pattern = "*",
     group = "IndentHighlight",
     callback = function()
       M.setup_indent_highlight()
     end,
   })
-
   -- Autocommand to trigger setup on ModeChanged
   autogrp("ModeHighlighting", { clear = true })
   autocmd("ModeChanged", {
@@ -210,8 +238,9 @@ function M.setup_autocommands()
 
   -- Create a new augroup for the dashboard
   local dashboardGroup = autogrp("DashboardColors", { clear = true })
-  -- Set the color for DashboardHeader when VimEnter event triggers
-  autocmd("CursorMoved", {
+  -- Autocommand to trigger setup on FileType
+  autocmd("FileType", {
+    pattern = "*",
     group = dashboardGroup,
     callback = function()
       M.setup_dashboard_highlight()
