@@ -4,25 +4,19 @@
 
 -- --------------------------------- Keymaps -----------------------------------
 
--- Initialize dependencies
-local substitute_loaded, substitute = pcall(require, "substitute")
-local codesnap_loaded = pcall(require, "codesnap")
-local icon_picker_loaded = pcall(require, "icon-picker")
-local gist_loaded = pcall(require, "gist")
-local rootiest = require("config.rootiest")
-
 -- Initialize which-key
 local wk = require("which-key")
 wk.add({
-  {
+  { -- Toggle Terminal
+    mode = "n",
     "<c-/>",
     ":ToggleTerm<cr>",
     desc = "Toggle Terminal",
   },
-  {
+  { -- Open LazyGit in terminal
     "<leader>gt",
     rhs = function()
-      rootiest.toggle_lazygit_term()
+      require("config.rootiest").toggle_lazygit_term()
     end,
     desc = "LazyGit Terminal",
   },
@@ -33,7 +27,7 @@ wk.add({
     group = "IconPicker",
     icon = { icon = "󰥸", color = "orange" },
     cond = function()
-      return icon_picker_loaded
+      return pcall(require, "icon-picker")
     end,
   },
   -- Pick Icon
@@ -44,7 +38,7 @@ wk.add({
     desc = "Pick Icon",
     group = "IconPicker",
     cond = function()
-      return icon_picker_loaded
+      return pcall(require, "icon-picker")
     end,
   },
   -- Yank Icon
@@ -55,7 +49,7 @@ wk.add({
     desc = "Yank Icon",
     group = "IconPicker",
     cond = function()
-      return icon_picker_loaded
+      return pcall(require, "icon-picker")
     end,
   },
   -- Insert Icon in insert mode
@@ -66,7 +60,7 @@ wk.add({
     desc = "Insert Icon",
     group = "IconPicker",
     cond = function()
-      return icon_picker_loaded
+      return pcall(require, "icon-picker")
     end,
   },
   -- Gists group
@@ -76,7 +70,7 @@ wk.add({
     group = "Gists",
     icon = { icon = "", color = "orange" },
     cond = function()
-      return gist_loaded
+      return pcall(require, "gist")
     end,
   },
   -- Create Gist
@@ -86,7 +80,7 @@ wk.add({
     rhs = "<cmd>GistCreate<cr>",
     desc = "Create Gist",
     cond = function()
-      return gist_loaded
+      return pcall(require, "gist")
     end,
   },
   -- Find Gists
@@ -96,24 +90,24 @@ wk.add({
     rhs = "<cmd>GistList<cr>",
     desc = "Find Gists",
     cond = function()
-      return gist_loaded
+      return pcall(require, "gist")
     end,
   },
-  {
+  { -- Lazy group
     "<leader>l",
     group = "Lazy",
   },
-  {
+  { -- LazyVim
     "<leader>lv",
     "<cmd>Lazy<cr>",
     desc = "LazyVim",
   },
-  {
+  { -- LazyExtras
     "<leader>lx",
     "<cmd>LazyExtras<cr>",
     desc = "LazyExtras",
   },
-  {
+  { -- MiniMap
     "<leader>m",
     group = "MiniMap",
     icon = { icon = "", color = "yellow" },
@@ -125,7 +119,7 @@ wk.add({
     rhs = "<cmd>CodeSnap<cr>",
     desc = "Save selected code snapshot into clipboard",
     cond = function()
-      return codesnap_loaded
+      return pcall(require, "codesnap")
     end,
   },
   -- Save selected code snapshot in ~/Pictures
@@ -135,7 +129,7 @@ wk.add({
     rhs = "<cmd>CodeSnapSave<cr>",
     desc = "Save selected code snapshot in ~/Pictures",
     cond = function()
-      return codesnap_loaded
+      return pcall(require, "codesnap")
     end,
   },
   -- Highlight and snapshot selected code into clipboard
@@ -145,7 +139,7 @@ wk.add({
     rhs = "<cmd>CodeSnapHighlight<cr>",
     desc = "Highlight and snapshot selected code into clipboard",
     cond = function()
-      return codesnap_loaded
+      return pcall(require, "codesnap")
     end,
   },
   -- Save ASCII code snapshot into clipboard
@@ -155,7 +149,7 @@ wk.add({
     rhs = "<cmd>CodeSnapASCII<cr>",
     desc = "Save ASCII code snapshot into clipboard",
     cond = function()
-      return codesnap_loaded
+      return pcall(require, "codesnap")
     end,
   },
   {
@@ -184,7 +178,7 @@ wk.add({
     end,
     desc = "KittyNavigateLeft",
     cond = function() -- Using Kitty
-      return rootiest.using_kitty()
+      return require("config.rootiest").using_kitty()
     end,
   },
   {
@@ -194,7 +188,7 @@ wk.add({
     end,
     desc = "KittyNavigateDown",
     cond = function() -- Using Kitty
-      return rootiest.using_kitty()
+      return require("config.rootiest").using_kitty()
     end,
   },
   {
@@ -204,7 +198,7 @@ wk.add({
     end,
     desc = "KittyNavigateUp",
     cond = function() -- Using Kitty
-      return rootiest.using_kitty()
+      return require("config.rootiest").using_kitty()
     end,
   },
   {
@@ -214,13 +208,13 @@ wk.add({
     end,
     desc = "KittyNavigateRight",
     cond = function() -- Using Kitty
-      return rootiest.using_kitty()
+      return require("config.rootiest").using_kitty()
     end,
   },
   {
     "zk",
     rhs = function()
-      rootiest.toggle_precognition()
+      require("config.rootiest").toggle_precognition()
     end,
     desc = "Toggle Precognition",
   },
@@ -255,14 +249,14 @@ wk.add({
   {
     "yo",
     rhs = function()
-      rootiest.yank_line()
+      require("config.rootiest").yank_line()
     end,
     desc = "Yank Line-text",
   },
   { -- Toggle Hardmode with Hints
     "<leader>h",
     rhs = function()
-      rootiest.toggle_hardmode()
+      require("config.rootiest").toggle_hardmode()
     end,
     desc = "Toggle Hardmode",
   },
@@ -278,11 +272,11 @@ wk.add({
     mode = "n",
     lhs = "x",
     rhs = function()
-      substitute.operator()
+      require("substitute").operator()
     end,
     desc = "Substitute operator",
     cond = function()
-      return substitute_loaded
+      return pcall(require, "substitute")
     end,
   },
   -- Substitute line in normal mode
@@ -290,11 +284,11 @@ wk.add({
     mode = "n",
     lhs = "xx",
     rhs = function()
-      substitute.line()
+      require("substitute").line()
     end,
     desc = "Substitute line",
     cond = function()
-      return substitute_loaded
+      return pcall(require, "substitute")
     end,
   },
   -- Substitute end of line in normal mode
@@ -302,11 +296,11 @@ wk.add({
     mode = "n",
     lhs = "X",
     rhs = function()
-      substitute.eol()
+      require("substitute").eol()
     end,
     desc = "Substitute end of line",
     cond = function()
-      return substitute_loaded
+      return pcall(require, "substitute")
     end,
   },
   -- Substitute visual selection in visual mode
@@ -314,11 +308,11 @@ wk.add({
     mode = "x",
     lhs = "x",
     rhs = function()
-      substitute.visual()
+      require("substitute").visual()
     end,
     desc = "Substitute visual selection",
     cond = function()
-      return substitute_loaded
+      return pcall(require, "substitute")
     end,
   },
   { "<leader>u,", group = "Font" },
