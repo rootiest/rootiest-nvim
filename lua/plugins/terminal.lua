@@ -15,6 +15,14 @@ return {
   { -- ToggleTerm
     "akinsho/toggleterm.nvim",
     event = "VeryLazy",
+    keys = {
+      { -- Toggle Terminal
+        "<c-/>",
+        "<cmd>ToggleTerm<cr>",
+        desc = "Toggle Terminal",
+        mode = "n",
+      },
+    },
     config = function()
       require("toggleterm").setup({
         -- size can be a number or function which is passed the current terminal
@@ -63,6 +71,36 @@ return {
       local kit = string.find(term, "kitty")
       return kit ~= nil
     end,
+    keys = {
+      {
+        "<c-s-h>",
+        function()
+          require("kitty-navigator").navigateLeft()
+        end,
+        desc = "KittyNavigateLeft",
+      },
+      {
+        "<c-s-j>",
+        function()
+          require("kitty-navigator").navigateDown()
+        end,
+        desc = "KittyNavigateDown",
+      },
+      {
+        "<c-s-k>",
+        function()
+          require("kitty-navigator").navigateUp()
+        end,
+        desc = "KittyNavigateUp",
+      },
+      {
+        "<c-s-l>",
+        function()
+          require("kitty-navigator").navigateRight()
+        end,
+        desc = "KittyNavigateRight",
+      },
+    },
   },
   { -- Kitty-Runner
     "jghauser/kitty-runner.nvim",
@@ -87,9 +125,36 @@ return {
   },
   {
     "NeViRAIDE/nekifoch.nvim",
+    lazy = true,
     cmd = "Nekifoch",
     opts = {
       kitty_conf_path = vim.env.HOME .. "/.kittyoverrides",
+    },
+    keys = {
+      {
+        "<leader>u,l",
+        "<cmd>Nekifoch list<cr>",
+        desc = "Fonts list",
+      },
+      {
+        "<leader>u,c",
+        "<cmd>Nekifoch check<cr>",
+        desc = "Check current font settings",
+      },
+      {
+        "<leader>u,f",
+        function()
+          require("nekifoch.nui_set_font")()
+        end,
+        desc = "Set font family",
+      },
+      {
+        "<leader>u,s",
+        function()
+          require("nekifoch.nui_set_size")()
+        end,
+        desc = "Set font size",
+      },
     },
     cond = function() -- Using Kitty
       local term = os.getenv("TERM") or ""

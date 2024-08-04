@@ -42,15 +42,14 @@ return {
   },
   { -- indent-blankline
     "lukas-reineke/indent-blankline.nvim",
+    lazy = true,
   },
   { -- Outline
     import = "lazyvim.plugins.extras.editor.outline",
   },
-  { -- Telescope
-    import = "lazyvim.plugins.extras.editor.telescope",
-  },
   { -- FoldNav
     "domharries/foldnav.nvim",
+    lazy = true,
     keys = {
       {
         "<C-h>",
@@ -80,6 +79,7 @@ return {
   },
   { -- Which-Key
     "folke/which-key.nvim",
+    lazy = true,
     opts = {
       preset = "modern",
       win = {
@@ -118,12 +118,30 @@ return {
     "tris203/precognition.nvim",
     lazy = true,
     opts = {},
+    keys = {
+      {
+        "zk",
+        function()
+          require("config.rootiest").toggle_precognition()
+        end,
+        desc = "Toggle Precognition",
+      },
+    },
   },
   { -- Zen Mode
     "folke/zen-mode.nvim",
     --event = "VeryLazy",
     lazy = true,
     opts = {},
+    keys = {
+      { -- Toggle ZenMode
+        "<leader>z",
+        function()
+          require("zen-mode").toggle()
+        end,
+        desc = "Toggle ZenMode",
+      },
+    },
   },
   { -- SmoothCursor
     "gen740/SmoothCursor.nvim",

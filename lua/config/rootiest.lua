@@ -110,31 +110,6 @@ function M.set_cursor_icons()
   end
 end
 
--- Evaluate dependencies and print warnings if needed
-function M.eval_dependencies()
-  local function should_suppress_warnings()
-    return false
-  end
-
-  local function check_executable(executable)
-    if vim.fn.executable(executable) ~= 1 then
-      vim.api.nvim_notify(
-        executable .. " is not installed!",
-        vim.log.levels.WARN,
-        {}
-      )
-    end
-  end
-
-  if not should_suppress_warnings() then
-    local executables =
-      { "lazygit", "gh", "rg", "fzf", "fd", "git", "luarocks" }
-    for _, executable in ipairs(executables) do
-      check_executable(executable)
-    end
-  end
-end
-
 -- Evaluate Neovide settings
 function M.eval_neovide()
   if vim.g.neovide then
@@ -158,11 +133,40 @@ function M.define_commands()
   end, { force = true, desc = "Yank line without leading whitespace" })
 end
 
+function M.define_autocommands()
+  local autogrp = vim.api.nvim_create_augroup
+  local autocmd = vim.api.nvim_create_autocmd
+  autogrp("AutoSpellCorrections", { clear = true })
+  -- List of filetypes to exclude
+  local excluded_filetypes = {
+    "help",
+    "alpha",
+    "dashboard",
+    "neo-tree",
+    "Trouble",
+    "trouble",
+    "lazy",
+    "mason",
+    "notify",
+    "toggleterm",
+    "lazyterm",
+  }
+  -- Autocommand to trigger setup on FileType
+  autocmd("FileType", {
+    group = "AutoSpellCorrections",
+    callback = function()
+      local filetype = vim.bo.filetype
+      if not vim.tbl_contains(excluded_filetypes, filetype) then
+        M.define_autocorrections()
+      end
+    end,
+  })
+end
+
 function M.setup()
-  M.eval_dependencies()
   M.eval_neovide()
-  M.define_autocorrections()
   M.define_commands()
+  M.define_autocommands()
 end
 
 return M

@@ -21,10 +21,6 @@ local function get_fg_color(hlgroup)
 end
 
 return {
-  { -- Project management
-    import = "lazyvim.plugins.extras.util.project",
-    opts = { manual_mode = false },
-  },
   { -- Chezmoi
     import = "lazyvim.plugins.extras.util.chezmoi",
   },
@@ -43,8 +39,16 @@ return {
   },
   { -- Link following
     "chrishrb/gx.nvim",
-    event = "VeryLazy",
+    lazy = true,
     cmd = { "Browse" },
+    keys = {
+      { -- Open URL/Link
+        "gx",
+        "<cmd>Browse<cr>",
+        mode = { "n", "x" },
+        desc = "Open URL/Link",
+      },
+    },
     init = function()
       vim.g.netrw_nogx = 1
     end,
@@ -55,19 +59,42 @@ return {
     "Pocco81/auto-save.nvim",
     event = "BufEnter",
   },
-  { -- User is bored
-    "mikesmithgh/ugbi",
-    event = "InsertEnter",
-  },
   { -- Ripgrep substitute
     "chrisgrieser/nvim-rip-substitute",
     event = "InsertEnter",
     cmd = "RipSubstitute",
+    keys = {
+      { -- Rip Substitute
+        "<leader>fs",
+        function()
+          require("rip-substitute").sub()
+        end,
+        mode = { "n", "x" },
+        desc = "Rip Substitute",
+      },
+    },
   },
   { -- Gist Tools
     "Rawnly/gist.nvim",
-    event = "InsertEnter",
-    cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
+    lazy = true,
+    cmd = {
+      "GistCreate",
+      "GistCreateFromFile",
+      "GistsList",
+    },
+    keys = {
+      { -- Create Gist
+        "<leader>gnc",
+        "<cmd>GistCreate<cr>",
+        desc = "Create Gist",
+        mode = { "n", "x" },
+      },
+      { -- Find Gists
+        "<leader>gnf",
+        "<cmd>GistList<cr>",
+        desc = "Find Gists",
+      },
+    },
     config = true,
   },
   { -- Unception
@@ -78,10 +105,28 @@ return {
   },
   { -- 🍎 Icon Picker
     "ziontee113/icon-picker.nvim",
-    event = "InsertEnter",
+    lazy = true,
     config = function()
       require("icon-picker").setup({ disable_legacy_commands = true })
     end,
+    keys = {
+      { -- Pick Icon
+        "<leader>Ii",
+        "<cmd>IconPickerNormal<cr>",
+        desc = "Pick Icon",
+      },
+      { -- Yank Icon
+        "<leader>Iy",
+        "<cmd>IconPickerYank<cr>",
+        desc = "Yank Icon",
+      },
+      { -- Insert Icon in insert mode
+        "<C-i>",
+        "<cmd>IconPickerInsert<cr>",
+        desc = "Insert Icon",
+        mode = "i",
+      },
+    },
   },
   { -- LazyGit
     "kdheepak/lazygit.nvim",
@@ -93,13 +138,20 @@ return {
       "LazyGitFilter",
       "LazyGitFilterCurrentFile",
     },
+    keys = {
+      {
+        "<leader>lg",
+        "<cmd>LazyGit<cr>",
+        desc = "LazyGit",
+      },
+    },
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
   },
   { -- Codesnap
     "mistricky/codesnap.nvim",
-    event = "InsertEnter",
+    lazy = true,
     build = "make",
     opts = {
       save_path = "~/Pictures/Screenshots/",
@@ -109,6 +161,38 @@ return {
       watermark = "Rootiest Snippets",
       code_font_family = "Iosevka NF",
       code_font_size = 12,
+    },
+    cmd = {
+      "CodeSnap",
+      "CodeSnapSave",
+      "CodeSnapHighlight",
+      "CodeSnapASCII",
+    },
+    keys = {
+      { -- Save selected code snapshot into clipboard
+        "<leader>cy",
+        "<cmd>CodeSnap<cr>",
+        desc = "Save selected code snapshot into clipboard",
+        mode = "x",
+      },
+      { -- Save selected code snapshot in ~/Pictures
+        "<leader>cs",
+        "<cmd>CodeSnapSave<cr>",
+        desc = "Save selected code snapshot in ~/Pictures",
+        mode = "x",
+      },
+      { -- Highlight and snapshot selected code into clipboard
+        "<leader>ch",
+        "<cmd>CodeSnapHighlight<cr>",
+        desc = "Highlight and snapshot selected code into clipboard",
+        mode = "x",
+      },
+      { -- Save ASCII code snapshot into clipboard
+        "<leader>ci",
+        "<cmd>CodeSnapASCII<cr>",
+        desc = "Save ASCII code snapshot into clipboard",
+        mode = "x",
+      },
     },
   },
   { -- Kulala
@@ -120,7 +204,13 @@ return {
   },
   { -- Thanks/github-stars
     "jsongerber/thanks.nvim",
-    event = "VeryLazy",
+    lazy = true,
+    cmd = {
+      "ThanksAll",
+      "ThanksGithubAuth",
+      "ThanksGithubLogout",
+      "ThanksClearCache",
+    },
     opts = {
       star_on_install = false,
     },
@@ -158,9 +248,12 @@ return {
     opts = {},
     keys = {
       {
-        mode = { "i", "n" },
         "<C-s>",
-        "<cmd>lua require('caps-word').toggle()<CR>",
+        function()
+          require("caps-word").toggle()
+        end,
+        desc = "Toggle CapsWord",
+        mode = { "i", "n" },
       },
     },
   },

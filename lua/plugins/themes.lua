@@ -72,6 +72,15 @@ return {
     "xiyaowong/transparent.nvim",
     lazy = true,
     config = true,
+    keys = {
+      {
+        "<leader>wt",
+        function()
+          require("transparent").toggle()
+        end,
+        desc = "Toggle Transparency",
+      },
+    },
   },
   { -- Auto Dark Mode
     "f-person/auto-dark-mode.nvim",

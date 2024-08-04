@@ -183,15 +183,6 @@ function M.setup_autocommands()
   local autogrp = vim.api.nvim_create_augroup
   local autocmd = vim.api.nvim_create_autocmd
   autogrp("IndentHighlight", { clear = true })
-  -- Autocommand to trigger setup on FileType
-  -- autocmd("FileType", {
-  --   pattern = "*",
-  --   group = "IndentHighlight",
-  --   callback = function()
-  --     M.setup_indent_highlight()
-  --     M.setup_dashboard_highlight()
-  --   end,
-  -- })
 
   -- List of filetypes to exclude
   local excluded_filetypes = {
@@ -209,7 +200,7 @@ function M.setup_autocommands()
   }
 
   -- Autocommand to trigger setup on FileType
-  vim.api.nvim_create_autocmd("FileType", {
+  autocmd("FileType", {
     group = "IndentHighlight",
     callback = function()
       local filetype = vim.bo.filetype

@@ -2,10 +2,15 @@
 -- -------------------------------- AUTOCMDS -----------------------------------
 -- -----------------------------------------------------------------------------
 
+local autogrp = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
 -- GIT CONFLICT MARKERS
 -- if there are conflicts, jump to first conflict, highlight conflict markers,
 -- and disable diagnostics (simplified version of `git-conflict.nvim`)
-vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained" }, {
+autogrp("GitConflictMarkers", { clear = true })
+autocmd({ "BufEnter", "FocusGained" }, {
+  group = "GitConflictMarkers",
   callback = function(ctx)
     local hlgroup = "DiagnosticVirtualTextInfo" -- CONFIG
 
