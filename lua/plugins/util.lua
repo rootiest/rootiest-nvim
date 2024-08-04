@@ -53,7 +53,7 @@ return {
   },
   { -- Auto-save
     "Pocco81/auto-save.nvim",
-    event = "InsertEnter",
+    event = "BufEnter",
   },
   { -- User is bored
     "mikesmithgh/ugbi",
