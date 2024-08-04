@@ -1,131 +1,102 @@
 -- -----------------------------------------------------------------------------
--- ------------------------------ MUSIC-STATS ----------------------------------
+-- ------------------------------- MUSIC-STATS ---------------------------------
 -- -----------------------------------------------------------------------------
 
 local M = {}
-local cache = {
-  text = "", -- Default to empty string to handle initial state
-  timestamp = 0,
-}
-local cache_duration = 1 -- Cache duration in seconds
+local cache_file = os.getenv("HOME") .. "/.cache/music_cache.txt"
 
--- List of players to ignore
-local ignored_players = {
-  "firefox",
-  "kdeconnect",
-  "plasma-browser-integration",
-}
-
-local function get_ignored_players_string()
-  return table.concat(ignored_players, ",")
+-- Function to read the cache file
+local function read_cache()
+  local file = io.open(cache_file, "r")
+  if file then
+    local content = file:read("*a")
+    file:close()
+    return content
+  end
+  return ""
 end
 
-local function get_music_current()
-  local ignored_players_str = get_ignored_players_string()
-  local cmd = string.format(
-    "playerctl --ignore-player %s metadata --format '{{ artist }} - {{ title }}' 2>/dev/null",
-    ignored_players_str
-  )
-
-  local result = vim.call("system", cmd)
-
-  if not result or result:match("No players found") then
-    return "" -- Return empty string for no music
+-- Parse the cached music data
+local function parse_cache()
+  local content = read_cache()
+  if not content or content:match("No players found") then
+    return "", "", "", ""
   end
-
-  local artist_title = result:match("^(.-)%s*$") -- Trim any whitespace
-  return artist_title or "" -- Return empty string if no artist/title
+  local artist, title, album, status =
+    content:match("^(.-)%s*-%s*(.-)%s*-%s*(.-)%s*-%s*(.-)%s*$")
+  return artist or "", title or "", album or "", status or ""
 end
 
-local function get_music_icon()
-  local ignored_players_str = get_ignored_players_string()
-  local cmd = string.format(
-    "playerctl --ignore-player %s status 2>/dev/null",
-    ignored_players_str
-  )
-
-  local result = vim.call("system", cmd)
-
-  if not result then
-    return "󰓃 " -- Default icon for music stopped
-  end
-
-  -- Determine the icon based on the player status
-  if result:match("Playing") then
-    return "󰝚 " -- Icon for music playing
-  elseif result:match("Paused") then
-    return "󰝛 " -- Icon for music paused
+function M.get_status()
+  local _, _, _, status = parse_cache()
+  if status:match("Playing") then
+    return "playing"
+  elseif status:match("Paused") then
+    return "paused"
   else
-    return "󰓃 " -- Default icon for music stopped
+    return "ptopped"
   end
-end
-
-local function get_music_metadata(field)
-  local ignored_players_str = get_ignored_players_string()
-  local cmd = string.format(
-    "playerctl --ignore-player %s metadata --format '{{ %s }}' 2>/dev/null",
-    ignored_players_str,
-    field
-  )
-
-  local result = vim.call("system", cmd)
-
-  if not result or result:match("No players found") then
-    return "" -- Return empty string for no music or missing metadata
-  end
-
-  local metadata = result:match("^(.-)%s*$") -- Trim any whitespace
-  return metadata or "" -- Return empty string if no metadata
-end
-
-local function get_player_property(property)
-  local ignored_players_str = get_ignored_players_string()
-  local cmd = string.format(
-    "playerctl --ignore-player %s %s 2>/dev/null",
-    ignored_players_str,
-    property
-  )
-
-  local result = vim.call("system", cmd)
-
-  if not result then
-    return nil -- Return nil for no property value
-  end
-
-  return result:match("^(.-)%s*$") -- Trim any whitespace
 end
 
 function M.get_current()
-  local current_time = os.time()
-  if current_time - cache.timestamp > cache_duration then
-    cache.text = get_music_current()
-    cache.timestamp = current_time
-  end
-  return cache.text
+  return parse_cache() -- Just return title for simplicity
 end
 
 function M.get_icon()
-  return get_music_icon()
+  local _, _, _, status = parse_cache()
+  if status == "Playing" then
+    return "󰝚 "
+  elseif status == "Paused" then
+    return "󰝛 "
+  else
+    return "󰓃 "
+  end
 end
 
 function M.get_title()
-  return get_music_metadata("title")
+  local _, title = parse_cache()
+  return title
 end
 
 function M.get_artist()
-  return get_music_metadata("artist")
+  local artist = parse_cache()
+  return artist
 end
 
 function M.get_album()
-  return get_music_metadata("album")
+  local _, _, album = parse_cache()
+  return album
 end
 
 function M.is_shuffle()
-  return get_player_property("shuffle") == "on"
+  -- Add shuffle property parsing if needed
+  return false
 end
 
 function M.is_loop()
-  return get_player_property("loop") == "true"
+  -- Add loop property parsing if needed
+  return false
+end
+
+function M.get_icon_with_text()
+  local icon = M.get_icon()
+  local title = M.get_title()
+  local artist = M.get_artist()
+  local status = M.get_status() -- Assuming there's a function to get the music status
+
+  if status ~= "playing" and status ~= "paused" then
+    return "" -- Return empty string if the status is neither "Playing" nor "Paused"
+  end
+
+  if artist and #artist > 25 then
+    return icon .. " " .. title
+  elseif title and #title > 25 then
+    return icon .. " " .. title
+  elseif title and artist and #title <= 25 then
+    return icon .. " " .. artist .. " - " .. title
+  else
+    return icon .. " " .. (title or artist or "No music")
+  end
 end
 
 return M
