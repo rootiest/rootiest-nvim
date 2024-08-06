@@ -56,8 +56,14 @@ return {
     config = true,
   },
   { -- Auto-save
-    "Pocco81/auto-save.nvim",
-    event = "BufEnter",
+    "okuuva/auto-save.nvim",
+    cmd = "ASToggle",
+    event = { "InsertLeave", "TextChanged" },
+    opts = {
+      execution_message = {
+        enabled = false,
+      },
+    },
   },
   { -- Ripgrep substitute
     "chrisgrieser/nvim-rip-substitute",
@@ -121,7 +127,7 @@ return {
         desc = "Yank Icon",
       },
       { -- Insert Icon in insert mode
-        "<C-i>",
+        "<C-.>",
         "<cmd>IconPickerInsert<cr>",
         desc = "Insert Icon",
         mode = "i",
@@ -295,5 +301,16 @@ return {
     opts = {
       set_ft = "qalc",
     },
+  },
+  { -- Remote-nvim
+    "amitds1997/remote-nvim.nvim",
+    lazy = true,
+    version = "*", -- Pin to GitHub releases
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- For standard functions
+      "MunifTanjim/nui.nvim", -- To build the plugin UI
+      "nvim-telescope/telescope.nvim", -- For picking b/w different remote methods
+    },
+    config = true,
   },
 }
