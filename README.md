@@ -181,7 +181,7 @@ Options are configured in the `config/options.lua` file under the `ROOTIEST` hea
 The default values are:
 
 ```lua
--- --------------------------------- ROOTIEST -----------------------------------
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROOTIEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.g.aitool      = "codeium" --Options:  codeium, copilot, tabnine, minuet, none
 vim.g.usewakatime = true      --Options:  true, false
 vim.g.usehardtime = false     --Options:  true, false
