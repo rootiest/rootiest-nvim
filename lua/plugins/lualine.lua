@@ -86,14 +86,6 @@ return {
           },
           -- stylua: ignore
           {
-            ---@diagnostic disable-next-line: undefined-field
-            function() return require("noice").api.status.mode.get() end,
-            ---@diagnostic disable-next-line: undefined-field
-            cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-            color = function() return LazyVim.ui.fg("Constant") end,
-          },
-          -- stylua: ignore
-          {
             function() return "  " .. require("dap").status() end,
             cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
             color = function() return LazyVim.ui.fg("Debug") end,
@@ -124,7 +116,7 @@ return {
           },
           {
             function()
-              return wakatime_stats.get_icon_with_text() -- Display the icon and WakaTime data together
+              return wakatime_stats.get_icon_with_text()
             end,
             color = function()
               if wakatime_stats.get_total_minutes() >= 60 then
@@ -145,7 +137,7 @@ return {
         lualine_y = {
           {
             function()
-              return music_stats.get_icon_with_text() -- Display the icon and current state together
+              return music_stats.get_icon_with_text()
             end,
           },
 
@@ -173,6 +165,12 @@ return {
           },
         },
         lualine_z = {
+          {
+            require("recorder").recordingStatus,
+            color = "CurSearch",
+            separator = { left = "", right = "" },
+          },
+
           {
             "searchcount",
             color = "CurSearch",
