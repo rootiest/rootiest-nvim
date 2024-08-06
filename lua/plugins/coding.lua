@@ -9,37 +9,6 @@ return {
       automatic_installation = true,
     },
   },
-  { -- Codeium
-    import = "lazyvim.plugins.extras.coding.codeium",
-    opts = {
-      enable_chat = true,
-    },
-    cond = function()
-      return vim.g.aitool == "codeium"
-    end,
-  },
-  { -- Copilot
-    import = "lazyvim.plugins.extras.coding.copilot",
-    cond = function()
-      return vim.g.aitool == "copilot"
-    end,
-  },
-  { -- Tabnine
-    import = "lazyvim.plugins.extras.coding.tabnine",
-    cond = function()
-      return vim.g.aitool == "tabnine"
-    end,
-  },
-  { -- Minuet-AI
-    "milanglacier/minuet-ai.nvim",
-    dependencies = { { "nvim-lua/plenary.nvim" }, { "hrsh7th/nvim-cmp" } },
-    config = function()
-      require("minuet").setup({ provider = "openai" })
-    end,
-    cond = function()
-      return vim.g.aitool == "minuet"
-    end,
-  },
   { -- Yanky
     import = "lazyvim.plugins.extras.coding.yanky",
   },
@@ -68,78 +37,23 @@ return {
       },
     },
   },
-  { -- Completion
-    "hrsh7th/nvim-cmp",
-    ---@param opts cmp.ConfigSchema
-    opts = function(_, opts)
-      local cmp = require("cmp")
-
-      -- Global sources
-      opts.sources = {
-        { name = "emoji" },
-        { name = "cmp_yanky" },
-        { name = "dotenv" },
-        { name = "calc" },
-        { name = "conventionalcommits" },
-        { name = "gitmoji" },
-      }
-
-      -- General setup
-      cmp.setup(opts)
-
-      -- Filetype-specific setup
-      cmp.setup.filetype("config", {
-        sources = vim.tbl_filter(function(source)
-          return source.name ~= "emoji" and source.name ~= "gitmoji"
-        end, opts.sources),
-      })
-
-      -- List of filetypes to disable completion
-      local disabled_filetypes = { "dashboard", "qalc" }
-      for _, filetype in ipairs(disabled_filetypes) do
-        cmp.setup.filetype(filetype, {
-          sources = {},
-        })
-      end
-
-      -- Key mappings
-      cmp.setup({
-        mapping = {
-          ["<C-p>"] = cmp.mapping.select_prev_item(),
-          ["<C-n>"] = cmp.mapping.select_next_item(),
-          ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-          ["<Tab>"] = cmp.mapping.select_next_item(),
-          ["<C-S-f>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-e>"] = cmp.mapping.close(),
-          ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Insert,
-            select = true,
-          }),
-        },
-      })
-    end,
-    dependencies = {
-      "hrsh7th/cmp-emoji",
-      {
-        "chrisgrieser/cmp_yanky",
-        option = {
-          onlyCurrentFiletype = false,
-        },
-      },
-      "SergioRibera/cmp-dotenv",
-      "hrsh7th/cmp-calc",
-      "davidsierradz/cmp-conventionalcommits",
-      "Dynge/gitmoji.nvim",
-    },
-  },
-  { -- Colorizer
-    "norcalli/nvim-colorizer.lua",
-    event = "BufEnter",
+  -- { -- Colorizer
+  --   "norcalli/nvim-colorizer.lua",
+  --   event = "BufEnter",
+  --   config = function()
+  --     require("colorizer").setup()
+  --   end,
+  -- },
+  {
+    "brenoprata10/nvim-highlight-colors",
     config = function()
-      require("colorizer").setup()
+      require("nvim-highlight-colors").setup({})
     end,
+  },
+  {
+    "luckasRanarison/tailwind-tools.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    opts = {}, -- your configuration
   },
   { -- Substitute
     "gbprod/substitute.nvim",
