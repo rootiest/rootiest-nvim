@@ -1,7 +1,6 @@
 -- -----------------------------------------------------------------------------
 -- --------------------------------- THEMES ------------------------------------
 -- -----------------------------------------------------------------------------
-local astral = require("astral")
 
 return {
   -- ----------------------- Themes --------------------------
@@ -90,13 +89,13 @@ return {
       set_dark_mode = function()
         vim.o.background = "dark"
         vim.cmd.colorscheme(
-          astral.colortheme or "catppuccin-frappe" or "tokyonight"
+          require("astral").colortheme or "catppuccin-frappe" or "tokyonight"
         )
       end,
       set_light_mode = function()
         vim.o.background = "light"
         vim.cmd.colorscheme(
-          astral.colortheme or "catppuccin-latte" or "tokyonight-day"
+          require("astral").colortheme or "catppuccin-latte" or "tokyonight-day"
         )
       end,
     },
