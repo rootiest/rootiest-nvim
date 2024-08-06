@@ -19,7 +19,10 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 -- --------------------------------- PLUGINS -----------------------------------
 require("lazy").setup({
   spec = {
-    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    {
+      "LazyVim/LazyVim",
+      import = "lazyvim.plugins",
+    },
     { import = "plugins" }, -- General Plugins
   },
   defaults = { lazy = false, version = false },
@@ -40,5 +43,9 @@ require("lazy").setup({
     -- Track the time spent loading plugins
     loader = true,
     require = true,
+  },
+  ui = {
+    border = "rounded",
+    title = " Plugin Manager ",
   },
 })
