@@ -77,6 +77,13 @@ return {
             key = "s",
           },
           {
+            action = 'lua require("config.rootiest").load_remote()',
+            desc = " Remote Session",
+            icon = "󰢹 ",
+            key = "S",
+          },
+
+          {
             action = "Lazy",
             desc = " Lazy",
             icon = "󰒲 ",
