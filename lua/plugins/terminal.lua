@@ -1,7 +1,6 @@
--- -----------------------------------------------------------------------------
--- -------------------------------- TERMINALS ----------------------------------
--- -----------------------------------------------------------------------------
-
+--          ╭─────────────────────────────────────────────────────────╮
+--          │                        Terminals                        │
+--          ╰─────────────────────────────────────────────────────────╯
 package.path = package.path
   .. ";"
   .. vim.fn.expand("$HOME")
@@ -73,28 +72,28 @@ return {
     end,
     keys = {
       {
-        "<c-s-h>",
+        "<C-S-h>",
         function()
           require("kitty-navigator").navigateLeft()
         end,
         desc = "KittyNavigateLeft",
       },
       {
-        "<c-s-j>",
+        "<C-S-j>",
         function()
           require("kitty-navigator").navigateDown()
         end,
         desc = "KittyNavigateDown",
       },
       {
-        "<c-s-k>",
+        "<C-S-k>",
         function()
           require("kitty-navigator").navigateUp()
         end,
         desc = "KittyNavigateUp",
       },
       {
-        "<c-s-l>",
+        "<C-S-l>",
         function()
           require("kitty-navigator").navigateRight()
         end,
