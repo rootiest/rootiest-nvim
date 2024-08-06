@@ -4,6 +4,7 @@
 
 local M = {}
 local cache_file = os.getenv("HOME") .. "/.cache/music_cache.txt"
+local separator = "␟"
 
 -- Function to read the cache file
 local function read_cache()
@@ -20,11 +21,30 @@ end
 local function parse_cache()
   local content = read_cache()
   if not content or content:match("No players found") then
-    return "", "", "", ""
+    return "", "", "", "", "", "", ""
   end
-  local artist, title, album, status =
-    content:match("^(.-)%s*-%s*(.-)%s*-%s*(.-)%s*-%s*(.-)%s*$")
-  return artist or "", title or "", album or "", status or ""
+  local pattern = "^(.-)%s*"
+    .. separator
+    .. "%s*(.-)%s*"
+    .. separator
+    .. "%s*(.-)%s*"
+    .. separator
+    .. "%s*(.-)%s*"
+    .. separator
+    .. "%s*(.-)%s*"
+    .. separator
+    .. "%s*(.-)%s*"
+    .. separator
+    .. "%s*(.-)%s*$"
+  local artist, title, album, status, volume, loop, shuffle =
+    content:match(pattern)
+  return artist or "",
+    title or "",
+    album or "",
+    status or "",
+    volume or "",
+    loop or "",
+    shuffle or ""
 end
 
 function M.get_status()
@@ -34,7 +54,7 @@ function M.get_status()
   elseif status:match("Paused") then
     return "paused"
   else
-    return "ptopped"
+    return "stopped"
   end
 end
 
@@ -68,14 +88,53 @@ function M.get_album()
   return album
 end
 
+function M.get_volume()
+  local _, _, _, _, volume = parse_cache()
+  return tonumber(volume) or 0.0
+end
+
 function M.is_shuffle()
-  -- Add shuffle property parsing if needed
-  return false
+  local _, _, _, _, _, _, shuffle = parse_cache()
+  return shuffle == "On"
 end
 
 function M.is_loop()
-  -- Add loop property parsing if needed
-  return false
+  local _, _, _, _, _, loop = parse_cache()
+  return loop ~= "None" and loop ~= "false"
+end
+
+local function shorten_text(text)
+  if #text <= 25 then
+    return text
+  end
+
+  local delimiters = { ",", "-", ":" }
+  for _, delimiter in ipairs(delimiters) do
+    local parts = vim.split(text, delimiter)
+    if #parts > 1 then
+      local first_part = parts[1]
+      local second_part = table.concat(vim.list_slice(parts, 2), delimiter)
+      if #first_part > #second_part then
+        return second_part
+      else
+        return first_part
+      end
+    end
+  end
+
+  return text
+end
+
+local function format_icon_with_text(icon, artist, title)
+  if artist and #artist > 25 then
+    return icon .. " " .. title
+  elseif title and #title > 25 then
+    return icon .. " " .. title
+  elseif title and artist and #title <= 25 then
+    return icon .. " " .. artist .. " - " .. title
+  else
+    return icon .. " " .. (title or artist or "No music")
+  end
 end
 
 function M.get_icon_with_text()
@@ -88,15 +147,10 @@ function M.get_icon_with_text()
     return "" -- Return empty string if the status is neither "Playing" nor "Paused"
   end
 
-  if artist and #artist > 25 then
-    return icon .. " " .. title
-  elseif title and #title > 25 then
-    return icon .. " " .. title
-  elseif title and artist and #title <= 25 then
-    return icon .. " " .. artist .. " - " .. title
-  else
-    return icon .. " " .. (title or artist or "No music")
-  end
+  title = shorten_text(title)
+  artist = shorten_text(artist)
+
+  return format_icon_with_text(icon, artist, title)
 end
 
 return M
