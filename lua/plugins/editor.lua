@@ -1,34 +1,16 @@
 -- -----------------------------------------------------------------------------
 -- --------------------------------- EDITOR ------------------------------------
 -- -----------------------------------------------------------------------------
-return {
-  { -- Edgy
-    import = "lazyvim.plugins.extras.ui.edgy",
-  },
-  { -- Mini-animate
-    import = "lazyvim.plugins.extras.ui.mini-animate",
-  },
 
+return {
   { -- Aerial
     import = "lazyvim.plugins.extras.editor.aerial",
   },
   { -- Dial
     import = "lazyvim.plugins.extras.editor.dial",
   },
-  { -- Fzf
-    import = "lazyvim.plugins.extras.editor.fzf",
-  },
   { -- Illuminate
     import = "lazyvim.plugins.extras.editor.illuminate",
-  },
-
-  {
-    "akinsho/bufferline.nvim",
-    opts = {
-      options = {
-        separator_style = "slant",
-      },
-    },
   },
   {
     "folke/flash.nvim",
@@ -74,18 +56,6 @@ return {
         function()
           require("foldnav").goto_end()
         end,
-      },
-    },
-  },
-  { -- Which-Key
-    "folke/which-key.nvim",
-    lazy = true,
-    opts = {
-      preset = "modern",
-      win = {
-        wo = {
-          winblend = 10,
-        },
       },
     },
   },
@@ -151,5 +121,18 @@ return {
       ---@diagnostic disable-next-line: missing-fields
       require("smoothcursor").setup({})
     end,
+  },
+  {
+    "tonymajestro/smart-scrolloff.nvim",
+    event = "VeryLazy",
+    opts = {
+      scrolloff_percentage = 0.25,
+    },
+  },
+  {
+    "chrisgrieser/nvim-recorder",
+    event = "VeryLazy",
+    dependencies = "rcarriga/nvim-notify", -- optional
+    opts = {},
   },
 }
