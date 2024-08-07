@@ -2,7 +2,9 @@
 --          │                        AI Tools                         │
 --          ╰─────────────────────────────────────────────────────────╯
 return {
-  { -- Neocodeium
+
+  {
+    -- Neocodeium
     "monkoose/neocodeium",
     event = "VeryLazy",
     opts = {
@@ -10,23 +12,48 @@ return {
       silent = true,
       debounce = false,
     },
-    init = function()
-      vim.keymap.set("i", "<c-y>", function()
-        require("neocodeium").accept()
-      end)
-      vim.keymap.set("i", "<c-w>", function()
-        require("neocodeium").accept_word()
-      end)
-      vim.keymap.set("i", "<c-l>", function()
-        require("neocodeium").accept_line()
-      end)
-      vim.keymap.set("i", "<c-p>", function()
-        require("neocodeium").cycle_or_complete(-1)
-      end)
-      vim.keymap.set("i", "<c-n>", function()
-        require("neocodeium").cycle_or_complete()
-      end)
-    end,
+    keys = {
+      { -- Accept suggestion
+        "<c-y>",
+        function()
+          require("neocodeium").accept()
+        end,
+        desc = "Accept suggestion",
+        mode = "i",
+      },
+      { -- Accept word
+        "<c-w>",
+        function()
+          require("neocodeium").accept_word()
+        end,
+        desc = "Accept word",
+        mode = "i",
+      },
+      { -- Accept line
+        "<c-l>",
+        function()
+          require("neocodeium").accept_line()
+        end,
+        desc = "Accept line",
+        mode = "i",
+      },
+      { -- Cycle or complete (previous)
+        "<c-p>",
+        function()
+          require("neocodeium").cycle_or_complete(-1)
+        end,
+        desc = "Cycle or complete (previous)",
+        mode = "i",
+      },
+      { -- Cycle or complete (next)
+        "<c-n>",
+        function()
+          require("neocodeium").cycle_or_complete()
+        end,
+        desc = "Cycle or complete (next)",
+        mode = "i",
+      },
+    },
   },
   { -- Copilot
     import = "lazyvim.plugins.extras.coding.copilot",
