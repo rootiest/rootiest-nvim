@@ -8,6 +8,9 @@ return {
   { -- Dial
     import = "lazyvim.plugins.extras.editor.dial",
   },
+  { -- Harpoon
+    import = "lazyvim.plugins.extras.editor.harpoon2",
+  },
   { -- Illuminate
     import = "lazyvim.plugins.extras.editor.illuminate",
   },
@@ -121,18 +124,20 @@ return {
       require("smoothcursor").setup({})
     end,
   },
-  {
+  { -- Smart Scrolloff
     "tonymajestro/smart-scrolloff.nvim",
     event = "VeryLazy",
     opts = {
       scrolloff_percentage = 0.25,
     },
   },
-  {
+  { -- Recorder
     "chrisgrieser/nvim-recorder",
     event = "VeryLazy",
     dependencies = "rcarriga/nvim-notify", -- optional
     opts = {},
   },
-  { "LudoPinelli/comment-box.nvim" },
+  { -- Comment Box
+    "LudoPinelli/comment-box.nvim",
+  },
 }
