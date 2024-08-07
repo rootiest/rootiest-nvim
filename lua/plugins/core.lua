@@ -2,7 +2,7 @@
 --          │                          Core                           │
 --          ╰─────────────────────────────────────────────────────────╯
 return {
-  {
+  { -- LazyVim
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "catppuccin-frappe",
@@ -12,13 +12,10 @@ return {
       },
     },
   },
-  { -- Edgy
-    import = "lazyvim.plugins.extras.ui.edgy",
-  },
   { -- Mini-animate
     import = "lazyvim.plugins.extras.ui.mini-animate",
   },
-  {
+  { -- Bufferline
     "akinsho/bufferline.nvim",
     opts = {
       options = {
