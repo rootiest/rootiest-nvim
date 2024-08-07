@@ -14,7 +14,7 @@ return {
   { -- Illuminate
     import = "lazyvim.plugins.extras.editor.illuminate",
   },
-  {
+  { -- Flash
     "folke/flash.nvim",
     opts = {
       modes = {
@@ -35,25 +35,25 @@ return {
     "domharries/foldnav.nvim",
     lazy = true,
     keys = {
-      {
+      { -- Goto Start
         "<C-h>",
         function()
           require("foldnav").goto_start()
         end,
       },
-      {
+      { -- Goto Next
         "<C-j>",
         function()
           require("foldnav").goto_next()
         end,
       },
-      {
+      { -- Goto Prev
         "<C-k>",
         function()
           require("foldnav").goto_prev_start()
         end,
       },
-      {
+      { -- Goto End
         "<C-l>",
         function()
           require("foldnav").goto_end()
@@ -91,7 +91,7 @@ return {
     lazy = true,
     opts = {},
     keys = {
-      {
+      { -- Toggle Precognition
         "zk",
         function()
           require("config.rootiest").toggle_precognition()
@@ -102,7 +102,6 @@ return {
   },
   { -- Zen Mode
     "folke/zen-mode.nvim",
-    --event = "VeryLazy",
     lazy = true,
     opts = {},
     keys = {
@@ -134,7 +133,7 @@ return {
   { -- Recorder
     "chrisgrieser/nvim-recorder",
     event = "VeryLazy",
-    dependencies = "rcarriga/nvim-notify", -- optional
+    dependencies = "rcarriga/nvim-notify",
     opts = {},
   },
   { -- Comment Box
