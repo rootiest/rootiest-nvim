@@ -11,6 +11,18 @@ package.path = package.path
   .. "/.luarocks/share/lua/5.1/?.lua"
 
 return {
+  { -- Smart-Splits
+    "mrjones2014/smart-splits.nvim",
+    build = "./kitty/install-kittens.bash",
+  },
+  { -- Image Renderer
+    "3rd/image.nvim",
+    ft = "markdown",
+    config = function()
+      require("image").setup()
+    end,
+    cond = vim.g.useimage and not vim.g.neovide,
+  },
   { -- ToggleTerm
     "akinsho/toggleterm.nvim",
     event = "VeryLazy",
@@ -80,7 +92,7 @@ return {
       end
     end,
   },
-  {
+  { -- Nekifoch
     "NeViRAIDE/nekifoch.nvim",
     lazy = true,
     cmd = "Nekifoch",
@@ -88,24 +100,24 @@ return {
       kitty_conf_path = vim.env.HOME .. "/.kittyoverrides",
     },
     keys = {
-      {
+      { -- List Fonts
         "<leader>u,l",
         "<cmd>Nekifoch list<cr>",
         desc = "Fonts list",
       },
-      {
+      { -- Check Font
         "<leader>u,c",
         "<cmd>Nekifoch check<cr>",
         desc = "Check current font settings",
       },
-      {
+      { -- Set Font Family
         "<leader>u,f",
         function()
           require("nekifoch.nui_set_font")()
         end,
         desc = "Set font family",
       },
-      {
+      { -- Set Font Size
         "<leader>u,s",
         function()
           require("nekifoch.nui_set_size")()
@@ -118,14 +130,6 @@ return {
       local kit = string.find(term, "kitty")
       return kit ~= nil
     end,
-  },
-  { -- Image Renderer
-    "3rd/image.nvim",
-    ft = "markdown",
-    config = function()
-      require("image").setup()
-    end,
-    cond = vim.g.useimage and not vim.g.neovide,
   },
   { -- WezTerm
     "willothy/wezterm.nvim",
@@ -152,29 +156,5 @@ return {
         end
       end
     end,
-  },
-  { -- Navigator (wezterm/tmux)
-    "numToStr/Navigator.nvim",
-    config = function()
-      require("Navigator").setup()
-    end,
-    cond = function() -- Using Tmux or WezTerm
-      local tterm = os.getenv("TERM")
-      if tterm and string.find(tterm, "screen") then
-        if os.getenv("TMUX") then
-          return true
-        end
-      else
-        if tterm and string.find(tterm, "tmux") then
-          return true
-        end
-        local wterm = os.getenv("TERM_PROGRAM")
-        return wterm and string.find(wterm, "WezTerm")
-      end
-    end,
-  },
-  { -- Smart-Splits
-    "mrjones2014/smart-splits.nvim",
-    build = "./kitty/install-kittens.bash",
   },
 }
