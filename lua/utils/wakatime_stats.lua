@@ -66,4 +66,17 @@ function M.get_total_minutes()
   return (hours * 60) + mins
 end
 
+function M.get_color()
+  local total_minutes = M.get_total_minutes()
+  local rooticolor = require("utils.rooticolor") -- Adjust according to your actual setup
+
+  if total_minutes >= 60 then
+    return { fg = rooticolor.get_fg_color("GitSignsAdd") }
+  elseif total_minutes >= 30 then
+    return { fg = rooticolor.get_fg_color("GitSignsChange") }
+  else
+    return { fg = rooticolor.get_fg_color("GitSignsDelete") }
+  end
+end
+
 return M
