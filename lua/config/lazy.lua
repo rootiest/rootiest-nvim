@@ -24,7 +24,11 @@ require("lazy").setup({
     },
     { import = "plugins" }, -- General Plugins
   },
-  defaults = { lazy = false, version = false },
+  defaults = {
+    lazy = false,
+    version = false,
+    event = "VeryLazy",
+  },
   checker = { enabled = true },
   performance = {
     rtp = {
