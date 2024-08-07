@@ -128,7 +128,7 @@ without replacing your current NeoVim configuration.
 - Many UI elements to enhance the experience
 - LSP support for many languages and automatic setup for many more
 - Remotely spawn a NeoVim instance over ssh, in a container, or from a git repo
-- Dashboard logo adjusts to the size of the windowa
+- Dashboard logo adjusts to the size of the window
 - Beautiful, unique, and feature-rich lualine statusline
 - When available, git-blame, WakaTime and music player stats components displayed
   in lualine ![Lualine](.screenshots/lualine.png)
