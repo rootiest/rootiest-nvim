@@ -1,23 +1,8 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Utilities                        │
 --          ╰─────────────────────────────────────────────────────────╯
--- Function to convert RGB to hexadecimal
-local function rgb_to_hex(rgb)
-  return string.format("#%02x%02x%02x", rgb[1], rgb[2], rgb[3])
-end
 
-local function get_fg_color(hlgroup)
-  local hl = vim.api.nvim_get_hl(0, { name = hlgroup, link = false })
-  local fg = hl.fg
-  if fg then
-    return rgb_to_hex({
-      bit.rshift(bit.band(fg, 0xFF0000), 16),
-      bit.rshift(bit.band(fg, 0x00FF00), 8),
-      bit.band(fg, 0x0000FF),
-    })
-  end
-  return nil
-end
+local rooticolor = require("utils.rooticolor")
 
 return {
   { -- Chezmoi
@@ -280,7 +265,7 @@ return {
       table.insert(config.sections.lualine_c, {
         git_blame.get_current_blame_text,
         cond = git_blame.is_blame_text_available,
-        color = { fg = get_fg_color("GitSignsCurrentLineBlame") },
+        color = { fg = rooticolor.get_fg_color("GitSignsCurrentLineBlame") },
       })
 
       -- Apply the new configuration

@@ -1,23 +1,6 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                         Lualine                         │
 --          ╰─────────────────────────────────────────────────────────╯
--- Function to convert RGB to hexadecimal
-local function rgb_to_hex(rgb)
-  return string.format("#%02x%02x%02x", rgb[1], rgb[2], rgb[3])
-end
-
-local function get_fg_color(hlgroup)
-  local hl = vim.api.nvim_get_hl(0, { name = hlgroup, link = false })
-  local fg = hl.fg
-  if fg then
-    return rgb_to_hex({
-      bit.rshift(bit.band(fg, 0xFF0000), 16),
-      bit.rshift(bit.band(fg, 0x00FF00), 8),
-      bit.band(fg, 0x0000FF),
-    })
-  end
-  return nil
-end
 
 return {
   "nvim-lualine/lualine.nvim",
@@ -34,10 +17,6 @@ return {
   end,
   opts = function()
     local icons = LazyVim.config.icons
-
-    -- Require the dependencies
-    local wakatime_stats = require("config.wakatime_stats")
-    local music_stats = require("config.music_stats")
 
     vim.o.laststatus = vim.g.lualine_laststatus
 
@@ -115,16 +94,11 @@ return {
           },
           {
             function()
-              return wakatime_stats.get_icon_with_text()
+              return require("utils.wakatime_stats").get_icon_with_text()
             end,
             color = function()
-              if wakatime_stats.get_total_minutes() >= 60 then
-                return { fg = get_fg_color("diffAdded") }
-              elseif wakatime_stats.get_total_minutes() >= 30 then
-                return { fg = get_fg_color("diffOldFile") }
-              else
-                return { fg = get_fg_color("diffRemoved") }
-              end
+              local wakatime_stats = require("utils.wakatime_stats")
+              return wakatime_stats.get_color()
             end,
             on_click = function(button)
               if button == "left" then
@@ -136,7 +110,7 @@ return {
         lualine_y = {
           {
             function()
-              return music_stats.get_icon_with_text()
+              return require("utils.music_stats").get_icon_with_text()
             end,
           },
 
