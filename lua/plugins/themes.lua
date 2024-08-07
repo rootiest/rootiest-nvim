@@ -23,13 +23,13 @@ return {
       indent_blankline = {
         enabled = true,
         scope_color = "mauve",
-        colored_indent_levels = false,
+        colored_indent_levels = true,
       },
       grug_far = true,
       mason = true,
       mini = {
         enabled = true,
-        indentscope_color = "lavender", -- catppuccin color (eg. `lavender`) Default: text
+        indentscope_color = "mauve",
       },
       neotree = true,
       noice = true,
