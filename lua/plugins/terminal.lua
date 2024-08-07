@@ -59,48 +59,6 @@ return {
       })
     end,
   },
-  { -- Kitty-Navigator
-    "MunsMan/kitty-navigator.nvim",
-    build = {
-      "cp navigate_kitty.py ~/.config/kitty",
-      "cp pass_keys.py ~/.config/kitty",
-    },
-    cond = function() -- Using Kitty
-      local term = os.getenv("TERM") or ""
-      local kit = string.find(term, "kitty")
-      return kit ~= nil
-    end,
-    keys = {
-      {
-        "<C-S-h>",
-        function()
-          require("kitty-navigator").navigateLeft()
-        end,
-        desc = "KittyNavigateLeft",
-      },
-      {
-        "<C-S-j>",
-        function()
-          require("kitty-navigator").navigateDown()
-        end,
-        desc = "KittyNavigateDown",
-      },
-      {
-        "<C-S-k>",
-        function()
-          require("kitty-navigator").navigateUp()
-        end,
-        desc = "KittyNavigateUp",
-      },
-      {
-        "<C-S-l>",
-        function()
-          require("kitty-navigator").navigateRight()
-        end,
-        desc = "KittyNavigateRight",
-      },
-    },
-  },
   { -- Kitty-Runner
     "jghauser/kitty-runner.nvim",
     cond = function() -- Using Kitty
@@ -214,5 +172,9 @@ return {
         return wterm and string.find(wterm, "WezTerm")
       end
     end,
+  },
+  { -- Smart-Splits
+    "mrjones2014/smart-splits.nvim",
+    build = "./kitty/install-kittens.bash",
   },
 }
