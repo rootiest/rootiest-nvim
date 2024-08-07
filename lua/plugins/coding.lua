@@ -36,20 +36,13 @@ return {
       },
     },
   },
-  -- { -- Colorizer
-  --   "norcalli/nvim-colorizer.lua",
-  --   event = "BufEnter",
-  --   config = function()
-  --     require("colorizer").setup()
-  --   end,
-  -- },
-  {
+  { -- Highlight colors
     "brenoprata10/nvim-highlight-colors",
     config = function()
       require("nvim-highlight-colors").setup({})
     end,
   },
-  {
+  { -- Tailwind
     "luckasRanarison/tailwind-tools.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     opts = {}, -- your configuration
@@ -91,7 +84,7 @@ return {
         desc = "Substitute visual selection",
         mode = "x",
       },
-      {
+      { -- Substitute visual selection in visual mode
         "<leader>r",
         function()
           require("substitute").visual()
