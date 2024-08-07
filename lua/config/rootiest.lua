@@ -49,7 +49,12 @@ end
 function M.toggle_lazygit_term()
   if pcall(require, "toggleterm.terminal") then
     local Terminal = require("toggleterm.terminal").Terminal
-    local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+    local lazygit = Terminal:new({
+      cmd = "lazygit",
+      hidden = true,
+      direction = "horizontal", -- Set direction to horizontal split
+      size = 0.5, -- Set size to 50% of the screen
+    })
     lazygit:toggle()
   else
     vim.api.nvim_err_writeln("toggleterm plugin is not installed")
@@ -106,11 +111,6 @@ function M.eval_neovide()
   end
 end
 
--- Define autocorrections
-function M.define_autocorrections()
-  require("config.autospell")
-end
-
 -- Define user commands
 function M.define_commands()
   vim.api.nvim_create_user_command("Q", function()
@@ -122,40 +122,9 @@ function M.define_commands()
   end, { force = true, desc = "Yank line without leading whitespace" })
 end
 
-function M.define_autocommands()
-  local autogrp = vim.api.nvim_create_augroup
-  local autocmd = vim.api.nvim_create_autocmd
-  autogrp("AutoSpellCorrections", { clear = true })
-  -- List of filetypes to exclude
-  local excluded_filetypes = {
-    "help",
-    "alpha",
-    "dashboard",
-    "neo-tree",
-    "Trouble",
-    "trouble",
-    "lazy",
-    "mason",
-    "notify",
-    "toggleterm",
-    "lazyterm",
-  }
-  -- Autocommand to trigger setup on FileType
-  autocmd("FileType", {
-    group = "AutoSpellCorrections",
-    callback = function()
-      local filetype = vim.bo.filetype
-      if not vim.tbl_contains(excluded_filetypes, filetype) then
-        M.define_autocorrections()
-      end
-    end,
-  })
-end
-
 function M.setup()
   M.eval_neovide()
   M.define_commands()
-  M.define_autocommands()
 end
 
 return M
