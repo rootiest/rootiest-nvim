@@ -4,64 +4,120 @@
 return {
   { -- Tokyonight
     "folke/tokyonight.nvim",
-    lazy = false, -- Override
+    lazy = true, -- Override
+    name = "tokyonight",
+    opts = {
+      style = "night",
+    },
   },
   { -- Catppuccin
     "catppuccin/nvim",
     lazy = false, -- Override
+    priority = 1000,
+    name = "catppuccin",
+    background = { -- :h background
+      light = "latte",
+      dark = "frappe",
+    },
     integrations = {
       indent_blankline = {
         enabled = true,
         scope_color = "mauve",
         colored_indent_levels = false,
       },
+      grug_far = true,
+      mason = true,
+      mini = {
+        enabled = true,
+        indentscope_color = "lavender", -- catppuccin color (eg. `lavender`) Default: text
+      },
+      neotree = true,
+      noice = true,
+      nvim_surround = true,
+      octo = true,
+      overseer = true,
+      which_key = true,
     },
   },
   { -- Ayu
     "Shatur/neovim-ayu",
+    lazy = true,
+    name = "ayu",
   },
   { -- Dracula
     "Mofiqul/dracula.nvim",
+    lazy = true,
+    name = "dracula",
   },
   { -- Eldritch
     "eldritch-theme/eldritch.nvim",
+    lazy = true,
+    name = "eldritch",
+  },
+  { -- Flow
+    "0xstepit/flow.nvim",
+    lazy = true,
+    name = "flow",
   },
   { -- Github-theme
     "projekt0n/github-nvim-theme",
+    lazy = true,
+    name = "github-nvim-theme",
   },
   { -- Gruvbox
     "ellisonleao/gruvbox.nvim",
+    lazy = true,
+    name = "gruvbox",
   },
   { -- Kanagawa
     "rebelot/kanagawa.nvim",
+    lazy = true,
+    name = "kanagawa",
   },
   { -- Monochrome
     "kdheepak/monochrome.nvim",
+    lazy = true,
+    name = "monochrome",
   },
   { -- NeoFusion
     "diegoulloao/neofusion.nvim",
+    lazy = true,
+    name = "neofusion",
   },
   { -- Nord
     "shaunsingh/nord.nvim",
+    lazy = true,
+    name = "nord",
   },
   { -- One Dark Pro
     "olimorris/onedarkpro.nvim",
+    lazy = true,
+    name = "onedarkpro",
   },
   { -- Oxocarbon
     "nyoom-engineering/oxocarbon.nvim",
+    lazy = true,
+    name = "oxocarbon",
   },
   { -- Paper
     "https://gitlab.com/yorickpeterse/vim-paper.git",
+    lazy = true,
+    name = "vim-paper",
   },
   { -- Rose-Pine
     "rose-pine/neovim",
     name = "rose-pine",
+    lazy = true,
   },
   { -- Umbra
     "LZDQ/umbra.nvim",
+    lazy = true,
+    name = "umbra",
   },
   { -- Zenbones
     "zenbones-theme/zenbones.nvim",
+    name = "zenbones",
+    lazy = true,
     dependencies = { "rktjmp/lush.nvim" },
   },
   --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ UTILITIES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -77,6 +133,11 @@ return {
         end,
         desc = "Toggle Transparency",
       },
+    },
+    cmd = {
+      "TransparentEnable",
+      "TransparentDisable",
+      "TransparentToggle",
     },
   },
   { -- Auto Dark Mode
