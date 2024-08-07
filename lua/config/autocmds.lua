@@ -53,7 +53,7 @@ autocmd({ "BufEnter", "FocusGained" }, {
 })
 
 -- Set up autocommands and highlight settings
-local load_highlight = require("config.highlight")
+local load_highlight = require("utils.highlight")
 -- load_highlight.setup_indent_highlight()
 load_highlight.setup_autocommands()
 load_highlight.setup_dashboard_highlight()
