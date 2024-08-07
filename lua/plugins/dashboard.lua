@@ -29,9 +29,18 @@ return {
 
     local opts = {
       theme = "doom",
-      hide = { statusline = false },
+      hide = {
+        statusline = false,
+        tabline = true,
+      },
+      preview = {
+        command = "cat",
+        file_path = logo_path .. "taco.ans",
+        file_width = 33,
+        file_height = 15,
+      },
       config = {
-        header = vim.split(LOGO, "\n"),
+        -- header = vim.split(LOGO, "\n"),
         center = {
           {
             action = "lua LazyVim.pick()()",
