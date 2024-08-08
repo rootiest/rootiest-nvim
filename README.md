@@ -141,6 +141,7 @@ without replacing your current NeoVim configuration.
 - Highlight group customizations that are colorscheme-compliant
 - Lean and fast while providing a complete professional experience
 - Achieves sub-75ms startup time on my personal laptop, goal to never exceed 100ms
+- Now with more efficient, refactored keymappings!
 
 ## Screenshots
 
