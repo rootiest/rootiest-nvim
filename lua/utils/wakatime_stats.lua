@@ -11,12 +11,13 @@ local function read_cache()
     file:close()
     return content
   end
-  return "Error: Cache file not found"
+  return "" -- Return empty string if file is not found or empty
 end
 
 local function get_wakatime_today()
   local result = read_cache()
-  if not result or result == "" then
+  if not result or result:match("^%s*$") then
+    -- Return empty string if result is nil or only whitespace
     return ""
   end
 
@@ -25,7 +26,7 @@ local function get_wakatime_today()
     result:match("command not found")
     or result:match("No such file or directory")
   then
-    return "Error: wakatime-cli not found"
+    return ""
   end
 
   return result:match("^%s*(.-)%s*$") -- Trim any whitespace
@@ -37,21 +38,27 @@ end
 
 function M.get_icon()
   local text = M.get_today()
-  if text and text:match("Error:") then
-    return "󰥕 " -- Icon for error or issue
-  else
+  if text ~= "" then
     return "󱦺 " -- Default icon
+  else
+    return "" -- No icon
   end
 end
 
 function M.get_icon_with_text()
-  return M.get_icon() .. " " .. (M.get_today() or "Loading...")
+  local icon = M.get_icon()
+  local text = M.get_today()
+  if icon ~= "" or text ~= "" then
+    return icon .. text -- Combine icon and text
+  else
+    return "" -- No text or icon
+  end
 end
 
 function M.get_total_minutes()
   local wakatime_string = M.get_today()
-  if not wakatime_string or wakatime_string:match("Error:") then
-    return 0 -- Return 0 if there's an error in the wakatime string
+  if wakatime_string == "" then
+    return 0 -- Return 0 if there's no data
   end
 
   local hours, mins = wakatime_string:match("(%d+)%s*hrs?%s*(%d+)%s*mins?")
