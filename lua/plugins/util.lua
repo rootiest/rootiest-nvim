@@ -2,7 +2,7 @@
 --          │                        Utilities                        │
 --          ╰─────────────────────────────────────────────────────────╯
 
-local rooticolor = require("utils.rooticolor")
+local rootilities = require("utils.rootilities")
 
 return {
   { -- Chezmoi
@@ -265,11 +265,17 @@ return {
       -- Get the current lualine configuration
       local config = require("lualine").get_config()
       local git_blame = require("gitblame")
+      -- Define the width limit for displaying the Git blame component
+      local width_limit = 180 -- Adjust this value as needed
+
       -- Add Git-blame to lualine_c section
       table.insert(config.sections.lualine_c, {
         git_blame.get_current_blame_text,
-        cond = git_blame.is_blame_text_available,
-        color = { fg = rooticolor.get_fg_color("GitSignsCurrentLineBlame") },
+        cond = function()
+          return git_blame.is_blame_text_available()
+            and rootilities.is_window_wide_enough(width_limit)
+        end,
+        color = { fg = rootilities.get_fg_color("GitSignsCurrentLineBlame") },
       })
 
       -- Apply the new configuration

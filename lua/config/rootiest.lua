@@ -3,7 +3,7 @@
 --          ╰─────────────────────────────────────────────────────────╯
 local M = {}
 
-local rooticolor = require("utils.rooticolor")
+local rootilities = require("utils.rootilities")
 
 local precog_first_time = true
 
@@ -78,27 +78,27 @@ function M.set_cursor_icons()
   local bg_color
 
   if current_mode == "n" then
-    bg_color = rooticolor.get_bg_color("MiniStatuslineModeNormal")
+    bg_color = rootilities.get_bg_color("MiniStatuslineModeNormal")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
   elseif current_mode == "v" then
-    bg_color = rooticolor.get_bg_color("MiniStatuslineModeVisual")
+    bg_color = rootilities.get_bg_color("MiniStatuslineModeVisual")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
   elseif current_mode == "V" then
-    bg_color = rooticolor.get_bg_color("MiniStatuslineModeVisual")
+    bg_color = rootilities.get_bg_color("MiniStatuslineModeVisual")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
   elseif current_mode == "R" or current_mode == "r" then
-    bg_color = rooticolor.get_bg_color("MiniStatuslineModeReplace")
+    bg_color = rootilities.get_bg_color("MiniStatuslineModeReplace")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
   elseif current_mode == "i" then
-    bg_color = rooticolor.get_bg_color("MiniStatuslineModeInsert")
+    bg_color = rootilities.get_bg_color("MiniStatuslineModeInsert")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
   else
-    bg_color = rooticolor.get_bg_color("MiniStatuslineModeNormal")
+    bg_color = rootilities.get_bg_color("MiniStatuslineModeNormal")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
   end

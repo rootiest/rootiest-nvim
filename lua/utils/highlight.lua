@@ -3,15 +3,15 @@
 --          ╰─────────────────────────────────────────────────────────╯
 local M = {}
 
-local rooticolor = require("utils.rooticolor")
+local rootilities = require("utils.rootilities")
 
 -- Function to set up indent highlights
 function M.setup_indent_highlight()
   -- Get the background color of CursorLine
-  local cursorline_bg_hex = rooticolor.get_bg_color("CursorLine")
+  local cursorline_bg_hex = rootilities.get_bg_color("CursorLine")
 
   -- Get the foreground color of Error
-  local miniiconsred_fg_hex = rooticolor.get_fg_color("Error")
+  local miniiconsred_fg_hex = rootilities.get_fg_color("Error")
 
   local hooks = require("ibl.hooks")
   -- create the highlight groups in the highlight setup hook, so they are reset
@@ -110,27 +110,27 @@ function M.setup_mode_highlight()
   local bg_color
 
   if current_mode == "n" then
-    bg_color = rooticolor.get_bg_color("MiniStatuslineModeNormal")
+    bg_color = rootilities.get_bg_color("MiniStatuslineModeNormal")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
   elseif current_mode == "v" then
-    bg_color = rooticolor.get_bg_color("MiniStatuslineModeVisual")
+    bg_color = rootilities.get_bg_color("MiniStatuslineModeVisual")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
   elseif current_mode == "V" then
-    bg_color = rooticolor.get_bg_color("MiniStatuslineModeVisual")
+    bg_color = rootilities.get_bg_color("MiniStatuslineModeVisual")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
   elseif current_mode == "R" or current_mode == "r" then
-    bg_color = rooticolor.get_bg_color("MiniStatuslineModeReplace")
+    bg_color = rootilities.get_bg_color("MiniStatuslineModeReplace")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
   elseif current_mode == "i" then
-    bg_color = rooticolor.get_bg_color("MiniStatuslineModeInsert")
+    bg_color = rootilities.get_bg_color("MiniStatuslineModeInsert")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
   else
-    bg_color = rooticolor.get_bg_color("MiniStatuslineModeNormal")
+    bg_color = rootilities.get_bg_color("MiniStatuslineModeNormal")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
   end
@@ -138,7 +138,7 @@ end
 
 function M.setup_dashboard_highlight()
   if not vim.g.DashboardHeaderColor then
-    local dash_color = rooticolor.get_fg_color("Error")
+    local dash_color = rootilities.get_fg_color("Error")
     vim.api.nvim_set_hl(0, "DashboardHeader", { fg = dash_color })
   else
     vim.api.nvim_set_hl(

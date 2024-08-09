@@ -34,4 +34,11 @@ function M.get_bg_color(hlgroup)
   return nil
 end
 
+function M.is_window_wide_enough(width_limit)
+  -- Get the current width of the Neovim window
+  local width = vim.fn.winwidth(0)
+  -- Return true if width is greater than or equal to width_limit
+  return width >= width_limit
+end
+
 return M
