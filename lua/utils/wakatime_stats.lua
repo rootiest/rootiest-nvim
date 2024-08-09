@@ -2,6 +2,8 @@
 --          │                     WakaTime Stats                      │
 --          ╰─────────────────────────────────────────────────────────╯
 local M = {}
+
+require("utils.cache_stats")
 local cache_file = os.getenv("HOME") .. "/.cache/wakatime_cache.txt"
 
 local function read_cache()

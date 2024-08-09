@@ -2,7 +2,10 @@
 --          │                       Music Stats                       │
 --          ╰─────────────────────────────────────────────────────────╯
 local M = {}
+
+require("utils.cache_stats")
 local cache_file = os.getenv("HOME") .. "/.cache/music_cache.txt"
+
 local separator = "␟"
 
 -- Function to read the cache file
@@ -58,7 +61,7 @@ function M.get_status()
 end
 
 function M.get_current()
-  return parse_cache() -- Just return title for simplicity
+  return parse_cache()
 end
 
 function M.get_icon()
@@ -102,6 +105,58 @@ function M.is_loop()
   return loop ~= "None" and loop ~= "false"
 end
 
+-- Function to remove text inside parentheses, including the parentheses themselves
+local function remove_parentheses(text)
+  return text:gsub("%b()", "")
+end
+
+-- Function to abbreviate common words or phrases
+local function abbreviate(text)
+  local replacements = {
+    ["feat%.?%s"] = "ft. ",
+    ["and%s"] = "& ",
+    ["versus%s"] = "vs ",
+    ["Original Mix%s"] = "Orig. Mix ",
+  }
+  for long, short in pairs(replacements) do
+    text = text:gsub(long, short)
+  end
+  return text
+end
+
+-- Function to strip unnecessary words or phrases
+local function strip_redundant(text)
+  local redundant_phrases =
+    { "Radio Edit", "Extended Version", "Remix", "Instrumental", "Live" }
+  for _, phrase in ipairs(redundant_phrases) do
+    text = text:gsub(phrase, "")
+  end
+  return text:gsub("%s+", " "):gsub("^%s*(.-)%s*$", "%1") -- Clean up any extra spaces
+end
+
+-- Function to limit the number of words in the text
+local function limit_words(text, max_words)
+  local words = vim.split(text, "%s+")
+  if #words > max_words then
+    return table.concat(vim.list_slice(words, 1, max_words), " ") .. "..."
+  end
+  return text
+end
+
+-- Function to remove duplicate words
+local function remove_duplicates(text)
+  local seen = {}
+  local result = {}
+  for word in text:gmatch("%S+") do
+    if not seen[word:lower()] then
+      table.insert(result, word)
+      seen[word:lower()] = true
+    end
+  end
+  return table.concat(result, " ")
+end
+
+-- Function to shorten text based on delimiters
 local function shorten_text(text)
   if #text <= 25 then
     return text
@@ -124,6 +179,17 @@ local function shorten_text(text)
   return text
 end
 
+-- Combine all simplification functions
+local function simplify_text(text)
+  text = remove_parentheses(text)
+  text = strip_redundant(text)
+  text = abbreviate(text)
+  text = shorten_text(text) -- Apply shortening based on delimiters
+  text = limit_words(text, 7) -- Adjust max words as needed
+  text = remove_duplicates(text)
+  return text
+end
+
 local function format_icon_with_text(icon, artist, title)
   if artist and #artist > 25 then
     return icon .. " " .. title
@@ -140,14 +206,15 @@ function M.get_icon_with_text()
   local icon = M.get_icon()
   local title = M.get_title()
   local artist = M.get_artist()
-  local status = M.get_status() -- Assuming there's a function to get the music status
+  local status = M.get_status()
 
   if status ~= "playing" and status ~= "paused" then
-    return "" -- Return empty string if the status is neither "Playing" nor "Paused"
+    return ""
   end
 
-  title = shorten_text(title)
-  artist = shorten_text(artist)
+  -- Apply the simplification methods
+  title = simplify_text(title)
+  artist = simplify_text(artist)
 
   return format_icon_with_text(icon, artist, title)
 end
