@@ -2,6 +2,8 @@
 --          │                         Lualine                         │
 --          ╰─────────────────────────────────────────────────────────╯
 
+local rootilities = require("utils.rootilities")
+
 return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
@@ -105,12 +107,18 @@ return {
                 vim.cmd(":WakaTimeToday")
               end
             end,
+            cond = function()
+              return rootilities.is_window_wide_enough(100)
+            end,
           },
         },
         lualine_y = {
           {
             function()
               return require("utils.music_stats").get_icon_with_text()
+            end,
+            cond = function()
+              return rootilities.is_window_wide_enough(100)
             end,
           },
 
@@ -119,22 +127,37 @@ return {
               return vim.fn.wordcount().words
             end,
             icon = " ",
+            cond = function()
+              return rootilities.is_window_wide_enough(80)
+            end,
           },
 
           {
             "progress",
             separator = " ",
             padding = { left = 1, right = 0 },
+            cond = function()
+              return rootilities.is_window_wide_enough(60)
+            end,
           },
           {
             "location",
             padding = { left = 0, right = 1 },
+            cond = function()
+              return rootilities.is_window_wide_enough(40)
+            end,
           },
           {
             "selection_count",
+            cond = function()
+              return rootilities.is_window_wide_enough(120)
+            end,
           },
           {
             "filesize",
+            cond = function()
+              return rootilities.is_window_wide_enough(100)
+            end,
           },
         },
         lualine_z = {
