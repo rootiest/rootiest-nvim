@@ -97,6 +97,13 @@ local resize_splits = {
     end,
     "Resize split right",
   },
+  {
+    "<A-r>",
+    function()
+      smartsplits.start_resize_mode()
+    end,
+    "Resize split to previous size",
+  },
 }
 
 for _, map in ipairs(resize_splits) do
