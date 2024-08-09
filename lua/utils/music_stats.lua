@@ -7,6 +7,7 @@ require("utils.cache_stats")
 local cache_file = os.getenv("HOME") .. "/.cache/music_cache.txt"
 
 local separator = "␟"
+local last_known_value = ""
 
 -- Function to read the cache file
 local function read_cache()
@@ -14,15 +15,20 @@ local function read_cache()
   if file then
     local content = file:read("*a")
     file:close()
+    last_known_value = content -- Update the last known value
     return content
   end
-  return ""
+  return last_known_value -- Return last known value if file cannot be read
 end
 
 -- Parse the cached music data
 local function parse_cache()
   local content = read_cache()
-  if not content or content:match("No players found") then
+  if
+    not content
+    or content:match("No players found")
+    or content:match("^%s*$")
+  then
     return "", "", "", "", "", "", ""
   end
   local pattern = "^(.-)%s*"
@@ -119,7 +125,7 @@ local function abbreviate(text)
     ["Original Mix%s"] = "Orig. Mix ",
   }
   for long, short in pairs(replacements) do
-    text = text:gsub(long, short)
+    text = text:gsub("%f[%a]" .. long, short) -- Match only at word boundaries
   end
   return text
 end

@@ -6,29 +6,30 @@ local M = {}
 require("utils.cache_stats")
 local cache_file = os.getenv("HOME") .. "/.cache/wakatime_cache.txt"
 
+local last_known_value = ""
+
 local function read_cache()
   local file = io.open(cache_file, "r")
   if file then
     local content = file:read("*a")
     file:close()
+    last_known_value = content
     return content
   end
-  return "" -- Return empty string if file is not found or empty
+  return last_known_value
 end
 
 local function get_wakatime_today()
   local result = read_cache()
   if not result or result:match("^%s*$") then
-    -- Return empty string if result is nil or only whitespace
-    return ""
+    return last_known_value
   end
 
-  -- Handle common error messages
   if
     result:match("command not found")
     or result:match("No such file or directory")
   then
-    return ""
+    return last_known_value
   end
 
   return result:match("^%s*(.-)%s*$") -- Trim any whitespace
@@ -41,7 +42,7 @@ end
 function M.get_icon()
   local text = M.get_today()
   if text ~= "" then
-    return "󱦺 " -- Default icon
+    return "󱦺  " -- Default icon
   else
     return "" -- No icon
   end
@@ -77,14 +78,14 @@ end
 
 function M.get_color()
   local total_minutes = M.get_total_minutes()
-  local rooticolor = require("utils.rooticolor") -- Adjust according to your actual setup
+  local rootilities = require("utils.rootilities") -- Adjust according to your actual setup
 
   if total_minutes >= 60 then
-    return { fg = rooticolor.get_fg_color("GitSignsAdd") }
+    return { fg = rootilities.get_fg_color("GitSignsAdd") }
   elseif total_minutes >= 30 then
-    return { fg = rooticolor.get_fg_color("GitSignsChange") }
+    return { fg = rootilities.get_fg_color("GitSignsChange") }
   else
-    return { fg = rooticolor.get_fg_color("GitSignsDelete") }
+    return { fg = rootilities.get_fg_color("GitSignsDelete") }
   end
 end
 
