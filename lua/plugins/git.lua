@@ -115,7 +115,7 @@ return {
       local git_ops = {
         display_virtual_text = 0, -- Disable virtual text
         date_format = "%r", -- Relative date format
-        message_when_not_committed = "  Fly, you fools!",
+        message_when_not_committed = "  Not yet committed",
         message_template = "<author> • <date> • <summary>",
       }
       -- Return the git-blame options
