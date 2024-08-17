@@ -2,20 +2,12 @@
 --          │                        Utilities                        │
 --          ╰─────────────────────────────────────────────────────────╯
 
-local rootilities = require("utils.rootilities")
-
 return {
   { -- Chezmoi
     import = "lazyvim.plugins.extras.util.chezmoi",
   },
   { -- Dotfiles plugins
     import = "lazyvim.plugins.extras.util.dot",
-  },
-  { -- Git UI
-    import = "lazyvim.plugins.extras.util.gitui",
-  },
-  { -- Octo plugin
-    import = "lazyvim.plugins.extras.util.octo",
   },
   { -- Wakatime
     "wakatime/vim-wakatime",
@@ -64,29 +56,6 @@ return {
       },
     },
   },
-  { -- Gist Tools
-    "Rawnly/gist.nvim",
-    lazy = true,
-    cmd = {
-      "GistCreate",
-      "GistCreateFromFile",
-      "GistsList",
-    },
-    keys = {
-      { -- Create Gist
-        "<leader>gnc",
-        "<cmd>GistCreate<cr>",
-        desc = "Create Gist",
-        mode = { "n", "x" },
-      },
-      { -- Find Gists
-        "<leader>gnf",
-        "<cmd>GistList<cr>",
-        desc = "Find Gists",
-      },
-    },
-    config = true,
-  },
   { -- Unception
     "samjwill/nvim-unception",
     init = function()
@@ -117,31 +86,6 @@ return {
         mode = "i",
       },
     },
-  },
-  { -- LazyGit
-    "kdheepak/lazygit.nvim",
-    event = "VeryLazy",
-    cmd = {
-      "LazyGit",
-      "LazyGitConfig",
-      "LazyGitCurrentFile",
-      "LazyGitFilter",
-      "LazyGitFilterCurrentFile",
-    },
-    keys = {
-      { -- LazyGit
-        "<leader>lg",
-        "<cmd>LazyGit<cr>",
-        desc = "LazyGit",
-      },
-    },
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-      "nvim-lua/plenary.nvim",
-    },
-    config = function()
-      require("telescope").load_extension("lazygit")
-    end,
   },
   { -- Codesnap
     "mistricky/codesnap.nvim",
@@ -196,45 +140,12 @@ return {
       require("kulala").setup()
     end,
   },
-  { -- Thanks/github-stars
-    "jsongerber/thanks.nvim",
-    lazy = true,
-    cmd = {
-      "ThanksAll",
-      "ThanksGithubAuth",
-      "ThanksGithubLogout",
-      "ThanksClearCache",
-    },
-    opts = {
-      star_on_install = false,
-    },
-  },
   { -- Hardtime
     "m4xshen/hardtime.nvim",
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
     opts = function()
       return { enabled = vim.g.usehardtime }
     end,
-  },
-  { -- GitLinker
-    "linrongbin16/gitlinker.nvim",
-    lazy = true,
-    cmd = "GitLink",
-    opts = {},
-    keys = {
-      {
-        "<leader>gy",
-        "<cmd>GitLink<cr>",
-        mode = { "n", "v" },
-        desc = "Yank git link",
-      },
-      {
-        "<leader>gY",
-        "<cmd>GitLink!<cr>",
-        mode = { "n", "v" },
-        desc = "Open git link",
-      },
-    },
   },
   { -- CapsWord
     "dmtrKovalenko/caps-word.nvim",
@@ -257,30 +168,6 @@ return {
     opts = {
       default_player = "YoutubeMusic",
     },
-  },
-  { -- Git Blame
-    "f-person/git-blame.nvim",
-    event = "VeryLazy",
-    opts = function()
-      -- Get the current lualine configuration
-      local config = require("lualine").get_config()
-      local git_blame = require("gitblame")
-      -- Define the width limit for displaying the Git blame component
-      local width_limit = 180 -- Adjust this value as needed
-
-      -- Add Git-blame to lualine_c section
-      table.insert(config.sections.lualine_c, {
-        git_blame.get_current_blame_text,
-        cond = function()
-          return git_blame.is_blame_text_available()
-            and rootilities.is_window_wide_enough(width_limit)
-        end,
-        color = { fg = rootilities.get_fg_color("GitSignsCurrentLineBlame") },
-      })
-
-      -- Apply the new configuration
-      require("lualine").setup(config)
-    end,
   },
   { -- Qalc
     "Apeiros-46B/qalc.nvim",
@@ -306,5 +193,16 @@ return {
       "nvim-telescope/telescope.nvim", -- For picking b/w different remote methods
     },
     config = true,
+  },
+  { -- Encourage
+    "r-cha/encourage.nvim",
+    config = true,
+  },
+  { -- Helpview
+    "OXY2DEV/helpview.nvim",
+    ft = "help",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
   },
 }

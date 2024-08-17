@@ -12,7 +12,13 @@ vim.g.loaded_perl_provider = 0
 vim.g.lazyvim_python_lsp = "basedpyright"
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Git-Blame ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
+-- vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
+-- vim.g.gitblame_date_format = "%r"
+-- vim.g.gitblame_message_when_not_committed = "Not yet committed!"
+-- vim.g.gitblame_message_template = "<author> • <date> • <summary> <<sha>>"
+
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ OS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.g.is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROOTIEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- stylua: ignore start
