@@ -221,6 +221,10 @@ function M.get_icon_with_text()
   -- Apply the simplification methods
   title = simplify_text(title)
   artist = simplify_text(artist)
+  -- if title/artist are empty, return empty string
+  if title == "" and artist == "" then
+    return ""
+  end
 
   return format_icon_with_text(icon, artist, title)
 end
