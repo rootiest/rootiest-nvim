@@ -78,7 +78,7 @@ end
 
 function M.get_color()
   local total_minutes = M.get_total_minutes()
-  local rootilities = require("utils.rootilities") -- Adjust according to your actual setup
+  local rootilities = require("utils.rootiest") -- Adjust according to your actual setup
 
   if total_minutes >= 60 then
     return { fg = rootilities.get_fg_color("GitSignsAdd") }

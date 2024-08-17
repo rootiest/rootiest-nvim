@@ -41,4 +41,8 @@ function M.is_window_wide_enough(width_limit)
   return width >= width_limit
 end
 
+function M.get_date()
+  return os.date("%Y-%m-%d")
+end
+
 return M

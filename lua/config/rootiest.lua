@@ -3,7 +3,7 @@
 --          ╰─────────────────────────────────────────────────────────╯
 local M = {}
 
-local rootilities = require("utils.rootilities")
+local rootilities = require("utils.rootiest")
 
 local precog_first_time = true
 
@@ -53,7 +53,7 @@ function M.toggle_lazygit_term()
       cmd = "lazygit",
       hidden = true,
       direction = "horizontal", -- Set direction to horizontal split
-      size = 0.5, -- Set size to 50% of the screen
+      size = 0.8, -- Set size to 80% of the screen
     })
     lazygit:toggle()
   else

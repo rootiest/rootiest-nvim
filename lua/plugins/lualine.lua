@@ -2,7 +2,7 @@
 --          │                         Lualine                         │
 --          ╰─────────────────────────────────────────────────────────╯
 
-local rootilities = require("utils.rootilities")
+local rootilities = require("utils.rootiest")
 
 return {
   "nvim-lualine/lualine.nvim",

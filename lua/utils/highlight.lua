@@ -3,15 +3,21 @@
 --          ╰─────────────────────────────────────────────────────────╯
 local M = {}
 
-local rootilities = require("utils.rootilities")
+-- Load utils
+local rootilities = require("utils.rootiest")
+-- Readability functions
+local get_bg_color = rootilities.get_bg_color
+local get_fg_color = rootilities.get_fg_color
+local set_hl = vim.api.nvim_set_hl
+local sign_def = vim.fn.sign_define
 
 -- Function to set up indent highlights
 function M.setup_indent_highlight()
   -- Get the background color of CursorLine
-  local cursorline_bg_hex = rootilities.get_bg_color("CursorLine")
+  local cursorline_bg_hex = get_bg_color("CursorLine")
 
   -- Get the foreground color of Error
-  local miniiconsred_fg_hex = rootilities.get_fg_color("Error")
+  local miniiconsred_fg_hex = get_fg_color("Error")
 
   local hooks = require("ibl.hooks")
   -- create the highlight groups in the highlight setup hook, so they are reset
@@ -19,12 +25,12 @@ function M.setup_indent_highlight()
   if cursorline_bg_hex then
     -- Define custom highlight groups for indent using the CursorLine background color
     hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-      vim.api.nvim_set_hl(
+      set_hl(
         0,
         "IndentBlanklineIndent",
         { fg = cursorline_bg_hex, nocombine = true }
       )
-      vim.api.nvim_set_hl(
+      set_hl(
         0,
         "IndentsScopeHighlight",
         { fg = miniiconsred_fg_hex, nocombine = true }
@@ -107,45 +113,41 @@ end
 
 function M.setup_mode_highlight()
   local current_mode = vim.fn.mode()
-  local bg_color
+  local bg_color -- Define bg_color variable
 
   if current_mode == "n" then
-    bg_color = rootilities.get_bg_color("MiniStatuslineModeNormal")
-    vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
-    vim.fn.sign_define("smoothcursor", { text = "" })
+    bg_color = get_bg_color("MiniStatuslineModeNormal")
+    set_hl(0, "SmoothCursor", { fg = bg_color })
+    sign_def("smoothcursor", { text = "" })
   elseif current_mode == "v" then
-    bg_color = rootilities.get_bg_color("MiniStatuslineModeVisual")
-    vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
-    vim.fn.sign_define("smoothcursor", { text = "" })
+    bg_color = get_bg_color("MiniStatuslineModeVisual")
+    set_hl(0, "SmoothCursor", { fg = bg_color })
+    sign_def("smoothcursor", { text = "" })
   elseif current_mode == "V" then
-    bg_color = rootilities.get_bg_color("MiniStatuslineModeVisual")
-    vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
-    vim.fn.sign_define("smoothcursor", { text = "" })
+    bg_color = get_bg_color("MiniStatuslineModeVisual")
+    set_hl(0, "SmoothCursor", { fg = bg_color })
+    sign_def("smoothcursor", { text = "" })
   elseif current_mode == "R" or current_mode == "r" then
-    bg_color = rootilities.get_bg_color("MiniStatuslineModeReplace")
-    vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
-    vim.fn.sign_define("smoothcursor", { text = "" })
+    bg_color = get_bg_color("MiniStatuslineModeReplace")
+    set_hl(0, "SmoothCursor", { fg = bg_color })
+    sign_def("smoothcursor", { text = "" })
   elseif current_mode == "i" then
-    bg_color = rootilities.get_bg_color("MiniStatuslineModeInsert")
-    vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
-    vim.fn.sign_define("smoothcursor", { text = "" })
+    bg_color = get_bg_color("MiniStatuslineModeInsert")
+    set_hl(0, "SmoothCursor", { fg = bg_color })
+    sign_def("smoothcursor", { text = "" })
   else
-    bg_color = rootilities.get_bg_color("MiniStatuslineModeNormal")
-    vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
-    vim.fn.sign_define("smoothcursor", { text = "" })
+    bg_color = get_bg_color("MiniStatuslineModeNormal")
+    set_hl(0, "SmoothCursor", { fg = bg_color })
+    sign_def("smoothcursor", { text = "" })
   end
 end
 
 function M.setup_dashboard_highlight()
   if not vim.g.DashboardHeaderColor then
-    local dash_color = rootilities.get_fg_color("Error")
-    vim.api.nvim_set_hl(0, "DashboardHeader", { fg = dash_color })
+    local dash_color = get_fg_color("Error")
+    set_hl(0, "DashboardHeader", { fg = dash_color })
   else
-    vim.api.nvim_set_hl(
-      0,
-      "DashboardHeader",
-      { fg = vim.g.DashboardHeaderColor }
-    )
+    set_hl(0, "DashboardHeader", { fg = vim.g.DashboardHeaderColor })
   end
 end
 
@@ -153,7 +155,6 @@ end
 function M.setup_autocommands()
   local autogrp = vim.api.nvim_create_augroup
   local autocmd = vim.api.nvim_create_autocmd
-  autogrp("IndentHighlight", { clear = true })
 
   -- List of filetypes to exclude
   local excluded_filetypes = {
@@ -170,9 +171,11 @@ function M.setup_autocommands()
     "lazyterm",
   }
 
+  -- Create a new augroup for the IndentHighlight
+  local IndentGroup = autogrp("IndentHighlight", { clear = true })
   -- Autocommand to trigger setup on FileType
   autocmd("FileType", {
-    group = "IndentHighlight",
+    group = IndentGroup,
     callback = function()
       local filetype = vim.bo.filetype
       if not vim.tbl_contains(excluded_filetypes, filetype) then
@@ -180,11 +183,10 @@ function M.setup_autocommands()
       end
     end,
   })
-
   -- Autocommand to trigger setup on ColorScheme
   autocmd("ColorScheme", {
     pattern = "*",
-    group = "IndentHighlight",
+    group = IndentGroup,
     callback = function()
       M.setup_indent_highlight()
     end,
@@ -216,8 +218,12 @@ function M.setup_autocommands()
       M.setup_dashboard_highlight()
     end,
   })
+
+  -- Create a new augroup for the terminal background
+  local terminalGroup = autogrp("TerminalColors", { clear = true })
   -- Match neovim and terminal background colors
-  vim.api.nvim_create_autocmd({ "UIEnter", "ColorScheme" }, {
+  autocmd({ "UIEnter", "ColorScheme" }, {
+    group = terminalGroup,
     callback = function()
       local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
       if not normal.bg then
@@ -226,7 +232,8 @@ function M.setup_autocommands()
       io.write(string.format("\027]11;#%06x\027\\", normal.bg))
     end,
   })
-  vim.api.nvim_create_autocmd("UILeave", {
+  autocmd("UILeave", {
+    group = terminalGroup,
     callback = function()
       io.write("\027]111\027\\")
     end,
