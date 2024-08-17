@@ -4,7 +4,7 @@
 return {
   {
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
+    event = "VeryLazy",
     dependencies = {
       {
         "L3MON4D3/LuaSnip",
@@ -55,6 +55,7 @@ return {
       "davidsierradz/cmp-conventionalcommits",
       "Dynge/gitmoji.nvim",
     },
+    -- :
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
