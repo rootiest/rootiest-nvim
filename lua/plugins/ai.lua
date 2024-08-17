@@ -2,7 +2,6 @@
 --          │                        AI Tools                         │
 --          ╰─────────────────────────────────────────────────────────╯
 return {
-
   {
     -- Neocodeium
     "monkoose/neocodeium",
