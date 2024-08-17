@@ -31,7 +31,8 @@ add_keymap("<leader>uH", function()
   rootiest.toggle_hardmode()
 end, "Toggle Hardmode")
 add_keymap("<leader>Y", "<cmd>%y<cr>", "Yank buffer contents")
-add_keymap("|", "<cmd>Neotree reveal<cr>", "Neotree reveal")
+add_keymap("<C-a>", "<cmd>norm ggVG<cr>", "Select all")
+add_keymap("|", "<cmd>Neotree reveal toggle<cr>", "Neotree reveal")
 
 -- Group Keybinds
 wk.add({
