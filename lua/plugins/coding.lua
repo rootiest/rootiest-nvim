@@ -17,6 +17,9 @@ return {
   { -- VSCode
     import = "lazyvim.plugins.extras.vscode",
   },
+  { -- G-code
+    "wilriker/gcode.vim",
+  },
   { -- Mini Align
     "echasnovski/mini.align",
     event = "InsertEnter",
@@ -38,12 +41,14 @@ return {
   },
   { -- Highlight colors
     "brenoprata10/nvim-highlight-colors",
+    event = "BufReadPre",
     config = function()
       require("nvim-highlight-colors").setup({})
     end,
   },
   { -- Tailwind
     "luckasRanarison/tailwind-tools.nvim",
+    lazy = true,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     opts = {}, -- your configuration
   },
