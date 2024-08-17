@@ -32,4 +32,7 @@ return {
   { -- Java
     import = "lazyvim.plugins.extras.lang.java",
   },
+  { -- Sql
+    import = "lazyvim.plugins.extras.lang.sql",
+  },
 }
