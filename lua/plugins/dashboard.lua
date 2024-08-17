@@ -119,8 +119,8 @@ return {
       },
     }
 
-    -- if logo_file extension is not .ans then read the content and add it to the header
-    if logo_file:sub(-4) ~= ".ans" then
+    -- if logo_file extension is not .ans or .png then read the content and add it to the header
+    if logo_file:sub(-4) ~= ".ans" and logo_file:sub(-4) ~= ".png" then
       local logo_content = vim.fn.readfile(logo_path .. logo_file)
       local LOGO = "\n\n" .. table.concat(logo_content, "\n") .. "\n\n"
       opts.config.header = vim.split(LOGO, "\n")
