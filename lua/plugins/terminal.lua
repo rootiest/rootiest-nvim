@@ -13,6 +13,7 @@ package.path = package.path
 return {
   { -- Smart-Splits
     "mrjones2014/smart-splits.nvim",
+    lazy = false,
     build = "./kitty/install-kittens.bash",
   },
   { -- Image Renderer
@@ -60,7 +61,7 @@ return {
         float_opts = {
           border = "curved",
           winblend = 3,
-          title_pos = "left",
+          title_pos = "center",
         },
         winbar = {
           enabled = true,
