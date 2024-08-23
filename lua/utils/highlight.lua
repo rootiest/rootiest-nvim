@@ -4,10 +4,10 @@
 local M = {}
 
 -- Load utils
-local rootilities = require("utils.rootiest")
+local utils = require("utils.rootiest")
 -- Readability functions
-local get_bg_color = rootilities.get_bg_color
-local get_fg_color = rootilities.get_fg_color
+local get_bg_color = utils.get_bg_color
+local get_fg_color = utils.get_fg_color
 local set_hl = vim.api.nvim_set_hl
 local sign_def = vim.fn.sign_define
 
@@ -19,11 +19,11 @@ function M.setup_indent_highlight()
   -- Get the foreground color of Error
   local miniiconsred_fg_hex = get_fg_color("Error")
 
+  -- Load the ibl plugin hooks
   local hooks = require("ibl.hooks")
-  -- create the highlight groups in the highlight setup hook, so they are reset
-  -- every time the colorscheme changes
+  -- create the highlight groups in the highlight setup hook
   if cursorline_bg_hex then
-    -- Define custom highlight groups for indent using the CursorLine background color
+    -- Define custom highlight groups for indent
     hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
       set_hl(
         0,
@@ -41,18 +41,7 @@ function M.setup_indent_highlight()
   -- Configure the indent-blankline plugin
   require("ibl").setup({
     indent = {
-      char = {
-        "󰎤",
-        "󰎧",
-        "󰎪",
-        "󰎭",
-        "󰎱",
-        "󰎳",
-        "󰎶",
-        "󰎹",
-        "󰎼",
-        "󰽽",
-      },
+      char = require("data.types").indent_char,
       highlight = {
         "IndentBlanklineIndent",
       },
@@ -69,19 +58,7 @@ function M.setup_indent_highlight()
       remove_blankline_trail = true,
     },
     exclude = {
-      filetypes = {
-        "help",
-        "alpha",
-        "dashboard",
-        "neo-tree",
-        "Trouble",
-        "trouble",
-        "lazy",
-        "mason",
-        "notify",
-        "toggleterm",
-        "lazyterm",
-      },
+      filetypes = require("data.types").highlights.exclude,
     },
   })
 
@@ -111,10 +88,10 @@ function M.setup_indent_highlight()
   vim.cmd(":set colorcolumn=120")
 end
 
+-- Function to set up mode highlights
 function M.setup_mode_highlight()
   local current_mode = vim.fn.mode()
   local bg_color -- Define bg_color variable
-
   if current_mode == "n" then
     bg_color = get_bg_color("MiniStatuslineModeNormal")
     set_hl(0, "SmoothCursor", { fg = bg_color })
@@ -142,6 +119,7 @@ function M.setup_mode_highlight()
   end
 end
 
+-- Function to set up dashboard header highlight
 function M.setup_dashboard_highlight()
   if not vim.g.DashboardHeaderColor then
     local dash_color = get_fg_color("Error")
@@ -157,19 +135,7 @@ function M.setup_autocommands()
   local autocmd = vim.api.nvim_create_autocmd
 
   -- List of filetypes to exclude
-  local excluded_filetypes = {
-    "help",
-    "alpha",
-    "dashboard",
-    "neo-tree",
-    "Trouble",
-    "trouble",
-    "lazy",
-    "mason",
-    "notify",
-    "toggleterm",
-    "lazyterm",
-  }
+  local excluded_filetypes = require("data.types").highlights.exclude
 
   -- Create a new augroup for the IndentHighlight
   local IndentGroup = autogrp("IndentHighlight", { clear = true })
@@ -232,6 +198,7 @@ function M.setup_autocommands()
       io.write(string.format("\027]11;#%06x\027\\", normal.bg))
     end,
   })
+  -- Reset terminal background on UILeave
   autocmd("UILeave", {
     group = terminalGroup,
     callback = function()
