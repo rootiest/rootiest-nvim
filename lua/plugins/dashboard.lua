@@ -3,25 +3,49 @@
 --          ╰─────────────────────────────────────────────────────────╯
 return {
   -- Dashboard
+  enabled = false,
   "nvimdev/dashboard-nvim",
   event = "UIEnter",
+  version = false,
   opts = function()
-    local logo_path = vim.fn.stdpath("config") .. "/logo/"
+    ---@diagnostic disable-next-line: param-type-mismatch
+    local logo_path = vim.fs.joinpath(vim.fn.stdpath("config"), "logo/")
     local height, width = vim.fn.winheight(0), vim.fn.winwidth(0)
     local logo_file
+    local logo_dimensions = { width = 0, height = 0 }
 
     if height >= 80 and width >= 80 then
       logo_file = "rootiest.txt"
     elseif height >= 48 and width >= 48 then
-      logo_file = "taco.ans"
+      logo_file = "xerneas.ans"
     elseif width >= 100 then
-      logo_file = "long.txt"
+      logo_file = "pikachu.ans"
     elseif width >= 80 then
       logo_file = "tall.txt"
     elseif width >= 50 then
       logo_file = "small.txt"
     else
       logo_file = "tiny.txt"
+    end
+
+    if logo_file == "snorlax.ans" then
+      logo_dimensions = { width = 53, height = 25 }
+    elseif logo_file == "porygon-z.ans" then
+      logo_dimensions = { width = 28, height = 18 }
+    elseif logo_file == "pikachu.ans" then
+      logo_dimensions = { width = 22, height = 11 }
+    elseif logo_file == "taco.ans" then
+      logo_dimensions = { width = 33, height = 15 }
+    elseif logo_file == "nvim.ans" then
+      logo_dimensions = { width = 35, height = 20 }
+    elseif logo_file == "marshadow.ans" then
+      logo_dimensions = { width = 28, height = 17 }
+    elseif logo_file == "eiscue.ans" then
+      logo_dimensions = { width = 22, height = 18 }
+    elseif logo_file == "xerneas.ans" then
+      logo_dimensions = { width = 39, height = 24 }
+    elseif logo_file == "rootiest.ans" then
+      logo_dimensions = { width = 65, height = 27 }
     end
 
     local opts = {
@@ -32,76 +56,13 @@ return {
       },
       -- By default, use ANSI art header
       preview = {
-        command = "cat",
+        command = "bat -pp | bat -pp",
         file_path = logo_path .. logo_file,
-        file_width = 33,
-        file_height = 15,
+        file_width = logo_dimensions.width,
+        file_height = logo_dimensions.height,
       },
       config = {
-        center = {
-          { -- Find File
-            action = "lua LazyVim.pick()()",
-            desc = " Find File",
-            icon = " ",
-            key = "f",
-          },
-          { -- New File
-            action = "ene | startinsert",
-            desc = " New File",
-            icon = " ",
-            key = "n",
-          },
-          { -- Open Recent Files
-            action = 'lua LazyVim.pick("oldfiles")()',
-            desc = " Recent Files",
-            icon = " ",
-            key = "r",
-          },
-          { -- Find Text
-            action = 'lua LazyVim.pick("live_grep")()',
-            desc = " Find Text",
-            icon = " ",
-            key = "g",
-          },
-          { -- LazyGit
-            action = "LazyGit",
-            desc = " LazyGit",
-            icon = " ",
-            key = "z",
-          },
-          { -- Config
-            action = "lua LazyVim.pick.config_files()()",
-            desc = " Config",
-            icon = " ",
-            key = "c",
-          },
-          { -- Restore Session
-            action = 'lua require("persistence").load()',
-            desc = " Restore Session",
-            icon = " ",
-            key = "s",
-          },
-          { -- Remote Session
-            action = 'lua require("config.rootiest").load_remote()',
-            desc = " Remote Session",
-            icon = "󰢹 ",
-            key = "S",
-          },
-          { -- Lazy
-            action = "Lazy",
-            desc = " Lazy",
-            icon = "󰒲 ",
-            key = "l",
-          },
-          { -- Quit
-            action = function()
-              vim.api.nvim_input("<cmd>qa<cr>")
-            end,
-            desc = " Quit",
-            icon = " ",
-            key = "q",
-          },
-        },
+        center = require("data.dash").choices,
         footer = function()
           local stats = require("lazy").stats()
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
