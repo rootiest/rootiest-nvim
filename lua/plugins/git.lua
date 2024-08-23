@@ -9,46 +9,23 @@ return {
   { -- Octo plugin
     import = "lazyvim.plugins.extras.util.octo",
   },
+  { -- DiffView
+    "sindrets/diffview.nvim",
+    lazy = true,
+    cmd = require("data.cmd").diffview,
+  },
   { -- Gist Tools
     "Rawnly/gist.nvim",
     lazy = true,
-    cmd = {
-      "GistCreate",
-      "GistCreateFromFile",
-      "GistsList",
-    },
-    keys = {
-      { -- Create Gist
-        "<leader>gnc",
-        "<cmd>GistCreate<cr>",
-        desc = "Create Gist",
-        mode = { "n", "x" },
-      },
-      { -- Find Gists
-        "<leader>gnf",
-        "<cmd>GistList<cr>",
-        desc = "Find Gists",
-      },
-    },
+    cmd = require("data.cmd").gist,
+    keys = require("data.keys").gist,
     config = true,
   },
   { -- LazyGit
     "kdheepak/lazygit.nvim",
     lazy = true,
-    cmd = {
-      "LazyGit",
-      "LazyGitConfig",
-      "LazyGitCurrentFile",
-      "LazyGitFilter",
-      "LazyGitFilterCurrentFile",
-    },
-    keys = {
-      { -- LazyGit
-        "<leader>lg",
-        "<cmd>LazyGit<cr>",
-        desc = "LazyGit",
-      },
-    },
+    cmd = require("data.cmd").lazygit,
+    keys = require("data.keys").lazygit,
     dependencies = {
       "nvim-telescope/telescope.nvim",
       "nvim-lua/plenary.nvim",
@@ -60,12 +37,7 @@ return {
   { -- Thanks/github-stars
     "jsongerber/thanks.nvim",
     lazy = true,
-    cmd = {
-      "ThanksAll",
-      "ThanksGithubAuth",
-      "ThanksGithubLogout",
-      "ThanksClearCache",
-    },
+    cmd = require("data.cmd").thanks,
     opts = {
       star_on_install = false,
     },
@@ -73,22 +45,9 @@ return {
   { -- GitLinker
     "linrongbin16/gitlinker.nvim",
     lazy = true,
-    cmd = "GitLink",
+    cmd = require("data.cmd").gitlinker,
     opts = {},
-    keys = {
-      { -- Yank git link
-        "<leader>gy",
-        "<cmd>GitLink<cr>",
-        mode = { "n", "v" },
-        desc = "Yank git link",
-      },
-      { -- Open git link
-        "<leader>gY",
-        "<cmd>GitLink!<cr>",
-        mode = { "n", "v" },
-        desc = "Open git link",
-      },
-    },
+    keys = require("data.keys").gitlinker,
   },
   { -- Git Blame
     "f-person/git-blame.nvim",
@@ -97,84 +56,46 @@ return {
       -- Get the current lualine configuration
       local config = require("lualine").get_config()
       local git_blame = require("gitblame")
-      local rootilities = require("utils.rootiest")
+      local utils = require("utils.rootiest")
       -- Define the width limit for displaying the Git blame component
       local width_limit = 180 -- Adjust this value as needed
       -- Add Git-blame to lualine_c section
       table.insert(config.sections.lualine_c, {
         git_blame.get_current_blame_text,
-        cond = function() -- Only show the component if the text is available
+        cond = function() -- Only show if text is available
           return git_blame.is_blame_text_available()
-            and rootilities.is_window_wide_enough(width_limit)
+            and utils.is_window_wide_enough(width_limit)
         end,
-        color = { fg = rootilities.get_fg_color("GitSignsCurrentLineBlame") },
+        color = { fg = utils.get_fg_color("GitSignsCurrentLineBlame") },
       })
       -- Apply the lualine configuration
       require("lualine").setup(config)
-      -- Define git-blame options
-      local git_ops = {
-        display_virtual_text = 0, -- Disable virtual text
-        date_format = "%r", -- Relative date format
-        message_when_not_committed = "  Not yet committed",
-        message_template = "<author> • <date> • <summary>",
-      }
       -- Return the git-blame options
-      return git_ops
+      return require("data.types").gitblame
     end,
   },
   { -- Git Graph
     "isakbm/gitgraph.nvim",
     opts = {
-      symbols = {
-        merge_commit = "",
-        commit = "",
-        merge_commit_end = "",
-        commit_end = "",
-
-        -- Advanced symbols
-        GVER = "",
-        GHOR = "",
-        GCLD = "",
-        GCRD = "╭",
-        GCLU = "",
-        GCRU = "",
-        GLRU = "",
-        GLRD = "",
-        GLUD = "",
-        GRUD = "",
-        GFORKU = "",
-        GFORKD = "",
-        GRUDCD = "",
-        GRUDCU = "",
-        GLUDCD = "",
-        GLUDCU = "",
-        GLRDCL = "",
-        GLRDCR = "",
-        GLRUCL = "",
-        GLRUCR = "",
-      },
+      symbols = require("data.types").gitgraph.symbols(),
       format = {
-        timestamp = "%H:%M:%S %d-%m-%Y",
-        fields = { "hash", "timestamp", "author", "branch_name", "tag" },
+        timestamp = require("data.types").gitgraph.timestamp,
+        fields = require("data.types").gitgraph.fields,
       },
       hooks = {
+        -- Check diff of a commit
         on_select_commit = function(commit)
-          print("selected commit:", commit.hash)
+          vim.notify("DiffviewOpen " .. commit.hash .. "^!")
+          vim.cmd(":DiffviewOpen " .. commit.hash .. "^!")
         end,
+        -- Check diff from commit a -> commit b
         on_select_range_commit = function(from, to)
-          print("selected range:", from.hash, to.hash)
+          vim.notify("DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
+          vim.cmd(":DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
         end,
       },
     },
-    keys = {
-      { -- gitgraph_toggle
-        "<leader>gm",
-        function()
-          require("utils.git").gitgraph_toggle()
-        end,
-        desc = "GitGraph - Toggle",
-      },
-    },
+    keys = require("data.keys").gitgraph,
   },
   { -- FuGit
     "SuperBo/fugit2.nvim",
@@ -189,17 +110,7 @@ return {
         dependencies = { "stevearc/dressing.nvim" },
       },
     },
-    cmd = {
-      "Fugit2",
-      "Fugit2Diff",
-      "Fugit2Graph",
-    },
-    keys = {
-      { -- Open Fugit
-        "<leader>F",
-        mode = "n",
-        "<cmd>Fugit2<cr>",
-      },
-    },
+    cmd = require("data.cmd").fugit,
+    keys = require("data.keys").fugit,
   },
 }

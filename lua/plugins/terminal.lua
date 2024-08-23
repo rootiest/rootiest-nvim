@@ -18,7 +18,7 @@ return {
   },
   { -- Image Renderer
     "3rd/image.nvim",
-    ft = "markdown",
+    ft = require("data.types").image,
     config = function()
       require("image").setup()
     end,
@@ -27,64 +27,20 @@ return {
   { -- ToggleTerm
     "akinsho/toggleterm.nvim",
     event = "VeryLazy",
-    keys = {
-      { -- Toggle Terminal
-        "<c-/>",
-        "<cmd>ToggleTerm<cr>",
-        desc = "Toggle Terminal",
-        mode = "n",
-      },
-    },
+    keys = require("data.keys").toggleterm,
     config = function()
-      require("toggleterm").setup({
-        -- size can be a number or function which is passed the current terminal
-        size = function(term)
-          if term.direction == "horizontal" then
-            return 10
-          elseif term.direction == "vertical" then
-            return vim.o.columns * 0.4
-          end
-        end,
-        open_mapping = [[<c-\>]],
-        hide_numbers = true,
-        autochdir = true,
-        shade_terminals = false,
-        start_in_insert = true,
-        insert_mappings = true,
-        terminal_mappings = true,
-        persist_size = true,
-        persist_mode = true,
-        direction = "horizontal",
-        close_on_exit = true,
-        shell = vim.o.shell,
-        auto_scroll = true,
-        float_opts = {
-          border = "curved",
-          winblend = 3,
-          title_pos = "center",
-        },
-        winbar = {
-          enabled = true,
-          name_formatter = function(term) --  term: Terminal
-            return term.name
-          end,
-        },
-      })
+      require("toggleterm").setup(require("data.types").toggleterm)
     end,
   },
   { -- Kitty-Runner
     "jghauser/kitty-runner.nvim",
-    cond = function() -- Using Kitty
-      local term = os.getenv("TERM") or ""
-      local kit = string.find(term, "kitty")
-      return kit ~= nil
-    end,
+    cond = require("data.func").is_kitty(),
   },
   { -- Kitty-Scrollback
     "mikesmithgh/kitty-scrollback.nvim",
     enabled = true,
     lazy = true,
-    cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
+    cmd = require("data.cmd").kitty_scrollback,
     event = { "User KittyScrollbackLaunch" },
     version = "*",
     config = function() -- Using Kitty-Scrollback
@@ -96,41 +52,12 @@ return {
   { -- Nekifoch
     "NeViRAIDE/nekifoch.nvim",
     lazy = true,
-    cmd = "Nekifoch",
+    cmd = require("data.cmd").nekifoch,
     opts = {
       kitty_conf_path = vim.env.HOME .. "/.kittyoverrides",
     },
-    keys = {
-      { -- List Fonts
-        "<leader>u,l",
-        "<cmd>Nekifoch list<cr>",
-        desc = "Fonts list",
-      },
-      { -- Check Font
-        "<leader>u,c",
-        "<cmd>Nekifoch check<cr>",
-        desc = "Check current font settings",
-      },
-      { -- Set Font Family
-        "<leader>u,f",
-        function()
-          require("nekifoch.nui_set_font")()
-        end,
-        desc = "Set font family",
-      },
-      { -- Set Font Size
-        "<leader>u,s",
-        function()
-          require("nekifoch.nui_set_size")()
-        end,
-        desc = "Set font size",
-      },
-    },
-    cond = function() -- Using Kitty
-      local term = os.getenv("TERM") or ""
-      local kit = string.find(term, "kitty")
-      return kit ~= nil
-    end,
+    keys = require("data.keys").nekifoch,
+    cond = require("data.func").is_kitty(),
   },
   { -- WezTerm
     "willothy/wezterm.nvim",
@@ -145,17 +72,6 @@ return {
     config = function()
       return require("tmux").setup()
     end,
-    cond = function() -- Using Tmux
-      local tterm = os.getenv("TERM")
-      if tterm and string.find(tterm, "screen") then
-        if os.getenv("TMUX") then
-          return true
-        end
-      else
-        if tterm and string.find(tterm, "tmux") then
-          return true
-        end
-      end
-    end,
+    cond = require("data.func").is_tmux(),
   },
 }

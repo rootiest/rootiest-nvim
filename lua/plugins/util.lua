@@ -16,15 +16,8 @@ return {
   { -- Link following
     "chrishrb/gx.nvim",
     lazy = true,
-    cmd = { "Browse" },
-    keys = {
-      { -- Open URL/Link
-        "gx",
-        "<cmd>Browse<cr>",
-        mode = { "n", "x" },
-        desc = "Open URL/Link",
-      },
-    },
+    cmd = require("data.cmd").gx,
+    keys = require("data.keys").gx,
     init = function()
       vim.g.netrw_nogx = 1
     end,
@@ -33,7 +26,7 @@ return {
   },
   { -- Auto-save
     "okuuva/auto-save.nvim",
-    cmd = "ASToggle",
+    cmd = require("data.cmd").autosave,
     event = { "InsertLeave", "TextChanged" },
     opts = {
       execution_message = {
@@ -44,17 +37,8 @@ return {
   { -- Ripgrep substitute
     "chrisgrieser/nvim-rip-substitute",
     event = "InsertEnter",
-    cmd = "RipSubstitute",
-    keys = {
-      { -- Rip Substitute
-        "<leader>fs",
-        function()
-          require("rip-substitute").sub()
-        end,
-        mode = { "n", "x" },
-        desc = "Rip Substitute",
-      },
-    },
+    cmd = require("data.cmd").ripsub,
+    keys = require("data.keys").ripsub,
   },
   { -- Unception
     "samjwill/nvim-unception",
@@ -68,24 +52,7 @@ return {
     config = function()
       require("icon-picker").setup({ disable_legacy_commands = true })
     end,
-    keys = {
-      { -- Pick Icon
-        "<leader>Ii",
-        "<cmd>IconPickerNormal<cr>",
-        desc = "Pick Icon",
-      },
-      { -- Yank Icon
-        "<leader>Iy",
-        "<cmd>IconPickerYank<cr>",
-        desc = "Yank Icon",
-      },
-      { -- Insert Icon in insert mode
-        "<C-.>",
-        "<cmd>IconPickerInsert<cr>",
-        desc = "Insert Icon",
-        mode = "i",
-      },
-    },
+    keys = require("data.keys").iconpicker,
   },
   { -- Codesnap
     "mistricky/codesnap.nvim",
@@ -100,38 +67,8 @@ return {
       code_font_family = "Iosevka NF",
       code_font_size = 12,
     },
-    cmd = {
-      "CodeSnap",
-      "CodeSnapSave",
-      "CodeSnapHighlight",
-      "CodeSnapASCII",
-    },
-    keys = {
-      { -- Save selected code snapshot into clipboard
-        "<leader>cy",
-        "<cmd>CodeSnap<cr>",
-        desc = "Save selected code snapshot into clipboard",
-        mode = "x",
-      },
-      { -- Save selected code snapshot in ~/Pictures
-        "<leader>cs",
-        "<cmd>CodeSnapSave<cr>",
-        desc = "Save selected code snapshot in ~/Pictures",
-        mode = "x",
-      },
-      { -- Highlight and snapshot selected code into clipboard
-        "<leader>ch",
-        "<cmd>CodeSnapHighlight<cr>",
-        desc = "Highlight and snapshot selected code into clipboard",
-        mode = "x",
-      },
-      { -- Save ASCII code snapshot into clipboard
-        "<leader>ci",
-        "<cmd>CodeSnapASCII<cr>",
-        desc = "Save ASCII code snapshot into clipboard",
-        mode = "x",
-      },
-    },
+    cmd = require("data.cmd").codesnap,
+    keys = require("data.keys").codesnap,
   },
   { -- Kulala
     "mistweaverco/kulala.nvim",
@@ -151,16 +88,7 @@ return {
     "dmtrKovalenko/caps-word.nvim",
     lazy = true,
     opts = {},
-    keys = {
-      {
-        "<C-s>",
-        function()
-          require("caps-word").toggle()
-        end,
-        desc = "Toggle CapsWord",
-        mode = { "i", "n" },
-      },
-    },
+    keys = require("data.keys").capsword,
   },
   { -- Music Controls
     "AntonVanAssche/music-controls.nvim",
@@ -171,14 +99,8 @@ return {
   },
   { -- Qalc
     "Apeiros-46B/qalc.nvim",
-    cmd = {
-      "Qalc",
-      "QalcAttach",
-      "QalcYank",
-    },
-    keys = {
-      { "<leader>qc", "<cmd>Qalc<cr>", desc = "Qalc" },
-    },
+    cmd = require("data.cmd").qalc,
+    keys = require("data.keys").qalc,
     opts = {
       set_ft = "qalc",
     },

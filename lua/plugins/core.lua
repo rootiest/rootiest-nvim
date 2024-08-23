@@ -18,9 +18,7 @@ return {
   { -- Bufferline
     "akinsho/bufferline.nvim",
     opts = {
-      options = {
-        separator_style = "slant",
-      },
+      options = require("data.types").bufferline,
     },
   },
   { -- Which-Key

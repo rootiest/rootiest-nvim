@@ -125,6 +125,7 @@ return {
     "xiyaowong/transparent.nvim",
     lazy = true,
     config = true,
+
     keys = {
       {
         "<leader>wt",
@@ -158,9 +159,6 @@ return {
         )
       end,
     },
-    cond = function() -- Not Using SSH
-      local ssh = os.getenv("SSH_TTY") or false
-      return not ssh
-    end,
+    cond = not require("data.func").is_ssh(),
   },
 }
