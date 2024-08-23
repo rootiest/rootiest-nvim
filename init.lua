@@ -58,3 +58,7 @@ require("config.rootiest").setup()
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ LAZY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Load Lazy package manager and plugins
 require("config.lazy")
+
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROCKS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Load LuaRocks package manager and plugins
+require("config.rocks")
