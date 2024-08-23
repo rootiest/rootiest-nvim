@@ -32,7 +32,9 @@ return {
         component_separators = { left = "", right = "" },
       },
       sections = {
-        lualine_a = { "mode" },
+        lualine_a = {
+          { "mode" },
+        },
         lualine_b = {
           { "branch" },
         },
