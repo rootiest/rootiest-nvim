@@ -78,14 +78,14 @@ end
 
 function M.get_color()
   local total_minutes = M.get_total_minutes()
-  local rootilities = require("utils.rootiest") -- Adjust according to your actual setup
+  local utils = require("utils.rootiest") -- Adjust according to your actual setup
 
   if total_minutes >= 60 then
-    return { fg = rootilities.get_fg_color("GitSignsAdd") }
+    return { fg = utils.get_fg_color("GitSignsAdd") }
   elseif total_minutes >= 30 then
-    return { fg = rootilities.get_fg_color("GitSignsChange") }
+    return { fg = utils.get_fg_color("GitSignsChange") }
   else
-    return { fg = rootilities.get_fg_color("GitSignsDelete") }
+    return { fg = utils.get_fg_color("GitSignsDelete") }
   end
 end
 
