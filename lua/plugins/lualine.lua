@@ -2,11 +2,10 @@
 --          │                         Lualine                         │
 --          ╰─────────────────────────────────────────────────────────╯
 
-local rootilities = require("utils.rootiest")
+local utils = require("utils.rootiest")
 
 return {
   "nvim-lualine/lualine.nvim",
-  event = "VeryLazy",
   init = function()
     vim.g.lualine_laststatus = vim.o.laststatus
     if vim.fn.argc(-1) > 0 then
@@ -34,8 +33,9 @@ return {
       },
       sections = {
         lualine_a = { "mode" },
-        lualine_b = { "branch" },
-
+        lualine_b = {
+          { "branch" },
+        },
         lualine_c = {
           LazyVim.lualine.root_dir(),
           {
@@ -104,61 +104,62 @@ return {
               local wakatime_stats = require("utils.wakatime_stats")
               return wakatime_stats.get_color()
             end,
-            on_click = function(button)
-              if button == "left" then
-                vim.cmd(":WakaTimeToday")
-              end
+            cond = function()
+              return utils.is_window_wide_enough(100)
+            end,
+          },
+          {
+            function()
+              return require("utils.music_stats").get_icon_with_text()
             end,
             cond = function()
-              return rootilities.is_window_wide_enough(100)
+              return utils.is_window_wide_enough(100)
             end,
           },
         },
         lualine_y = {
           {
             function()
-              return require("utils.music_stats").get_icon_with_text()
-            end,
-            cond = function()
-              return rootilities.is_window_wide_enough(100)
-            end,
-          },
-
-          {
-            function()
               return vim.fn.wordcount().words
             end,
             icon = " ",
             cond = function()
-              return rootilities.is_window_wide_enough(80)
+              return utils.is_window_wide_enough(80)
             end,
           },
-
           {
             "progress",
             separator = " ",
             padding = { left = 1, right = 0 },
             cond = function()
-              return rootilities.is_window_wide_enough(60)
+              return utils.is_window_wide_enough(60)
             end,
           },
           {
             "location",
             padding = { left = 0, right = 1 },
             cond = function()
-              return rootilities.is_window_wide_enough(40)
+              return utils.is_window_wide_enough(40)
             end,
           },
           {
             "selection_count",
             cond = function()
-              return rootilities.is_window_wide_enough(120)
+              return utils.is_window_wide_enough(120)
             end,
           },
           {
             "filesize",
             cond = function()
-              return rootilities.is_window_wide_enough(100)
+              return utils.is_window_wide_enough(100)
+            end,
+          },
+          {
+            function()
+              return require("arrow.statusline").text_for_statusline_with_icons()
+            end,
+            cond = function()
+              return utils.is_window_wide_enough(100)
             end,
           },
         },
@@ -168,7 +169,6 @@ return {
             color = "CurSearch",
             separator = { left = "", right = "" },
           },
-
           {
             "searchcount",
             color = "CurSearch",
@@ -182,7 +182,20 @@ return {
           },
         },
       },
-      extensions = { "neo-tree", "lazy" },
+      extensions = {
+        "neo-tree",
+        "lazy",
+        "aerial",
+        "fugitive",
+        "fzf",
+        "mason",
+        "overseer",
+        "toggleterm",
+        "nvim-dap-ui",
+        "quickfix",
+        "symbols-outline",
+        "trouble",
+      },
     }
 
     -- do not add trouble symbols if aerial is enabled
