@@ -3,7 +3,7 @@
 --          ╰─────────────────────────────────────────────────────────╯
 local M = {}
 
-local rootilities = require("utils.rootiest")
+local utils = require("utils.rootiest")
 
 local precog_first_time = true
 
@@ -21,7 +21,9 @@ end
 -- Toggle the precognition plugin
 function M.toggle_precognition()
   if pcall(require, "precognition") then
+    -- Initialize precognition plugin
     local precognition = require("precognition")
+    -- Toggle the plugin
     if precog_first_time then
       precognition.toggle()
       precognition.toggle() -- Call toggle twice
@@ -34,7 +36,7 @@ function M.toggle_precognition()
   end
 end
 
--- Toggle Hardtime and Precognition
+-- Toggle Hardtime and Precognition together
 function M.toggle_hardmode()
   if pcall(require, "hardtime") then
     local hardtime = require("hardtime")
@@ -75,32 +77,57 @@ end
 -- Set cursor icons
 function M.set_cursor_icons()
   local current_mode = vim.fn.mode()
-  local bg_color
-
-  if current_mode == "n" then
-    bg_color = rootilities.get_bg_color("MiniStatuslineModeNormal")
+  local bg_color -- Define bg_color variable
+  if current_mode == "n" then -- Normal
+    bg_color = utils.get_bg_color("MiniStatuslineModeNormal")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
-  elseif current_mode == "v" then
-    bg_color = rootilities.get_bg_color("MiniStatuslineModeVisual")
+  elseif current_mode == "v" then -- Visual
+    bg_color = utils.get_bg_color("MiniStatuslineModeVisual")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
-  elseif current_mode == "V" then
-    bg_color = rootilities.get_bg_color("MiniStatuslineModeVisual")
+  elseif current_mode == "V" then -- Visual line
+    bg_color = utils.get_bg_color("MiniStatuslineModeVisual")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
-  elseif current_mode == "R" or current_mode == "r" then
-    bg_color = rootilities.get_bg_color("MiniStatuslineModeReplace")
+  elseif current_mode == "R" or current_mode == "r" then -- Replace
+    bg_color = utils.get_bg_color("MiniStatuslineModeReplace")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
-  elseif current_mode == "i" then
-    bg_color = rootilities.get_bg_color("MiniStatuslineModeInsert")
+  elseif current_mode == "i" then -- Insert
+    bg_color = utils.get_bg_color("MiniStatuslineModeInsert")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
-  else
-    bg_color = rootilities.get_bg_color("MiniStatuslineModeNormal")
+  else -- Other\Unknown
+    bg_color = utils.get_bg_color("MiniStatuslineModeNormal")
     vim.api.nvim_set_hl(0, "SmoothCursor", { fg = bg_color })
     vim.fn.sign_define("smoothcursor", { text = "" })
+  end
+end
+
+function M.YankAndPasteInQuotes()
+  -- Yank text inside quotes on the current line
+  vim.cmd("normal! yiq")
+
+  -- Get the yanked text from the "0 register (the unnamed register)
+  local yanked_text = vim.fn.getreg('"')
+
+  -- List of marks to check ('a' to 'z')
+  local marks = "abcdefghijklmnopqrstuvwxyz"
+
+  -- Loop through each mark
+  for mark in marks:gmatch(".") do
+    -- Check if the mark exists (returns the line number or nil)
+    local position = vim.fn.getpos("'" .. mark)
+
+    if position[1] ~= 0 then
+      -- Go to the mark
+      vim.cmd("normal! '" .. mark)
+
+      -- Select text inside quotes and paste the yanked text
+      vim.cmd("normal! viq")
+      vim.cmd('normal! "' .. yanked_text .. "P")
+    end
   end
 end
 
@@ -113,18 +140,25 @@ end
 
 -- Define user commands
 function M.define_commands()
-  vim.api.nvim_create_user_command("Q", function()
-    vim.cmd.qall()
-  end, { force = true, desc = "Close all buffers" })
+  -- Define Q abbreviation
+  vim.cmd.cnoreabbrev("Q", "qall")
 
+  -- Define yank line command
   vim.api.nvim_create_user_command("YankLine", function()
     M.yank_line()
   end, { force = true, desc = "Yank line without leading whitespace" })
+  vim.api.nvim_create_user_command(
+    "YankAndPasteQuotes",
+    M.YankAndPasteInQuotes,
+    {}
+  )
 end
 
+-- Set up module
 function M.setup()
   M.eval_neovide()
   M.define_commands()
+  require("data.types").setup()
 end
 
 return M
