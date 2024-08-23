@@ -2,6 +2,9 @@
 --          │                        Languages                        │
 --          ╰─────────────────────────────────────────────────────────╯
 return {
+  { -- none-ls
+    import = "lazyvim.plugins.extras.lsp.none-ls",
+  },
   { -- JSON
     import = "lazyvim.plugins.extras.lang.json",
   },
