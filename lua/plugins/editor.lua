@@ -8,74 +8,42 @@ return {
   { -- Dial
     import = "lazyvim.plugins.extras.editor.dial",
   },
-  { -- Harpoon
-    import = "lazyvim.plugins.extras.editor.harpoon2",
-  },
   { -- Illuminate
     import = "lazyvim.plugins.extras.editor.illuminate",
+  },
+  { -- Outline
+    import = "lazyvim.plugins.extras.editor.outline",
+  },
+  { -- IncRename
+    import = "lazyvim.plugins.extras.editor.inc-rename",
   },
   { -- Flash
     "folke/flash.nvim",
     opts = {
-      modes = {
-        char = {
-          jump_labels = true,
-        },
-      },
+      modes = { char = { jump_labels = true } },
     },
+  },
+  { -- Arrow
+    "otavioschwanck/arrow.nvim",
+    opts = require("data.types").arrow,
   },
   { -- indent-blankline
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
   },
-  { -- Outline
-    import = "lazyvim.plugins.extras.editor.outline",
-  },
   { -- FoldNav
     "domharries/foldnav.nvim",
     lazy = true,
-    keys = {
-      { -- Goto Start
-        "<C-h>",
-        function()
-          require("foldnav").goto_start()
-        end,
-      },
-      { -- Goto Next
-        "<C-j>",
-        function()
-          require("foldnav").goto_next()
-        end,
-      },
-      { -- Goto Prev
-        "<C-k>",
-        function()
-          require("foldnav").goto_prev_start()
-        end,
-      },
-      { -- Goto End
-        "<C-l>",
-        function()
-          require("foldnav").goto_end()
-        end,
-      },
-    },
+    keys = require("data.keys").foldnav,
   },
-  { -- CodeWindow
-    "gorbit99/codewindow.nvim",
-    event = "BufEnter",
-    config = function()
-      require("codewindow").setup({
-        auto_enable = true,
-        exclude_filetypes = { "help", "dashboard" },
-        minimap_width = 16,
-        width_multiplier = 3,
-        screen_bounds = "background",
-        window_border = "none",
-        relative = "win",
-      })
-      require("codewindow").apply_default_keybinds()
-    end,
+  ---@module "neominimap.config.meta"
+  { -- NeoMiniMap
+    "Isrothy/neominimap.nvim",
+    enabled = true,
+    lazy = false,
+    keys = require("data.keys").minimap,
+    init = require("data.types").minimap.init(),
+    cond = require("data.types").minimap.cond(),
   },
   { -- Persistence
     "folke/persistence.nvim",
@@ -90,29 +58,13 @@ return {
     "tris203/precognition.nvim",
     lazy = true,
     opts = {},
-    keys = {
-      { -- Toggle Precognition
-        "zk",
-        function()
-          require("config.rootiest").toggle_precognition()
-        end,
-        desc = "Toggle Precognition",
-      },
-    },
+    keys = require("data.keys").precog,
   },
   { -- Zen Mode
     "folke/zen-mode.nvim",
     lazy = true,
     opts = {},
-    keys = {
-      { -- Toggle ZenMode
-        "<leader>z",
-        function()
-          require("zen-mode").toggle()
-        end,
-        desc = "Toggle ZenMode",
-      },
-    },
+    keys = require("data.keys").zen,
   },
   { -- SmoothCursor
     "gen740/SmoothCursor.nvim",
