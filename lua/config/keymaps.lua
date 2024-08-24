@@ -31,13 +31,13 @@ add_keymap(
   "x"
 )
 
-wk.add({
+-- Exit Neovim
+add_keymap({
   lhs = "<leader>Cq",
   rhs = function()
     data.func.exit()
   end,
   desc = "Exit Neovim",
-  mode = all_modes,
 })
 
 -- Group Keybinds
