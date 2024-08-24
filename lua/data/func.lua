@@ -264,4 +264,8 @@ function M.get_date()
   return os.date("%Y-%m-%d")
 end
 
+function M.exit()
+  vim.api.nvim_command("wqall")
+end
+
 return M
