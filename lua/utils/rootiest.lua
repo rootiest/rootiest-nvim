@@ -45,4 +45,56 @@ function M.get_date()
   return os.date("%Y-%m-%d")
 end
 
+function M.code_action_on_selection()
+  -- Capture the current mode
+  local mode = vim.fn.mode()
+
+  -- Proceed only if in Visual mode
+  if mode == "v" or mode == "V" or mode == "" then
+    -- Capture the start and end positions of the selected text
+    local start_pos = vim.fn.getpos("'<")
+    local end_pos = vim.fn.getpos("'>")
+
+    -- Ensure positions are valid (non-nil)
+    if start_pos and end_pos then
+      -- Convert positions to zero-indexed (LSP format)
+      local start_row = start_pos[2]
+      local start_col = start_pos[3]
+      local end_row = end_pos[2]
+      local end_col = end_pos[3]
+
+      -- Ensure that the range is valid
+      if
+        start_row >= 0
+        and start_col >= 0
+        and end_row >= 0
+        and end_col >= 0
+      then
+        -- Create the range
+        local range = {
+          start = { line = start_row, character = start_col },
+          ["end"] = { line = end_row, character = end_col },
+        }
+
+        -- Invoke code action with the range
+        vim.lsp.buf.code_action({
+          range = range,
+        })
+      else
+        -- Fallback if the range is invalid
+        vim.notify(
+          "Invalid selection range for code action",
+          vim.log.levels.ERROR
+        )
+      end
+    else
+      -- Fallback if positions are nil
+      vim.notify("Could not capture selection range", vim.log.levels.ERROR)
+    end
+  else
+    -- If not in Visual mode, just run code action normally
+    vim.lsp.buf.code_action()
+  end
+end
+
 return M

@@ -2,7 +2,8 @@
 --          │                         Lualine                         │
 --          ╰─────────────────────────────────────────────────────────╯
 
-local utils = require("utils.rootiest")
+local utils = require("utils")
+local rootils = utils.rootiest
 
 return {
   "nvim-lualine/lualine.nvim",
@@ -100,22 +101,21 @@ return {
           },
           {
             function()
-              return require("utils.wakatime_stats").get_icon_with_text()
+              return utils.wakatime_stats.get_icon_with_text()
             end,
             color = function()
-              local wakatime_stats = require("utils.wakatime_stats")
-              return wakatime_stats.get_color()
+              return utils.wakatime_stats.get_color()
             end,
             cond = function()
-              return utils.is_window_wide_enough(100)
+              return rootils.is_window_wide_enough(100)
             end,
           },
           {
             function()
-              return require("utils.music_stats").get_icon_with_text()
+              return utils.music_stats.get_icon_with_text()
             end,
             cond = function()
-              return utils.is_window_wide_enough(100)
+              return rootils.is_window_wide_enough(100)
             end,
           },
         },
@@ -126,7 +126,7 @@ return {
             end,
             icon = " ",
             cond = function()
-              return utils.is_window_wide_enough(80)
+              return rootils.is_window_wide_enough(80)
             end,
           },
           {
@@ -134,26 +134,26 @@ return {
             separator = " ",
             padding = { left = 1, right = 0 },
             cond = function()
-              return utils.is_window_wide_enough(60)
+              return rootils.is_window_wide_enough(60)
             end,
           },
           {
             "location",
             padding = { left = 0, right = 1 },
             cond = function()
-              return utils.is_window_wide_enough(40)
+              return rootils.is_window_wide_enough(40)
             end,
           },
           {
             "selection_count",
             cond = function()
-              return utils.is_window_wide_enough(120)
+              return rootils.is_window_wide_enough(120)
             end,
           },
           {
             "filesize",
             cond = function()
-              return utils.is_window_wide_enough(100)
+              return rootils.is_window_wide_enough(100)
             end,
           },
           {
@@ -161,8 +161,9 @@ return {
               return require("arrow.statusline").text_for_statusline_with_icons()
             end,
             cond = function()
-              return utils.is_window_wide_enough(100)
+              return rootils.is_window_wide_enough(100)
             end,
+            separator = { left = "", right = "" },
           },
         },
         lualine_z = {
@@ -178,9 +179,10 @@ return {
             icon = "󰍉 ",
           },
           {
-            function()
-              return "  " .. os.date("%R")
-            end,
+            "datetime",
+            -- options: default, us, uk, iso, or your own format string ("%H:%M", etc..)
+            style = "%a %R",
+            icon = " ",
           },
         },
       },
