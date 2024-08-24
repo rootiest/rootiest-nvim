@@ -1,6 +1,8 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                     Auto Completion                     │
 --          ╰─────────────────────────────────────────────────────────╯
+local data = require("data")
+
 return {
   {
     "hrsh7th/nvim-cmp",
@@ -153,7 +155,7 @@ return {
       })
 
       -- List of filetypes to disable completion
-      local disabled_filetypes = require("data.types").cmp
+      local disabled_filetypes = data.types.cmp
       for _, filetype in ipairs(disabled_filetypes) do
         cmp.setup.filetype(filetype, {
           sources = {},

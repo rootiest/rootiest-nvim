@@ -1,6 +1,8 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Dashboard                        │
 --          ╰─────────────────────────────────────────────────────────╯
+local data = require("data")
+
 return {
   -- Dashboard
   enabled = false,
@@ -62,7 +64,7 @@ return {
         file_height = logo_dimensions.height,
       },
       config = {
-        center = require("data.dash").choices,
+        center = data.dash.choices,
         footer = function()
           local stats = require("lazy").stats()
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)

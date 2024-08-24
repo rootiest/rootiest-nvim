@@ -1,6 +1,7 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                       Git Plugins                       │
 --          ╰─────────────────────────────────────────────────────────╯
+local data = require("data")
 
 return {
   { -- Git UI
@@ -12,20 +13,20 @@ return {
   { -- DiffView
     "sindrets/diffview.nvim",
     lazy = true,
-    cmd = require("data.cmd").diffview,
+    cmd = data.cmd.diffview,
   },
   { -- Gist Tools
     "Rawnly/gist.nvim",
     lazy = true,
-    cmd = require("data.cmd").gist,
-    keys = require("data.keys").gist,
+    cmd = data.cmd.gist,
+    keys = data.keys.gist,
     config = true,
   },
   { -- LazyGit
     "kdheepak/lazygit.nvim",
     lazy = true,
-    cmd = require("data.cmd").lazygit,
-    keys = require("data.keys").lazygit,
+    cmd = data.cmd.lazygit,
+    keys = data.keys.lazygit,
     dependencies = {
       "nvim-telescope/telescope.nvim",
       "nvim-lua/plenary.nvim",
@@ -37,7 +38,7 @@ return {
   { -- Thanks/github-stars
     "jsongerber/thanks.nvim",
     lazy = true,
-    cmd = require("data.cmd").thanks,
+    cmd = data.cmd.thanks,
     opts = {
       star_on_install = false,
     },
@@ -45,9 +46,9 @@ return {
   { -- GitLinker
     "linrongbin16/gitlinker.nvim",
     lazy = true,
-    cmd = require("data.cmd").gitlinker,
+    cmd = data.cmd.gitlinker,
     opts = {},
-    keys = require("data.keys").gitlinker,
+    keys = data.keys.gitlinker,
   },
   { -- Git Blame
     "f-person/git-blame.nvim",
@@ -71,16 +72,16 @@ return {
       -- Apply the lualine configuration
       require("lualine").setup(config)
       -- Return the git-blame options
-      return require("data.types").gitblame
+      return data.types.gitblame
     end,
   },
   { -- Git Graph
     "isakbm/gitgraph.nvim",
     opts = {
-      symbols = require("data.types").gitgraph.symbols(),
+      symbols = data.types.gitgraph.symbols(),
       format = {
-        timestamp = require("data.types").gitgraph.timestamp,
-        fields = require("data.types").gitgraph.fields,
+        timestamp = data.types.gitgraph.timestamp,
+        fields = data.types.gitgraph.fields,
       },
       hooks = {
         -- Check diff of a commit
@@ -95,7 +96,7 @@ return {
         end,
       },
     },
-    keys = require("data.keys").gitgraph,
+    keys = data.keys.gitgraph,
   },
   { -- FuGit
     "SuperBo/fugit2.nvim",
@@ -110,7 +111,7 @@ return {
         dependencies = { "stevearc/dressing.nvim" },
       },
     },
-    cmd = require("data.cmd").fugit,
-    keys = require("data.keys").fugit,
+    cmd = data.cmd.fugit,
+    keys = data.keys.fugit,
   },
 }

@@ -1,6 +1,8 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                          Core                           │
 --          ╰─────────────────────────────────────────────────────────╯
+local data = require("data")
+
 return {
   { -- LazyVim
     "LazyVim/LazyVim",
@@ -18,7 +20,7 @@ return {
   { -- Bufferline
     "akinsho/bufferline.nvim",
     opts = {
-      options = require("data.types").bufferline,
+      options = data.types.bufferline,
     },
   },
   { -- Which-Key

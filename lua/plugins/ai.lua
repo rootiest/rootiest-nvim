@@ -1,6 +1,8 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        AI Tools                         │
 --          ╰─────────────────────────────────────────────────────────╯
+local data = require("data")
+
 return {
   {
     -- Neocodeium
@@ -11,7 +13,7 @@ return {
       silent = true,
       debounce = false,
     },
-    keys = require("data.keys").neocodeium,
+    keys = data.keys.neocodeium,
   },
   { -- Copilot
     import = "lazyvim.plugins.extras.coding.copilot",

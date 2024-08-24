@@ -1,6 +1,8 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                         Editor                          │
 --          ╰─────────────────────────────────────────────────────────╯
+local data = require("data")
+
 return {
   { -- Aerial
     import = "lazyvim.plugins.extras.editor.aerial",
@@ -25,7 +27,7 @@ return {
   },
   { -- Arrow
     "otavioschwanck/arrow.nvim",
-    opts = require("data.types").arrow,
+    opts = data.types.arrow,
   },
   { -- indent-blankline
     "lukas-reineke/indent-blankline.nvim",
@@ -34,16 +36,16 @@ return {
   { -- FoldNav
     "domharries/foldnav.nvim",
     lazy = true,
-    keys = require("data.keys").foldnav,
+    keys = data.keys.foldnav,
   },
   ---@module "neominimap.config.meta"
   { -- NeoMiniMap
     "Isrothy/neominimap.nvim",
     enabled = true,
     lazy = false,
-    keys = require("data.keys").minimap,
-    init = require("data.types").minimap.init(),
-    cond = require("data.types").minimap.cond(),
+    keys = data.keys.minimap,
+    init = data.types.minimap.init(),
+    cond = data.types.minimap.cond(),
   },
   { -- Persistence
     "folke/persistence.nvim",
@@ -58,13 +60,13 @@ return {
     "tris203/precognition.nvim",
     lazy = true,
     opts = {},
-    keys = require("data.keys").precog,
+    keys = data.keys.precog,
   },
   { -- Zen Mode
     "folke/zen-mode.nvim",
     lazy = true,
     opts = {},
-    keys = require("data.keys").zen,
+    keys = data.keys.zen,
   },
   { -- SmoothCursor
     "gen740/SmoothCursor.nvim",

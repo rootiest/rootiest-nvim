@@ -1,6 +1,8 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                         Coding                          │
 --          ╰─────────────────────────────────────────────────────────╯
+local data = require("data")
+
 return {
   { -- Mason-lspconfig
     "williamboman/mason-lspconfig.nvim",
@@ -17,14 +19,6 @@ return {
   { -- VSCode
     import = "lazyvim.plugins.extras.vscode",
   },
-  { -- Ollama Copilot
-    "Faywyn/llama-copilot.nvim",
-    lazy = false,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    opts = require("data.types").ollama_copilot,
-  },
   { -- G-code
     "wilriker/gcode.vim",
   },
@@ -38,8 +32,8 @@ return {
   { -- Alternate
     "ton/vim-alternate",
     lazy = true,
-    ft = require("data.types").alternate,
-    keys = require("data.keys").alternate,
+    ft = data.types.alternate,
+    keys = data.keys.alternate,
   },
   { -- Highlight colors
     "brenoprata10/nvim-highlight-colors",
@@ -57,14 +51,14 @@ return {
   { -- Substitute
     "gbprod/substitute.nvim",
     lazy = true,
-    opts = require("data.types").substitute,
-    keys = require("data.keys").substitute,
+    opts = data.types.substitute,
+    keys = data.keys.substitute,
   },
   { -- mini.splitjoin
     "echasnovski/mini.splitjoin",
     event = "InsertEnter",
     opts = {
-      mappings = require("data.keys").splitjoin,
+      mappings = data.keys.splitjoin,
     },
   },
 }
