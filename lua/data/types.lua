@@ -147,6 +147,16 @@ M.indent_char = {
   "󰽽",
 }
 
+M.smart_splits = {
+  build = function()
+    if require("data.func").is_kitty() then
+      return "./kitty/install-kittens.bash"
+    else
+      return false
+    end
+  end,
+}
+
 M.minimap = {
   -- Width of minimap
   width = 20,
@@ -210,7 +220,7 @@ M.minimap = {
   end,
 }
 
-M.ollama_copilot = {
+M.llama_copilot = {
   host = "localhost",
   port = "11434",
   model = "codellama:7b-code",
