@@ -128,7 +128,23 @@ end
 
 -- Check if plugin is installed
 function M.is_installed(plugin)
-  return require("lazy.core.config").plugins[plugin] ~= nil
+  -- Check for lazy.nvim
+  local lazy_installed = pcall(require, "lazy")
+  if lazy_installed then
+    return require("lazy.core.config").plugins[plugin] ~= nil
+  end
+  -- Check for packer.nvim
+  local packer_installed = pcall(require, "packer_plugins")
+  if packer_installed then
+    ---@diagnostic disable-next-line: undefined-field
+    return _G.packer_plugins and _G.packer_plugins[plugin] ~= nil
+  end
+  -- Check for vim-plug
+  if vim.fn.exists("g:plugs") == 1 then
+    return vim.g.plugs[plugin] ~= nil
+  end
+  -- Plugin not found
+  return false
 end
 
 -- Function to convert RGB to hexadecimal
