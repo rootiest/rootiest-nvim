@@ -200,6 +200,30 @@ function M.rm_mark(mark)
   end
   return false -- Indicate that the mark did not exist
 end
+
+-- Get Workspace dimensions with optional output format
+function M.get_ws_dimensions(format)
+  format = format or "verbose"
+  local dimensions = {
+    width = tonumber(vim.opt.columns:get()) or 0,
+    height = tonumber(vim.opt.lines:get()) or 0,
+  }
+  if format == "verbose" then
+    return string.format(
+      "Width: %d cells\nHeight: %d cells",
+      dimensions.width,
+      dimensions.height
+    )
+  elseif format == "basic" then
+    return string.format("%dx%d", dimensions.width, dimensions.height)
+  elseif format == "raw" then
+    return dimensions
+  else
+    -- Trigger an error if the format is not valid
+    error("Invalid format: " .. format)
+  end
+end
+
 -- Check if plugin is installed
 function M.is_installed(plugin)
   -- Check for lazy.nvim
