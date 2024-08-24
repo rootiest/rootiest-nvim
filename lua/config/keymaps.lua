@@ -5,20 +5,11 @@
 local wk = require("which-key")
 local rootiest = require("config.rootiest")
 local smartsplits = require("smart-splits")
+local data = require("data")
 
 local all_modes = { "n", "i", "v", "x", "s", "o", "c", "t" }
 
--- Helper function to add keymaps with common properties
-local function add_keymap(lhs, rhs, desc, modes)
-  wk.add({
-    {
-      lhs,
-      rhs = rhs,
-      desc = desc,
-      mode = modes or "n", -- default to normal mode if not specified
-    },
-  })
-end
+local add_keymap = require("data").func.add_keymap
 
 -- General Keybinds
 add_keymap("<leader>gt", function()
@@ -33,6 +24,21 @@ end, "Toggle Hardmode")
 add_keymap("<leader>Y", "<cmd>%y<cr>", "Yank buffer contents")
 add_keymap("<C-a>", "<cmd>norm ggVG<cr>", "Select all")
 add_keymap("|", "<cmd>Neotree reveal toggle<cr>", "Neotree reveal")
+add_keymap(
+  "<leader>Ca",
+  ":<C-U>lua require('utils.rootiest').code_action_on_selection()<CR>",
+  "Code Action on Selection",
+  "x"
+)
+
+wk.add({
+  lhs = "<leader>Cq",
+  rhs = function()
+    data.func.exit()
+  end,
+  desc = "Exit Neovim",
+  mode = all_modes,
+})
 
 -- Group Keybinds
 wk.add({
