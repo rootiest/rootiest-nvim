@@ -126,6 +126,65 @@ function M.get_os()
   end
 end
 
+-- Helper function to add keymaps with common properties
+function M.add_keymap(lhs, rhs, desc, modes)
+  -- Check if which-key.nvim is installed
+  if M.is_installed("which-key.nvim") then
+    require("which-key").add({
+      --stylua: ignore start
+      {
+        lhs,                 -- The keybind
+        rhs = rhs,           -- Function to execute when the key is pressed
+        desc = desc,         -- Description of the keybind
+        mode = modes or "n", -- Default to "n" (normal mode) if mode is not provided
+      },
+      --stylua: ignore end
+    })
+  else
+    -- If which-key.nvim is not installed, use vim.keymap.set
+    vim.keymap.set(modes or "n", lhs, rhs, { desc = desc })
+  end
+end
+
+-- Helper function to remove keymaps
+function M.rm_keymap(lhs, mode, opts)
+  mode = mode or "n" -- Default to "n" (normal mode) if mode is not provided
+  opts = opts or {} -- Default to an empty table if opts are not provided
+  -- Get all keymaps for the specified mode
+  local keymaps = vim.api.nvim_get_keymap(mode)
+  -- Check if the keymap exists
+  for _, keymap in pairs(keymaps) do
+    ---@diagnostic disable-next-line: undefined-field
+    if keymap.lhs and keymap.lhs == lhs then
+      -- Keymap exists, remove it
+      vim.keymap.del(mode, lhs, opts)
+      return true -- Indicate that the keymap was removed
+    end
+  end
+  return false -- Indicate that the keymap did not exist
+end
+
+-- Helper function to add a mark
+function M.add_mark(mark, line, col)
+  -- Set the mark at the specified line and column
+  vim.api.nvim_buf_set_mark(0, mark, line, col, {})
+  return true -- Indicate that the mark was successfully added
+end
+
+-- Helper function to remove a mark if it exists
+function M.rm_mark(mark)
+  -- Get a list of marks in the current buffer
+  local marks = vim.fn.getmarklist(vim.fn.bufnr("%"))
+  -- Check if the mark exists
+  for _, m in ipairs(marks) do
+    if m.mark == mark then
+      -- Mark exists, remove it
+      vim.cmd("delmarks " .. mark)
+      return true -- Indicate that the mark was removed
+    end
+  end
+  return false -- Indicate that the mark did not exist
+end
 -- Check if plugin is installed
 function M.is_installed(plugin)
   -- Check for lazy.nvim
