@@ -13,6 +13,21 @@ function M.is_kitty()
   return kit ~= nil
 end
 
+-- Check if using kitty-scrollback
+function M.is_kitty_scrollback()
+  if vim.env.KITTY_SCROLLBACK_NVIM == "true" then
+    return true
+  end
+  return false
+end
+
+-- Check if the terminal is alacritty
+function M.is_alacritty()
+  local term = os.getenv("TERM") or ""
+  local alc = string.find(term, "alacritty")
+  return alc ~= nil
+end
+
 -- Check if the terminal is tmux
 function M.is_tmux()
   local tterm = os.getenv("TERM")
