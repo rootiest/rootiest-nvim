@@ -4,6 +4,7 @@ local wakatime = require("utils.wakatime_stats")
 local music = require("utils.music_stats")
 local highlight = require("utils.highlight")
 local rootiest = require("utils.rootiest")
+local blinky = require("utils.blinky")
 
 return {
   cache_stats = cache,
@@ -12,4 +13,5 @@ return {
   music_stats = music,
   highlight = highlight,
   rootiest = rootiest,
+  blinky = blinky,
 }
