@@ -59,7 +59,7 @@ return {
       local git_blame = require("gitblame")
       local utils = require("utils.rootiest")
       -- Define the width limit for displaying the Git blame component
-      local width_limit = 180 -- Adjust this value as needed
+      local width_limit = 245 -- Adjust this value as needed
       -- Add Git-blame to lualine_c section
       table.insert(config.sections.lualine_c, {
         git_blame.get_current_blame_text,
@@ -97,21 +97,5 @@ return {
       },
     },
     keys = data.keys.gitgraph,
-  },
-  { -- FuGit
-    "SuperBo/fugit2.nvim",
-    opts = {
-      width = 100,
-    },
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      {
-        "chrisgrieser/nvim-tinygit", -- optional: for Github PR view
-        dependencies = { "stevearc/dressing.nvim" },
-      },
-    },
-    cmd = data.cmd.fugit,
-    keys = data.keys.fugit,
   },
 }
