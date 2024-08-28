@@ -10,6 +10,7 @@ ignored_players=(
 	"kdeconnect"
 	"haruna"
 	"plasma-browser-integration"
+	"plasma-browser-integration-76042"
 )
 
 # Convert array to a comma-separated string with no spaces
@@ -38,7 +39,7 @@ trap cleanup EXIT
 
 # Update the music cache file every second
 while true; do
-	playerctl --ignore-player ${ignored_sources} metadata --format "{{ artist }}${separator}{{ title }}${separator}{{ album }}${separator}{{ status }}${separator}{{ volume }}${separator}{{ loop }}${separator}{{ shuffle }}" >~/.cache/music_cache.txt
+	playerctl --ignore-player "${ignored_sources}" metadata --format "{{ artist }}${separator}{{ title }}${separator}{{ album }}${separator}{{ status }}${separator}{{ volume }}${separator}{{ loop }}${separator}{{ shuffle }}" >~/.cache/music_cache.txt
 	sleep 1
 done & # Run this loop in the background
 
