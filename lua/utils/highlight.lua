@@ -5,6 +5,7 @@ local M = {}
 
 -- Load utils
 local utils = require("utils.rootiest")
+local data = require("data")
 -- Readability functions
 local get_bg_color = utils.get_bg_color
 local get_fg_color = utils.get_fg_color
@@ -41,7 +42,7 @@ function M.setup_indent_highlight()
   -- Configure the indent-blankline plugin
   require("ibl").setup({
     indent = {
-      char = require("data.types").indent_char,
+      char = vim.g.indent_char or data.types.ibl.indent_char.none,
       highlight = {
         "IndentBlanklineIndent",
       },
@@ -52,13 +53,13 @@ function M.setup_indent_highlight()
         "IndentsScopeHighlight",
         "IndentsScopeHighlight",
       },
-      char = "",
+      char = vim.g.scope_char or data.types.ibl.scope_char.light,
     },
     whitespace = {
       remove_blankline_trail = true,
     },
     exclude = {
-      filetypes = require("data.types").highlights.exclude,
+      filetypes = data.types.highlights.exclude,
     },
   })
 
@@ -129,13 +130,22 @@ function M.setup_dashboard_highlight()
   end
 end
 
+-- Set up transparency
+function M.setup_transparency()
+  if data.func.is_kitty() and not vim.g.disable_transparency then
+    vim.cmd("TransparentEnable")
+  else
+    vim.cmd("TransparentDisable")
+  end
+end
+
 -- Setup autocommands to update on InsertEnter and ColorScheme events
 function M.setup_autocommands()
   local autogrp = vim.api.nvim_create_augroup
   local autocmd = vim.api.nvim_create_autocmd
 
   -- List of filetypes to exclude
-  local excluded_filetypes = require("data.types").highlights.exclude
+  local excluded_filetypes = data.types.highlights.exclude
 
   -- Create a new augroup for the IndentHighlight
   local IndentGroup = autogrp("IndentHighlight", { clear = true })
