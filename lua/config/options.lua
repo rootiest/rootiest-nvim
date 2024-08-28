@@ -31,15 +31,15 @@ vim.g.usewakatime =  true  --- @type boolean Options:  <true|false>
 vim.g.usehardtime =  false --- @type boolean Options:  <true|false>
 vim.g.useimage    =  true  --- @type boolean Options:  <true|false>
 
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ USER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.o.background = "dark"              --- @type string Options: <dark|light>
-vim.g.DashboardHeaderColor = "#88fc9a" --- @type string Options: [hex color]
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ COLOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--  Background color
+vim.o.background = "dark"                 --- @type string Options: <dark|light>
+--  Dashboard header color
+vim.g.DashboardHeaderColor = "#88fc9a"    --- @type string Options: [hex color]
+-- Disable Transparency
+vim.g.disable_transparency = true         --- @type boolean Options: <true|false>
 
--- BLINKY CURSOR
-vim.opt.guicursor = {
-  "n-v-c:block-Cursor/lCursor",         -- Block cursor in normal, visual, and command modes
-  "i:ver25-blinkwait700-blinkoff400-blinkon250-Cursor/lCursor",  -- Blinking vertical line in insert mode
-  "r-cr-o:hor20-Cursor/lCursor",        -- Horizontal line cursor in replace, command-line replace, and operator-pending modes
-  "a:blinkwait700-blinkoff400-blinkon250",  -- Global blinking settings for all modes
-}
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ BLINKY CURSOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--  Setup the blinky cursor
+require("utils.blinky").enable()
 -- stylua: ignore end
