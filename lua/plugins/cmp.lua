@@ -6,6 +6,8 @@ local data = require("data")
 return {
   {
     "hrsh7th/nvim-cmp",
+    -- HACK: Experiemental cmp performance fork
+    dev = true,
     event = "VeryLazy",
     dependencies = {
       {
@@ -46,6 +48,7 @@ return {
       "hrsh7th/cmp-buffer",
       "onsails/lspkind.nvim",
       "hrsh7th/cmp-emoji",
+      "hrsh7th/cmp-cmdline",
       {
         "chrisgrieser/cmp_yanky",
         option = {
@@ -144,6 +147,28 @@ return {
             end
             return item
           end,
+        },
+      })
+
+      -- `:` cmdline setup.
+      cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = "path" },
+        }, {
+          {
+            name = "cmdline",
+            option = {
+              ignore_cmds = { "Man", "!" },
+            },
+          },
+        }),
+      })
+
+      -- Additional setup for cmdline filetype
+      cmp.setup.filetype("cmdline", {
+        sources = {
+          { name = "cmdline" }, -- Ensure 'cmdline' source is available
         },
       })
 
