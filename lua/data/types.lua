@@ -134,17 +134,32 @@ M.highlights = {
 }
 
 -- Indent characters
-M.indent_char = {
-  "󰎤",
-  "󰎧",
-  "󰎪",
-  "󰎭",
-  "󰎱",
-  "󰎳",
-  "󰎶",
-  "󰎹",
-  "󰎼",
-  "󰽽",
+M.ibl = {
+  indent_char = {
+    fancy = {
+      "󰎤",
+      "󰎧",
+      "󰎪",
+      "󰎭",
+      "󰎱",
+      "󰎳",
+      "󰎶",
+      "󰎹",
+      "󰎼",
+      "󰽽",
+    },
+    none = { " " },
+    basic = { "󰇘" },
+  },
+  scope_char = {
+    light = { "" },
+    none = { " " },
+    fancy = { "‖" },
+    strong = { "⦀" },
+    basic = { "" },
+    arrow = { "" },
+    tab = { "󰌒" },
+  },
 }
 
 M.smart_splits = {
@@ -231,10 +246,44 @@ M.llama_copilot = {
 M.substitute = {
   yank_substituted_text = false,
   preserve_cursor_position = true,
+  on_substitute = function()
+    require("yanky.integration").substitute()
+  end,
 }
 
 -- Image.nvim filetypes
 M.image = "markdown"
+
+-- Todo-comments
+M.todo = {
+  keywords = {
+    FIX = {
+      icon = " ", -- icon used for the sign, and in search results
+      color = "error", -- can be a hex color, or a named color (see below)
+      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+      -- signs = false, -- configure signs for some keywords individually
+    },
+    TODO = { icon = " ", color = "info" },
+    HACK = { icon = " ", color = "warning" },
+    WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+    NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+    TEST = {
+      icon = "⏲ ",
+      color = "test",
+      alt = { "TESTING", "PASSED", "FAILED" },
+    },
+  },
+  lualine = function()
+    local config = {
+      -- The todo-comments types to show & in what order:
+      order = { "TODO", "FIX", "HACK", "WARN", "NOTE", "PERF", "TEST" },
+      keywords = M.todo.keywords,
+      when_empty = "",
+    }
+    return config
+  end,
+}
 
 -- Toggleterm plugin options
 M.toggleterm = {
