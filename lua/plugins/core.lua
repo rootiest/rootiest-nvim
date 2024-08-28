@@ -7,7 +7,7 @@ return {
   { -- LazyVim
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin-frappe",
+      colorscheme = vim.g.my_colorscheme or "catppuccin-mocha",
       news = {
         lazyvim = true,
         neovim = true,

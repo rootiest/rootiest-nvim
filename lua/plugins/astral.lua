@@ -7,8 +7,8 @@ return {
     version = "*", -- Pin to GitHub releases
     opts = {
       fallback_themes = {
-        "catppuccin-frappe",
         "catppuccin-macchiato",
+        "catppuccin-frappe",
         "tokyonight",
         "kanagawa",
         "monochrome",
