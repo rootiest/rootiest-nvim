@@ -158,7 +158,20 @@ end
 function M.setup()
   M.eval_neovide()
   M.define_commands()
+
+  -- Setup types data
   require("data.types").setup()
+
+  --  ━━━━━━━━━━━━━━━━━━━━━━━━━ Rootiest cmd window ━━━━━━━━━━━━━━━━━━━━━━━━━
+  --
+  -- Setup Rootiest cmd window utility
+  require("utils.cmd_window").setup()
+
+  -- Setup Rootiest cmd window (override default command-line behavior)
+  -- require("utils.cmd_window").setup({ override_cmdline = true })
+
+  -- Setup indentor
+  require("utils.indentor")
 end
 
 return M
