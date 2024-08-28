@@ -36,6 +36,7 @@ return {
       nvim_surround = true,
       octo = true,
       overseer = true,
+      rainbow_delimiters = true,
       which_key = true,
     },
   },
@@ -124,8 +125,6 @@ return {
   { -- Transparent
     "xiyaowong/transparent.nvim",
     lazy = true,
-    config = true,
-
     keys = {
       {
         "<leader>wt",

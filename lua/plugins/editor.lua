@@ -19,6 +19,25 @@ return {
   { -- IncRename
     import = "lazyvim.plugins.extras.editor.inc-rename",
   },
+  { -- Treesitter-context
+    import = "lazyvim.plugins.extras.ui.treesitter-context",
+  },
+  {
+    "folke/trouble.nvim",
+    cmd = { "Trouble" },
+    opts = {
+      modes = {
+        symbols = { -- Configure symbols mode
+          win = {
+            type = "split", -- split window
+            relative = "win", -- relative to current window
+            position = "right", -- right side
+            size = 0.3, -- 30% of the window
+          },
+        },
+      },
+    },
+  },
   { -- Flash
     "folke/flash.nvim",
     opts = {
@@ -92,5 +111,17 @@ return {
   },
   { -- Comment Box
     "LudoPinelli/comment-box.nvim",
+  },
+  { -- vim-visual-multi
+    "mg979/vim-visual-multi",
+  },
+  { -- Todo Comments
+    "folke/todo-comments.nvim",
+    opts = {
+      keywords = data.types.todo.keywords,
+    },
+  },
+  { -- Rainbow Delimeters
+    "HiPhish/rainbow-delimiters.nvim",
   },
 }
