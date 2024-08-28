@@ -127,4 +127,14 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
   },
+  { -- Docker-compose logs
+    "adelowo/dockercomposelogs.nvim",
+    config = function()
+      require("dockercomposelogs").setup({})
+    end,
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
+  },
 }
