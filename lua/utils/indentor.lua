@@ -41,20 +41,10 @@ function M.insert_previous_line_indentation()
   end
 end
 
--- Create a keymap to trigger the function using native mappings
--- vim.api.nvim_set_keymap(
---   { "i", "n" },
---   "<C-i>",
---   "<Cmd>lua require('indentor').insert_previous_line_indentation()<CR>",
---   { noremap = true, silent = true }
--- )
-
--- Create a keymap to trigger the function using Rootiest utils
-require("data").func.add_keymap(
-  "<C-i>",
-  M.insert_previous_line_indentation,
-  "Indent Line",
-  { "i", "n" }
-)
+-- Create a keymap to trigger the function
+local data = require("data")
+for _, map in ipairs(data.keys.indentor) do
+  data.func.add_keymap(map[1], map[2], map[3], map[4])
+end
 
 return M

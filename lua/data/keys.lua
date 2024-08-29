@@ -295,6 +295,17 @@ M.iconpicker = {
   },
 }
 
+M.indentor = {
+  { -- Indentor
+    "<C-i>",
+    function()
+      require("utils.indentor").insert_previous_line_indentation()
+    end,
+    "Insert Previous Line Indentation",
+    { "i", "n" },
+  },
+}
+
 M.lazygit = {
   { -- LazyGit
     "<leader>lg",
