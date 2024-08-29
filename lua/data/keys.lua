@@ -4,6 +4,9 @@
 
 local M = {}
 
+-- Load utils
+local rootiest = require("config.rootiest")
+
 M.alternate = {
   { -- Toggle Alternate
     "<leader>a",
@@ -220,6 +223,39 @@ M.gist = {
   },
 }
 
+M.groups = {
+  -- Icon picker
+  {
+    lhs = "<leader>I",
+    group = "IconPicker",
+    icon = { icon = "󰥸", color = "orange" },
+  },
+  -- Gists menu
+  {
+    lhs = "<leader>gn",
+    group = "Gists",
+    icon = { icon = "", color = "orange" },
+  },
+  -- Lazy menu
+  {
+    lhs = "<leader>l",
+    group = "Lazy",
+    icon = { icon = "󰒲", color = "red" },
+  },
+  -- MiniMap menu
+  {
+    lhs = "<leader>n",
+    group = "MiniMap",
+    icon = { icon = "", color = "green" },
+  },
+  -- Code action menu
+  {
+    lhs = "<leader>C",
+    group = "CodeActions",
+    icon = { icon = "", color = "yellow" },
+  },
+}
+
 M.gx = {
   { -- Open URL/Link
     "gx",
@@ -253,6 +289,83 @@ M.lazygit = {
     "<leader>lg",
     "<cmd>LazyGit<cr>",
     desc = "LazyGit",
+  },
+}
+
+M.misc = {
+  -- LazyGit
+  {
+    lhs = "<leader>gt",
+    rhs = function()
+      rootiest.toggle_lazygit_term()
+    end,
+    desc = "LazyGit Terminal",
+  },
+  -- Yank line (without whitespace)
+  {
+    lhs = "yo",
+    rhs = function()
+      rootiest.yank_line()
+    end,
+    desc = "Yank Line-text",
+  },
+  -- Hardmode
+  {
+    lhs = "<leader>uH",
+    rhs = function()
+      rootiest.toggle_hardmode()
+    end,
+    desc = "Toggle Hardmode",
+  },
+  -- Yank buffer
+  {
+    lhs = "<leader>Y",
+    rhs = "<cmd>%y<cr>",
+    desc = "Yank buffer contents",
+  },
+  -- Select all
+  {
+    lhs = "<C-a>",
+    rhs = "<cmd>norm ggVG<cr>",
+    desc = "Select all",
+  },
+  -- Neotree
+  {
+    lhs = "|",
+    rhs = "<cmd>Neotree reveal toggle<cr>",
+    desc = "Neotree toggle",
+  },
+  -- Code action on selection
+  {
+    lhs = "<leader>Ca",
+    rhs = ":<C-U>lua require('utils.rootiest').code_action_on_selection()<CR>",
+    desc = "Code Action on Selection",
+    mode = "x",
+  },
+  -- Exit Neovim
+  {
+    lhs = "<leader>Q",
+    rhs = "<cmd>lua require('data').func.exit()<cr>",
+    desc = "Exit Neovim",
+  },
+  -- LazyVim
+  {
+    lhs = "<leader>lv",
+    rhs = "<cmd>Lazy<cr>",
+    desc = "LazyVim",
+  },
+  -- LazyExtras
+  {
+    lhs = "<leader>lx",
+    rhs = "<cmd>LazyExtras<cr>",
+    desc = "LazyExtras",
+  },
+  -- De-map 's' to avoid conflicts with mini.surround
+  {
+    lhs = "s",
+    rhs = "<Nop>",
+    desc = "Nos",
+    mode = { "n", "x" },
   },
 }
 
@@ -294,7 +407,7 @@ M.precog = {
 }
 
 M.qalc = {
-  {
+  { -- Open Qalc
     "<leader>qc",
     "<cmd>Qalc<cr>",
     desc = "Qalc",
@@ -314,6 +427,113 @@ M.ripsub = {
 
 M.splitjoin = {
   toggle = "gJ",
+}
+
+M.splits = {
+  resize = {
+    {
+      "<A-h>",
+      function()
+        require("smart-splits").resize_left()
+      end,
+      "Resize split left",
+    },
+    {
+      "<A-j>",
+      function()
+        require("smart-splits").resize_down()
+      end,
+      "Resize split down",
+    },
+    {
+      "<A-k>",
+      function()
+        require("smart-splits").resize_up()
+      end,
+      "Resize split up",
+    },
+    {
+      "<A-l>",
+      function()
+        require("smart-splits").resize_right()
+      end,
+      "Resize split right",
+    },
+    {
+      "<A-r>",
+      function()
+        require("smart-splits").start_resize_mode()
+      end,
+      "Resize split to previous size",
+    },
+  },
+  move = {
+    {
+      "<C-S-h>",
+      function()
+        require("smart-splits").move_cursor_left()
+      end,
+      "Move cursor left",
+    },
+    {
+      "<C-S-j>",
+      function()
+        require("smart-splits").move_cursor_down()
+      end,
+      "Move cursor down",
+    },
+    {
+      "<C-S-k>",
+      function()
+        require("smart-splits").move_cursor_up()
+      end,
+      "Move cursor up",
+    },
+    {
+      "<C-S-l>",
+      function()
+        require("smart-splits").move_cursor_right()
+      end,
+      "Move cursor right",
+    },
+    {
+      "<C-\\>",
+      function()
+        require("smart-splits").move_cursor_previous()
+      end,
+      "Move cursor to previous split",
+    },
+  },
+  swap = {
+    {
+      "<A-S-h>",
+      function()
+        require("smart-splits").swap_buf_left()
+      end,
+      "Swap buffer left",
+    },
+    {
+      "<A-S-j>",
+      function()
+        require("smart-splits").swap_buf_down()
+      end,
+      "Swap buffer down",
+    },
+    {
+      "<A-S-k>",
+      function()
+        require("smart-splits").swap_buf_up()
+      end,
+      "Swap buffer up",
+    },
+    {
+      "<A-S-l>",
+      function()
+        require("smart-splits").swap_buf_right()
+      end,
+      "Swap buffer right",
+    },
+  },
 }
 
 M.substitute = {
@@ -353,6 +573,15 @@ M.substitute = {
     end,
     desc = "Substitute",
     mode = "x",
+  },
+}
+
+M.surround = {
+  { -- De-map 's' to prevent conflicts
+    "s",
+    "<Nop>",
+    desc = "Nos",
+    mode = { "n", "x" },
   },
 }
 
