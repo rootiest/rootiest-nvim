@@ -1,5 +1,5 @@
 --          ╭─────────────────────────────────────────────────────────╮
---          │                      FUNCTION DATA                      │
+--          │                    Utility Functions                    │
 --          ╰─────────────────────────────────────────────────────────╯
 
 local M = {}
@@ -141,30 +141,84 @@ function M.get_os()
   end
 end
 
+-- Function to send a notification
+function M.notify(message, level)
+  level = level or "info"
+  vim.notify(message, vim.log.levels[level:upper()])
+end
+
+-- Check if plugin is installed
+function M.is_installed(plugin)
+  -- Check for lazy.nvim
+  local lazy_installed = pcall(require, "lazy")
+  if lazy_installed then
+    return require("lazy.core.config").plugins[plugin] ~= nil
+  end
+  -- Check for packer.nvim
+  local packer_installed = pcall(require, "packer_plugins")
+  if packer_installed then
+    ---@diagnostic disable-next-line: undefined-field
+    return _G.packer_plugins and _G.packer_plugins[plugin] ~= nil
+  end
+  -- Check for vim-plug
+  if vim.fn.exists("g:plugs") == 1 then
+    return vim.g.plugs[plugin] ~= nil
+  end
+  -- Plugin not found
+  return false
+end
+
 -- Helper function to add keymaps with common properties
-function M.add_keymap(lhs, rhs, desc, modes)
+function M.add_keymap(lhs, rhs, desc, mode, icon, group)
   -- Check if which-key.nvim is installed
   if M.is_installed("which-key.nvim") then
     require("which-key").add({
-      --stylua: ignore start
+      -- stylua: ignore start
       {
-        lhs,                 -- The keybind
-        rhs = rhs,           -- Function to execute when the key is pressed
-        desc = desc,         -- Description of the keybind
-        mode = modes or "n", -- Default to "n" (normal mode) if mode is not provided
+        lhs,                -- The keybind
+        rhs = rhs,          -- Function to execute when the key is pressed
+        desc = desc,        -- Description of the keybind
+        mode = mode or "n", -- Default to "n" (normal mode) if mode is not provided
+        icon = icon,        -- Icon to use for the keybind
+        group = group,      -- Default to nil (no group) if group is not provided
       },
-      --stylua: ignore end
+      -- stylua: ignore end
     })
   else
+    -- Handle the case where lhs is a table
+    if type(lhs) == "table" then
+      rhs = lhs.rhs or rhs
+      desc = lhs.desc or desc
+      mode = lhs.mode or mode
+      icon = lhs.icon or icon
+      group = lhs.group or group
+      lhs = lhs.lhs or lhs
+    end
     -- If which-key.nvim is not installed, use vim.keymap.set
-    vim.keymap.set(modes or "n", lhs, rhs, { desc = desc })
+    if not group and not icon then
+      -- stylua: ignore start
+      vim.keymap.set(
+        mode or "n",    -- Default to "n" (normal mode) if mode is not provided
+        lhs,            -- The keybind
+        rhs,            -- Function to execute when the key is pressed
+        { desc = desc } -- Description of the keybind
+      )
+      -- stylua: ignore end
+    else
+      -- If which-key.nvim is not installed, use vim.notify with detailed error message
+      local msg = string.format(
+        "Mapping requires which-key.nvim:\n%s%s",
+        vim.inspect(lhs), -- Convert lhs to a readable format
+        desc and ("\nDescription: " .. desc) or ""
+      )
+      M.notify(msg, "WARN")
+    end
   end
 end
 
 -- Helper function to remove keymaps
-function M.rm_keymap(lhs, mode, opts)
+function M.rm_keymap(lhs, mode)
   mode = mode or "n" -- Default to "n" (normal mode) if mode is not provided
-  opts = opts or {} -- Default to an empty table if opts are not provided
   -- Get all keymaps for the specified mode
   local keymaps = vim.api.nvim_get_keymap(mode)
   -- Check if the keymap exists
@@ -172,7 +226,7 @@ function M.rm_keymap(lhs, mode, opts)
     ---@diagnostic disable-next-line: undefined-field
     if keymap.lhs and keymap.lhs == lhs then
       -- Keymap exists, remove it
-      vim.keymap.del(mode, lhs, opts)
+      vim.api.nvim_del_keymap(mode, lhs)
       return true -- Indicate that the keymap was removed
     end
   end
@@ -201,6 +255,64 @@ function M.rm_mark(mark)
   return false -- Indicate that the mark did not exist
 end
 
+-- Function to check if buffer is modified
+function M.is_buffer_modified()
+  return vim.bo.modified
+end
+
+-- Function to check if buffer is empty
+function M.is_buffer_empty()
+  return vim.fn.empty(vim.fn.expand("%:t")) == 1
+end
+
+-- Function to check if buffer is read-only
+function M.is_buffer_readonly()
+  return vim.bo.readonly
+end
+
+-- Function to check if file exists
+function M.file_exists(filepath)
+  local f = io.open(filepath, "r")
+  if f then
+    f:close()
+  end
+  return f ~= nil
+end
+
+-- Function to get the current git branch
+function M.get_git_branch()
+  local branch = vim.fn.systemlist("git rev-parse --abbrev-ref HEAD")[1]
+  if branch and branch ~= "" then
+    return branch
+  else
+    return "No branch"
+  end
+end
+
+-- Function to get the current git commit hash
+function M.get_git_commit_hash()
+  local commit_hash = vim.fn.systemlist("git rev-parse --short HEAD")[1]
+  if commit_hash and commit_hash ~= "" then
+    return commit_hash
+  else
+    return "No commit hash"
+  end
+end
+
+-- Function to execute a shell command
+function M.run_shell_command(cmd)
+  local handle = io.popen(cmd)
+  if handle then
+    local result = handle:read("*a")
+    handle:close()
+    return result
+  else
+    -- Handle the error case where `handle` is nil
+    vim.notify("Failed to run the command: " .. cmd, vim.log.levels.ERROR)
+    return nil
+  end
+end
+
 -- Get Workspace dimensions with optional output format
 function M.get_ws_dimensions(format)
   format = format or "verbose"
@@ -224,25 +336,22 @@ function M.get_ws_dimensions(format)
   end
 end
 
--- Check if plugin is installed
-function M.is_installed(plugin)
-  -- Check for lazy.nvim
-  local lazy_installed = pcall(require, "lazy")
-  if lazy_installed then
-    return require("lazy.core.config").plugins[plugin] ~= nil
+-- Function to get the current cursor position
+function M.get_cursor_position()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return row, col
+end
+
+-- Function to split strings
+function M.split_string(inputstr, sep)
+  if sep == nil then
+    sep = "%s"
   end
-  -- Check for packer.nvim
-  local packer_installed = pcall(require, "packer_plugins")
-  if packer_installed then
-    ---@diagnostic disable-next-line: undefined-field
-    return _G.packer_plugins and _G.packer_plugins[plugin] ~= nil
+  local t = {}
+  for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
+    table.insert(t, str)
   end
-  -- Check for vim-plug
-  if vim.fn.exists("g:plugs") == 1 then
-    return vim.g.plugs[plugin] ~= nil
-  end
-  -- Plugin not found
-  return false
+  return t
 end
 
 -- Function to convert RGB to hexadecimal
