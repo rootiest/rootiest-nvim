@@ -51,30 +51,29 @@
 -- ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 --                       The rootiest NeoVim configuration!
 
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ OPTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━
---  Options are configured in the lua/config/options.lua file
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ OPTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--  Neovim options are configured in the lua/config/options.lua file
 
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROOTIEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROOTIEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Rootiest Configuration
-require("config.rootiest").setup()
+require("config.rootiest").setup() -- Set up Rootiest options
 
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ LAZY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ LAZY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Load Lazy package manager and plugins
-require("config.lazy")
+---@diagnostic disable-next-line: different-requires -- This is intentional
+require("config.lazy") -- Bootstrap lazy.nvim and initialize plugins
 
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROCKS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROCKS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Load LuaRocks package manager and plugins
-require("config.rocks")
+require("config.rocks") -- Bootstrap LuaRocks and initialize plugins
 
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PROFILING ━━━━━━━━━━━━━━━━━━━━━━━━━━
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PROFILING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Load profiling package
-require("config.profile")
+require("config.profile") -- Set profiling options with environment variables:
+--    ╭─────────────────────────────────────────────────────────────────────╮
+--    │   NVIM_PROFILE=1                      Start profiling at startup    │
+--    │   NVIM_PROFILE_MODULE="lualine"       Set profiling target module   │
+--    ╰─────────────────────────────────────────────────────────────────────╯
 
--- Profiling options:     Set by environment variable
---   ──────────────────────────────────────────────────────────────────────
---   NVIM_PROFILE=1                       Start profiling at startup
---   NVIM_PROFILE_MODILE="lualine"        Set profiling target to lualine
---   ──────────────────────────────────────────────────────────────────────
-
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ KEYMAPS ━━━━━━━━━━━━━━━━━━━━━━━━━━━
---  Keymaps are configured in the lua/config/keymaps.lua file
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ KEYMAPS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--  Custom keymaps are configured in the lua/config/keymaps.lua file
