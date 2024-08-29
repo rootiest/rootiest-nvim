@@ -4,6 +4,11 @@
 
 local M = {}
 
+M.logo = {
+  icon = "",
+  color = "Special",
+}
+
 M.general = {
   -- Excluded buffer types
   buf = {
@@ -25,6 +30,18 @@ M.general = {
     "dashboard",
     "neorg",
   },
+}
+
+-- All modes for keymaps
+M.all_modes = {
+  "n",
+  "i",
+  "v",
+  "x",
+  "s",
+  "o",
+  "c",
+  "t",
 }
 
 -- Filetypes for Alternate plugin
