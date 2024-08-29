@@ -68,6 +68,10 @@ return {
             and utils.is_window_wide_enough(width_limit)
         end,
         color = { fg = utils.get_fg_color("GitSignsCurrentLineBlame") },
+        padding = { left = 1, right = 0 },
+        on_click = function()
+          vim.cmd("LazyGit")
+        end,
       })
       -- Apply the lualine configuration
       require("lualine").setup(config)
