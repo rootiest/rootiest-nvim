@@ -22,6 +22,9 @@ return {
   { -- Treesitter-context
     import = "lazyvim.plugins.extras.ui.treesitter-context",
   },
+  { -- Mini.move
+    import = "lazyvim.plugins.extras.editor.mini-move",
+  },
   {
     "folke/trouble.nvim",
     cmd = { "Trouble" },
@@ -43,6 +46,7 @@ return {
     opts = {
       modes = { char = { jump_labels = true } },
     },
+    keys = data.keys.flash,
   },
   { -- Arrow
     "otavioschwanck/arrow.nvim",
@@ -52,15 +56,10 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
   },
-  { -- FoldNav
-    "domharries/foldnav.nvim",
-    lazy = true,
-    keys = data.keys.foldnav,
-  },
   ---@module "neominimap.config.meta"
   { -- NeoMiniMap
     "Isrothy/neominimap.nvim",
-    enabled = true,
+    version = "*",
     lazy = false,
     keys = data.keys.minimap,
     init = data.types.minimap.init(),
