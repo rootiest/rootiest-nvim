@@ -2,7 +2,8 @@
 --          │                         Options                         │
 --          ╰─────────────────────────────────────────────────────────╯
 -- stylua: ignore start
--- Leader Key
+
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Leader Key ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.g.mapleader      = " " --- @type string Options: <leader>
 vim.g.maplocalleader = " " --- @type string Options: <localleader>
 
@@ -33,13 +34,18 @@ vim.g.useimage    =  true  --- @type boolean Options:  <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ COLOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 --  Background color
-vim.o.background = "dark"                 --- @type string Options: <dark|light>
+vim.o.background           = "dark"    --- @type string Options: <dark|light>
 --  Dashboard header color
-vim.g.DashboardHeaderColor = "#88fc9a"    --- @type string Options: [hex color]
+vim.g.DashboardHeaderColor = "#88fc9a" --- @type string Options: [hex color]
 -- Disable Transparency
-vim.g.disable_transparency = true         --- @type boolean Options: <true|false>
+vim.g.disable_transparency = true      --- @type boolean Options: <true|false>
 
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ BLINKY CURSOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ BLINKY CURSOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 --  Setup the blinky cursor
 require("utils.blinky").enable()
+
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ OTHER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--  Suda smart edit: Automatically edit files in sudo mode when needed
+vim.g.suda_smart_edit      = 1         --- @type integer Options: <0|1>
+vim.cmd("let g:suda#prompt = '   Enter Sudo Password  '")
 -- stylua: ignore end
