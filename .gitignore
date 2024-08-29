@@ -10,3 +10,5 @@ debug/
 .useimage
 .wakatime
 .ignore-deps
+profile.json
+rocks.toml
