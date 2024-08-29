@@ -10,11 +10,18 @@ return {
       automatic_installation = true,
     },
   },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      setup = {
+        clangd = function(_, opts)
+          opts.capabilities.offsetEncoding = { "utf-16" }
+        end,
+      },
+    },
+  },
   { -- Yanky
     import = "lazyvim.plugins.extras.coding.yanky",
-  },
-  { -- Mini Surround
-    import = "lazyvim.plugins.extras.coding.mini-surround",
   },
   { -- VSCode
     import = "lazyvim.plugins.extras.vscode",
@@ -60,5 +67,10 @@ return {
     opts = {
       mappings = data.keys.splitjoin,
     },
+  },
+  { -- mini-surround
+    "echasnovski/mini.surround",
+    opts = {},
+    keys = data.keys.surround,
   },
 }
