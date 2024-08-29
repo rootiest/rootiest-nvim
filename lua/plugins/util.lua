@@ -137,4 +137,8 @@ return {
       "nvim-telescope/telescope.nvim",
     },
   },
+  { -- Suda
+    "lambdalisue/vim-suda",
+    cmd = require("data.cmd").suda,
+  },
 }
