@@ -12,6 +12,31 @@ local get_fg_color = utils.get_fg_color
 local set_hl = vim.api.nvim_set_hl
 local sign_def = vim.fn.sign_define
 
+-- Function to apply the todo highlights
+function M.apply_todo_highlights(status_string)
+  -- Define patterns and associated highlight groups
+  local patterns = {
+    { icon = "", hl = "lualine_c_diagnostics_info_normal" },
+    { icon = "", hl = "lualine_c_diagnostics_warning_normal" },
+    { icon = "", hl = "lualine_c_diagnostics_warning_normal" },
+    { icon = "", hl = "lualine_c_diagnostics_hint_normal" },
+    { icon = "", hl = "lualine_c_diagnostics_hint_normal" },
+  }
+
+  -- Apply the highlights
+  for _, pattern in ipairs(patterns) do
+    status_string = status_string:gsub(
+      vim.pesc(pattern.icon),
+      "%#" .. pattern.hl .. "#" .. pattern.icon
+    )
+  end
+
+  -- Reset highlight to normal after the string
+  status_string = status_string .. "%#LualineNormal#"
+
+  return status_string
+end
+
 -- Function to set up indent highlights
 function M.setup_indent_highlight()
   -- Get the background color of CursorLine

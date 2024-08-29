@@ -5,30 +5,6 @@
 local utils = require("utils")
 local rootils = utils.rootiest
 
-local function apply_todo_highlights(status_string)
-  -- Define patterns and associated highlight groups
-  local patterns = {
-    { icon = "", hl = "lualine_c_diagnostics_info_normal" },
-    { icon = "", hl = "lualine_c_diagnostics_warning_normal" },
-    { icon = "", hl = "lualine_c_diagnostics_warning_normal" },
-    { icon = "", hl = "lualine_c_diagnostics_hint_normal" },
-    { icon = "", hl = "lualine_c_diagnostics_hint_normal" },
-  }
-
-  -- Apply the highlights
-  for _, pattern in ipairs(patterns) do
-    status_string = status_string:gsub(
-      vim.pesc(pattern.icon),
-      "%#" .. pattern.hl .. "#" .. pattern.icon
-    )
-  end
-
-  -- Reset highlight to normal after the string
-  status_string = status_string .. "%#LualineNormal#"
-
-  return status_string
-end
-
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = {
@@ -48,15 +24,15 @@ return {
   opts = function()
     local icons = LazyVim.config.icons
 
+    -- Restore laststatus
     vim.o.laststatus = vim.g.lualine_laststatus
 
+    -- Define todo-comments component
     local todos_component =
       require("todos-lualine").component(require("data").types.todo.lualine())
 
-    -- todos_component = apply_todo_highlights(todos_component)
-
     local opts = {
-      options = {
+      options = { -- General options
         theme = "auto",
         globalstatus = vim.o.laststatus == 3,
         disabled_filetypes = {
@@ -65,15 +41,29 @@ return {
         section_separators = { left = "", right = "" },
         component_separators = { left = "", right = "" },
       },
-      sections = {
+      sections = { -- Sections
         lualine_a = {
           { -- Mode
             "mode",
+            icon = require("data").types.logo.icon,
+            padding = { left = 1, right = 0 },
           },
         },
         lualine_b = {
           { -- Branch
             "branch",
+            separator = "",
+            padding = { left = 1, right = 0 },
+          },
+          { -- Todo
+            todos_component,
+            cond = function()
+              return rootils.is_window_wide_enough(100)
+            end,
+            padding = { left = 1, right = 0 },
+            on_click = function()
+              vim.cmd("TodoTelescope")
+            end,
           },
           { -- Arrow
             function()
@@ -82,11 +72,9 @@ return {
             cond = function()
               return rootils.is_window_wide_enough(100)
             end,
-          },
-          { -- Todo
-            todos_component,
-            cond = function()
-              return rootils.is_window_wide_enough(100)
+            padding = { left = 1, right = 0 },
+            on_click = function()
+              vim.cmd("Arrow open")
             end,
           },
         },
@@ -100,6 +88,7 @@ return {
               info = icons.diagnostics.Info,
               hint = icons.diagnostics.Hint,
             },
+            padding = { left = 0, right = 0 },
           },
           { -- Filetype
             "filetype",
@@ -107,7 +96,10 @@ return {
             separator = "",
             padding = { left = 1, right = 0 },
           },
-          { LazyVim.lualine.pretty_path() },
+          { -- PrettyPath
+            LazyVim.lualine.pretty_path(),
+            padding = { left = 0, right = 0 },
+          },
         },
         lualine_x = {
           -- stylua: ignore
@@ -136,6 +128,10 @@ return {
               added = icons.git.added,
               modified = icons.git.modified,
               removed = icons.git.removed,
+              padding = { left = 0, right = 0 },
+              on_click = function()
+                vim.cmd("LazyGit")
+              end,
             },
             { -- GitSigns
               source = function()
@@ -147,6 +143,13 @@ return {
                     removed = gitsigns.removed,
                   }
                 end
+              end,
+              cond = function()
+                return rootils.is_window_wide_enough(200)
+              end,
+              padding = { left = 0, right = 0 },
+              on_click = function()
+                vim.cmd("LazyGit")
               end,
             },
           },
@@ -160,6 +163,7 @@ return {
             cond = function()
               return rootils.is_window_wide_enough(100)
             end,
+            padding = { left = 0, right = 1 },
           },
           { -- Music
             function()
@@ -168,6 +172,7 @@ return {
             cond = function()
               return rootils.is_window_wide_enough(100)
             end,
+            padding = { left = 0, right = 1 },
           },
         },
         lualine_y = {
@@ -179,13 +184,21 @@ return {
             cond = function()
               return rootils.is_window_wide_enough(80)
             end,
+            padding = { left = 0, right = 1 },
+            on_click = function()
+              vim.cmd("Telescope current_buffer_fuzzy_find")
+            end,
           },
           { -- Progress
             "progress",
-            separator = " ",
-            padding = { left = 1, right = 0 },
+            separator = "",
+            padding = { left = 0, right = 1 },
             cond = function()
               return rootils.is_window_wide_enough(60)
+            end,
+            icon = "",
+            on_click = function()
+              vim.cmd("Telescope grep_string")
             end,
           },
           { -- Location
@@ -194,17 +207,26 @@ return {
             cond = function()
               return rootils.is_window_wide_enough(40)
             end,
+            on_click = function()
+              vim.cmd("Telescope grep_string")
+            end,
           },
           { -- Selection
             "selection_count",
             cond = function()
               return rootils.is_window_wide_enough(120)
             end,
+            padding = { left = 0, right = 1 },
           },
           { -- Filesize
             "filesize",
             cond = function()
               return rootils.is_window_wide_enough(100)
+            end,
+            padding = { left = 0, right = 1 },
+            icon = "",
+            on_click = function()
+              vim.cmd("Neotree reveal toggle")
             end,
           },
         },
@@ -219,11 +241,18 @@ return {
             color = "CurSearch",
             separator = { left = "", right = "" },
             icon = "󰍉 ",
+            on_click = function()
+              vim.cmd("Telescope current_buffer_fuzzy_find")
+            end,
           },
           { -- Time
             "datetime",
             style = "%a %R",
             icon = " ",
+            padding = { left = 0, right = 1 },
+            on_click = function()
+              vim.cmd("Telescope oldfiles")
+            end,
           },
         },
       },
