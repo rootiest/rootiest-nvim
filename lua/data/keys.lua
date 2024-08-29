@@ -53,6 +53,17 @@ M.codesnap = {
   },
 }
 
+M.flash = {
+  {
+    "<CR>",
+    function()
+      require("flash").jump()
+    end,
+    desc = "Flash jump",
+    mode = { "n", "o", "v" },
+  },
+}
+
 M.minimap = {
   { "<leader>nt", "<cmd>Neominimap toggle<cr>", desc = "Toggle minimap" },
   { "<leader>no", "<cmd>Neominimap on<cr>", desc = "Enable minimap" },
@@ -591,6 +602,16 @@ M.toggleterm = {
     "<cmd>ToggleTerm<cr>",
     desc = "Toggle Terminal",
     mode = "n",
+  },
+}
+
+M.transparent = {
+  {
+    "<leader>wt",
+    function()
+      require("transparent").toggle()
+    end,
+    desc = "Toggle Transparency",
   },
 }
 

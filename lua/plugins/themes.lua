@@ -125,20 +125,8 @@ return {
   { -- Transparent
     "xiyaowong/transparent.nvim",
     lazy = true,
-    keys = {
-      {
-        "<leader>wt",
-        function()
-          require("transparent").toggle()
-        end,
-        desc = "Toggle Transparency",
-      },
-    },
-    cmd = {
-      "TransparentEnable",
-      "TransparentDisable",
-      "TransparentToggle",
-    },
+    keys = data.keys.transparent,
+    cmd = data.cmd.transparent,
   },
   { -- Auto Dark Mode
     "f-person/auto-dark-mode.nvim",
@@ -148,7 +136,7 @@ return {
       set_dark_mode = function()
         vim.o.background = "dark"
         vim.cmd.colorscheme(
-          require("astral").colortheme or "catppuccin-frappe" or "tokyonight"
+          require("astral").colortheme or "catppuccin-mocha" or "tokyonight"
         )
       end,
       set_light_mode = function()
@@ -158,6 +146,6 @@ return {
         )
       end,
     },
-    cond = not require("data.func").is_ssh(),
+    cond = not data.func.is_ssh(),
   },
 }

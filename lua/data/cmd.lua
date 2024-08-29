@@ -82,4 +82,10 @@ M.suda = {
   "SudaRead",
 }
 
+M.transparent = {
+  "TransparentEnable",
+  "TransparentDisable",
+  "TransparentToggle",
+}
+
 return M
