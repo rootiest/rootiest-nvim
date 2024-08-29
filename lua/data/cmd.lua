@@ -77,4 +77,9 @@ M.ripsub = {
   "RipSubstitute",
 }
 
+M.suda = {
+  "SudaWrite",
+  "SudaRead",
+}
+
 return M
