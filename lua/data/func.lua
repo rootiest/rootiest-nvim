@@ -5,6 +5,9 @@
 -- Define a namespace for utility functions
 local M = {}
 
+-- Load data module
+local data = require("data")
+
 --- Check if the terminal is kitty
 ---@return boolean condition true if the terminal is kitty, false otherwise
 function M.is_kitty()
@@ -106,22 +109,51 @@ function M.is_linux()
   return false
 end
 
---- Get the name of the OS
----@return string os The name of the OS
-function M.get_os()
-  --- @diagnostic disable-next-line: undefined-field
-  local os_name = vim.loop.os_uname().sysname
+--- Get the name of the OS.
+--- @param format string The format of the OS name.
+---                    Possible values:
+---                    - "verbose": Returns the full name of the OS.
+---                    - "short": Returns a short name or abbreviation.
+---                    - "code": Returns a code or identifier.
+---                    - "platform": Returns either "windows", "osx", or "linux".
+--- @return string os The name of the OS.
+function M.get_os(format)
+  ---@diagnostic disable-next-line: undefined-field
+  local uname = vim.loop and vim.loop.os_uname and vim.loop.os_uname() or {}
+  local os_name = uname.sysname or "unknown"
 
   if os_name == "Windows_NT" then
-    return "Windows"
+    if format == "platform" then
+      return "windows"
+    elseif format == "short" then
+      return "Win"
+    elseif format == "code" then
+      return "win"
+    else
+      return "Windows"
+    end
   elseif os_name == "Darwin" then
-    return "macOS"
+    if format == "platform" then
+      return "osx"
+    elseif format == "short" then
+      return "macOS"
+    elseif format == "code" then
+      return "osx"
+    else
+      return "macOS"
+    end
   elseif os_name == "Linux" then
     -- Check if the system is running Android
-    --- @diagnostic disable-next-line: undefined-field
-    --- @diagnostic disable-next-line: missing-parameter
-    if vim.env("ANDROID_ROOT") then
-      return "Android"
+    if vim.env.ANDROID_ROOT then
+      if format == "platform" then
+        return "linux"
+      elseif format == "short" then
+        return "Android"
+      elseif format == "code" then
+        return "android"
+      else
+        return "Android"
+      end
     end
 
     -- Determine the Linux distribution
@@ -138,15 +170,48 @@ function M.get_os()
       end
       fd:close()
     end
-    return "Linux (" .. distro .. ")"
+
+    if format == "platform" then
+      return "linux"
+    elseif format == "short" then
+      return "Linux"
+    elseif format == "code" then
+      return distro
+    else
+      return "Linux (" .. distro .. ")"
+    end
   else
     -- Falback tests
     if M.is_mac() then
-      return "macOS"
+      if format == "platform" then
+        return "osx"
+      elseif format == "short" then
+        return "macOS"
+      elseif format == "code" then
+        return "osx"
+      else
+        return "macOS"
+      end
     elseif M.is_linux() then
-      return "Linux"
+      if format == "platform" then
+        return "linux"
+      elseif format == "short" then
+        return "Linux"
+      elseif format == "code" then
+        return "linux"
+      else
+        return "Linux"
+      end
     elseif M.is_windows() then
-      return "Windows"
+      if format == "platform" then
+        return "windows"
+      elseif format == "short" then
+        return "Win"
+      elseif format == "code" then
+        return "win"
+      else
+        return "Windows"
+      end
     else
       -- Failed to determine OS
       return "Unknown OS"
@@ -165,10 +230,13 @@ function M.notify(message, level)
 end
 
 --- Function to reload all plugins.
+--- This is a messy operation. It's not recommended to use it.
+--- If you do, please define the exclusion list in your config.lua file.
+--- @see data.types.plugin_reloader.exclusion_list
 --- @return nil
 function M.reload_all_plugins()
   -- Define the exclusion list
-  local exclude = require("data").types.plugin_reloader.exclusion_list
+  local exclude = data.types.plugin_reloader.exclusion_list
 
   -- Get the list of currently loaded plugins
   local plugins = require("lazy.core.config").plugins
@@ -216,15 +284,60 @@ end
 
 --- Helper function to add keymaps with common properties
 ---@param lhs string|table The keybind (or list of keybinds)
+--- This field can be the following:
+--- - A string representing the keybind
+--- - A list of strings representing a set of keybinds
+--- - A table of multiple keybind specifications
 ---@param rhs string|function The function to execute when the key is pressed
+--- This field can be the following:
+--- - A string representing the vimscript command
+--- - A lua function (only when using which-key.nvim or global keymaps)
 ---@param desc string|nil The description of the keybind (optional)
+--- This field can be the following:
+--- - A string representing the description
+---   The description will be displayed in the which-key menu
 ---@param mode string|table|nil The mode(s) in which the keybind should be added (optional)
+--- This field can be the following:
+--- - A string representing the mode
+--- - A table of multiple modes (only when using which-key.nvim or global keymaps)
 ---@param icon string|nil The icon to use for the keybind (optional)
+--- This field can be the following:
+--- - A string representing the icon (only when defining a menu)
 ---@param group string|nil The group to add the keybind to (optional)
+--- This field can be the following:
+--- - A string representing the group (only when defining a menu)
+---@param bufnr number|nil The buffer number to add the keymap to (optional)
+--- This field can be the following:
+--- - A number representing the buffer
+---   This option is incompatible with some extended keymap options
 ---@return boolean condition true if the keybind was added, false otherwise
-function M.add_keymap(lhs, rhs, desc, mode, icon, group)
+--- There are three main types of keymaps:
+--- - Global keymaps
+---   This is the most common type of keymap.
+---   Ex:
+---     add_keymap("<leader>ff", "lua require('telescope.builtin').find_files()")
+--- - Buffer keymaps
+---   This is used to add keymaps to specific buffers.
+---   Ex:
+---     add_keymap("<leader>ff", "lua require('telescope.builtin').find_files()", nil, nil, nil, 0)
+--- - Which-key menus
+---   This is used to add which-key menus.
+---   Ex:
+---     add_keymap("<leader>l", nil, nil, nil, "󰒲", "Lazy")
+---@see which-key.nvim-which-key-mappings
+---@see vim.api.nvim_buf_set_keymap
+---@see vim.keymap.set
+function M.add_keymap(
+  lhs, -- The keybind
+  rhs, -- Function to execute when the key is pressed
+  desc, -- Description of the keybind
+  mode, -- Mode(s) in which the keybind should be added
+  icon, -- Icon to use for the keybind menu
+  group, -- Group to use for the keybind menu
+  bufnr -- Buffer number to add the keymap to
+)
   -- Check if which-key.nvim is installed
-  if M.is_installed("which-key.nvim") then
+  if M.is_installed("which-key.nvim") and not bufnr then
     require("which-key").add({
       -- stylua: ignore start
       {
@@ -233,7 +346,7 @@ function M.add_keymap(lhs, rhs, desc, mode, icon, group)
         desc  = desc,        -- Description of the keybind
         mode  = mode or "n", -- Default to "n" (normal mode) if mode is not provided
         icon  = icon,        -- Icon to use for the keybind
-        group = group,       -- Default to nil (no group) if group is not provided
+        group = group,       -- Group to add the keybind to
       },
       -- stylua: ignore end
     })
@@ -241,7 +354,6 @@ function M.add_keymap(lhs, rhs, desc, mode, icon, group)
   else
     -- Handle the case where lhs is a table
     if type(lhs) == "table" then
-      -- If lhs is a list of keymaps, iterate over each item
       for _, keymap in ipairs(lhs) do
         -- Set default values or use provided ones
         local keymap_rhs = keymap.rhs or rhs
@@ -252,15 +364,38 @@ function M.add_keymap(lhs, rhs, desc, mode, icon, group)
         local keymap_lhs = keymap.lhs
 
         if not keymap_group and not keymap_icon then
-          -- Apply the keymap using vim.keymap.set
-          vim.keymap.set(
-            keymap_mode, -- Mode(s) in which the keybind should be added
-            keymap_lhs, -- The keybind
-            keymap_rhs, -- Function to execute when the key is pressed
-            { desc = keymap_desc } -- Description of the keybind
-          )
+          if not bufnr then
+            -- Apply the keymap using vim.keymap.set
+            vim.keymap.set(
+              keymap_mode, -- Mode(s) in which the keybind should be added
+              keymap_lhs, -- The keybind
+              keymap_rhs, -- Function to execute when the key is pressed
+              { desc = keymap_desc } -- Description of the keybind
+            )
+          else
+            if -- Check if the keymap is compatible with buffer-based keymaps
+              type(keymap_mode) == "table" or type(keymap_rhs) == "function"
+            then
+              -- The keymap is incompatible with buffer-based keymaps
+              local msg = string.format(
+                "Mapping incompatible with buffer-based keymaps:\n%s%s",
+                vim.inspect(keymap_lhs), -- Convert lhs to a readable format
+                keymap_desc and ("\nDescription: " .. keymap_desc) or ""
+              )
+              M.notify(msg, "WARN")
+              return false
+            end
+            -- Apply the keymap using vim.api.nvim_buf_set_keymap
+            vim.api.nvim_buf_set_keymap(
+              bufnr,
+              keymap_mode,
+              keymap_lhs,
+              keymap_rhs,
+              { desc = keymap_desc }
+            )
+          end
         else
-          -- If which-key.nvim is not installed, use vim.notify with a detailed error message
+          -- The keymap requires which-key.nvim
           local msg = string.format(
             "Mapping requires which-key.nvim:\n%s%s",
             vim.inspect(keymap_lhs), -- Convert lhs to a readable format
@@ -271,20 +406,39 @@ function M.add_keymap(lhs, rhs, desc, mode, icon, group)
         end
       end
       return true
-    else
-      -- If lhs is a single keymap (not a table)
+    else -- Handle the case where lhs is not a table
       if not group and not icon then
-        -- stylua: ignore start
-        vim.keymap.set(
-          mode or "n",    -- Default to "n" (normal mode) if mode is not provided
-          lhs,            -- The keybind
-          rhs,            -- Function to execute when the key is pressed
-          { desc = desc } -- Description of the keybind
-        )
-        -- stylua: ignore end
+        if not bufnr then
+          vim.keymap.set(
+            mode or "n", -- Default to "n" (normal mode) if mode is not provided
+            lhs, -- The keybind
+            rhs, -- Function to execute when the key is pressed
+            { desc = desc } -- Description of the keybind and optional buffer number
+          )
+        else
+          if -- Check if the keymap is compatible with buffer-based keymaps
+            type(mode) == "table" or type(rhs) == "function"
+          then
+            -- The keymap is incompatible with buffer-based keymaps
+            local msg = string.format(
+              "Mapping incompatible with buffer-based keymaps:\n%s%s",
+              vim.inspect(lhs), -- Convert lhs to a readable format
+              desc and ("\nDescription: " .. desc) or ""
+            )
+            M.notify(msg, "WARN")
+            return false
+          end
+          -- Apply the keymap using vim.api.nvim_buf_set_keymap
+          vim.api.nvim_buf_set_keymap(
+            bufnr,
+            mode or "n",
+            lhs,
+            rhs,
+            { desc = desc }
+          )
+        end
         return true
       else
-        -- If which-key.nvim is not installed, use vim.notify with a detailed error message
         local msg = string.format(
           "Mapping requires which-key.nvim:\n%s%s",
           vim.inspect(lhs), -- Convert lhs to a readable format
@@ -299,21 +453,44 @@ end
 
 --- Helper function to remove keymaps
 ---@param lhs string The keybind
----@param mode string|nil The mode in which the keybind should be removed
+---@param mode string|nil The mode in which the keybind should be removed (optional)
+---@param bufnr number|nil The buffer number to remove the keymap from (optional)
 ---@return boolean condition true if the keymap was removed, false otherwise
-function M.rm_keymap(lhs, mode)
+---@see vim.api.nvim_del_keymap
+---@see vim.api.nvim_buf_del_keymap
+function M.rm_keymap(
+  lhs, -- The keybind
+  mode, -- Mode(s) in which the keybind should be removed
+  bufnr -- Buffer number to remove the keymap from
+)
   mode = mode or "n" -- Default to "n" (normal mode) if mode is not provided
-  -- Get all keymaps for the specified mode
-  local keymaps = vim.api.nvim_get_keymap(mode)
-  -- Check if the keymap exists
-  for _, keymap in pairs(keymaps) do
-    ---@diagnostic disable-next-line: undefined-field
-    if keymap.lhs and keymap.lhs == lhs then
-      -- Keymap exists, remove it
-      vim.api.nvim_del_keymap(mode, lhs)
-      return true -- Indicate that the keymap was removed
+
+  --- @class Keymap
+  --- @field lhs string The keybind
+  --- @field rhs string|function The function or command associated with the keybind
+
+  if bufnr then
+    -- If a buffer number is provided, remove the keymap from the specified buffer
+    --- @type Keymap[]
+    local keymaps = vim.api.nvim_buf_get_keymap(bufnr, mode)
+    for _, keymap in pairs(keymaps) do
+      if keymap.lhs and keymap.lhs == lhs then
+        vim.api.nvim_buf_del_keymap(bufnr, mode, lhs)
+        return true -- Indicate that the keymap was removed
+      end
+    end
+  else
+    -- If no buffer number is provided, remove the global keymap
+    --- @type Keymap[]
+    local keymaps = vim.api.nvim_get_keymap(mode)
+    for _, keymap in pairs(keymaps) do
+      if keymap.lhs and keymap.lhs == lhs then
+        vim.api.nvim_del_keymap(mode, lhs)
+        return true -- Indicate that the keymap was removed
+      end
     end
   end
+
   return false -- Indicate that the keymap did not exist
 end
 
