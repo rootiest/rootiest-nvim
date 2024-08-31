@@ -48,4 +48,6 @@ require("utils.blinky").enable()
 --  Suda smart edit: Automatically edit files in sudo mode when needed
 vim.g.suda_smart_edit      = 1         --- @type integer Options: <0|1>
 vim.cmd("let g:suda#prompt = '   Enter Sudo Password  '")
+-- Cmp Window Border
+vim.g.completion_round_borders_enabled = true
 -- stylua: ignore end
