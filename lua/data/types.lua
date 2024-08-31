@@ -260,11 +260,123 @@ M.llama_copilot = {
   debug = false,
 }
 
+M.plugin_reloader = {
+  exclusion_list = { -- Define the exclusion list
+    -- stylua: ignore start
+    ["lazy.nvim"]      = true,
+    ["noice.nvim"]     = true,
+    ["unception.nvim"] = true,
+    ["nvim-unception"] = true,
+    ["nui.nvim"]       = true,
+    ["nui"]            = true,
+    ["packer.nvim"]    = true,
+    ["packer"]         = true,
+    ["trouble.nvim"]   = true,
+    ["trouble"]        = true,
+    ["which-key.nvim"] = true,
+    ["which-key"]      = true,
+    -- stylua: ignore end
+    -- Add any other plugins you want to exclude here
+  },
+}
+
 M.substitute = {
   yank_substituted_text = false,
   preserve_cursor_position = true,
   on_substitute = function()
     require("yanky.integration").substitute()
+  end,
+}
+
+-- Hightlight-colors
+M.hightlight_colors = {
+  render = "virtual",
+  virtual_symbol = "",
+  virtual_symbol_prefix = "",
+  virtual_symbol_suffix = "",
+  virtual_symbol_position = "inline",
+  ---Highlight hex colors, e.g. '#FFFFFF' more text
+  enable_hex = true,
+  ---Highlight short hex colors e.g. '#fff more text'
+  enable_short_hex = true,
+  ---Highlight rgb colors, e.g. 'rgb(0 0 0) more text'
+  enable_rgb = true,
+  ---Highlight hsl colors, e.g. 'hsl(150deg 30% 40%) more text'
+  enable_hsl = true,
+  ---Highlight CSS variables, e.g. 'var(--testing-color) more text'
+  enable_var_usage = true,
+  ---Highlight named colors, e.g. 'green more text'
+  enable_named_colors = true,
+  ---Highlight tailwind colors, e.g. 'bg-blue-500 more text'
+  enable_tailwind = true,
+  exclude_filetypes = { "lazy", "lazygit" },
+  exclude_buftypes = {},
+}
+
+-- Catppuccin opts
+M.catppuccin = {
+  background = { -- :h background
+    light = "latte",
+    dark = "frappe",
+  },
+  integrations = {
+    native_lsp = {
+      enabled = true,
+      virtual_text = {
+        errors = { "italic" },
+        hints = { "italic" },
+        warnings = { "italic" },
+        information = { "italic" },
+        ok = { "italic" },
+      },
+      underlines = {
+        errors = { "underline" },
+        hints = { "underline" },
+        warnings = { "underline" },
+        information = { "underline" },
+        ok = { "underline" },
+      },
+      inlay_hints = {
+        background = true,
+      },
+    },
+    dadbod_ui = true,
+    indent_blankline = {
+      enabled = true,
+      scope_color = "mauve",
+      colored_indent_levels = true,
+    },
+    grug_far = true,
+    mason = true,
+    mini = {
+      enabled = true,
+      indentscope_color = "mauve",
+    },
+    neotree = true,
+    noice = true,
+    notify = true,
+    nvim_surround = true,
+    octo = true,
+    overseer = true,
+    rainbow_delimiters = true,
+    which_key = true,
+  },
+}
+
+-- Auto Dark Mode opts
+M.auto_dark_mode = {
+  update_interval = 2000,
+  set_dark_mode = function()
+    vim.o.background = "dark"
+    vim.cmd.colorscheme(
+      require("astral").colortheme or "catppuccin-mocha" or "tokyonight"
+    )
+  end,
+  set_light_mode = function()
+    vim.o.background = "light"
+    vim.cmd.colorscheme(
+      require("astral").colortheme or "catppuccin-latte" or "tokyonight-day"
+    )
   end,
 }
 
