@@ -4,9 +4,6 @@
 local data = require("data")
 
 return {
-  { -- Git UI
-    import = "lazyvim.plugins.extras.util.gitui",
-  },
   { -- Octo plugin
     import = "lazyvim.plugins.extras.util.octo",
   },
