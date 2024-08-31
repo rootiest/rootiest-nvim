@@ -30,22 +30,22 @@ function M.open_floating_window_with_completion()
   _G.history_size = vim.fn.histnr("cmd")
 
   -- Function to close the window
-  _G.close_window = function()
+  M.close_window = function()
     vim.api.nvim_win_close(win, true) -- Close the window
     -- Switch back to normal mode
     vim.api.nvim_command("stopinsert")
   end
 
   -- Function to execute the command
-  _G.execute_command = function()
+  M.execute_command = function()
     local cmd = vim.api.nvim_buf_get_lines(buf, 0, -1, false)[1] or ""
     -- Ensure abbreviation expansion
     vim.api.nvim_command("execute 'silent! " .. cmd .. "'")
-    close_window()
+    M.close_window()
   end
 
   -- Function to handle navigation and clear buffer
-  _G.handle_history_navigation = function(direction)
+  M.handle_history_navigation = function(direction)
     -- Update history index
     _G.history_index = (_G.history_index + direction) % _G.history_size
     if _G.history_index < 0 then
@@ -67,7 +67,7 @@ function M.open_floating_window_with_completion()
     buf,
     "i",
     "<CR>",
-    [[<cmd>lua execute_command()<CR>]],
+    [[<cmd>lua require('utils.cmd_window').execute_command()<CR>]],
     { noremap = true, silent = true }
   )
   -- Map <ESC> to close the window
@@ -75,7 +75,7 @@ function M.open_floating_window_with_completion()
     buf,
     "i",
     "<ESC>",
-    [[<cmd>lua close_window()<CR>]],
+    [[<cmd>lua require('utils.cmd_window').close_window()<CR>]],
     { noremap = true, silent = true }
   )
   -- Map <Up> to navigate command history
@@ -83,7 +83,7 @@ function M.open_floating_window_with_completion()
     buf,
     "i",
     "<Up>",
-    [[<cmd>lua handle_history_navigation(-1)<CR>]],
+    [[<cmd>lua require('utils.cmd_window').handle_history_navigation(-1)<CR>]],
     { noremap = true, silent = true }
   )
   -- Map <Down> to navigate command history
@@ -91,7 +91,7 @@ function M.open_floating_window_with_completion()
     buf,
     "i",
     "<Down>",
-    [[<cmd>lua handle_history_navigation(1)<CR>]],
+    [[<cmd>lua require('utils.cmd_window').handle_history_navigation(1)<CR>]],
     { noremap = true, silent = true }
   )
   -- Map <C-n> to navigate command history
@@ -99,7 +99,7 @@ function M.open_floating_window_with_completion()
     buf,
     "i",
     "<C-n>",
-    [[<cmd>lua handle_history_navigation(1)<CR>]],
+    [[<cmd>lua require('utils.cmd_window').handle_history_navigation(1)<CR>]],
     { noremap = true, silent = true }
   )
   -- Map <C-p> to navigate command history
@@ -107,7 +107,7 @@ function M.open_floating_window_with_completion()
     buf,
     "i",
     "<C-p>",
-    [[<cmd>lua handle_history_navigation(-1)<CR>]],
+    [[<cmd>lua require('utils.cmd_window').handle_history_navigation(-1)<CR>]],
     { noremap = true, silent = true }
   )
 
