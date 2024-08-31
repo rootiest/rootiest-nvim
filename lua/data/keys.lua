@@ -319,7 +319,7 @@ M.misc = {
   {
     lhs = "<leader>gt",
     rhs = function()
-      rootiest.toggle_lazygit_term()
+      rootiest.toggle_lazygit_float()
     end,
     desc = "LazyGit Terminal",
   },
