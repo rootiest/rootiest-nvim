@@ -408,6 +408,13 @@ function M.is_window_wide_enough(width_limit)
   return width >= width_limit
 end
 
+--- Function to check if the window is tall enough
+---@param height_limit number The minimum height of the window
+---@return boolean condition true if the window is tall enough, false otherwise
+function M.is_window_tall_enough(height_limit)
+  local height = vim.fn.winheight(0)
+  return height >= height_limit
+end
 function M.get_date()
   return os.date("%Y-%m-%d")
 end
