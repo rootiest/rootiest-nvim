@@ -357,13 +357,6 @@ M.misc = {
     rhs = "<cmd>Neotree reveal toggle<cr>",
     desc = "Neotree toggle",
   },
-  -- Code action on selection
-  {
-    lhs = "<leader>Ca",
-    rhs = ":<C-U>lua require('utils.rootiest').code_action_on_selection()<CR>",
-    desc = "Code Action on Selection",
-    mode = "x",
-  },
   -- Exit Neovim
   {
     lhs = "<leader>Q",
