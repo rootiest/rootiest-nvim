@@ -191,6 +191,12 @@ function M.setup_autocommands()
       local filetype = vim.bo.filetype
       if not vim.tbl_contains(excluded_filetypes, filetype) then
         M.setup_indent_highlight()
+      else
+        if pcall(require, "auto-cursorline") then
+          require("auto-cursorline").disable({
+            buffer = true,
+          })
+        end
       end
     end,
   })

@@ -121,4 +121,28 @@ return {
   { -- Rainbow Delimeters
     "HiPhish/rainbow-delimiters.nvim",
   },
+  { -- Colorful window separators
+    "nvim-zh/colorful-winsep.nvim",
+    opts = {
+      only_line_seq = false,
+      symbols = { "─", "│", "╭", "╮", "╰", "╯" },
+      no_exec_files = {
+        "packer",
+        "TelescopePrompt",
+        "mason",
+        "CompetiTest",
+        "NvimTree",
+        "neotree",
+        "lazy",
+        "neominimap",
+      },
+    },
+    event = { "WinLeave" },
+  },
+  { -- Auto Cursorline
+    "delphinus/auto-cursorline.nvim",
+    opts = {
+      wait_ms = 2000,
+    },
+  },
 }
