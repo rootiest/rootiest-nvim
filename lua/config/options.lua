@@ -32,6 +32,18 @@ vim.g.usewakatime =  true  --- @type boolean Options:  <true|false>
 vim.g.usehardtime =  false --- @type boolean Options:  <true|false>
 vim.g.useimage    =  true  --- @type boolean Options:  <true|false>
 
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Lualine Stats ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.g.stats_wakatime = true --- @type boolean Options: <true|false>
+vim.g.stats_music    = true --- @type boolean Options: <true|false>
+vim.g.stats_ignored_players = { --- @type string[] Options: [ignored players]
+  "chromium",
+  "firefox",
+  "kdeconnect",
+  "haruna",
+  "plasma-browser-integration",
+  "plasma-browser-integration-76042",
+}
+
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ COLOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 --  Background color
 vim.o.background           = "dark"    --- @type string Options: <dark|light>
