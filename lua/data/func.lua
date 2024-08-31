@@ -184,49 +184,85 @@ function M.is_installed(plugin)
 end
 
 -- Helper function to add keymaps with common properties
+--- Helper function to add keymaps with common properties
+---@param lhs string|table The keybind (or list of keybinds)
+---@param rhs string|function The function to execute when the key is pressed
+---@param desc string|nil The description of the keybind (optional)
+---@param mode string|table|nil The mode(s) in which the keybind should be added (optional)
+---@param icon string|nil The icon to use for the keybind (optional)
+---@param group string|nil The group to add the keybind to (optional)
+---@return boolean condition true if the keybind was added, false otherwise
 function M.add_keymap(lhs, rhs, desc, mode, icon, group)
   -- Check if which-key.nvim is installed
   if M.is_installed("which-key.nvim") then
     require("which-key").add({
       -- stylua: ignore start
       {
-        lhs,                -- The keybind
-        rhs = rhs,          -- Function to execute when the key is pressed
-        desc = desc,        -- Description of the keybind
-        mode = mode or "n", -- Default to "n" (normal mode) if mode is not provided
-        icon = icon,        -- Icon to use for the keybind
-        group = group,      -- Default to nil (no group) if group is not provided
+        lhs,                 -- The keybind
+        rhs   = rhs,         -- Function to execute when the key is pressed
+        desc  = desc,        -- Description of the keybind
+        mode  = mode or "n", -- Default to "n" (normal mode) if mode is not provided
+        icon  = icon,        -- Icon to use for the keybind
+        group = group,       -- Default to nil (no group) if group is not provided
       },
       -- stylua: ignore end
     })
+    return true
   else
     -- Handle the case where lhs is a table
     if type(lhs) == "table" then
-      rhs = lhs.rhs or rhs
-      desc = lhs.desc or desc
-      mode = lhs.mode or mode
-      icon = lhs.icon or icon
-      group = lhs.group or group
-      lhs = lhs.lhs or lhs
-    end
-    -- If which-key.nvim is not installed, use vim.keymap.set
-    if not group and not icon then
-      -- stylua: ignore start
-      vim.keymap.set(
-        mode or "n",    -- Default to "n" (normal mode) if mode is not provided
-        lhs,            -- The keybind
-        rhs,            -- Function to execute when the key is pressed
-        { desc = desc } -- Description of the keybind
-      )
-      -- stylua: ignore end
+      -- If lhs is a list of keymaps, iterate over each item
+      for _, keymap in ipairs(lhs) do
+        -- Set default values or use provided ones
+        local keymap_rhs = keymap.rhs or rhs
+        local keymap_desc = keymap.desc or desc
+        local keymap_mode = keymap.mode or mode or "n"
+        local keymap_icon = keymap.icon or icon
+        local keymap_group = keymap.group or group
+        local keymap_lhs = keymap.lhs
+
+        if not keymap_group and not keymap_icon then
+          -- Apply the keymap using vim.keymap.set
+          vim.keymap.set(
+            keymap_mode, -- Mode(s) in which the keybind should be added
+            keymap_lhs, -- The keybind
+            keymap_rhs, -- Function to execute when the key is pressed
+            { desc = keymap_desc } -- Description of the keybind
+          )
+        else
+          -- If which-key.nvim is not installed, use vim.notify with a detailed error message
+          local msg = string.format(
+            "Mapping requires which-key.nvim:\n%s%s",
+            vim.inspect(keymap_lhs), -- Convert lhs to a readable format
+            keymap_desc and ("\nDescription: " .. keymap_desc) or ""
+          )
+          M.notify(msg, "WARN")
+          return false
+        end
+      end
+      return true
     else
-      -- If which-key.nvim is not installed, use vim.notify with detailed error message
-      local msg = string.format(
-        "Mapping requires which-key.nvim:\n%s%s",
-        vim.inspect(lhs), -- Convert lhs to a readable format
-        desc and ("\nDescription: " .. desc) or ""
-      )
-      M.notify(msg, "WARN")
+      -- If lhs is a single keymap (not a table)
+      if not group and not icon then
+        -- stylua: ignore start
+        vim.keymap.set(
+          mode or "n",    -- Default to "n" (normal mode) if mode is not provided
+          lhs,            -- The keybind
+          rhs,            -- Function to execute when the key is pressed
+          { desc = desc } -- Description of the keybind
+        )
+        -- stylua: ignore end
+        return true
+      else
+        -- If which-key.nvim is not installed, use vim.notify with a detailed error message
+        local msg = string.format(
+          "Mapping requires which-key.nvim:\n%s%s",
+          vim.inspect(lhs), -- Convert lhs to a readable format
+          desc and ("\nDescription: " .. desc) or ""
+        )
+        M.notify(msg, "WARN")
+        return false
+      end
     end
   end
 end
