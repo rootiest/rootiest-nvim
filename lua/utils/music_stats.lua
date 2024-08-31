@@ -9,7 +9,8 @@ local cache_file = os.getenv("HOME") .. "/.cache/music_cache.txt"
 local separator = "␟"
 local last_known_value = ""
 
--- Function to read the cache file
+--- Function to read the cache file
+---@return string content The content of the cache file
 local function read_cache()
   local file = io.open(cache_file, "r")
   if file then
@@ -21,7 +22,14 @@ local function read_cache()
   return last_known_value -- Return last known value if file cannot be read
 end
 
--- Parse the cached music data
+--- Function to parse the cache file
+---@return string artist The artist
+---@return string title The title
+---@return string album The album
+---@return string status The play status
+---@return string volume The volume level
+---@return string loop The loop state
+---@return string shuffle The shuffle state
 local function parse_cache()
   local content = read_cache()
   if
@@ -55,6 +63,8 @@ local function parse_cache()
     shuffle or ""
 end
 
+--- Function to get the play status
+---@return string status The play status
 function M.get_status()
   local _, _, _, status = parse_cache()
   if status:match("Playing") then
@@ -66,10 +76,20 @@ function M.get_status()
   end
 end
 
+--- --- Function to get the current stats
+---@return string artist The artist
+---@return string title The title
+---@return string album The album
+---@return string status The play status
+---@return string volume The volume level
+---@return string loop The loop state
+---@return string shuffle The shuffle state
 function M.get_current()
   return parse_cache()
 end
 
+--- Function to get the music icon
+---@return string icon The music icon
 function M.get_icon()
   local _, _, _, status = parse_cache()
   if status == "Playing" then
@@ -81,42 +101,59 @@ function M.get_icon()
   end
 end
 
+--- Function to get the music title
+---@return string title The music title
 function M.get_title()
   local _, title = parse_cache()
   return title
 end
 
+--- Function to get the music artist
+---@return string artist The music artist
 function M.get_artist()
   local artist = parse_cache()
   return artist
 end
 
+--- Function to get the music album
+---@return string album The music album
 function M.get_album()
   local _, _, album = parse_cache()
   return album
 end
 
+--- Function to get the music volume
+---@return number volume The music volume
 function M.get_volume()
   local _, _, _, _, volume = parse_cache()
   return tonumber(volume) or 0.0
 end
 
+--- Function to get the music shuffle state
+---@return boolean shuffle The music shuffle state
 function M.is_shuffle()
   local _, _, _, _, _, _, shuffle = parse_cache()
   return shuffle == "On"
 end
 
+--- Function to get the music loop state
+---@return boolean loop The music loop state
 function M.is_loop()
   local _, _, _, _, _, loop = parse_cache()
   return loop ~= "None" and loop ~= "false"
 end
 
--- Function to remove text inside parentheses, including the parentheses themselves
+--- Function to remove parentheses and their contents
+---@param text string The text to remove parentheses from
+---@return string text The text with parentheses removed
+---@return integer count The number of parentheses removed
 local function remove_parentheses(text)
   return text:gsub("%b()", "")
 end
 
--- Function to abbreviate common words or phrases
+--- Function to abbreviate common words or phrases
+---@param text string The text to abbreviate
+---@return string text The abbreviated text
 local function abbreviate(text)
   local replacements = {
     ["feat%.?%s"] = "ft. ",
@@ -130,7 +167,10 @@ local function abbreviate(text)
   return text
 end
 
--- Function to strip unnecessary words or phrases
+--- Function to strip unnecessary words or phrases
+---@param text string The text to strip
+---@return string text The stripped text
+---@return integer count The number of instances removed
 local function strip_redundant(text)
   local redundant_phrases =
     { "Radio Edit", "Extended Version", "Remix", "Instrumental", "Live" }
@@ -140,7 +180,10 @@ local function strip_redundant(text)
   return text:gsub("%s+", " "):gsub("^%s*(.-)%s*$", "%1") -- Clean up any extra spaces
 end
 
--- Function to limit the number of words in the text
+--- Function to limit the number of words in the text
+---@param text string The text to limit
+---@param max_words integer The maximum number of words
+---@return string text The limited text
 local function limit_words(text, max_words)
   local words = vim.split(text, "%s+")
   if #words > max_words then
@@ -149,7 +192,9 @@ local function limit_words(text, max_words)
   return text
 end
 
--- Function to remove duplicate words
+--- Function to remove duplicate words
+---@param text string The text to remove duplicates from
+---@return string text The text with duplicates removed
 local function remove_duplicates(text)
   local seen = {}
   local result = {}
@@ -162,12 +207,13 @@ local function remove_duplicates(text)
   return table.concat(result, " ")
 end
 
--- Function to shorten text based on delimiters
+--- Function to shorten the text
+---@param text string The text to shorten
+---@return string text The shortened text
 local function shorten_text(text)
   if #text <= 25 then
     return text
   end
-
   local delimiters = { ",", "-", ":" }
   for _, delimiter in ipairs(delimiters) do
     local parts = vim.split(text, delimiter)
@@ -185,7 +231,9 @@ local function shorten_text(text)
   return text
 end
 
--- Combine all simplification functions
+--- Function to simplify text
+---@param text string The text to simplify
+---@return string text The simplified text
 local function simplify_text(text)
   text = remove_parentheses(text)
   text = strip_redundant(text)
@@ -196,6 +244,11 @@ local function simplify_text(text)
   return text
 end
 
+--- Function to format the icon with text
+---@param icon string The icon
+---@param artist string The artist
+---@param title string The title
+---@return string formatted_icon_with_text The formatted icon and text
 local function format_icon_with_text(icon, artist, title)
   if artist and #artist > 25 then
     return icon .. " " .. title
@@ -208,6 +261,8 @@ local function format_icon_with_text(icon, artist, title)
   end
 end
 
+--- Function to get the icon with text
+---@return string icon_with_text The icon and text
 function M.get_icon_with_text()
   local icon = M.get_icon()
   local title = M.get_title()

@@ -5,14 +5,14 @@
 local M = {}
 
 -- Path to the cache script
-local config_dir = vim.fn.stdpath("config")
----@diagnostic disable-next-line: param-type-mismatch
-local cache_script = vim.fs.joinpath(config_dir, "/scripts/update_cache.sh")
+local config_dir = vim.fn.stdpath("config") --[[@as string]]
+local cache_script = vim.fs.joinpath(config_dir, "scripts", "update_cache.sh")
 
 -- Flag to check if the script has already been run
 local script_run_once = false
 
--- Function to run the cache update script using vim.system
+--- Function to run the cache script
+---@return nil
 function M.setup_script()
   if not script_run_once then
     -- Run the cache script

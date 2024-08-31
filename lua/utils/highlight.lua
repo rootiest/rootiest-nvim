@@ -1,18 +1,23 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Highlight                        │
 --          ╰─────────────────────────────────────────────────────────╯
+---@module "utils.highlight"
+--- This module provides functions to apply highlights to the statusline and other components.
+
 local M = {}
 
 -- Load utils
-local utils = require("utils.rootiest")
 local data = require("data")
+local funcs = data.func
 -- Readability functions
-local get_bg_color = utils.get_bg_color
-local get_fg_color = utils.get_fg_color
+local get_bg_color = funcs.get_bg_color
+local get_fg_color = funcs.get_fg_color
 local set_hl = vim.api.nvim_set_hl
 local sign_def = vim.fn.sign_define
 
--- Function to apply the todo highlights
+--- Function to apply the todo highlights
+---@param status_string string The todo status string
+---@return string The updated status string with the todo highlights
 function M.apply_todo_highlights(status_string)
   -- Define patterns and associated highlight groups
   local patterns = {
@@ -37,7 +42,8 @@ function M.apply_todo_highlights(status_string)
   return status_string
 end
 
--- Function to set up indent highlights
+--- Function to set up indent highlights
+---@return nil
 function M.setup_indent_highlight()
   -- Get the background color of CursorLine
   local cursorline_bg_hex = get_bg_color("CursorLine")
@@ -114,7 +120,8 @@ function M.setup_indent_highlight()
   vim.cmd(":set colorcolumn=120")
 end
 
--- Function to set up mode highlights
+--- Function to set up smooth cursor mode highlights
+---@return nil
 function M.setup_mode_highlight()
   local current_mode = vim.fn.mode()
   local bg_color -- Define bg_color variable
@@ -145,7 +152,8 @@ function M.setup_mode_highlight()
   end
 end
 
--- Function to set up dashboard header highlight
+--- Function to set up dashboard header highlight
+---@return nil
 function M.setup_dashboard_highlight()
   if not vim.g.DashboardHeaderColor then
     local dash_color = get_fg_color("Error")
@@ -155,7 +163,8 @@ function M.setup_dashboard_highlight()
   end
 end
 
--- Set up transparency
+--- Function to set up transparency of the editor
+---@return nil
 function M.setup_transparency()
   if data.func.is_kitty() and not vim.g.disable_transparency then
     vim.cmd("TransparentEnable")
@@ -164,7 +173,8 @@ function M.setup_transparency()
   end
 end
 
--- Setup autocommands to update on InsertEnter and ColorScheme events
+--- Function to set up autocommands
+---@return nil
 function M.setup_autocommands()
   local autogrp = vim.api.nvim_create_augroup
   local autocmd = vim.api.nvim_create_autocmd
