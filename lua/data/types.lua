@@ -280,6 +280,41 @@ M.plugin_reloader = {
   },
 }
 
+M.pigeon = function()
+  local data = require("data")
+  local platform = data.func.get_os("platform")
+  local lazy_installed = pcall(require, "lazy")
+  local packer_installed = pcall(require, "packer_plugins")
+  local pigeon_enabled = true -- default
+  local plugman = "lazy" -- default package manager
+  if lazy_installed then
+    plugman = "lazy"
+  elseif packer_installed then
+    plugman = "packer"
+  elseif vim.fn.exists("g:plugs") == 1 then
+    plugman = "vim-plug"
+  else
+    data.func.notify(
+      "Failed to detect package manager.\nPigeon disabled.",
+      "ERROR"
+    )
+    pigeon_enabled = false
+    return
+  end
+  local config = {
+    enabled = pigeon_enabled,
+    os = platform,
+    plugin_manager = plugman,
+    callbacks = {
+      killing_pigeon = nil,
+      respawning_pigeon = nil,
+    },
+    -- more config options here
+  }
+
+  require("pigeon").setup(config)
+end
+
 M.substitute = {
   yank_substituted_text = false,
   preserve_cursor_position = true,

@@ -137,4 +137,8 @@ return {
     end,
     dependencies = data.deps.needs_telescope,
   },
+  {
+    "Pheon-Dev/pigeon",
+    config = data.types.pigeon,
+  },
 }
