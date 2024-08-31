@@ -88,4 +88,8 @@ M.transparent = {
   "TransparentToggle",
 }
 
+M.trouble = {
+  "Trouble",
+}
+
 return M
