@@ -145,6 +145,21 @@ end
 function M.notify(message, level)
   level = level or "info"
   vim.notify(message, vim.log.levels[level:upper()])
+--- Function to reload all plugins.
+--- @return nil
+function M.reload_all_plugins()
+  -- Define the exclusion list
+  local exclude = require("data").types.plugin_reloader.exclusion_list
+
+  -- Get the list of currently loaded plugins
+  local plugins = require("lazy.core.config").plugins
+
+  -- Iterate over each plugin and reload it if it's not in the exclusion list
+  for plugin_name, _ in pairs(plugins) do
+    if not exclude[plugin_name] then
+      vim.cmd("Lazy reload " .. plugin_name)
+    end
+  end
 end
 
 -- Check if plugin is installed
