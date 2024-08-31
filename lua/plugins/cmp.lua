@@ -28,7 +28,6 @@ return {
 
       local border_opts = {
         border = "rounded",
-        winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
       }
       local window_opts = {
         completion = cmp.config.window.bordered(border_opts),
@@ -77,8 +76,8 @@ return {
           { name = "dotenv" },
           { name = "calc" },
           { name = "conventionalcommits" },
-          { name = "gitmoji" },
-          { name = "emoji" },
+          { name = "gitmoji", priority = 9998 },
+          { name = "emoji", priority = 9999 },
         },
         formatting = {
           fields = { "abbr", "kind", "menu" },
@@ -112,6 +111,8 @@ return {
               ignore_cmds = { "Man", "!" },
             },
           },
+        }, { name = "cmp-cmdline-history" }, {
+          name = "cmp-cmdline-prompt",
         }),
       })
 
@@ -119,6 +120,9 @@ return {
       cmp.setup.filetype("cmdline", {
         sources = {
           { name = "cmdline" }, -- Ensure 'cmdline' source is available
+          { name = "path" },
+          { name = "cmp-cmdline-history" },
+          { name = "cmp-cmdline-prompt" },
         },
       })
 

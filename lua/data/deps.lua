@@ -44,6 +44,10 @@ M.cmp = {
   "onsails/lspkind.nvim",
   "hrsh7th/cmp-emoji",
   "hrsh7th/cmp-cmdline",
+  "dmitmel/cmp-cmdline-history",
+  "teramako/cmp-cmdline-prompt.nvim",
+  "mtoohey31/cmp-fish",
+  "vim-dadbod-completion",
   {
     "chrisgrieser/cmp_yanky",
     option = {
