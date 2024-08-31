@@ -315,14 +315,6 @@ M.lazygit = {
 }
 
 M.misc = {
-  -- LazyGit
-  {
-    lhs = "<leader>gt",
-    rhs = function()
-      rootiest.toggle_lazygit_float()
-    end,
-    desc = "LazyGit Terminal",
-  },
   -- Yank line (without whitespace)
   {
     lhs = "yo",
