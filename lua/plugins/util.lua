@@ -1,6 +1,7 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Utilities                        │
 --          ╰─────────────────────────────────────────────────────────╯
+local data = require("data")
 
 return {
   { -- Chezmoi
@@ -16,17 +17,17 @@ return {
   { -- Link following
     "chrishrb/gx.nvim",
     lazy = true,
-    cmd = require("data.cmd").gx,
-    keys = require("data.keys").gx,
+    cmd = data.cmd.gx,
+    keys = data.keys.gx,
     init = function()
       vim.g.netrw_nogx = 1
     end,
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = data.deps.gx,
     config = true,
   },
   { -- Auto-save
     "okuuva/auto-save.nvim",
-    cmd = require("data.cmd").autosave,
+    cmd = data.cmd.autosave,
     event = { "InsertLeave", "TextChanged" },
     opts = {
       execution_message = {
@@ -37,8 +38,8 @@ return {
   { -- Ripgrep substitute
     "chrisgrieser/nvim-rip-substitute",
     event = "InsertEnter",
-    cmd = require("data.cmd").ripsub,
-    keys = require("data.keys").ripsub,
+    cmd = data.cmd.ripsub,
+    keys = data.keys.ripsub,
   },
   { -- Unception
     "samjwill/nvim-unception",
@@ -49,10 +50,8 @@ return {
   { -- 🍎 Icon Picker
     "ziontee113/icon-picker.nvim",
     lazy = true,
-    config = function()
-      require("icon-picker").setup({ disable_legacy_commands = true })
-    end,
-    keys = require("data.keys").iconpicker,
+    opts = { disable_legacy_commands = true },
+    keys = data.keys.iconpicker,
   },
   { -- Codesnap
     "mistricky/codesnap.nvim",
@@ -67,19 +66,17 @@ return {
       code_font_family = "Iosevka NF",
       code_font_size = 12,
     },
-    cmd = require("data.cmd").codesnap,
-    keys = require("data.keys").codesnap,
+    cmd = data.cmd.codesnap,
+    keys = data.keys.codesnap,
   },
   { -- Kulala
     "mistweaverco/kulala.nvim",
-    event = "InsertEnter",
-    config = function()
-      require("kulala").setup()
-    end,
+    ft = { "http", "https", "ftp", "ftps" },
+    opts = {},
   },
   { -- Hardtime
     "m4xshen/hardtime.nvim",
-    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    dependencies = data.deps.hardtime,
     opts = function()
       return { enabled = vim.g.usehardtime }
     end,
@@ -88,19 +85,19 @@ return {
     "dmtrKovalenko/caps-word.nvim",
     lazy = true,
     opts = {},
-    keys = require("data.keys").capsword,
+    keys = data.keys.capsword,
   },
   { -- Music Controls
     "AntonVanAssche/music-controls.nvim",
-    dependencies = { "rcarriga/nvim-notify" },
+    dependencies = data.deps.musiccontrols,
     opts = {
       default_player = "YoutubeMusic",
     },
   },
   { -- Qalc
     "Apeiros-46B/qalc.nvim",
-    cmd = require("data.cmd").qalc,
-    keys = require("data.keys").qalc,
+    cmd = data.cmd.qalc,
+    keys = data.keys.qalc,
     opts = {
       set_ft = "qalc",
     },
@@ -109,11 +106,7 @@ return {
     "amitds1997/remote-nvim.nvim",
     lazy = true,
     version = "*", -- Pin to GitHub releases
-    dependencies = {
-      "nvim-lua/plenary.nvim", -- For standard functions
-      "MunifTanjim/nui.nvim", -- To build the plugin UI
-      "nvim-telescope/telescope.nvim", -- For picking b/w different remote methods
-    },
+    dependencies = data.deps.remotenvim,
     config = true,
   },
   { -- Encourage
@@ -123,9 +116,7 @@ return {
   { -- Helpview
     "OXY2DEV/helpview.nvim",
     ft = "help",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-    },
+    dependencies = data.deps.needs_treesitter,
   },
   { -- Docker-compose logs
     "adelowo/dockercomposelogs.nvim",
@@ -133,12 +124,17 @@ return {
       require("dockercomposelogs").setup({})
     end,
     event = "VeryLazy",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-    },
+    dependencies = data.deps.needs_telescope,
   },
   { -- Suda
     "lambdalisue/vim-suda",
-    cmd = require("data.cmd").suda,
+    cmd = data.cmd.suda,
+  },
+  { -- Spell checker
+    "matkrin/telescope-spell-errors.nvim",
+    config = function()
+      require("telescope").load_extension("spell_errors")
+    end,
+    dependencies = data.deps.needs_telescope,
   },
 }

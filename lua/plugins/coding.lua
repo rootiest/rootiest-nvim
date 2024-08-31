@@ -26,6 +26,9 @@ return {
   { -- VSCode
     import = "lazyvim.plugins.extras.vscode",
   },
+  { -- Neogen
+    import = "lazyvim.plugins.extras.coding.neogen",
+  },
   { -- G-code
     "wilriker/gcode.vim",
   },
@@ -42,17 +45,10 @@ return {
     ft = data.types.alternate,
     keys = data.keys.alternate,
   },
-  { -- Highlight colors
-    "brenoprata10/nvim-highlight-colors",
-    event = "BufReadPre",
-    config = function()
-      require("nvim-highlight-colors").setup({})
-    end,
-  },
   { -- Tailwind
     "luckasRanarison/tailwind-tools.nvim",
     lazy = true,
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    dependencies = data.deps.needs_treesitter,
     opts = {},
   },
   { -- Substitute

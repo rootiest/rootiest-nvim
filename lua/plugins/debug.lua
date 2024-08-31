@@ -1,6 +1,8 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                          Debug                          │
 --          ╰─────────────────────────────────────────────────────────╯
+local data = require("data")
+
 return {
   { -- DAP Core
     import = "lazyvim.plugins.extras.dap.core",
@@ -15,22 +17,9 @@ return {
   {
     "nvim-neotest/neotest",
     opts = {
-      adapters = {
-        "neotest-plenary",
-        "neotest-python",
-        "neotest-vim-test",
-        "neotest-minitest",
-        "neotest-bash",
-      },
+      adapters = data.deps.neotest.adapters,
     },
-    dependencies = {
-      "nvim-neotest/nvim-nio",
-      "nvim-lua/plenary.nvim",
-      "zidhuss/neotest-minitest",
-      "rcasia/neotest-bash",
-      "antoinemadec/FixCursorHold.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
+    dependencies = data.deps.neotest.deps,
   },
   { -- Profiling
     "stevearc/profile.nvim",

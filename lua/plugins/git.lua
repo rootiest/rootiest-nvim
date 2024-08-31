@@ -27,10 +27,7 @@ return {
     lazy = true,
     cmd = data.cmd.lazygit,
     keys = data.keys.lazygit,
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-      "nvim-lua/plenary.nvim",
-    },
+    dependencies = data.deps.lazygit,
     config = function()
       require("telescope").load_extension("lazygit")
     end,
@@ -57,7 +54,7 @@ return {
       -- Get the current lualine configuration
       local config = require("lualine").get_config()
       local git_blame = require("gitblame")
-      local utils = require("utils.rootiest")
+      local funcs = data.func
       -- Define the width limit for displaying the Git blame component
       local width_limit = 245 -- Adjust this value as needed
       -- Add Git-blame to lualine_c section
@@ -65,9 +62,9 @@ return {
         git_blame.get_current_blame_text,
         cond = function() -- Only show if text is available
           return git_blame.is_blame_text_available()
-            and utils.is_window_wide_enough(width_limit)
+            and funcs.is_window_wide_enough(width_limit)
         end,
-        color = { fg = utils.get_fg_color("GitSignsCurrentLineBlame") },
+        color = { fg = funcs.get_fg_color("GitSignsCurrentLineBlame") },
         padding = { left = 1, right = 0 },
         on_click = function()
           vim.cmd("LazyGit")

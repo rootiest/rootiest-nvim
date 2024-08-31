@@ -29,7 +29,7 @@ return {
   },
   { -- Minuet-AI
     "milanglacier/minuet-ai.nvim",
-    dependencies = { { "nvim-lua/plenary.nvim" }, { "hrsh7th/nvim-cmp" } },
+    dependencies = data.deps.minuet,
     config = function()
       require("minuet").setup({ provider = "openai" })
     end,

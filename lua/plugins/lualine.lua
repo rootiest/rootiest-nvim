@@ -3,14 +3,12 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 local utils = require("utils")
-local rootils = utils.rootiest
+local data = require("data")
+local funcs = data.func
 
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = {
-    { "bezhermoso/todos-lualine.nvim" },
-    { "folke/todo-comments.nvim" },
-  },
+  dependencies = data.deps.lualine,
   init = function()
     vim.g.lualine_laststatus = vim.o.laststatus
     if vim.fn.argc(-1) > 0 then
@@ -29,7 +27,7 @@ return {
 
     -- Define todo-comments component
     local todos_component =
-      require("todos-lualine").component(require("data").types.todo.lualine())
+      require("todos-lualine").component(data.types.todo.lualine())
 
     local opts = {
       options = { -- General options
@@ -45,7 +43,7 @@ return {
         lualine_a = {
           { -- Mode
             "mode",
-            icon = require("data").types.logo.icon,
+            icon = data.types.logo.icon,
             padding = { left = 1, right = 0 },
           },
         },
@@ -58,7 +56,7 @@ return {
           { -- Todo
             todos_component,
             cond = function()
-              return rootils.is_window_wide_enough(100)
+              return funcs.is_window_wide_enough(100)
             end,
             padding = { left = 1, right = 0 },
             on_click = function()
@@ -70,7 +68,7 @@ return {
               return require("arrow.statusline").text_for_statusline_with_icons()
             end,
             cond = function()
-              return rootils.is_window_wide_enough(100)
+              return funcs.is_window_wide_enough(100)
             end,
             padding = { left = 1, right = 0 },
             on_click = function()
@@ -145,7 +143,7 @@ return {
                 end
               end,
               cond = function()
-                return rootils.is_window_wide_enough(200)
+                return funcs.is_window_wide_enough(200)
               end,
               padding = { left = 0, right = 0 },
               on_click = function()
@@ -161,7 +159,7 @@ return {
               return utils.wakatime_stats.get_color()
             end,
             cond = function()
-              return rootils.is_window_wide_enough(100)
+              return funcs.is_window_wide_enough(100)
             end,
             padding = { left = 0, right = 1 },
           },
@@ -170,7 +168,7 @@ return {
               return utils.music_stats.get_icon_with_text()
             end,
             cond = function()
-              return rootils.is_window_wide_enough(100)
+              return funcs.is_window_wide_enough(100)
             end,
             padding = { left = 0, right = 1 },
           },
@@ -182,7 +180,7 @@ return {
             end,
             icon = " ",
             cond = function()
-              return rootils.is_window_wide_enough(80)
+              return funcs.is_window_wide_enough(80)
             end,
             padding = { left = 0, right = 1 },
             on_click = function()
@@ -194,7 +192,7 @@ return {
             separator = "",
             padding = { left = 0, right = 1 },
             cond = function()
-              return rootils.is_window_wide_enough(60)
+              return funcs.is_window_wide_enough(60)
             end,
             icon = "",
             on_click = function()
@@ -205,7 +203,7 @@ return {
             "location",
             padding = { left = 0, right = 1 },
             cond = function()
-              return rootils.is_window_wide_enough(40)
+              return funcs.is_window_wide_enough(40)
             end,
             on_click = function()
               vim.cmd("Telescope grep_string")
@@ -214,14 +212,14 @@ return {
           { -- Selection
             "selection_count",
             cond = function()
-              return rootils.is_window_wide_enough(120)
+              return funcs.is_window_wide_enough(120)
             end,
             padding = { left = 0, right = 1 },
           },
           { -- Filesize
             "filesize",
             cond = function()
-              return rootils.is_window_wide_enough(100)
+              return funcs.is_window_wide_enough(100)
             end,
             padding = { left = 0, right = 1 },
             icon = "",

@@ -17,52 +17,7 @@ return {
     lazy = false, -- Override
     priority = 1000,
     name = "catppuccin",
-    background = { -- :h background
-      light = "latte",
-      dark = "frappe",
-    },
-    integrations = {
-      native_lsp = {
-        enabled = true,
-        virtual_text = {
-          errors = { "italic" },
-          hints = { "italic" },
-          warnings = { "italic" },
-          information = { "italic" },
-          ok = { "italic" },
-        },
-        underlines = {
-          errors = { "underline" },
-          hints = { "underline" },
-          warnings = { "underline" },
-          information = { "underline" },
-          ok = { "underline" },
-        },
-        inlay_hints = {
-          background = true,
-        },
-      },
-      dadbod_ui = true,
-      indent_blankline = {
-        enabled = true,
-        scope_color = "mauve",
-        colored_indent_levels = true,
-      },
-      grug_far = true,
-      mason = true,
-      mini = {
-        enabled = true,
-        indentscope_color = "mauve",
-      },
-      neotree = true,
-      noice = true,
-      notify = true,
-      nvim_surround = true,
-      octo = true,
-      overseer = true,
-      rainbow_delimiters = true,
-      which_key = true,
-    },
+    opts = data.types.catppuccin,
   },
   { -- Ayu
     "Shatur/neovim-ayu",
@@ -143,7 +98,7 @@ return {
     "zenbones-theme/zenbones.nvim",
     name = "zenbones",
     lazy = true,
-    dependencies = { "rktjmp/lush.nvim" },
+    dependencies = data.deps.zenbones,
   },
   --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ UTILITIES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   { -- Transparent
@@ -155,21 +110,12 @@ return {
   { -- Auto Dark Mode
     "f-person/auto-dark-mode.nvim",
     lazy = true,
-    opts = {
-      update_interval = 2000,
-      set_dark_mode = function()
-        vim.o.background = "dark"
-        vim.cmd.colorscheme(
-          require("astral").colortheme or "catppuccin-mocha" or "tokyonight"
-        )
-      end,
-      set_light_mode = function()
-        vim.o.background = "light"
-        vim.cmd.colorscheme(
-          require("astral").colortheme or "catppuccin-latte" or "tokyonight-day"
-        )
-      end,
-    },
+    opts = data.types.auto_dark_mode,
     cond = not data.func.is_ssh(),
+  },
+  { -- Highlight colors
+    "brenoprata10/nvim-highlight-colors",
+    event = "BufReadPre",
+    opts = data.types.hightlight_colors,
   },
 }

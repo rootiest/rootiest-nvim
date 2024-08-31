@@ -27,7 +27,7 @@ return {
   },
   {
     "folke/trouble.nvim",
-    cmd = { "Trouble" },
+    cmd = data.cmd.trouble,
     opts = {
       modes = {
         symbols = { -- Configure symbols mode
@@ -59,7 +59,6 @@ return {
   ---@module "neominimap.config.meta"
   { -- NeoMiniMap
     "Isrothy/neominimap.nvim",
-    version = "*",
     lazy = false,
     keys = data.keys.minimap,
     init = data.types.minimap.init(),
@@ -90,10 +89,9 @@ return {
     "gen740/SmoothCursor.nvim",
     event = "BufEnter",
     -- lazy = true,
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require("smoothcursor").setup({})
-    end,
+    opts = {
+      cursor = "",
+    },
   },
   { -- Smart Scrolloff
     "tonymajestro/smart-scrolloff.nvim",
@@ -105,7 +103,7 @@ return {
   { -- Recorder
     "chrisgrieser/nvim-recorder",
     event = "VeryLazy",
-    dependencies = "rcarriga/nvim-notify",
+    dependencies = data.deps.recorder,
     opts = {},
   },
   { -- Comment Box
