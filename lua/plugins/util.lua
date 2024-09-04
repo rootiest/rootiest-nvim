@@ -1,3 +1,5 @@
+--- @module "plugins.util"
+--- This module defines the utility plugins spec for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Utilities                        │
 --          ╰─────────────────────────────────────────────────────────╯
@@ -27,6 +29,7 @@ return {
   },
   { -- Auto-save
     "okuuva/auto-save.nvim",
+    enabled = data.func.check_global_var("auto_save", true, true),
     cmd = data.cmd.autosave,
     event = { "InsertLeave", "TextChanged" },
     opts = {
@@ -55,6 +58,7 @@ return {
   },
   { -- Codesnap
     "mistricky/codesnap.nvim",
+    enabled = data.func.check_global_var("codesnap", true, true),
     lazy = true,
     build = "make",
     opts = {
@@ -89,6 +93,7 @@ return {
   },
   { -- Music Controls
     "AntonVanAssche/music-controls.nvim",
+    enabled = data.func.check_global_var("usemusic", true, true),
     dependencies = data.deps.musiccontrols,
     opts = {
       default_player = "YoutubeMusic",
@@ -129,6 +134,10 @@ return {
   { -- Suda
     "lambdalisue/vim-suda",
     cmd = data.cmd.suda,
+    config = function()
+      vim.g.suda_smart_edit = 1
+      vim.cmd("let g:suda#prompt = '   Enter Sudo Password  '")
+    end,
   },
   { -- Spell checker
     "matkrin/telescope-spell-errors.nvim",
@@ -137,7 +146,7 @@ return {
     end,
     dependencies = data.deps.needs_telescope,
   },
-  {
+  { --
     "Pheon-Dev/pigeon",
     config = data.types.pigeon,
   },

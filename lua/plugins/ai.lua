@@ -1,18 +1,16 @@
+---@module "plugins.ai"
+--- This module defines the AI plugins spec for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        AI Tools                         │
 --          ╰─────────────────────────────────────────────────────────╯
 local data = require("data")
 
 return {
-  {
+  { --
     -- Neocodeium
     "monkoose/neocodeium",
     event = "VeryLazy",
-    opts = {
-      manual = false,
-      silent = true,
-      debounce = false,
-    },
+    opts = data.types.neocodeium.opts,
     keys = data.keys.neocodeium,
   },
   { -- Copilot

@@ -1,3 +1,5 @@
+---@module "utils.cmd_window"
+--- This module provides a function to open a floating window with a completion menu.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                 Rootiest Command Window                 │
 --          ╰─────────────────────────────────────────────────────────╯

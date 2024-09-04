@@ -1,3 +1,5 @@
+---@module "data.func"
+--- This module contains utility functions used throughout the configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                    Utility Functions                    │
 --          ╰─────────────────────────────────────────────────────────╯
@@ -5,10 +7,7 @@
 -- Define a namespace for utility functions
 local M = {}
 
--- Load data module
-local data = require("data")
-
---- Check if the terminal is kitty
+---@function Check if the terminal is kitty
 ---@return boolean condition true if the terminal is kitty, false otherwise
 function M.is_kitty()
   local term = os.getenv("TERM") or ""
@@ -16,7 +15,7 @@ function M.is_kitty()
   return kit ~= nil
 end
 
---- Check if using kitty-scrollback
+---@function Check if using kitty-scrollback
 ---@return boolean condition true if using kitty-scrollback, false otherwise
 function M.is_kitty_scrollback()
   if vim.env.KITTY_SCROLLBACK_NVIM == "true" then
@@ -25,7 +24,7 @@ function M.is_kitty_scrollback()
   return false
 end
 
---- Check if the terminal is alacritty
+---@function Check if the terminal is alacritty
 ---@return boolean condition true if the terminal is alacritty, false otherwise
 function M.is_alacritty()
   local term = os.getenv("TERM") or ""
@@ -33,7 +32,7 @@ function M.is_alacritty()
   return alc ~= nil
 end
 
---- Check if the terminal is tmux
+---@function Check if the terminal is tmux
 ---@return boolean condition true if the terminal is tmux, false otherwise
 function M.is_tmux()
   local tterm = os.getenv("TERM")
@@ -49,7 +48,7 @@ function M.is_tmux()
   return false
 end
 
---- Check if the terminal is wezterm
+---@function Check if the terminal is wezterm
 ---@return boolean condition true if the terminal is wezterm, false otherwise
 function M.is_wezterm()
   local wterm = os.getenv("TERM_PROGRAM")
@@ -59,7 +58,7 @@ function M.is_wezterm()
   return false
 end
 
---- Check if the terminal is neovide
+---@function Check if the terminal is neovide
 ---@return boolean condition true if the terminal is neovide, false otherwise
 function M.is_neovide()
   local neovide = vim.g.neovide
@@ -69,7 +68,7 @@ function M.is_neovide()
   return false
 end
 
---- Check if the terminal is ssh
+---@function Check if the terminal is ssh
 ---@return boolean condition true if the terminal is ssh, false otherwise
 function M.is_ssh()
   local ssh = os.getenv("SSH_TTY") or false
@@ -79,7 +78,7 @@ function M.is_ssh()
   return false
 end
 
---- Check if OS is Windows
+---@function Check if OS is Windows
 ---@return boolean condition true if the OS is Windows, false otherwise
 function M.is_windows()
   local win = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
@@ -89,7 +88,7 @@ function M.is_windows()
   return false
 end
 
---- Check if OS is macOS
+---@function Check if OS is macOS
 ---@return boolean condition true if the OS is macOS, false otherwise
 function M.is_mac()
   local mac = vim.fn.has("macunix")
@@ -99,7 +98,7 @@ function M.is_mac()
   return false
 end
 
---- Check if OS is Linux
+---@function Check if OS is Linux
 ---@return boolean condition true if the OS is Linux, false otherwise
 function M.is_linux()
   local lin = vim.fn.has("unix")
@@ -109,14 +108,14 @@ function M.is_linux()
   return false
 end
 
---- Get the name of the OS.
---- @param format string The format of the OS name.
+---@function Get the name of the OS.
+---@param format string The format of the OS name.
 ---                    Possible values:
 ---                    - "verbose": Returns the full name of the OS.
 ---                    - "short": Returns a short name or abbreviation.
 ---                    - "code": Returns a code or identifier.
 ---                    - "platform": Returns either "windows", "osx", or "linux".
---- @return string os The name of the OS.
+---@return string os The name of the OS.
 function M.get_os(format)
   ---@diagnostic disable-next-line: undefined-field
   local uname = vim.loop and vim.loop.os_uname and vim.loop.os_uname() or {}
@@ -219,24 +218,64 @@ function M.get_os(format)
   end
 end
 
---- Function to send a notification
+---@function Function to send a notification
 ---@param message string The message to send
----@param level string The level of the notification (default: "info")
+---@param level string|nil The level of the notification (default: "info")
+---@param title string|nil The title of the notification
 ---@return boolean condition true if the notification was sent successfully, false otherwise
-function M.notify(message, level)
+function M.notify(message, level, title)
   level = level or "info"
-  vim.notify(message, vim.log.levels[level:upper()])
+  if title then
+    vim.notify(message, vim.log.levels[level:upper()], { title = title })
+  else
+    vim.notify(message, vim.log.levels[level:upper()])
+  end
   return true
 end
 
---- Function to reload all plugins.
+---@function Function to reload all plugins.
 --- This is a messy operation. It's not recommended to use it.
 --- If you do, please define the exclusion list in your config.lua file.
---- @see data.types.plugin_reloader.exclusion_list
---- @return nil
+--- Suggested defaults:
+---   vim.g.plugin_reloader_exclusion_list = {
+---         ["lazy.nvim"]      = true,
+---         ["noice.nvim"]     = true,
+---         ["unception.nvim"] = true,
+---         ["nvim-unception"] = true,
+---         ["nui.nvim"]       = true,
+---         ["packer.nvim"]    = true,
+---         ["trouble.nvim"]   = true,
+---         ["which-key.nvim"] = true,
+---   },
+---
+--- You should add any other plugins that won't handle a live reload
+--- well to this exclusion list and define it in your configuration.
+--- The exclusion list can be defined with:
+---   'vim.g.plugin_reloader_exclusion_list'
+---@see data.types.plugin_reloader.exclusion_list
+---@return nil
 function M.reload_all_plugins()
   -- Define the exclusion list
-  local exclude = data.types.plugin_reloader.exclusion_list
+  local exclude = {}
+  if vim.g.plugin_reloader.exclusion_list then
+    -- Use global variable if provided
+    exclude = vim.g.plugin_reloader.exclusion_list
+  elseif pcall(require, "data.types") then
+    -- Use data.types if available
+    exclude = require("data.types").plugin_reloader.exclusion_list
+  else
+    -- Fallback to default
+    exclude = {
+      ["lazy.nvim"] = true,
+      ["noice.nvim"] = true,
+      ["unception.nvim"] = true,
+      ["nvim-unception"] = true,
+      ["nui.nvim"] = true,
+      ["packer.nvim"] = true,
+      ["trouble.nvim"] = true,
+      ["which-key.nvim"] = true,
+    }
+  end
 
   -- Get the list of currently loaded plugins
   local plugins = require("lazy.core.config").plugins
@@ -249,30 +288,55 @@ function M.reload_all_plugins()
   end
 end
 
---- Check if a plugin is installed.
----@param plugin string The name of the plugin module to check.
----@return boolean condition true if the plugin is installed, false otherwise.
-function M.is_installed(plugin)
-  -- Check for lazy.nvim
-  local lazy_installed = pcall(require, "lazy")
-  if lazy_installed then
-    return require("lazy.core.config").plugins[plugin] ~= nil
+---@function Check if a plugin is installed.
+---@param plugins string|table The name of the plugin module(s) to check.
+---  Options:
+---   - string: The name of the plugin module to check.
+---   - table: A list of plugin modules to check.
+---@return boolean|table condition The installed state of the plugin(s).
+---   - boolean: The installed state of the plugin.
+---   - table: A list of installed states of the plugins.
+---     - boolean: The installed state of the plugin.
+---  The return type is determined based on the input type.
+---  If the input is a table of plugin modules, the return type is a table.
+function M.is_installed(plugins)
+  local is_single = type(plugins) == "string"
+  if type(plugins) == "string" then
+    plugins = { plugins }
   end
-  -- Check for packer.nvim
-  local packer_installed = pcall(require, "packer_plugins")
-  if packer_installed then
-    ---@diagnostic disable-next-line: undefined-field
-    return _G.packer_plugins and _G.packer_plugins[plugin] ~= nil
+
+  local installed_plugins = {}
+  for _, plugin in ipairs(plugins) do
+    local installed = false
+    local lazy_installed = pcall(require, "lazy")
+    if lazy_installed then
+      installed = require("lazy.core.config").plugins[plugin] ~= nil
+    end
+    local packer_installed = pcall(require, "packer_plugins")
+    if packer_installed then
+      ---@diagnostic disable-next-line: undefined-field
+      installed = _G.packer_plugins and _G.packer_plugins[plugin] ~= nil
+    end
+    if vim.fn.exists("g:plugs") == 1 then
+      installed = vim.g.plugs[plugin] ~= nil
+    end
+    if not installed then
+      local has_plug = pcall(require, plugin)
+      if has_plug then
+        installed = true
+      end
+    end
+    installed_plugins[plugin] = installed
   end
-  -- Check for vim-plug
-  if vim.fn.exists("g:plugs") == 1 then
-    return vim.g.plugs[plugin] ~= nil
+
+  if is_single then
+    return installed_plugins[plugins[1]]
+  else
+    return installed_plugins
   end
-  -- Plugin not found
-  return false
 end
 
---- Condition function to check filetype is not in list
+---@function Condition function to check filetype is not in list
 ---@param disabled_filetypes string[] The list of filetypes to check
 ---@return boolean|function true if filetype is not in list, false otherwise
 function M.disable_on_filetypes(disabled_filetypes)
@@ -282,16 +346,18 @@ function M.disable_on_filetypes(disabled_filetypes)
   end
 end
 
---- Helper function to add keymaps with common properties
+---@function Helper function to add keymaps with common properties
 ---@param lhs string|table The keybind (or list of keybinds)
 --- This field can be the following:
 --- - A string representing the keybind
 --- - A list of strings representing a set of keybinds
 --- - A table of multiple keybind specifications
----@param rhs string|function The function to execute when the key is pressed
+--- This field is required.
+---@param rhs string|function|nil The function to execute when the key is pressed
 --- This field can be the following:
 --- - A string representing the vimscript command
 --- - A lua function (only when using which-key.nvim or global keymaps)
+--- This field is required.
 ---@param desc string|nil The description of the keybind (optional)
 --- This field can be the following:
 --- - A string representing the description
@@ -310,6 +376,12 @@ end
 --- This field can be the following:
 --- - A number representing the buffer
 ---   This option is incompatible with some extended keymap options
+---@param hidden boolean|nil Whether the keybind should be hidden (optional)
+--- This field can be the following:
+--- - A boolean representing whether to hide the keymap in which-key menus
+---   This option is only compatible with which-key configurations
+---   It will be ignored if which-key is not installed
+---   The default value is false
 ---@return boolean condition true if the keybind was added, false otherwise
 --- There are three main types of keymaps:
 --- - Global keymaps
@@ -334,7 +406,8 @@ function M.add_keymap(
   mode, -- Mode(s) in which the keybind should be added
   icon, -- Icon to use for the keybind menu
   group, -- Group to use for the keybind menu
-  bufnr -- Buffer number to add the keymap to
+  bufnr, -- Buffer number to add the keymap to
+  hidden
 )
   -- Check if which-key.nvim is installed
   if M.is_installed("which-key.nvim") and not bufnr then
@@ -347,6 +420,7 @@ function M.add_keymap(
         mode  = mode or "n", -- Default to "n" (normal mode) if mode is not provided
         icon  = icon,        -- Icon to use for the keybind
         group = group,       -- Group to add the keybind to
+        hidden = hidden,     -- Hide the keybind in which-key menus
       },
       -- stylua: ignore end
     })
@@ -369,6 +443,7 @@ function M.add_keymap(
             vim.keymap.set(
               keymap_mode, -- Mode(s) in which the keybind should be added
               keymap_lhs, -- The keybind
+              ---@diagnostic disable-next-line: param-type-mismatch
               keymap_rhs, -- Function to execute when the key is pressed
               { desc = keymap_desc } -- Description of the keybind
             )
@@ -390,6 +465,7 @@ function M.add_keymap(
               bufnr,
               keymap_mode,
               keymap_lhs,
+              ---@diagnostic disable-next-line: param-type-mismatch
               keymap_rhs,
               { desc = keymap_desc }
             )
@@ -412,6 +488,7 @@ function M.add_keymap(
           vim.keymap.set(
             mode or "n", -- Default to "n" (normal mode) if mode is not provided
             lhs, -- The keybind
+            ---@diagnostic disable-next-line: param-type-mismatch
             rhs, -- Function to execute when the key is pressed
             { desc = desc } -- Description of the keybind and optional buffer number
           )
@@ -433,6 +510,7 @@ function M.add_keymap(
             bufnr,
             mode or "n",
             lhs,
+            ---@diagnostic disable-next-line: param-type-mismatch
             rhs,
             { desc = desc }
           )
@@ -451,7 +529,152 @@ function M.add_keymap(
   end
 end
 
---- Helper function to remove keymaps
+---@function Add a new keymap with optional which-key integration
+---@param lhs string|table The keybind or a table containing multiple keymaps
+---@param rhs string|function|nil The function to execute when the keybind is pressed
+---@param desc string|nil The description of the keybind
+---@param mode string|table|nil The mode(s) in which the keybind should be added
+---@param icon string|nil The icon to associate with the which-key entry (optional)
+---@param group string|nil The which-key group to add the keybind to (optional)
+---@param bufnr number|nil The buffer number to add the keymap to (optional, for buffer-specific mappings)
+---@return boolean success True if all keymaps were successfully added, false otherwise
+function M.add_km(lhs, rhs, desc, mode, icon, group, bufnr)
+  local function is_mode(value)
+    -- Identify common vim modes; this can be expanded based on requirements
+    local common_modes =
+      { n = true, i = true, v = true, x = true, s = true, o = true, c = true }
+    if type(value) == "string" and #value == 1 then
+      return common_modes[value] ~= nil
+    elseif type(value) == "table" then
+      for _, v in ipairs(value) do
+        if not common_modes[v] then
+          return false
+        end
+      end
+      return true
+    end
+    return false
+  end
+
+  local function correct_swapped_params()
+    -- Try to correct common mistakes where rhs and mode might be swapped
+
+    if type(rhs) == "string" and is_mode(rhs) then
+      if type(mode) == "string" or type(mode) == "function" then
+        -- Swap them if it looks like rhs is mode and mode is rhs
+        ---@diagnostic disable-next-line: cast-local-type
+        rhs, mode = mode, rhs
+      elseif type(mode) == "table" and is_mode(mode) then
+        -- Swap if rhs is mode and mode is list of modes
+        ---@diagnostic disable-next-line: cast-local-type
+        rhs, mode = mode, rhs
+      end
+    elseif
+      type(rhs) == "function"
+      and type(mode) == "string"
+      and not is_mode(mode)
+    then
+      -- This checks if mode is actually an rhs-like string or command
+      rhs, mode = mode, rhs
+    end
+  end
+
+  -- Attempt to correct any common parameter swapping issues
+  correct_swapped_params()
+
+  -- Helper function to set keymaps using native functions
+  local function set_keymap(
+    keymap_lhs,
+    keymap_rhs,
+    keymap_desc,
+    keymap_mode,
+    keymap_bufnr
+  )
+    if keymap_bufnr then
+      vim.api.nvim_buf_set_keymap(
+        keymap_bufnr,
+        keymap_mode,
+        keymap_lhs,
+        keymap_rhs,
+        { desc = keymap_desc }
+      )
+    else
+      vim.keymap.set(
+        keymap_mode,
+        keymap_lhs,
+        keymap_rhs,
+        { desc = keymap_desc }
+      )
+    end
+  end
+
+  -- Determine if which-key is available and should be used
+  local use_which_key = M.is_installed
+    and M.is_installed("which-key.nvim")
+    and not bufnr
+
+  -- Process a single keymap entry
+  ---@function Helper function to process a single keymap
+  ---@param keymap table The table containing a keymap
+  ---@return boolean success True if the keymap was processed successfully, false otherwise
+  local function process_keymap(keymap)
+    local keymap_lhs = type(keymap) == "table" and keymap.lhs or lhs
+    local keymap_rhs = type(keymap) == "table" and (keymap.rhs or rhs) or rhs
+    local keymap_desc = type(keymap) == "table" and (keymap.desc or desc)
+      or desc
+    local keymap_mode = type(keymap) == "table" and (keymap.mode or mode)
+      or mode
+      or "n"
+    local keymap_icon = type(keymap) == "table" and (keymap.icon or icon)
+      or icon
+    local keymap_group = type(keymap) == "table" and (keymap.group or group)
+      or group
+
+    -- Use which-key if possible; fallback to native keymap functions if not
+    if use_which_key then
+      require("which-key").add({
+        [keymap_lhs] = {
+          keymap_rhs,
+          keymap_desc,
+          mode = keymap_mode,
+          icon = keymap_icon,
+          group = keymap_group,
+        },
+      })
+    else
+      -- Attempt to fall back to the native keymap functions
+      local success, err_msg = pcall(
+        set_keymap,
+        keymap_lhs,
+        keymap_rhs,
+        keymap_desc,
+        keymap_mode,
+        bufnr
+      )
+      if not success then
+        -- Notify the user about the failed mapping
+        M.notify(("Failed to map %s: %s"):format(keymap_lhs, err_msg), "WARN")
+        return false
+      end
+    end
+    return true
+  end
+
+  -- Handle the scenario where lhs is a table containing multiple keymaps
+  if type(lhs) == "table" then
+    for _, keymap in ipairs(lhs) do
+      if not process_keymap(keymap) then
+        return false
+      end
+    end
+    return true
+  else
+    -- Handle a single keymap entry
+    return process_keymap({})
+  end
+end
+
+---@function Helper function to remove keymaps
 ---@param lhs string The keybind
 ---@param mode string|nil The mode in which the keybind should be removed (optional)
 ---@param bufnr number|nil The buffer number to remove the keymap from (optional)
@@ -465,13 +688,13 @@ function M.rm_keymap(
 )
   mode = mode or "n" -- Default to "n" (normal mode) if mode is not provided
 
-  --- @class Keymap
-  --- @field lhs string The keybind
-  --- @field rhs string|function The function or command associated with the keybind
+  ---@class Keymap
+  ---@field lhs string The keybind
+  ---@field rhs string|function The function or command associated with the keybind
 
   if bufnr then
     -- If a buffer number is provided, remove the keymap from the specified buffer
-    --- @type Keymap[]
+    ---@type Keymap[]
     local keymaps = vim.api.nvim_buf_get_keymap(bufnr, mode)
     for _, keymap in pairs(keymaps) do
       if keymap.lhs and keymap.lhs == lhs then
@@ -481,7 +704,7 @@ function M.rm_keymap(
     end
   else
     -- If no buffer number is provided, remove the global keymap
-    --- @type Keymap[]
+    ---@type Keymap[]
     local keymaps = vim.api.nvim_get_keymap(mode)
     for _, keymap in pairs(keymaps) do
       if keymap.lhs and keymap.lhs == lhs then
@@ -494,7 +717,7 @@ function M.rm_keymap(
   return false -- Indicate that the keymap did not exist
 end
 
---- Helper function to add a mark
+---@function Helper function to add a mark
 ---@param mark string The mark to add
 ---@param line integer The line to add the mark to
 ---@param col integer The column to add the mark to
@@ -505,7 +728,7 @@ function M.add_mark(mark, line, col)
   return true -- Indicate that the mark was successfully added
 end
 
---- Helper function to remove a mark
+---@function Helper function to remove a mark
 ---@param mark string The mark to remove
 ---@return boolean condition true if the mark was removed, false otherwise
 function M.rm_mark(mark)
@@ -522,25 +745,25 @@ function M.rm_mark(mark)
   return false -- Indicate that the mark did not exist
 end
 
---- Function to check if buffer is modified
+---@function Function to check if buffer is modified
 ---@return boolean condition true if buffer is modified, false otherwise
 function M.is_buffer_modified()
   return vim.bo.modified
 end
 
---- Function to check if buffer is empty
+---@function Function to check if buffer is empty
 ---@return boolean condition true if buffer is empty, false otherwise
 function M.is_buffer_empty()
   return vim.fn.empty(vim.fn.expand("%:t")) == 1
 end
 
---- Function to check if buffer is read-only
+---@function Function to check if buffer is read-only
 ---@return boolean condition true if buffer is read-only, false otherwise
 function M.is_buffer_readonly()
   return vim.bo.readonly
 end
 
---- Function to check if file exists
+---@function Function to check if file exists
 ---@param filepath string The path to the file
 ---@return boolean condition true if file exists, false otherwise
 function M.file_exists(filepath)
@@ -551,7 +774,7 @@ function M.file_exists(filepath)
   return f ~= nil
 end
 
---- Function to get the current git branch
+---@function Function to get the current git branch
 ---@return string branch git branch name or "No branch"
 function M.get_git_branch()
   local branch = vim.fn.systemlist("git rev-parse --abbrev-ref HEAD")[1]
@@ -562,7 +785,7 @@ function M.get_git_branch()
   end
 end
 
---- Function to get the current git commit hash
+---@function Function to get the current git commit hash
 ---@return string The current git commit hash or "No commit hash"
 function M.get_git_commit_hash()
   local commit_hash = vim.fn.systemlist("git rev-parse --short HEAD")[1]
@@ -573,7 +796,7 @@ function M.get_git_commit_hash()
   end
 end
 
---- Function to run a shell command
+---@function Function to run a shell command
 ---@param cmd string The command to run
 ---@return string|nil result The output of the command
 function M.run_shell_command(cmd)
@@ -584,12 +807,12 @@ function M.run_shell_command(cmd)
     return result
   else
     -- Handle the error case where `handle` is nil
-    vim.notify("Failed to run the command: " .. cmd, vim.log.levels.ERROR)
+    M.notify("Failed to run the command: " .. cmd, "ERROR")
     return nil
   end
 end
 
---- Function to get the dimensions of the current window
+---@function Function to get the dimensions of the current window
 ---@param format string The format of the dimensions
 ---@return string|table dimensions dimensions of the current window
 function M.get_ws_dimensions(format)
@@ -614,7 +837,7 @@ function M.get_ws_dimensions(format)
   end
 end
 
---- Function to get the cursor position
+---@function Function to get the cursor position
 ---@return integer row The current line number
 ---@return integer col The current column number
 function M.get_cursor_position()
@@ -622,7 +845,24 @@ function M.get_cursor_position()
   return row, col
 end
 
---- Function to split a string
+---@function Function to check if a global variable is set
+---@param var_name string The name of the global variable
+---@param expected_value any The expected value of the global variable
+---@param default_value any The default value of the global variable
+---@return boolean condition true if the global variable is set to the expected value, false otherwise
+function M.check_global_var(var_name, expected_value, default_value)
+  local actual_value = vim.g[var_name]
+
+  -- If the global variable is not set, use the default value (if provided)
+  if actual_value == nil and default_value ~= nil then
+    actual_value = default_value
+  end
+
+  -- Return whether the actual value matches the expected value
+  return actual_value == expected_value
+end
+
+---@function Function to split a string
 ---@param inputstr string The string to split
 ---@param sep string The separator
 ---@return table output The split string
@@ -637,14 +877,14 @@ function M.split_string(inputstr, sep)
   return output
 end
 
---- Function to convert RGB to hexadecimal
+---@function Function to convert RGB to hexadecimal
 ---@param rgb table The RGB color
 ---@return string hex The hexadecimal color
 function M.rgb_to_hex(rgb)
   return string.format("#%02x%02x%02x", rgb[1], rgb[2], rgb[3])
 end
 
---- Function to get the foreground color of a highlight group
+---@function Function to get the foreground color of a highlight group
 ---@param hlgroup string The name of the highlight group
 ---@return string|nil hex The foreground color of the highlight group
 function M.get_fg_color(hlgroup)
@@ -660,7 +900,7 @@ function M.get_fg_color(hlgroup)
   return nil
 end
 
---- Function to get the background color of a highlight group
+---@function Function to get the background color of a highlight group
 ---@param hlgroup string The name of the highlight group
 ---@return string|nil hex The background color of the highlight group
 function M.get_bg_color(hlgroup)
@@ -676,7 +916,7 @@ function M.get_bg_color(hlgroup)
   return nil
 end
 
---- Function to check if the window is wide enough
+---@function Function to check if the window is wide enough
 ---@param width_limit number The minimum width of the window
 ---@return boolean condition true if the window is wide enough, false otherwise
 function M.is_window_wide_enough(width_limit)
@@ -684,7 +924,7 @@ function M.is_window_wide_enough(width_limit)
   return width >= width_limit
 end
 
---- Function to check if the window is tall enough
+---@function Function to check if the window is tall enough
 ---@param height_limit number The minimum height of the window
 ---@return boolean condition true if the window is tall enough, false otherwise
 function M.is_window_tall_enough(height_limit)
@@ -692,13 +932,13 @@ function M.is_window_tall_enough(height_limit)
   return height >= height_limit
 end
 
---- Function to get the current date
+---@function Function to get the current date
 ---@return string|osdate date The current date
 function M.get_date()
   return os.date("%Y-%m-%d")
 end
 
---- Function to exit neovim
+---@function Function to exit neovim
 ---@return nil
 function M.exit()
   vim.api.nvim_command("wqall")

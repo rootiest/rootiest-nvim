@@ -1,12 +1,18 @@
 ---@module "data.deps"
 --- This module aggregates various dependencies used throughout the configuration.
 --- It provides a centralized way to access dependencies.
-
+--          ╭─────────────────────────────────────────────────────────╮
+--          │                      DEPENDENCIES                       │
+--          ╰─────────────────────────────────────────────────────────╯
 local M = {}
 
+--- nvim-cmp dependencies
+---@return table The nvim-cmp dependencies
 M.cmp = {
   {
     "L3MON4D3/LuaSnip",
+    --- Function to build the dependencies
+    ---@return string|nil The command to build the dependencies
     build = (function()
       if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
         return
@@ -25,6 +31,8 @@ M.cmp = {
   {
     "petertriho/cmp-git",
     opts = {},
+    --- Function to configure the cmp-git dependency
+    ---@return table|nil The cmp-git config
     config = function()
       local cmp = require("cmp")
       cmp.setup.filetype("gitcommit", {
@@ -60,42 +68,51 @@ M.cmp = {
   "Dynge/gitmoji.nvim",
 }
 
+--- Gx plugin dependencies
 M.gx = {
   "nvim-lua/plenary.nvim",
 }
 
+--- Hardtime plugin dependencies
 M.hardtime = {
   "MunifTanjim/nui.nvim",
   "nvim-lua/plenary.nvim",
 }
 
+--- LazyGit plugin dependencies
 M.lazygit = {
   "nvim-telescope/telescope.nvim",
   "nvim-lua/plenary.nvim",
 }
 
+--- Lualine plugin dependencies
 M.lualine = {
   { "bezhermoso/todos-lualine.nvim" },
   { "folke/todo-comments.nvim" },
 }
 
+--- Minuet plugin dependencies
 M.minuet = {
   { "nvim-lua/plenary.nvim" },
   { "hrsh7th/nvim-cmp" },
 }
 
+--- MusicControls plugin dependencies
 M.musiccontrols = {
   "rcarriga/nvim-notify",
 }
 
+--- Table for plugins that need Telescope as a dependency
 M.needs_telescope = {
   "nvim-telescope/telescope.nvim",
 }
 
+--- Table for plugins that need Treesitter as a dependency
 M.needs_treesitter = {
   "nvim-treesitter/nvim-treesitter",
 }
 
+--- Neotest plugin adapters and dependencies
 M.neotest = {
   adapters = {
     "neotest-plenary",
@@ -114,16 +131,19 @@ M.neotest = {
   },
 }
 
+--- Recorder plugin dependencies
 M.recorder = {
   "rcarriga/nvim-notify",
 }
 
+--- nvim-remote plugin dependencies
 M.remotenvim = {
   "nvim-lua/plenary.nvim", -- For standard functions
   "MunifTanjim/nui.nvim", -- To build the plugin UI
   "nvim-telescope/telescope.nvim", -- For picking b/w different remote methods
 }
 
+--- Zenbones plugin dependencies
 M.zenbones = {
   "rktjmp/lush.nvim",
 }

@@ -1,38 +1,24 @@
+--- @module "plugins.core"
+--- This module defines the core plugins spec for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                          Core                           │
 --          ╰─────────────────────────────────────────────────────────╯
 local data = require("data")
 
 return {
+  require("config.rocks").plugin_spec,
   { -- LazyVim
     "LazyVim/LazyVim",
-    opts = {
-      colorscheme = vim.g.my_colorscheme or "catppuccin-mocha",
-      news = {
-        lazyvim = true,
-        neovim = true,
-      },
-    },
-  },
-  { -- Mini-animate
-    import = "lazyvim.plugins.extras.ui.mini-animate",
+    priority = 900,
+    opts = data.types.lazyvim.opts,
   },
   { -- Bufferline
     "akinsho/bufferline.nvim",
-    opts = {
-      options = data.types.bufferline,
-    },
+    opts = data.types.bufferline.opts,
   },
   { -- Which-Key
     "folke/which-key.nvim",
     lazy = true,
-    opts = {
-      preset = "modern",
-      win = {
-        wo = {
-          winblend = 10,
-        },
-      },
-    },
+    opts = data.types.whichkey.opts,
   },
 }

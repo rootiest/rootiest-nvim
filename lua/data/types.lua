@@ -1,14 +1,142 @@
+---@module "M"
+--- This module aggregates various types used throughout the configuration.
+--- Plugin opts/config tables/functions are defined in this module.
+--- Other general tables and lists are also defined here.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                          TYPES                          │
 --          ╰─────────────────────────────────────────────────────────╯
 
 local M = {}
 
-M.logo = {
-  icon = "",
-  color = "Special",
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ Mode Indicators ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+M.mode = {
+  n = { -- Normal mode
+    icon = "",
+    name = "NORMAL",
+    color = "Special",
+  },
+  no = { -- Operator-pending mode
+    icon = "",
+    name = "NORMAL OPERATOR PENDING",
+    color = "Special",
+  },
+  nov = { -- Operator-pending (charwise) mode
+    icon = "",
+    name = "NORMAL OP (CHARWISE)",
+    color = "Special",
+  },
+  nt = { -- Terminal-mode within Normal mode
+    icon = "",
+    name = "NORMAL TERMINAL",
+    color = "Special",
+  },
+  i = { -- Insert mode
+    icon = "",
+    name = "INSERT",
+    color = "Special",
+  },
+  ic = { -- Insert completion mode
+    icon = "",
+    name = "INSERT COMPLETION",
+    color = "Special",
+  },
+  R = { -- Replace mode
+    icon = "",
+    name = "REPLACE",
+    color = "Special",
+  },
+  Rv = { -- Virtual replace mode
+    icon = "",
+    name = "REPLACE VIRT",
+    color = "Special",
+  },
+  v = { -- Visual mode
+    icon = "󰸿",
+    name = "VISUAL",
+    color = "Special",
+  },
+  V = { -- Visual Line mode
+    icon = "󰸽",
+    name = "VISUAL LINE",
+    color = "Special",
+  },
+  [""] = { -- Visual Block mode
+    icon = "󰹀",
+    name = "VISUAL BLOCK",
+    color = "Special",
+  },
+  c = { -- Command mode
+    icon = "󰑮",
+    name = "COMMAND",
+    color = "Special",
+  },
+  s = { -- Select mode
+    icon = "",
+    name = "SELECT",
+    color = "Special",
+  },
+  S = { -- Select Line mode
+    icon = "",
+    name = "SELECT LINE",
+    color = "Special",
+  },
+  t = { -- Terminal mode
+    icon = "",
+    name = "INSERT TERMINAL",
+    color = "Special",
+  },
+
+  --- A collection of functions that return icons and names for
+  --- the current mode.
+  --- These use the tables defined above in `M.mode`.
+  current = {
+    --- Returns an icon representing the current mode
+    --- Ex: ""
+    ---@return string|function icon The current mode icon
+    icon = function()
+      local current_mode = vim.api.nvim_get_mode().mode
+      -- Check if current_mode exists in full in M.mode
+      if M.mode[current_mode] then
+        return M.mode[current_mode].icon
+      end
+      -- Fallback to single-character mode if full mode isn't available
+      local fallback_mode = current_mode:sub(1, 1)
+      return M.mode[fallback_mode] and M.mode[fallback_mode].icon or ""
+    end,
+
+    --- Returns the name of the current mode
+    --- Ex: "NORMAL"
+    ---@return string|function name The current mode name
+    name = function()
+      local current_mode = vim.api.nvim_get_mode().mode
+      -- Check if current_mode exists in full in M.mode
+      if M.mode[current_mode] then
+        return M.mode[current_mode].name
+      end
+      -- Fallback to single-character mode if full mode isn't available
+      local fallback_mode = current_mode:sub(1, 1)
+      return M.mode[fallback_mode] and M.mode[fallback_mode].name or "UNKNOWN"
+    end,
+
+    --- Returns a string representing the current mode with icon and name
+    --- Ex: " NORMAL"
+    ---@return string|function icon_text The current mode icon and name
+    icon_text = function()
+      return M.mode.current.icon() .. " " .. M.mode.current.name()
+    end,
+
+    --- Returns a string representing the current mode with icon and name
+    --- Ex: " NORMAL"
+    ---@return string|function icon_text The current mode icon and name
+    lualine = function()
+      return M.mode.current.icon_text()
+    end,
+  },
 }
 
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Type tables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+--- General exclusion list for buffers and filetypes
 M.general = {
   -- Excluded buffer types
   buf = {
@@ -32,7 +160,7 @@ M.general = {
   },
 }
 
--- All modes for keymaps
+--- All-modes table for keymaps
 M.all_modes = {
   "n",
   "i",
@@ -44,7 +172,7 @@ M.all_modes = {
   "t",
 }
 
--- Filetypes for Alternate plugin
+--- Filetypes for Alternate plugin
 M.alternate = {
   "cpp",
   "h",
@@ -52,52 +180,272 @@ M.alternate = {
   "c",
 }
 
+--- Arrow config options
 M.arrow = {
   show_icons = true,
   leader_key = ";", -- Recommended to be a single key
   buffer_leader_key = "m", -- Per Buffer Mappings
 }
 
--- Bufferline configuration options
+--- Bufferline configuration options
 M.bufferline = {
-  themable = true,
-  color_icons = true,
-  numbers = "ordinal",
-  separator_style = "slant",
-  auto_toggle_bufferline = true,
-  buffer_close_icon = "󱎘",
-  modified_icon = "●",
-  close_icon = "",
-  left_trunc_marker = "󰬨",
-  right_trunc_marker = "󰬪",
-  diagnostics_indicator = function(_, _, diagnostics_dict, _)
-    local s = " "
-    for e, n in pairs(diagnostics_dict) do
-      local sym = e == "error" and " "
-        or (e == "warning" and " " or " ")
-      s = s .. sym .. n
-    end
-    return s
-  end,
+  opts = {
+    options = {
+      themable = true,
+      color_icons = true,
+      numbers = "ordinal",
+      separator_style = "slant",
+      auto_toggle_bufferline = true,
+      buffer_close_icon = "󱎘",
+      modified_icon = "●",
+      close_icon = "",
+      left_trunc_marker = "󰬨",
+      right_trunc_marker = "󰬪",
+      diagnostics_indicator = function(_, _, diagnostics_dict, _)
+        local s = " "
+        for e, n in pairs(diagnostics_dict) do
+          local sym = e == "error" and " "
+            or (e == "warning" and " " or " ")
+          s = s .. sym .. n
+        end
+        return s
+      end,
+    },
+  },
 }
 
--- Nvim-cmp excluded filetypes
+--- LazyVim configuration options
+M.lazyvim = {
+  opts = {
+    colorscheme = vim.g.my_colorscheme or "catppuccin-mocha",
+    news = {
+      lazyvim = true,
+      neovim = true,
+    },
+  },
+}
+
+--- Nvim-cmp excluded filetypes
 M.cmp = {
   "dashboard",
   "qalc",
 }
 
--- Git-Blame configuration
-M.gitblame = {
-  display_virtual_text = 0, -- Disable virtual text
-  date_format = "%r", -- Relative date format
-  message_when_not_committed = "  Not yet committed",
-  message_template = "<author> • <date> • <summary>",
+M.neotree = {
+  opts = {
+    default_component_configs = {
+      git_status = {
+        symbols = {
+          untracked = "󱀶",
+          ignored = "",
+          unstaged = "󰄱",
+          staged = "󰱒",
+          conflict = "",
+        },
+      },
+    },
+  },
 }
 
--- Git-Graph plugin options
+M.minifiles = {
+  opts = {
+    windows = {
+      preview = true,
+      width_focus = 30,
+      width_preview = 80,
+    },
+    options = {
+      -- Whether to use for editing directories
+      -- Disabled by default in LazyVim because neo-tree is used for that
+      use_as_default_explorer = false,
+      -- Whether to permanently delete or use trash
+      permanent_delete = false,
+    },
+  },
+  config = function(_, opts)
+    require("mini.files").setup(opts)
+
+    local show_dotfiles = true
+    local filter_show = function(_)
+      return true
+    end
+    local filter_hide = function(fs_entry)
+      return not vim.startswith(fs_entry.name, ".")
+    end
+
+    local toggle_dotfiles = function()
+      show_dotfiles = not show_dotfiles
+      local new_filter = show_dotfiles and filter_show or filter_hide
+      require("mini.files").refresh({ content = { filter = new_filter } })
+    end
+
+    local map_split = function(buf_id, lhs, direction, close_on_file)
+      local rhs = function()
+        local new_target_window
+        local cur_target_window = require("mini.files").get_target_window()
+        if cur_target_window ~= nil then
+          vim.api.nvim_win_call(cur_target_window, function()
+            vim.cmd("belowright " .. direction .. " split")
+            new_target_window = vim.api.nvim_get_current_win()
+          end)
+
+          require("mini.files").set_target_window(new_target_window)
+          require("mini.files").go_in({ close_on_file = close_on_file })
+        end
+      end
+
+      local desc = "Open in " .. direction .. " split"
+      if close_on_file then
+        desc = desc .. " and close"
+      end
+      vim.keymap.set("n", lhs, rhs, { buffer = buf_id, desc = desc })
+    end
+
+    local files_set_cwd = function()
+      ---@diagnostic disable-next-line: undefined-global
+      local cur_entry_path = MiniFiles.get_fs_entry().path
+      local cur_directory = vim.fs.dirname(cur_entry_path)
+      if cur_directory ~= nil then
+        vim.fn.chdir(cur_directory)
+      end
+    end
+
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "MiniFilesBufferCreate",
+      callback = function(args)
+        local buf_id = args.data.buf_id
+
+        vim.keymap.set(
+          "n",
+          opts.mappings and opts.mappings.toggle_hidden or "g.",
+          toggle_dotfiles,
+          { buffer = buf_id, desc = "Toggle hidden files" }
+        )
+
+        vim.keymap.set(
+          "n",
+          opts.mappings and opts.mappings.change_cwd or "gc",
+          files_set_cwd,
+          { buffer = args.data.buf_id, desc = "Set cwd" }
+        )
+
+        map_split(
+          buf_id,
+          opts.mappings and opts.mappings.go_in_horizontal or "<C-w>s",
+          "horizontal",
+          false
+        )
+        map_split(
+          buf_id,
+          opts.mappings and opts.mappings.go_in_vertical or "<C-w>v",
+          "vertical",
+          false
+        )
+        map_split(
+          buf_id,
+          opts.mappings and opts.mappings.go_in_horizontal_plus or "<C-w>S",
+          "horizontal",
+          true
+        )
+        map_split(
+          buf_id,
+          opts.mappings and opts.mappings.go_in_vertical_plus or "<C-w>V",
+          "vertical",
+          true
+        )
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "MiniFilesActionRename",
+      callback = function(event)
+        LazyVim.lsp.on_rename(event.data.from, event.data.to)
+      end,
+    })
+  end,
+}
+
+--- Git-Blame configuration options
+M.gitblame = {
+  opts = function()
+    if vim.g.statusline == "lualine" or vim.g.statusline == nil then
+      -- Get the current lualine configuration
+      local config = require("lualine").get_config()
+      local git_blame = require("gitblame")
+      local funcs = require("data.func")
+      -- Define the width limit for displaying the Git blame component
+      local width_limit = 245 -- Adjust this value as needed
+      -- Add Git-blame to lualine_c section
+      table.insert(config.sections.lualine_c, {
+        git_blame.get_current_blame_text,
+        cond = function() -- Only show if text is available
+          return git_blame.is_blame_text_available()
+            and funcs.is_window_wide_enough(width_limit)
+        end,
+        color = { fg = funcs.get_fg_color("GitSignsCurrentLineBlame") },
+        padding = { left = 1, right = 0 },
+        on_click = function()
+          if vim.g.statusline_clickable_git ~= false then
+            require("config.rootiest").toggle_lazygit_float()
+          end
+        end,
+      })
+      -- Apply the lualine configuration
+      require("lualine").setup(config)
+    end
+    -- Return the git-blame options
+    return M.gitblame.style
+  end,
+  style = {
+    display_virtual_text = 0, -- Disable virtual text
+    date_format = "%r", -- Relative date format
+    message_when_not_committed = "  Not yet committed",
+    message_template = "<author> • <date> • <summary>",
+  },
+}
+
+--- Neocodeium configuration options
+M.neocodeium = {
+  opts = {
+    manual = false,
+    silent = true,
+    debounce = false,
+  },
+}
+
+--- Thanks configuration options
+M.thanks = {
+  opts = {
+    star_on_install = false,
+  },
+}
+
+--- LSPConfig configuration options
+M.lspconfig = {
+  opts = {
+    setup = {
+      clangd = function(_, opts)
+        opts.capabilities.offsetEncoding = { "utf-16" }
+      end,
+    },
+  },
+}
+
+--- Which-Key configuration options
+M.whichkey = {
+  opts = {
+    preset = "modern",
+    win = {
+      wo = {
+        winblend = 10,
+      },
+    },
+  },
+}
+
+--- Git-Graph plugin options
 M.gitgraph = {
-  -- Git-graph symbols check for kitty
+  --- Git-graph symbols check for kitty
   symbols = function()
     if require("data.func").is_kitty() then
       return {
@@ -142,7 +490,7 @@ M.gitgraph = {
   fields = { "hash", "timestamp", "author", "branch_name", "tag" },
 }
 
--- Highlights module options
+--- Highlights module options
 M.highlights = {
   -- Excluded buffer types
   exclude = {
@@ -150,7 +498,7 @@ M.highlights = {
   },
 }
 
--- Indent characters
+--- Indent characters
 M.ibl = {
   indent_char = {
     fancy = {
@@ -179,7 +527,10 @@ M.ibl = {
   },
 }
 
+--- Smart-Splits plugin options
 M.smart_splits = {
+  --- Function to check if kitty is running
+  --- and install Smart-Splits kittens if it is.
   build = function()
     if require("data.func").is_kitty() then
       return "./kitty/install-kittens.bash"
@@ -189,6 +540,7 @@ M.smart_splits = {
   end,
 }
 
+--- Neominiap plugin options
 M.minimap = {
   -- Width of minimap
   width = 20,
@@ -210,14 +562,14 @@ M.minimap = {
     "neorg",
   },
 
-  -- Function to initialize or manipulate minimap settings
+  --- Function to initialize or manipulate minimap settings
   init = function()
     M.setup()
     vim.g.neominimap = {
       auto_enable = true,
       layout = "float",
-      exclude_filetypes = require("data.types").minimap.file,
-      exclude_buftypes = require("data.types").minimap.buf,
+      exclude_filetypes = M.minimap.file,
+      exclude_buftypes = M.minimap.buf,
       x_multiplier = 4,
       y_multiplier = 1,
       click = {
@@ -238,7 +590,7 @@ M.minimap = {
     }
   end,
 
-  -- Function to check if minimap should be enabled
+  --- Function to check if minimap should be enabled
   cond = function()
     M.setup()
     local ex_ft = M.minimap.ft
@@ -252,6 +604,7 @@ M.minimap = {
   end,
 }
 
+--- Llama Copilot plugin options
 M.llama_copilot = {
   host = "localhost",
   port = "11434",
@@ -260,6 +613,7 @@ M.llama_copilot = {
   debug = false,
 }
 
+--- Plugin reloader function options
 M.plugin_reloader = {
   exclusion_list = { -- Define the exclusion list
     -- stylua: ignore start
@@ -280,6 +634,69 @@ M.plugin_reloader = {
   },
 }
 
+M.trouble = {
+  opts = {
+    modes = {
+      symbols = { -- Configure symbols mode
+        win = {
+          type = "split", -- split window
+          relative = "win", -- relative to current window
+          position = "right", -- right side
+          size = 0.3, -- 30% of the window
+        },
+      },
+    },
+  },
+}
+
+--- Function to set up bars-n-lines plugin options
+M.barsNlines = function()
+  require("bars").setup({
+    exclude_filetypes = M.minimap.ft,
+    exclude_buftypes = M.minimap.buf,
+    statuscolumn = {
+      enable = true,
+      parts = {
+        {
+          type = "fold",
+          markers = {
+            default = {
+              content = { "  " },
+            },
+            open = {
+              { " ", "BarsStatuscolumnFold1" },
+            },
+            close = {
+              { "╴", "BarsStatuscolumnFold1" },
+            },
+            scope = {
+              { "│ ", "BarsStatuscolumnFold1" },
+            },
+            divider = {
+              { "├╴", "BarsStatuscolumnFold1" },
+            },
+            foldend = {
+              { "╰╼", "BarsStatuscolumnFold1" },
+            },
+          },
+        },
+        {
+          type = "number",
+          mode = "hybrid",
+          hl = "LineNr",
+          lnum_hl = "BarsStatusColumnNum",
+          relnum_hl = "LineNr",
+          virtnum_hl = "TablineSel",
+          wrap_hl = "TablineSel",
+        },
+      },
+    },
+    tabline = false,
+    statusline = false,
+  })
+end
+
+--- Function to setup Pigeon plugin options
 M.pigeon = function()
   local data = require("data")
   local platform = data.func.get_os("platform")
@@ -315,6 +732,7 @@ M.pigeon = function()
   require("pigeon").setup(config)
 end
 
+--- Substitute plugin options
 M.substitute = {
   yank_substituted_text = false,
   preserve_cursor_position = true,
@@ -323,7 +741,7 @@ M.substitute = {
   end,
 }
 
--- Hightlight-colors
+--- Hightlight-colors plugin options
 M.hightlight_colors = {
   render = "virtual",
   virtual_symbol = "",
@@ -348,7 +766,7 @@ M.hightlight_colors = {
   exclude_buftypes = {},
 }
 
--- Catppuccin opts
+--- Catppuccin options
 M.catppuccin = {
   background = { -- :h background
     light = "latte",
@@ -398,15 +816,17 @@ M.catppuccin = {
   },
 }
 
--- Auto Dark Mode opts
+--- Auto Dark Mode plugin options
 M.auto_dark_mode = {
   update_interval = 2000,
+  --- Function that runs when dark mode is enabled
   set_dark_mode = function()
     vim.o.background = "dark"
     vim.cmd.colorscheme(
       require("astral").colortheme or "catppuccin-mocha" or "tokyonight"
     )
   end,
+  --- Function that runs when light mode is enabled
   set_light_mode = function()
     vim.o.background = "light"
     vim.cmd.colorscheme(
@@ -415,33 +835,63 @@ M.auto_dark_mode = {
   end,
 }
 
--- Image.nvim filetypes
+--- Image.nvim enabled filetypes
 M.image = "markdown"
 
--- Todo-comments
+--- Todo-comments plugin options
 M.todo = {
   keywords = {
     FIX = {
       icon = " ", -- icon used for the sign, and in search results
-      color = "error", -- can be a hex color, or a named color (see below)
-      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-      -- signs = false, -- configure signs for some keywords individually
+      color = "error", -- can be a hex color, or a named color
+      alt = { -- a set of other keywords that all map to this FIX keywords
+        "FIXME",
+        "BUG",
+        "FIXIT",
+        "ISSUE",
+      },
     },
-    TODO = { icon = " ", color = "info" },
+    TODO = { icon = " ", color = "info" },
     HACK = { icon = " ", color = "warning" },
     WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
     PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
     NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+    BUST = {
+      icon = "󰇷 ",
+      color = "broken",
+      alt = { "BROKEN", "UNAVAILABLE", "POOP" },
+    },
+    JUNK = {
+      icon = " ",
+      color = "trash",
+      alt = { "TRASH", "WASTE", "DUMP", "GARBAGE" },
+    },
     TEST = {
-      icon = "⏲ ",
+      icon = " ",
       color = "test",
       alt = { "TESTING", "PASSED", "FAILED" },
     },
   },
+  colors = {
+    error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+    warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
+    info = { "DiagnosticInfo", "#2563EB" },
+    hint = { "DiagnosticHint", "#10B981" },
+    default = { "Identifier", "#7C3AED" },
+    test = { "Identifier", "#FF00FF" },
+    broken = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+    trash = { "DiagnosticUnnecessary", "Comment", "#DC2626" },
+  },
   lualine = function()
     local config = {
       -- The todo-comments types to show & in what order:
-      order = { "TODO", "FIX", "HACK", "WARN", "NOTE", "PERF", "TEST" },
+      order = {
+        "TODO",
+        "FIX",
+        "WARN",
+        "BUST",
+        "JUNK",
+      },
       keywords = M.todo.keywords,
       when_empty = "",
     }
@@ -449,8 +899,26 @@ M.todo = {
   end,
 }
 
--- Toggleterm plugin options
+--- Colorful Window Separators plugin options
+M.colorful_winsep = {
+  symbols = { "─", "│", "╭", "╮", "╰", "╯" },
+  no_exec_files = {
+    "packer",
+    "TelescopePrompt",
+    "mason",
+    "CompetiTest",
+    "NvimTree",
+    "neotree",
+    "lazy",
+    "neominimap",
+  },
+}
+
+--- Toggleterm plugin options
 M.toggleterm = {
+  --- Sets the terminal panel size
+  ---@param term table The terminal object
+  ---@return number|nil The terminal size
   size = function(term)
     if term.direction == "horizontal" then
       return 10
@@ -478,12 +946,18 @@ M.toggleterm = {
   },
   winbar = {
     enabled = true,
+    --- Function that formats the name of the terminal
+    ---@param term table The terminal object
+    ---@return string The formatted name
     name_formatter = function(term)
       return term.name
     end,
   },
 }
 
+--- Function to extend minimap.buf with general exclusions
+---@private
+---@return nil
 function M.setup()
   -- Extend minimap.buf with general exclusions
   for _, v in ipairs(M.general.buf) do

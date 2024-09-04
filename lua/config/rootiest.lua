@@ -1,5 +1,6 @@
 ---@module "config.rootiest"
---- This module contains the configuration for the rootiest distro.
+--- This module contains the configuration options and functions
+--- for the rootiest distro.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                     Rootiest Module                     │
 --          ╰─────────────────────────────────────────────────────────╯
@@ -83,10 +84,13 @@ function M.toggle_lazygit_float(my_args)
     if my_args ~= "" or my_args ~= nil then
       Util.terminal.open(
         { "lazygit", my_args },
-        { cwd = Util.root(), esc_esc = false }
+        { cwd = Util.root(), interactive = true, esc_esc = false }
       )
     else
-      Util.terminal.open({ "lazygit" }, { cwd = Util.root(), esc_esc = false })
+      Util.terminal.open(
+        { "lazygit" },
+        { cwd = Util.root(), interactive = true, esc_esc = false }
+      )
     end
     return true
   else
@@ -191,6 +195,14 @@ function M.setup()
 
   -- Setup Rootiest cmd window (override default command-line behavior)
   -- require("utils.cmd_window").setup({ override_cmdline = true })
+
+  --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ BLINKY CURSOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  --  Setup the blinky cursor if it is enabled
+  if vim.g.blinky ~= false then
+    require("utils").blinky.enable()
+  else
+    require("utils").blinky.disable()
+  end
 end
 
 return M

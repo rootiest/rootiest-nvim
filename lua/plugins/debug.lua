@@ -1,3 +1,5 @@
+--- @module "plugins.debug"
+--- This module defines the debug plugins spec for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                          Debug                          │
 --          ╰─────────────────────────────────────────────────────────╯
@@ -13,8 +15,10 @@ return {
   { -- NeoTest
     import = "lazyvim.plugins.extras.test.core",
   },
-  { "nvim-neotest/neotest-plenary" },
-  {
+  { -- Neotest Plenary
+    "nvim-neotest/neotest-plenary",
+  },
+  { -- Neotest
     "nvim-neotest/neotest",
     opts = {
       adapters = data.deps.neotest.adapters,

@@ -1,3 +1,5 @@
+--- @module "plugins.editor"
+--- This module defines the editor plugins spec for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                         Editor                          │
 --          ╰─────────────────────────────────────────────────────────╯
@@ -22,24 +24,10 @@ return {
   { -- Treesitter-context
     import = "lazyvim.plugins.extras.ui.treesitter-context",
   },
-  { -- Mini.move
-    import = "lazyvim.plugins.extras.editor.mini-move",
-  },
-  {
+  { -- Trouble
     "folke/trouble.nvim",
     cmd = data.cmd.trouble,
-    opts = {
-      modes = {
-        symbols = { -- Configure symbols mode
-          win = {
-            type = "split", -- split window
-            relative = "win", -- relative to current window
-            position = "right", -- right side
-            size = 0.3, -- 30% of the window
-          },
-        },
-      },
-    },
+    opts = data.types.trouble.opts,
   },
   { -- Flash
     "folke/flash.nvim",
@@ -47,6 +35,10 @@ return {
       modes = { char = { jump_labels = true } },
     },
     keys = data.keys.flash,
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = data.types.neotree.opts,
   },
   { -- Arrow
     "otavioschwanck/arrow.nvim",
@@ -114,9 +106,7 @@ return {
   },
   { -- Todo Comments
     "folke/todo-comments.nvim",
-    opts = {
-      keywords = data.types.todo.keywords,
-    },
+    opts = data.types.todo.opts,
   },
   { -- Rainbow Delimeters
     "HiPhish/rainbow-delimiters.nvim",
@@ -125,24 +115,26 @@ return {
     "nvim-zh/colorful-winsep.nvim",
     opts = {
       only_line_seq = false,
-      symbols = { "─", "│", "╭", "╮", "╰", "╯" },
-      no_exec_files = {
-        "packer",
-        "TelescopePrompt",
-        "mason",
-        "CompetiTest",
-        "NvimTree",
-        "neotree",
-        "lazy",
-        "neominimap",
-      },
+      symbols = data.types.colorful_winsep.symbols,
+      no_exec_files = data.types.colorful_winsep.no_exec_files,
     },
     event = { "WinLeave" },
   },
   { -- Auto Cursorline
     "delphinus/auto-cursorline.nvim",
+    enabled = data.func.check_global_var("auto_cursorline", true, true),
     opts = {
       wait_ms = 2000,
     },
+  },
+  { -- Bars N Lines
+    "OXY2DEV/bars-N-lines.nvim",
+    enabled = data.func.check_global_var(
+      "statuscolumn",
+      "barsNlines",
+      "native"
+    ),
+    lazy = false,
+    config = data.types.barsNlines,
   },
 }

@@ -1,3 +1,5 @@
+--- @module "plugins.git"
+--- This module defines the git plugins spec for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                       Git Plugins                       │
 --          ╰─────────────────────────────────────────────────────────╯
@@ -6,11 +8,6 @@ local data = require("data")
 return {
   { -- Octo plugin
     import = "lazyvim.plugins.extras.util.octo",
-  },
-  { -- DiffView
-    "sindrets/diffview.nvim",
-    lazy = true,
-    cmd = data.cmd.diffview,
   },
   { -- Gist Tools
     "Rawnly/gist.nvim",
@@ -33,9 +30,7 @@ return {
     "jsongerber/thanks.nvim",
     lazy = true,
     cmd = data.cmd.thanks,
-    opts = {
-      star_on_install = false,
-    },
+    opts = data.types.thanks.opts,
   },
   { -- GitLinker
     "linrongbin16/gitlinker.nvim",
@@ -47,31 +42,7 @@ return {
   { -- Git Blame
     "f-person/git-blame.nvim",
     event = "VeryLazy",
-    opts = function()
-      -- Get the current lualine configuration
-      local config = require("lualine").get_config()
-      local git_blame = require("gitblame")
-      local funcs = data.func
-      -- Define the width limit for displaying the Git blame component
-      local width_limit = 245 -- Adjust this value as needed
-      -- Add Git-blame to lualine_c section
-      table.insert(config.sections.lualine_c, {
-        git_blame.get_current_blame_text,
-        cond = function() -- Only show if text is available
-          return git_blame.is_blame_text_available()
-            and funcs.is_window_wide_enough(width_limit)
-        end,
-        color = { fg = funcs.get_fg_color("GitSignsCurrentLineBlame") },
-        padding = { left = 1, right = 0 },
-        on_click = function()
-          vim.cmd("LazyGit")
-        end,
-      })
-      -- Apply the lualine configuration
-      require("lualine").setup(config)
-      -- Return the git-blame options
-      return data.types.gitblame
-    end,
+    opts = data.types.gitblame.opts,
   },
   { -- Git Graph
     "isakbm/gitgraph.nvim",

@@ -4,7 +4,7 @@
 local M = {}
 
 require("utils.cache_stats")
-local cache_file = os.getenv("HOME") .. "/.cache/music_cache.txt"
+local cache_file = vim.fs.joinpath(_G.cache_stats_dir, "music_cache.txt")
 
 local separator = "␟"
 local last_known_value = ""

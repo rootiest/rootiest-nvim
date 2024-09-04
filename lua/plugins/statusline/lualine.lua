@@ -1,13 +1,26 @@
+--- @module "plugins.statusline.lualine"
+--- This module defines the lualine plugin spec for the Neovim configuration.
+--- This option uses the lualine plugin to create a statusline for Neovim
+---
+--- Activate this module by setting the 'vim.g.statusline' variable to 'lualine'
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                         Lualine                         │
 --          ╰─────────────────────────────────────────────────────────╯
 
-local utils = require("utils")
+local wakatime_stats = require("utils.wakatime_stats")
+local music_stats = require("utils.music_stats")
 local data = require("data")
 local funcs = data.func
 
-return {
+-- Use lualine by default
+if vim.g.statusline == nil then
+  vim.g.statusline = "lualine"
+end
+
+return { -- Lualine
   "nvim-lualine/lualine.nvim",
+  enabled = data.func.check_global_var("statusline", "lualine", "lualine"),
+
   dependencies = data.deps.lualine,
   init = function()
     vim.g.lualine_laststatus = vim.o.laststatus
@@ -41,9 +54,11 @@ return {
       },
       sections = { -- Sections
         lualine_a = {
-          { -- Mode
-            "mode",
-            icon = data.types.logo.icon,
+          {
+            -- Calls the current.lualine() function to get the mode string
+            function()
+              return data.types.mode.current.lualine()
+            end,
             padding = { left = 1, right = 0 },
           },
         },
@@ -128,7 +143,9 @@ return {
               removed = icons.git.removed,
               padding = { left = 0, right = 0 },
               on_click = function()
-                vim.cmd("LazyGit")
+                if vim.g.statusline_clickable_git ~= false then
+                  require("config.rootiest").toggle_lazygit_float()
+                end
               end,
             },
             { -- GitSigns
@@ -147,16 +164,18 @@ return {
               end,
               padding = { left = 0, right = 0 },
               on_click = function()
-                vim.cmd("LazyGit")
+                if vim.g.statusline_clickable_git ~= false then
+                  require("config.rootiest").toggle_lazygit_float()
+                end
               end,
             },
           },
           { -- Wakatime
             function()
-              return utils.wakatime_stats.get_icon_with_text()
+              return wakatime_stats.get_icon_with_text()
             end,
             color = function()
-              return utils.wakatime_stats.get_color()
+              return wakatime_stats.get_color()
             end,
             cond = function()
               return funcs.is_window_wide_enough(100)
@@ -165,7 +184,7 @@ return {
           },
           { -- Music
             function()
-              return utils.music_stats.get_icon_with_text()
+              return music_stats.get_icon_with_text()
             end,
             cond = function()
               return funcs.is_window_wide_enough(100)

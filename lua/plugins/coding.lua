@@ -1,3 +1,5 @@
+--- @module "plugins.coding"
+--- This module defines the coding plugins spec for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                         Coding                          │
 --          ╰─────────────────────────────────────────────────────────╯
@@ -10,15 +12,9 @@ return {
       automatic_installation = true,
     },
   },
-  {
+  { --
     "neovim/nvim-lspconfig",
-    opts = {
-      setup = {
-        clangd = function(_, opts)
-          opts.capabilities.offsetEncoding = { "utf-16" }
-        end,
-      },
-    },
+    opts = data.types.lspconfig.opts,
   },
   { -- Yanky
     import = "lazyvim.plugins.extras.coding.yanky",
@@ -31,13 +27,6 @@ return {
   },
   { -- G-code
     "wilriker/gcode.vim",
-  },
-  { -- Mini Align
-    "echasnovski/mini.align",
-    event = "InsertEnter",
-    config = function()
-      require("mini.align").setup()
-    end,
   },
   { -- Alternate
     "ton/vim-alternate",
@@ -57,16 +46,8 @@ return {
     opts = data.types.substitute,
     keys = data.keys.substitute,
   },
-  { -- mini.splitjoin
-    "echasnovski/mini.splitjoin",
-    event = "InsertEnter",
-    opts = {
-      mappings = data.keys.splitjoin,
-    },
-  },
-  { -- mini-surround
-    "echasnovski/mini.surround",
-    opts = {},
-    keys = data.keys.surround,
+  {
+    "iamcco/markdown-preview.nvim",
+    build = "cd app && yarn install",
   },
 }

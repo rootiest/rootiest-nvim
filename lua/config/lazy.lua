@@ -1,8 +1,9 @@
+---@module "config.lazy"
+--- This module bootstraps Lazy.nvim.
+--- Lazy is a plugin manager for Neovim.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                          Lazy                           │
 --          ╰─────────────────────────────────────────────────────────╯
----@module "config.lazy"
---- Bootstrap the lazy.nvim plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
   -- stylua: ignore
@@ -17,14 +18,28 @@ end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PLUGINS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-require("lazy").setup({
-  spec = {
-    {
-      "LazyVim/LazyVim",
-      import = "lazyvim.plugins",
-    },
-    { import = "plugins" }, -- General Plugins
+
+local plugin_specs = {
+  {
+    "LazyVim/LazyVim", -- LazyVim
+    import = "lazyvim.plugins", -- LazyVim Core Plugins
   },
+  { import = "plugins" }, -- General Plugins
+}
+
+-- Automatically import all subdirectories of `lua/plugins`
+local plugin_dirs = vim.fn.glob("~/.config/nvim/lua/plugins/*", true, true)
+for _, dir in ipairs(plugin_dirs) do
+  if vim.fn.isdirectory(dir) == 1 then
+    table.insert( -- Add directory to the plugin import table
+      plugin_specs,
+      { import = "plugins." .. vim.fn.fnamemodify(dir, ":t") }
+    )
+  end
+end
+
+require("lazy").setup({
+  spec = plugin_specs,
   defaults = {
     lazy = false,
     version = false,
@@ -44,7 +59,6 @@ require("lazy").setup({
     },
   },
   profiling = {
-    -- Track the time spent loading plugins
     loader = true,
     require = true,
   },

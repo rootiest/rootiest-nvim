@@ -1,3 +1,5 @@
+--- @module "plugins.themes"
+--- This module defines the themes plugins spec for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                         Themes                          │
 --          ╰─────────────────────────────────────────────────────────╯

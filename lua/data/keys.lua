@@ -1,3 +1,7 @@
+---@module "data.keys"
+--- This module contains the keymaps for the plugins and commands.
+--- Keymaps use the add_keymap function from data.func for flexible
+--- keybinding functionality.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        KEYS DATA                        │
 --          ╰─────────────────────────────────────────────────────────╯
@@ -54,7 +58,7 @@ M.codesnap = {
 }
 
 M.flash = {
-  {
+  { -- Flash jump to next
     "<CR>",
     function()
       require("flash").jump()
@@ -65,52 +69,72 @@ M.flash = {
 }
 
 M.minimap = {
-  { "<leader>nt", "<cmd>Neominimap toggle<cr>", desc = "Toggle minimap" },
-  { "<leader>no", "<cmd>Neominimap on<cr>", desc = "Enable minimap" },
-  { "<leader>nc", "<cmd>Neominimap off<cr>", desc = "Disable minimap" },
-  { "<leader>nf", "<cmd>Neominimap focus<cr>", desc = "Focus on minimap" },
-  { "<leader>nu", "<cmd>Neominimap unfocus<cr>", desc = "Unfocus minimap" },
-  {
+  { -- Toggle minimap
+    "<leader>nt",
+    "<cmd>Neominimap toggle<cr>",
+    desc = "Toggle minimap",
+  },
+  { -- Enable minimap
+    "<leader>no",
+    "<cmd>Neominimap on<cr>",
+    desc = "Enable minimap",
+  },
+  { -- Disable minimap
+    "<leader>nc",
+    "<cmd>Neominimap off<cr>",
+    desc = "Disable minimap",
+  },
+  { -- Refresh minimap
+    "<leader>nf",
+    "<cmd>Neominimap focus<cr>",
+    desc = "Focus on minimap",
+  },
+  { -- Unfocus minimap
+    "<leader>nu",
+    "<cmd>Neominimap unfocus<cr>",
+    desc = "Unfocus minimap",
+  },
+  { -- Toggle focus
     "<leader>ns",
     "<cmd>Neominimap toggleFocus<cr>",
     desc = "Toggle focus on minimap",
   },
-  {
+  { -- Toggle minimap for current window
     "<leader>nwt",
     "<cmd>Neominimap winToggle<cr>",
     desc = "Toggle minimap for current window",
   },
-  {
+  { -- Refresh minimap for current window
     "<leader>nwr",
     "<cmd>Neominimap winRefresh<cr>",
     desc = "Refresh minimap for current window",
   },
-  {
+  { -- Enable minimap for current window
     "<leader>nwo",
     "<cmd>Neominimap winOn<cr>",
     desc = "Enable minimap for current window",
   },
-  {
+  { -- Disable minimap for current window
     "<leader>nwc",
     "<cmd>Neominimap winOff<cr>",
     desc = "Disable minimap for current window",
   },
-  {
+  { -- Toggle minimap for current buffer
     "<leader>nbt",
     "<cmd>Neominimap bufToggle<cr>",
     desc = "Toggle minimap for current buffer",
   },
-  {
+  { -- Refresh minimap for current buffer
     "<leader>nbr",
     "<cmd>Neominimap bufRefresh<cr>",
     desc = "Refresh minimap for current buffer",
   },
-  {
+  { -- Enable minimap for current buffer
     "<leader>nbo",
     "<cmd>Neominimap bufOn<cr>",
     desc = "Enable minimap for current buffer",
   },
-  {
+  { -- Disable minimap for current buffer
     "<leader>nbc",
     "<cmd>Neominimap bufOff<cr>",
     desc = "Disable minimap for current buffer",
@@ -187,14 +211,6 @@ M.foldnav = {
   },
 }
 
-M.fugit = {
-  { -- Open Fugit
-    "<leader>F",
-    mode = "n",
-    "<cmd>Fugit2<cr>",
-  },
-}
-
 M.gitlinker = {
   { -- Yank git link
     "<leader>gy",
@@ -235,32 +251,27 @@ M.gist = {
 }
 
 M.groups = {
-  -- Icon picker
-  {
+  { -- Icon picker menu
     lhs = "<leader>I",
     group = "IconPicker",
     icon = { icon = "󰥸", color = "orange" },
   },
-  -- Gists menu
-  {
+  { -- Gists menu
     lhs = "<leader>gn",
     group = "Gists",
     icon = { icon = "", color = "orange" },
   },
-  -- Lazy menu
-  {
+  { -- Lazy menu
     lhs = "<leader>l",
     group = "Lazy",
     icon = { icon = "󰒲", color = "red" },
   },
-  -- MiniMap menu
-  {
+  { -- MiniMap menu
     lhs = "<leader>n",
     group = "MiniMap",
     icon = { icon = "", color = "green" },
   },
-  -- Code action menu
-  {
+  { -- Code action menu
     lhs = "<leader>C",
     group = "CodeActions",
     icon = { icon = "", color = "yellow" },
@@ -314,65 +325,74 @@ M.lazygit = {
   },
 }
 
-M.misc = {
-  -- Yank line (without whitespace)
+M.minifiles = {
   {
+    "<leader>fm",
+    function()
+      require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+    end,
+    desc = "Open mini.files (Directory of Current File)",
+  },
+  {
+    "<leader>fM",
+    function()
+      require("mini.files").open(vim.uv.cwd(), true)
+    end,
+    desc = "Open mini.files (cwd)",
+  },
+}
+
+M.misc = {
+  { -- Yank line (without whitespace)
     lhs = "yo",
     rhs = function()
       rootiest.yank_line()
     end,
     desc = "Yank Line-text",
   },
-  -- Hardmode
-  {
+  { -- Hardmode
     lhs = "<leader>uH",
     rhs = function()
       rootiest.toggle_hardmode()
     end,
     desc = "Toggle Hardmode",
   },
-  -- Yank buffer
-  {
+  { -- Yank buffer
     lhs = "<leader>Y",
     rhs = "<cmd>%y<cr>",
     desc = "Yank buffer contents",
   },
-  -- Select all
-  {
+  { -- Select all
     lhs = "<C-a>",
     rhs = "<cmd>norm ggVG<cr>",
     desc = "Select all",
   },
-  -- Neotree
-  {
+  { -- Neotree
     lhs = "|",
     rhs = "<cmd>Neotree reveal toggle<cr>",
     desc = "Neotree toggle",
   },
-  -- Exit Neovim
-  {
+  { -- Exit Neovim
     lhs = "<leader>Q",
     rhs = "<cmd>lua require('data').func.exit()<cr>",
     desc = "Exit Neovim",
   },
-  -- LazyVim
-  {
+  { -- LazyVim
     lhs = "<leader>lv",
     rhs = "<cmd>Lazy<cr>",
     desc = "LazyVim",
   },
-  -- LazyExtras
-  {
+  { -- LazyExtras
     lhs = "<leader>lx",
     rhs = "<cmd>LazyExtras<cr>",
     desc = "LazyExtras",
   },
-  -- De-map 's' to avoid conflicts with mini.surround
-  {
-    lhs = "s",
+  { -- De-map Ctrl+Shift+LeftClick to avoid conflicts with WezTerm
+    lhs = "<C-S-LeftMouse>",
     rhs = "<Nop>",
-    desc = "Nos",
-    mode = { "n", "x" },
+    desc = "Prevent conflict with WezTerm hyperlinks",
+    mode = "n",
+    hidden = true,
   },
 }
 
@@ -438,102 +458,102 @@ M.splitjoin = {
 
 M.splits = {
   resize = {
-    {
+    { -- Resize split leftwards
       "<A-h>",
       function()
         require("smart-splits").resize_left()
       end,
       "Resize split left",
     },
-    {
+    { -- Resize split downwards
       "<A-j>",
       function()
         require("smart-splits").resize_down()
       end,
       "Resize split down",
     },
-    {
+    { -- Resize split upwards
       "<A-k>",
       function()
         require("smart-splits").resize_up()
       end,
       "Resize split up",
     },
-    {
+    { -- Resize split rightwards
       "<A-l>",
       function()
         require("smart-splits").resize_right()
       end,
       "Resize split right",
     },
-    {
+    { -- Start interactive split resizing
       "<A-r>",
       function()
         require("smart-splits").start_resize_mode()
       end,
-      "Resize split to previous size",
+      "Resize split interactively",
     },
   },
   move = {
-    {
+    { -- Move cursor to split left
       "<C-S-h>",
       function()
         require("smart-splits").move_cursor_left()
       end,
-      "Move cursor left",
+      "Move to split left",
     },
-    {
+    { -- Move cursor to split below
       "<C-S-j>",
       function()
         require("smart-splits").move_cursor_down()
       end,
-      "Move cursor down",
+      "Move to split below",
     },
-    {
+    { -- Move cursor to split above
       "<C-S-k>",
       function()
         require("smart-splits").move_cursor_up()
       end,
-      "Move cursor up",
+      "Move to split above",
     },
-    {
+    { -- Move cursor to split right
       "<C-S-l>",
       function()
         require("smart-splits").move_cursor_right()
       end,
-      "Move cursor right",
+      "Move to split right",
     },
-    {
+    { -- Move cursor to previous split
       "<C-\\>",
       function()
         require("smart-splits").move_cursor_previous()
       end,
-      "Move cursor to previous split",
+      "Move to previous split",
     },
   },
   swap = {
-    {
+    { -- Swap buffer with the one to the left
       "<A-S-h>",
       function()
         require("smart-splits").swap_buf_left()
       end,
       "Swap buffer left",
     },
-    {
+    { -- Swap buffer with the one below
       "<A-S-j>",
       function()
         require("smart-splits").swap_buf_down()
       end,
       "Swap buffer down",
     },
-    {
+    { -- Swap buffer with the one above
       "<A-S-k>",
       function()
         require("smart-splits").swap_buf_up()
       end,
       "Swap buffer up",
     },
-    {
+    { -- Swap buffer with the one to the right
       "<A-S-l>",
       function()
         require("smart-splits").swap_buf_right()
@@ -584,11 +604,12 @@ M.substitute = {
 }
 
 M.surround = {
-  { -- De-map 's' to prevent conflicts
-    "s",
-    "<Nop>",
-    desc = "Nos",
+  { -- De-map 's' to avoid conflicts with mini.surround
+    lhs = "s",
+    rhs = "<Nop>",
+    desc = "Prevent conflict with mini.surround",
     mode = { "n", "x" },
+    hidden = true,
   },
 }
 

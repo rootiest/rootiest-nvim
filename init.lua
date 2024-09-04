@@ -51,9 +51,6 @@
 -- ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 --                       The rootiest NeoVim configuration!
 
----━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ OPTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
---  Neovim options are configured in the lua/config/options.lua file
-
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROOTIEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Rootiest Configuration
 require("config.rootiest").setup() -- Set up Rootiest options
@@ -78,5 +75,47 @@ require("config.profile") -- Set profiling options with environment variables:
 --    │           :lua require("profile").start("lualine")                  │
 --    ╰─────────────────────────────────────────────────────────────────────╯
 
+--          ╔═════════════════════════════════════════════════════════╗
+--          ║                 CONFIGURATION STRUCTURE                 ║
+--          ╚═════════════════════════════════════════════════════════╝
+--    ╭─────────────────────────────────────────────────────────────────────╮
+--    │   Configuration modules are organized into categories:              │
+--    │    - Options                                                        │
+--    │    - Keymaps                                                        │
+--    │    - Autocommands                                                   │
+--    │    - Utility functions                                              │
+--    │    - Plugins                                                        │
+--    │    - Commands                                                       │
+--    │    - Dashboards                                                     │
+--    │    - Types                                                          │
+--    │    - Dependencies                                                   │
+--    ╰─────────────────────────────────────────────────────────────────────╯
+---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ OPTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--  Neovim options are configured in the lua/config/options.lua file
+
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ KEYMAPS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
---  Custom keymaps are configured in the lua/config/keymaps.lua file
+--  Custom keymaps and plugin keys are configured in the lua/data/keys.lua file
+
+---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ AUTOCOMMANDS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Custom autocommands are configured in the lua/config/autocmds.lua file
+
+---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ UTILITY FUNCTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Utility functions can be found in the lua/data/func.lua file
+
+---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PLUGINS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Plugin specs are defined in the lua/config/plugins.lua file
+-- Plugin keys, cmds, dependencies, and opts/config tables are
+-- defined in the lua/data/*.lua files. This allows all plugin configurations
+-- to be defined in a centralized location and keeps them organised.
+
+---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ COMMANDS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Plugin cmds are configured in the lua/data/cmds.lua file
+
+---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ DASHBOARDS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Dashboard configurations can be found in the lua/data/dash.lua file
+
+---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ TYPES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Plugin configuration tables are configured in the lua/data/types.lua file
+
+---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ DEPENDENCIES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Plugin depenendencies are configured in the lua/data/deps.lua file

@@ -1,3 +1,6 @@
+---@module "utils.blinky"
+--- This module provides a function to set up and disable the blinky cursor.
+
 local M = {}
 
 --- Function to set up blinky cursor

@@ -1,6 +1,10 @@
+--- @module "config.rocks"
+--- This module bootstraps rocks.nvim.
+--- Rocks is a package manager for Neovim.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                          ROCKS                          │
 --          ╰─────────────────────────────────────────────────────────╯
+local M = {}
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━ Bootstrap rocks.nvim ━━━━━━━━━━━━━━━━━━━━━
 do
@@ -73,5 +77,27 @@ if not pcall(require, "rocks") then
   vim.fn.delete(rocks_location, "rf")
 end
 
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━ Rocks plugin spec ━━━━━━━━━━━━━━━━━━━━━━
+M.plugin_spec = {
+  "vhyrro/luarocks.nvim",
+  priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
+  opts = {
+    rocks = { "magick" }, -- specifies a list of rocks to install
+  },
+}
+
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Load plugins ━━━━━━━━━━━━━━━━━━━━━━━━━
-require("rocks")
+-- Load rocks package manager
+M.load_rocks = function()
+  require("rocks")
+end
+
+-- Perform setup
+M.setup = function()
+  M.load_rocks()
+end
+
+-- Execute the setup function
+M.setup()
+
+return M

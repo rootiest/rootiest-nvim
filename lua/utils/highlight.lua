@@ -1,8 +1,8 @@
+---@module "utils.highlight"
+--- This module provides functions to apply highlights to the statusline and other components.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Highlight                        │
 --          ╰─────────────────────────────────────────────────────────╯
----@module "utils.highlight"
---- This module provides functions to apply highlights to the statusline and other components.
 
 local M = {}
 

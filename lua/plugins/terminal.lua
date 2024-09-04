@@ -1,15 +1,8 @@
+---@module "plugins.terminal"
+--- This module defines the terminal plugins spec for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Terminals                        │
 --          ╰─────────────────────────────────────────────────────────╯
--- package.path = package.path
---   .. ";"
---   .. vim.fn.expand("$HOME")
---   .. "/.luarocks/share/lua/5.1/?/init.lua"
--- package.path = package.path
---   .. ";"
---   .. vim.fn.expand("$HOME")
---   .. "/.luarocks/share/lua/5.1/?.lua"
-
 local data = require("data")
 
 return {
@@ -24,7 +17,14 @@ return {
     config = function()
       require("image").setup()
     end,
-    cond = vim.g.useimage and not vim.g.neovide,
+    cond = function()
+      -- Disable image rendering in Neovide
+      -- or when vim.g.useimage = false
+      if vim.g.useimage == false then
+        return false
+      end
+      return not vim.g.neovide
+    end,
   },
   { -- ToggleTerm
     "akinsho/toggleterm.nvim",

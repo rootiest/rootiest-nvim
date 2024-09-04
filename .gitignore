@@ -12,3 +12,4 @@ debug/
 .ignore-deps
 profile.json
 rocks.toml
+		  		  /home/rootiest/.cache/nvim

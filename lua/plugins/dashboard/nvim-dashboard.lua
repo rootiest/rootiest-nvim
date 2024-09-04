@@ -1,11 +1,12 @@
+--- @module "plugins.dashboard.nvim-dashboard"
+--- This module defines the dashboard plugin spec for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Dashboard                        │
 --          ╰─────────────────────────────────────────────────────────╯
 local data = require("data")
 
-return {
+return { --
   -- Dashboard
-  enabled = false,
   "nvimdev/dashboard-nvim",
   event = "UIEnter",
   version = false,
@@ -64,7 +65,7 @@ return {
         file_height = logo_dimensions.height,
       },
       config = {
-        center = data.dash.choices,
+        center = data.dash.dashboard_nvim.choices,
         footer = function()
           local stats = require("lazy").stats()
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
@@ -110,4 +111,5 @@ return {
 
     return opts
   end,
+  enabled = false,
 }

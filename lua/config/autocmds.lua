@@ -1,3 +1,5 @@
+--- @module "config.autocmds"
+--- This module defines the autocommands for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                      Autocommands                       │
 --          ╰─────────────────────────────────────────────────────────╯
@@ -49,6 +51,18 @@ autocmd({ "BufEnter", "FocusGained" }, {
         )
       end)
     )
+  end,
+})
+
+-- TodoFzfLua command override to use Telescope
+-- when fzf-lua is not installed
+autogrp("TodoFzfLua", { clear = true })
+autocmd({ "BufEnter" }, {
+  group = "TodoFzfLua",
+  callback = function()
+    if not pcall(require, "fzf-lua") then
+      vim.cmd([[command! -nargs=* TodoFzfLua :TodoTelescope]])
+    end
   end,
 })
 

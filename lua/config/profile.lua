@@ -1,3 +1,12 @@
+--- @module "config.profile"
+--- This module configures the profiler for the Neovim configuration.
+--- This tool can be used to profile specific modules or all modules.
+---
+--- The profiler can be toggled with the leader keybinding `d<f1>`
+--- or with the `NVIM_PROFILE` environment variable.
+---
+--- Specific modules can be selected with the `NVIM_PROFILE_MODULE`
+--- environment variable.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        PROFILER                         │
 --          ╰─────────────────────────────────────────────────────────╯

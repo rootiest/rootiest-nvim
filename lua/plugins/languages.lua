@@ -1,3 +1,5 @@
+--- @module "plugins.languages"
+--- This module defines the languages plugins spec for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Languages                        │
 --          ╰─────────────────────────────────────────────────────────╯

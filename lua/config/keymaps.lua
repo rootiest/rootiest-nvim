@@ -1,3 +1,6 @@
+--- @module "config.keymaps"
+--- This module defines the keymapping operations for the Neovim configuration.
+--- The actual keybindings are defined in lua/data/keys.lua
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Keybinds                         │
 --          ╰─────────────────────────────────────────────────────────╯

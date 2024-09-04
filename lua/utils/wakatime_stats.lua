@@ -1,10 +1,12 @@
+---@module "utils.wakatime_stats"
+--- This module provides functions to retrieve wakatime statistics from the cache file.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                     WakaTime Stats                      │
 --          ╰─────────────────────────────────────────────────────────╯
 local M = {}
 
 require("utils.cache_stats")
-local cache_file = os.getenv("HOME") .. "/.cache/wakatime_cache.txt"
+local cache_file = vim.fs.joinpath(_G.cache_stats_dir, "wakatime_cache.txt")
 
 -- Local variable to store the last known value
 local last_known_value = ""
@@ -41,7 +43,10 @@ end
 --- Function to get the wakatime today status
 ---@return string status The wakatime today status
 function M.get_today()
-  return get_wakatime_today()
+  local text = get_wakatime_today()
+  -- Check if it starts with "0 hrs " and remove it
+  text = text:gsub("^0 hrs%s*", "")
+  return text
 end
 
 --- Function to get the wakatime today icon

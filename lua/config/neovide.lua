@@ -1,3 +1,5 @@
+--- @module "config.neovide"
+--- This module defines the neovide options for the Neovim configuration.
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                         Neovide                         │
 --          ╰─────────────────────────────────────────────────────────╯
