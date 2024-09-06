@@ -233,6 +233,218 @@ function M.notify(message, level, title)
   return true
 end
 
+---@function Function to generate a y/n confirmation prompt
+---@param prompt string The prompt text to display
+---@param action function|string The action to execute if the user confirms the prompt, or a Vim command as a string
+---@return boolean condition true if the user confirms the prompt, false otherwise
+function M.ConfirmPrompt(prompt, action)
+  -- Validate the action parameter
+  local function perform_action()
+    if type(action) == "function" then
+      action() -- Call the function
+    elseif type(action) == "string" then
+      vim.cmd(action) -- Run the Vim command
+    else
+      M.notify(
+        "Action must be a function or a string",
+        "ERROR",
+        "Configuration Error"
+      )
+    end
+  end
+  -- Create a new buffer
+  local buf = vim.api.nvim_create_buf(false, true) -- Create a new empty buffer
+  -- Set the prompt text in the buffer
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { prompt, "y/n: " })
+  -- Create a floating window to display the buffer
+  local win_height = 2 -- Height of floating window
+  local win_width = math.floor(vim.o.columns * 0.25) -- Width of floating window
+  local row = math.floor((vim.o.lines - win_height) / 2) -- Position row
+  local col = math.floor((vim.o.columns - win_width) / 2) -- Position column
+  local win_border = "rounded"
+  local style = "minimal"
+  -- Create a floating window
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = win_width,
+    height = win_height,
+    col = col,
+    row = row,
+    style = style,
+    border = win_border,
+  })
+  -- Move the cursor to the end of the buffer
+  vim.api.nvim_win_set_cursor(win, { 2, 5 })
+  -- Define the yes function
+  local yes = function()
+    vim.api.nvim_win_close(win, true)
+    perform_action() -- Perform the action
+    return true
+  end
+  -- Define the no function
+  local no = function()
+    vim.api.nvim_win_close(win, true)
+    M.notify("Action Canceled", "INFO", "Info")
+  end
+  -- Define buffer-specific key mappings
+  local keymaps = {
+    y = function()
+      yes()
+    end,
+    n = function()
+      no()
+    end,
+    q = function()
+      no()
+    end,
+    ["<Esc>"] = function()
+      no()
+    end,
+  }
+  -- Set the key mappings
+  for key, callback in pairs(keymaps) do
+    vim.api.nvim_buf_set_keymap(buf, "n", key, "", {
+      noremap = true,
+      nowait = true,
+      callback = callback,
+    })
+  end
+
+  return false
+end
+
+---@function Function to generate an input prompt
+---@param prompt string The prompt text to display
+---@param callback function The function to call with the user input
+function M.InputPrompt(prompt, callback)
+  -- Create a new buffer
+  local buf = vim.api.nvim_create_buf(false, true) -- Create a new empty buffer
+
+  -- Set the buffer name
+  vim.api.nvim_buf_set_name(buf, "Input")
+  -- Set the buffer filetype (e.g., for custom behavior or syntax highlighting)
+  vim.bo[buf].filetype = "input"
+  -- Set the buffer type to "nofile" to avoid editing or saving the buffer
+  vim.bo[buf].buftype = "nofile"
+  -- Set the prompt text in the buffer
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { prompt, "Input: " })
+
+  -- Create a floating window to display the buffer
+  local win_height = 2 -- Height of floating window
+  local win_width = math.floor(vim.o.columns * 0.25) -- Width of floating window
+  local row = math.floor((vim.o.lines - win_height) / 2) -- Position row
+  local col = math.floor((vim.o.columns - win_width) / 2) -- Position column
+  local win_border = "rounded"
+  local style = "minimal"
+
+  -- Create a floating window
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = win_width,
+    height = win_height,
+    col = col,
+    row = row,
+    style = style,
+    border = win_border,
+  })
+
+  -- Move the cursor to the end of the buffer
+  vim.api.nvim_win_set_cursor(win, { 2, 8 })
+  -- Set input mode
+  vim.api.nvim_command("startinsert")
+
+  -- Function to close the window
+  local function exit_win()
+    vim.api.nvim_command("stopinsert")
+    vim.api.nvim_win_close(win, true)
+  end
+
+  -- Function to handle input and close the window
+  local function handle_input()
+    -- Get the text after the "Input: " string
+    local input = vim.api.nvim_buf_get_lines(buf, 1, 2, false)[1]:sub(7) -- Adjust to trim "Input: "
+    return input
+  end
+
+  ---@function Function to return user input
+  local function yes()
+    local user_input = handle_input() -- Get the input from the buffer
+    exit_win()
+    if callback then
+      callback(user_input) -- Call the callback with the user input
+    end
+  end
+
+  ---@function Function to cancel user input
+  local function no()
+    exit_win()
+    if callback then
+      callback(nil) -- Call the callback with nil to indicate cancellation
+    end
+  end
+
+  -- Define buffer-specific key mappings
+  local keymaps = {
+    ["<CR>"] = yes,
+    ["<Esc>"] = no,
+  }
+
+  -- Set the key mappings
+  for key, keyback in pairs(keymaps) do
+    vim.api.nvim_buf_set_keymap(buf, "n", key, "", {
+      noremap = true,
+      nowait = true,
+      callback = keyback,
+    })
+    vim.api.nvim_buf_set_keymap(buf, "i", key, "", {
+      noremap = true,
+      nowait = true,
+      callback = keyback,
+    })
+  end
+end
+
+---@function Function to reload the user's Neovim configuration
+---@return nil
+function M.reload_config()
+  -- Notify the user about the reload process
+  M.notify("Reloading configuration...", "WARN", "Reloading Config")
+  -- 1. Save all buffers
+  vim.cmd("silent! wa")
+  -- 2. Record the list of open buffers to reopen later
+  local buffer_list = vim.api.nvim_list_bufs()
+  local buffers_to_reopen = {}
+  for _, buf in ipairs(buffer_list) do
+    if vim.api.nvim_buf_is_loaded(buf) and vim.fn.bufname(buf) ~= "" then
+      table.insert(
+        buffers_to_reopen,
+        { buf = buf, file = vim.api.nvim_buf_get_name(buf) }
+      )
+    end
+  end
+  -- 3. Close all buffers
+  vim.cmd("silent! bufdo! bwipeout")
+  -- 4. Clear loaded lua modules related to your custom configuration
+  for name, _ in pairs(package.loaded) do
+    -- Replace 'userconfig' and 'plugin' with your actual config module names
+    if name:match("^userconfig") or name:match("^plugins") then
+      package.loaded[name] = nil
+    end
+  end
+  -- 5. Reload the vim script (init.lua)
+  vim.cmd("source $MYVIMRC")
+  -- 6. Reopen the buffers
+  for _, bufinfo in ipairs(buffers_to_reopen) do
+    local buf = vim.fn.bufadd(bufinfo.file)
+    vim.cmd("buffer " .. buf)
+    vim.api.nvim_buf_call(buf, function()
+      -- You could also restore the exact cursor position if desired
+      vim.cmd('silent! normal! g`"')
+    end)
+  end -- Notify the user that the config has been reloaded
+  M.notify("Configuration reloaded successfully!", "INFO", "Reloaded Config")
+end
+
 ---@function Function to reload all plugins.
 --- This is a messy operation. It's not recommended to use it.
 --- If you do, please define the exclusion list in your config.lua file.

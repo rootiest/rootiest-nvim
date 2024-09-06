@@ -29,9 +29,6 @@ return {
   { -- mini.surround
     "echasnovski/mini.surround",
     opts = {},
-    keys = function()
-      data.func.add_keymap(data.keys.surround)
-    end,
   },
   { -- mini.files
     "echasnovski/mini.files",

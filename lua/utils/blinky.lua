@@ -24,4 +24,17 @@ function M.disable()
   return false
 end
 
+---@function Function to setup blinky cursor option
+---@param enable boolean|nil enable blinky cursor option
+function M.setup(enable)
+  if enable then
+    vim.g.blinky = enable
+  end
+  if vim.g.blinky ~= false then
+    M.enable()
+  else
+    M.disable()
+  end
+end
+
 return M

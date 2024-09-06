@@ -7,30 +7,42 @@
 --          ╰─────────────────────────────────────────────────────────╯
 -- stylua: ignore start
 
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Leader Key ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.g.mapleader      = " " ---@type string Options: <leader>
-vim.g.maplocalleader = " " ---@type string Options: <localleader>
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Key Options ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.g.mapleader = " "                  ---@type string Options: <leader>
+vim.g.maplocalleader = " "             ---@type string Options: <localleader>
+-- vim.g.timeoutlen        = 1000      ---@type integer Options: <ms>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ LSP ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- We don't need perl
-vim.g.loaded_perl_provider = 0 ---@type integer Options: <0|1>
-vim.g.loaded_ruby_provider = 0 ---@type integer Options: <0|1>
--- Prefer basedpyright
-vim.g.lazyvim_python_lsp = "basedpyright" ---@type string Options: [python lsp]
-
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ OS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
---  Check if we are on windows
-vim.g.is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
+vim.g.loaded_perl_provider = 0         ---@type integer Options: <0|1>
+-- or ruby
+vim.g.loaded_ruby_provider = 0         ---@type integer Options: <0|1>
+-- Prefer basedpyright for python
+vim.g.lazyvim_python_lsp   = "basedpyright" ---@type string Options: [python lsp]
+-- Open all folds by default
+vim.opt.foldlevel          = 99        ---@type integer Options: <0-99>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROOTIEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Use WakaTime for code stats
 vim.g.usewakatime     =  true          ---@type boolean Options:  <true|false>
-vim.g.usemusic        =  true          ---@type boolean Options:  <true|false>
+-- Allow music controls and stats
+vim.g.usemusic        =  false         ---@type boolean Options:  <true|false>
+-- Enable HardTime on startup
 vim.g.usehardtime     =  false         ---@type boolean Options:  <true|false>
+-- Enable Image plugin on compatible terminals
 vim.g.useimage        =  true          ---@type boolean Options:  <true|false>
+-- Ignore missing lazy.nvim plugin manager
 vim.g.ignore_no_lazy  =  false         ---@type boolean Options:  <true|false>
+-- Enable codesnap for code screenshots
 vim.g.codesnap        =  true          ---@type boolean Options:  <true|false>
+-- Enable Auto-hiding cursorline
 vim.g.auto_cursorline =  true          ---@type boolean Options: <true|false>
+-- Enable Auto-save
 vim.g.auto_save       =  true          ---@type boolean Options: <true|false>
+-- Animate blinky cursor
+vim.g.blinky          =  true          ---@type boolean Options: <true|false>
+-- Use Rootiest cmd window instead of cmdline
+vim.g.rootiest_cmd    =  false         ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ AI TOOL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.g.aitool          = "codeium"      ---@type string Options: [ai tool]
@@ -42,15 +54,6 @@ vim.g.aitool          = "codeium"      ---@type string Options: [ai tool]
 --        │                           │                none
 --        ╰───────────────────────────╯
 
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATUS LINE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.g.statusline      = "lualine"      ---@type string Options: [statusline]
---        ╭───────────────────────────╮                lualine
---        │                           │                heirline
---        │      Status Lines:        │                basic
---        │   Choose a plugin from    │                none
---        │      the list            │
---        │                           │
---        ╰───────────────────────────╯
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATUS COLUMN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.g.statuscolumn    = "native"       ---@type string Options: [statuscolumn]
 --        ╭───────────────────────────╮                barsNlines
@@ -60,8 +63,9 @@ vim.g.statuscolumn    = "native"       ---@type string Options: [statuscolumn]
 --        │      the list            │
 --        │                           │
 --        ╰───────────────────────────╯
+
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ BUFFER LINE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.g.tabline         = "bufferline"   ---@type string Options: [tabline]
+vim.g.tabline         = "none"         ---@type string Options: [tabline]
 --        ╭───────────────────────────╮                bufferline
 --        │                           │                barsNlines
 --        │      Tab Lines:           │                none
@@ -69,17 +73,32 @@ vim.g.tabline         = "bufferline"   ---@type string Options: [tabline]
 --        │      the list            │
 --        │                           │
 --        ╰───────────────────────────╯
+
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATUS LINE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.g.statusline      = "lualine"      ---@type string Options: [statusline]
+--        ╭───────────────────────────╮                lualine
+--        │                           │                heirline
+--        │      Status Lines:        │                barsNlines
+--        │   Choose a plugin from    │                basic
+--        │      the list            │                none 
+--        │                           │
+--        ╰───────────────────────────╯
+--
+-- Click git components on statusline to open LazyGit
 vim.g.statusline_clickable_git = false ---@type boolean Options: <true|false>
+-- Show wakatime stats on statusline
 vim.g.stats_wakatime           = true  ---@type boolean Options: <true|false>
+-- Show music stats on statusline
 vim.g.stats_music              = true  ---@type boolean Options: <true|false>
+-- Ignored player sources for music stats
 vim.g.stats_ignored_players    = {     ---@type string[] Options: [ignored players]
-  "chromium",
-  "firefox",
-  "kdeconnect",
-  "haruna",
-  "plasma-browser-integration",
-  "plasma-browser-integration-76042",
-}
+                                  "chromium",
+                                  "firefox",
+                                  "kdeconnect",
+                                  "haruna",
+                                  "plasma-browser-integration",
+                                  "plasma-browser-integration-76042",
+                                 }
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ COLOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 --  Background color
@@ -91,5 +110,9 @@ vim.g.disable_transparency = true      ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Completion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Cmp Window Border
-vim.g.completion_round_borders_enabled = true  ---Options: <true|false>
+vim.g.completion_round_borders_enabled = true  ---@type boolean Options: <true|false>
+
 -- stylua: ignore end
+
+-- Post-Config Operations
+require("config.post-ops")

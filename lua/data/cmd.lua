@@ -74,6 +74,10 @@ M.ripsub = {
   "RipSubstitute",
 }
 
+M.spell_errors = {
+  "Telescope spell_errors",
+}
+
 --- Suda plugin cmds
 M.suda = {
   "SudaWrite",

@@ -125,6 +125,11 @@ return { --
       },
     })
 
+    -- Input filetype
+    cmp.setup.filetype("input", {
+      sources = {},
+    })
+
     -- Custom filetype configuration
     cmp.setup.filetype("config", {
       sources = vim.tbl_filter(function(source)

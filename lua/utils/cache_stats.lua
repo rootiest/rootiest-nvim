@@ -24,6 +24,10 @@ _G.cache_stats_dir = -- Cache directory
 -- Flag to check if the script has already been run
 local script_run_once = false
 
+-- Variable to track the pid
+---@type number|boolean
+M.pid = false
+
 -- Default list of players/sources to ignore when updating the status
 local ignored_players = {
   "chromium",
@@ -84,7 +88,42 @@ function M.setup_script()
   return false
 end
 
+---@function Function to force the script to reset
+---        This will kill the script if it's running and delete the lock file.
+---        Optionally the cache files will be deleted if wipe is true.
+---        By default, the cache files will not be deleted.
+---        If the script is not running, this function will start the script.
+---@param wipe boolean|nil Whether to wipe the cache files (default: false)
+---        If true, the cache files will be deleted.
+---        If false, the cache files will not be deleted.
+---
+---        The cache files are:
+---        - music_cache.txt
+---        - wakatime_cache.txt
+---@return boolean|number pid The pid of the script
+function M.reset_script(wipe)
+  -- Try to kill the script if it's running
+  if M.pid and vim.fn.jobstop(M.pid) == 0 then
+    M.pid = false
+  end
+  -- Remove the lockfile
+  vim.fn.delete(
+    vim.fs.joinpath(_G.cache_stats_dir, "music_wakatime_update.lock")
+  )
+  -- Wipe the cache files
+  if wipe then
+    vim.fn.delete(vim.fs.joinpath(_G.cache_stats_dir, "music_cache.txt"))
+    vim.fn.delete(vim.fs.joinpath(_G.cache_stats_dir, "wakatime_cache.txt"))
+  end
+  -- Reset the script_run_once flag
+  script_run_once = false
+  -- Re-run the script
+  M.pid = M.setup_script()
+  -- Return the pid
+  return M.pid
+end
+
 -- Run the setup script
-M.setup_script()
+M.pid = M.setup_script()
 
 return M

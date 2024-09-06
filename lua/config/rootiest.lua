@@ -13,6 +13,11 @@ local function trigger_error(message)
   return require("data").func.notify(message, "ERROR")
 end
 
+local function setup_os_vars()
+  --  Check if we are on windows
+  vim.g.is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
+end
+
 --- Yank line without leading/trailing whitespace
 ---@return nil
 function M.yank_line()
@@ -180,6 +185,7 @@ end
 
 --- Set up rootiest module
 function M.setup()
+  setup_os_vars()
   M.eval_neovide()
   M.define_commands()
 
@@ -187,22 +193,6 @@ function M.setup()
   require("data.types").setup()
   -- Setup indentor
   require("utils.indentor")
-
-  ---━━━━━━━━━━━━━━━━━━━━━━━━━━ Rootiest cmd window ━━━━━━━━━━━━━━━━━━━━━━━━━
-  --
-  -- Setup Rootiest cmd window utility
-  require("utils.cmd_window").setup()
-
-  -- Setup Rootiest cmd window (override default command-line behavior)
-  -- require("utils.cmd_window").setup({ override_cmdline = true })
-
-  --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ BLINKY CURSOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  --  Setup the blinky cursor if it is enabled
-  if vim.g.blinky ~= false then
-    require("utils").blinky.enable()
-  else
-    require("utils").blinky.disable()
-  end
 end
 
 return M

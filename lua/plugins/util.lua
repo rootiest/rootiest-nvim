@@ -123,14 +123,14 @@ return {
     ft = "help",
     dependencies = data.deps.needs_treesitter,
   },
-  { -- Docker-compose logs
-    "adelowo/dockercomposelogs.nvim",
-    config = function()
-      require("dockercomposelogs").setup({})
-    end,
-    event = "VeryLazy",
-    dependencies = data.deps.needs_telescope,
-  },
+  -- { -- Docker-compose logs
+  --   "adelowo/dockercomposelogs.nvim",
+  --   config = function()
+  --     require("dockercomposelogs").setup({})
+  --   end,
+  --   event = "VeryLazy",
+  --   dependencies = data.deps.needs_telescope,
+  -- },
   { -- Suda
     "lambdalisue/vim-suda",
     cmd = data.cmd.suda,
@@ -141,13 +141,21 @@ return {
   },
   { -- Spell checker
     "matkrin/telescope-spell-errors.nvim",
+    lazy = true,
+    cmd = data.cmd.spell_errors,
     config = function()
       require("telescope").load_extension("spell_errors")
     end,
     dependencies = data.deps.needs_telescope,
   },
-  { --
+  { -- Pigeon
     "Pheon-Dev/pigeon",
     config = data.types.pigeon,
+  },
+  { -- Discord Presence
+    "andweeb/presence.nvim",
+    opts = {
+      enable_line_number = true,
+    },
   },
 }

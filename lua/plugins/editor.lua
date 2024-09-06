@@ -113,6 +113,7 @@ return {
   },
   { -- Colorful window separators
     "nvim-zh/colorful-winsep.nvim",
+    lazy = true,
     opts = {
       only_line_seq = false,
       symbols = data.types.colorful_winsep.symbols,
@@ -129,12 +130,14 @@ return {
   },
   { -- Bars N Lines
     "OXY2DEV/bars-N-lines.nvim",
-    enabled = data.func.check_global_var(
-      "statuscolumn",
-      "barsNlines",
-      "native"
-    ),
+    enabled = data.types.barsNlines.enabled,
     lazy = false,
-    config = data.types.barsNlines,
+    config = data.types.barsNlines.config,
+  },
+  {
+    "nvim-telescope/telescope-frecency.nvim",
+    config = function()
+      require("telescope").load_extension("frecency")
+    end,
   },
 }

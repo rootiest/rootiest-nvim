@@ -84,7 +84,7 @@ function M.setup_indent_highlight()
         "IndentsScopeHighlight",
         "IndentsScopeHighlight",
       },
-      char = vim.g.scope_char or data.types.ibl.scope_char.light,
+      char = vim.g.scope_char or data.types.ibl.scope_char.hard,
     },
     whitespace = {
       remove_blankline_trail = true,

@@ -12,6 +12,10 @@ return {
       automatic_installation = true,
     },
   },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = data.types.treesitter.opts,
+  },
   { --
     "neovim/nvim-lspconfig",
     opts = data.types.lspconfig.opts,

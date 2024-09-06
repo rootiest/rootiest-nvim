@@ -189,6 +189,23 @@ M.arrow = {
 
 --- Bufferline configuration options
 M.bufferline = {
+  enabled = function()
+    if
+      require("data.func").check_global_var(
+        "tabline",
+        "bufferline",
+        "bufferline"
+      )
+      or require("data.func").check_global_var(
+        "tabline",
+        "barsNlines",
+        "bufferline"
+      )
+    then
+      return true
+    end
+    return false
+  end,
   opts = {
     options = {
       themable = true,
@@ -440,6 +457,10 @@ M.whichkey = {
         winblend = 10,
       },
     },
+    triggers = {
+      { "<leader>", mode = { "n", "v" } },
+      { "s", mode = { "n", "x" } },
+    },
   },
 }
 
@@ -479,8 +500,10 @@ M.gitgraph = {
     else
       -- Fallback
       return {
-        merge_commit = "M",
-        commit = "*",
+        merge_commit = "",
+        commit = "",
+        merge_commit_end = "",
+        commit_end = "",
       }
     end
   end,
@@ -518,6 +541,7 @@ M.ibl = {
   },
   scope_char = {
     light = { "" },
+    hard = { "│" },
     none = { " " },
     fancy = { "‖" },
     strong = { "⦀" },
@@ -650,56 +674,122 @@ M.trouble = {
 }
 
 --- Function to set up bars-n-lines plugin options
-M.barsNlines = function()
-  require("bars").setup({
-    exclude_filetypes = M.minimap.ft,
-    exclude_buftypes = M.minimap.buf,
-    statuscolumn = {
-      enable = true,
-      parts = {
-        {
-          type = "fold",
-          markers = {
-            default = {
-              content = { "  " },
-            },
-            open = {
-              { " ", "BarsStatuscolumnFold1" },
-            },
-            close = {
-              { "╴", "BarsStatuscolumnFold1" },
-            },
-            scope = {
-              { "│ ", "BarsStatuscolumnFold1" },
-            },
-            divider = {
-              { "├╴", "BarsStatuscolumnFold1" },
-            },
-            foldend = {
-              { "╰╼", "BarsStatuscolumnFold1" },
+M.barsNlines = {
+  enabled = function()
+    if
+      require("data.func").check_global_var(
+        "statuscolumn",
+        "barsNlines",
+        "native"
+      )
+      or require("data.func").check_global_var(
+        "tabline",
+        "barsNlines",
+        "bufferline"
+      )
+      or require("data.func").check_global_var(
+        "statusline",
+        "barsNlines",
+        "lualine"
+      )
+    then
+      return true
+    end
+    return false
+  end,
+  config = function()
+    require("bars").setup({
+      exclude_filetypes = M.minimap.ft,
+      exclude_buftypes = M.minimap.buf,
+      statuscolumn = {
+        enable = require("data.func").check_global_var(
+          "statuscolumn",
+          "barsNlines",
+          "native"
+        ),
+        parts = {
+          {
+            type = "fold",
+            markers = {
+              default = {
+                content = { "  " },
+              },
+              open = {
+                { " ", "BarsStatuscolumnFold1" },
+              },
+              close = {
+                { "╴", "BarsStatuscolumnFold1" },
+              },
+              scope = {
+                { "│ ", "BarsStatuscolumnFold1" },
+              },
+              divider = {
+                { "├╴", "BarsStatuscolumnFold1" },
+              },
+              foldend = {
+                { "╰╼", "BarsStatuscolumnFold1" },
+              },
             },
           },
-        },
-        {
-          type = "number",
-          mode = "hybrid",
-          hl = "LineNr",
-          lnum_hl = "BarsStatusColumnNum",
-          relnum_hl = "LineNr",
-          virtnum_hl = "TablineSel",
-          wrap_hl = "TablineSel",
+          {
+            type = "number",
+            mode = "hybrid",
+            hl = "LineNr",
+            lnum_hl = "BarsStatusColumnNum",
+            relnum_hl = "LineNr",
+            virtnum_hl = "TablineSel",
+            wrap_hl = "TablineSel",
+          },
         },
       },
-    },
-    tabline = false,
-    statusline = false,
-  })
-end
+      tabline = {
+        enable = require("data.func").check_global_var(
+          "tabline",
+          "barsNlines",
+          "bufferline"
+        ),
+        parts = {
+          {
+            -- Part name
+            type = "bufs",
+
+            -- Active buffer configuration
+            active = {
+              corner_left = { "", "BarsTablineBufActiveSep" },
+              corner_right = { "", "BarsTablineBufActiveSep" },
+
+              padding_left = { " ", "BarsTablineBufActive" },
+              padding_right = { " " },
+            },
+
+            -- Inactive buffer configuration
+            inactive = {
+              corner_left = { "", "BarsTablineBufInactiveSep" },
+              corner_right = { "", "BarsTablineBufInactiveSep" },
+
+              padding_left = { " ", "BarsTablineBufInactive" },
+              padding_right = { " " },
+            },
+
+            -- List of patterns to ignore
+            ignore = {},
+          },
+        },
+      },
+      statusline = {
+        enable = require("data.func").check_global_var(
+          "statusline",
+          "barsNlines",
+          "lualine"
+        ),
+      },
+    })
+  end,
+}
 
 --- Function to setup Pigeon plugin options
 M.pigeon = function()
-  local data = require("data")
-  local platform = data.func.get_os("platform")
+  local platform = require("data.func").get_os("platform")
   local lazy_installed = pcall(require, "lazy")
   local packer_installed = pcall(require, "packer_plugins")
   local pigeon_enabled = true -- default
@@ -711,7 +801,7 @@ M.pigeon = function()
   elseif vim.fn.exists("g:plugs") == 1 then
     plugman = "vim-plug"
   else
-    data.func.notify(
+    require("data.func").notify(
       "Failed to detect package manager.\nPigeon disabled.",
       "ERROR"
     )
@@ -952,6 +1042,38 @@ M.toggleterm = {
     name_formatter = function(term)
       return term.name
     end,
+  },
+}
+
+M.treesitter = {
+  opts = {
+    ensure_installed = {
+      "bash",
+      "c",
+      "css",
+      "diff",
+      "html",
+      "javascript",
+      "jsdoc",
+      "json",
+      "jsonc",
+      "lua",
+      "luadoc",
+      "luap",
+      "markdown",
+      "markdown_inline",
+      "printf",
+      "python",
+      "query",
+      "regex",
+      "toml",
+      "tsx",
+      "typescript",
+      "vim",
+      "vimdoc",
+      "xml",
+      "yaml",
+    },
   },
 }
 

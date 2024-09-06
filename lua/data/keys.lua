@@ -357,6 +357,13 @@ M.misc = {
     end,
     desc = "Toggle Hardmode",
   },
+  { -- Reload config
+    lhs = "<leader>qr",
+    rhs = function()
+      require("data.func").reload_config()
+    end,
+    desc = "Reload Config",
+  },
   { -- Yank buffer
     lhs = "<leader>Y",
     rhs = "<cmd>%y<cr>",
@@ -371,6 +378,21 @@ M.misc = {
     lhs = "|",
     rhs = "<cmd>Neotree reveal toggle<cr>",
     desc = "Neotree toggle",
+  },
+  { -- Neotree
+    lhs = "<leader>\\",
+    rhs = "<cmd>Neotree reveal toggle<cr>",
+    desc = "Neotree toggle",
+  },
+  { -- Mini.files
+    lhs = "<leader>.",
+    rhs = "<cmd>lua require('mini.files').open()<cr>",
+    desc = "Open mini.files",
+  },
+  { -- Telescope Frecency
+    lhs = "<leader><leader>",
+    rhs = "<cmd>Telescope frecency workspace=CWD<cr>",
+    desc = "Telescope frecency",
   },
   { -- Exit Neovim
     lhs = "<leader>Q",
@@ -603,13 +625,12 @@ M.substitute = {
   },
 }
 
-M.surround = {
+M.overrides = {
   { -- De-map 's' to avoid conflicts with mini.surround
     lhs = "s",
     rhs = "<Nop>",
-    desc = "Prevent conflict with mini.surround",
+    desc = "Surround",
     mode = { "n", "x" },
-    hidden = true,
   },
 }
 

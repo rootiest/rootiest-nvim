@@ -40,4 +40,7 @@ return {
   { -- Sql
     import = "lazyvim.plugins.extras.lang.sql",
   },
+  { -- Jinja
+    "armyers/Vim-Jinja2-Syntax",
+  },
 }

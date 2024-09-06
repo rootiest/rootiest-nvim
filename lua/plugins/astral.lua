@@ -16,5 +16,5 @@ return { -- Astral
       "default",
     },
   },
-  -- dev = true, -- Use local codebase
+  dev = true, -- Use local codebase
 }

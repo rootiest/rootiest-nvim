@@ -24,7 +24,7 @@ M.alpha = {
     -- stylua: ignore start
     dashboard.section.buttons.val = {
       ---@diagnostic disable: param-type-mismatch
-      dashboard.button("f", " " .. " Find file", LazyVim.pick()),
+      dashboard.button("f", " " .. " Find file", "<cmd>Telescope frecency workspace=CWD <cr>"),
       dashboard.button("n", " " .. " New file", [[<cmd> ene <BAR> startinsert <cr>]]),
       dashboard.button("r", " " .. " Recent files", LazyVim.pick("oldfiles")),
       dashboard.button("g", " " .. " Grep text", LazyVim.pick("live_grep")),
