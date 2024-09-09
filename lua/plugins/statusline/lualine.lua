@@ -191,6 +191,40 @@ return { -- Lualine
             end,
             padding = { left = 0, right = 1 },
           },
+          { -- NeoCodeium Status
+            --- Function to retrieve neocodeium status and provide corresponding symbols
+            --- @return string Status symbols for neocodeium server and state
+            function()
+              local status, serverstatus = require("neocodeium").get_status()
+
+              -- Tables to map serverstatus and status to corresponding symbols
+              local server_status_symbols = {
+                [0] = "󰣺 ", -- Connected
+                [1] = "󱤚 ", -- Connecting
+                [2] = "󰣽 ", -- Disconnected
+              }
+
+              local status_symbols = {
+                [0] = "󰚩 ", -- Enabled
+                [1] = "󱚧 ", -- Disabled Globally
+                [3] = "󱚢 ", -- Disabled for Buffer filetype
+                [5] = "󱚠 ", -- Disabled for Buffer encoding
+                [2] = "󱙻 ", -- Disabled for Buffer (catch-all)
+              }
+
+              -- Handle serverstatus and status fallback (safeguard against any unexpected value)
+              local luacodeium = server_status_symbols[serverstatus] or "󰣼 "
+              luacodeium = luacodeium .. (status_symbols[status] or "󱙻 ")
+
+              return luacodeium
+            end,
+            cond = require("neocodeium").is_enabled
+              and funcs.is_window_wide_enough(100),
+            padding = { left = 0, right = 0 },
+            color = function()
+              return LazyVim.ui.fg("lualine_c_diagnostics_hint_normal")
+            end,
+          },
         },
         lualine_y = {
           { -- Wordcount
