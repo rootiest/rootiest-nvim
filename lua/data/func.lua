@@ -404,6 +404,57 @@ function M.InputPrompt(prompt, callback)
   end
 end
 
+---@function Function to move blocks of text up and down
+---@param up? boolean Whether to move the blocks up or down
+---  Ex: Move selected block of text up: move_visual(true)
+---      Move selected block of text down: move_visual(false)
+---@param multiplier? integer The number of times to move the blocks
+---  Ex: Move selected block of text up 3 times: move_visual(true, 3)
+---      Move selected block of text down 2 times: move_visual(false, 2)
+---@return nil
+function M.move_visual(up, multiplier)
+  -- Handle parameter
+  local offset = 1
+  if up then
+    offset = -2
+  end
+  if multiplier then
+    offset = offset * multiplier
+  end
+
+  -- escape visual mode
+  vim.cmd("norm v")
+
+  -- GET REGION
+  -- eg region = { [103] = {0,-1}, [104] = {0,-1}, [105] = {0,-1}}
+  ---@diagnostic disable-next-line: deprecated
+  local region = vim.region(0, "'<", "'>", vim.fn.visualmode(), true)
+
+  local function array_keys(array)
+    local keys = {}
+    for k in pairs(array) do
+      table.insert(keys, k)
+    end
+    return keys
+  end
+
+  -- GET LINES
+  -- eg lines = { 103, 104, 105 }
+  local lines = array_keys(region)
+  table.sort(lines)
+
+  -- GET TOP/BOTTOM LINE NUMBERS
+  local top = lines[1] + 1
+  local bottom = lines[#lines] + 1
+
+  -- EXECUTE
+  local new_pos = offset > 0 and bottom + offset or top + offset
+  vim.cmd(string.format("silent %d, %d move %d", top, bottom, new_pos))
+  -- eg :silent 104, 106 move 107
+
+  vim.cmd("norm gv")
+end
+
 ---@function Function to reload the user's Neovim configuration
 ---@return nil
 function M.reload_config()
@@ -505,13 +556,14 @@ end
 ---  Options:
 ---   - string: The name of the plugin module to check.
 ---   - table: A list of plugin modules to check.
+---@param simple boolean|nil Whether to use a simple check (pcall(require, plugin)).
 ---@return boolean|table condition The installed state of the plugin(s).
 ---   - boolean: The installed state of the plugin.
 ---   - table: A list of installed states of the plugins.
 ---     - boolean: The installed state of the plugin.
 ---  The return type is determined based on the input type.
 ---  If the input is a table of plugin modules, the return type is a table.
-function M.is_installed(plugins)
+function M.is_installed(plugins, simple)
   local is_single = type(plugins) == "string"
   if type(plugins) == "string" then
     plugins = { plugins }
@@ -520,22 +572,26 @@ function M.is_installed(plugins)
   local installed_plugins = {}
   for _, plugin in ipairs(plugins) do
     local installed = false
-    local lazy_installed = pcall(require, "lazy")
-    if lazy_installed then
-      installed = require("lazy.core.config").plugins[plugin] ~= nil
-    end
-    local packer_installed = pcall(require, "packer_plugins")
-    if packer_installed then
-      ---@diagnostic disable-next-line: undefined-field
-      installed = _G.packer_plugins and _G.packer_plugins[plugin] ~= nil
-    end
-    if vim.fn.exists("g:plugs") == 1 then
-      installed = vim.g.plugs[plugin] ~= nil
-    end
-    if not installed then
-      local has_plug = pcall(require, plugin)
-      if has_plug then
-        installed = true
+    if simple then
+      installed = pcall(require, plugin)
+    else
+      local lazy_installed = pcall(require, "lazy")
+      if lazy_installed then
+        installed = require("lazy.core.config").plugins[plugin] ~= nil
+      end
+      local packer_installed = pcall(require, "packer_plugins")
+      if packer_installed then
+        ---@diagnostic disable-next-line: undefined-field
+        installed = _G.packer_plugins and _G.packer_plugins[plugin] ~= nil
+      end
+      if vim.fn.exists("g:plugs") == 1 then
+        installed = vim.g.plugs[plugin] ~= nil
+      end
+      if not installed then
+        local has_plug = pcall(require, plugin)
+        if has_plug then
+          installed = true
+        end
       end
     end
     installed_plugins[plugin] = installed
@@ -548,14 +604,65 @@ function M.is_installed(plugins)
   end
 end
 
----@function Condition function to check filetype is not in list
----@param disabled_filetypes string[] The list of filetypes to check
----@return boolean|function true if filetype is not in list, false otherwise
-function M.disable_on_filetypes(disabled_filetypes)
-  return function()
-    local filetype = vim.bo.filetype
-    return not vim.tbl_contains(disabled_filetypes, filetype)
+-- Function to create a floating terminal window
+function M.open_floating_terminal()
+  -- Create a scratch buffer specifically for the terminal
+  local buf = vim.api.nvim_create_buf(false, true) -- Create an unnamed, non-file, scratch buffer
+
+  if not buf or buf == 0 then
+    vim.notify("Failed to create buffer", vim.log.levels.ERROR)
+    return
   end
+
+  -- Get the dimensions of the current editor window
+  -- This helps us center the floating window
+  local ui = vim.api.nvim_list_uis()[1]
+  local width = ui.width
+  local height = ui.height
+  local win_width = math.floor(width * 0.8)
+  local win_height = math.floor(height * 0.8)
+
+  -- Define settings of the floating window, sizing it to 80% of the full editor size
+  local win_opts = {
+    style = "minimal", -- Minimal UI, no status line or tab line
+    relative = "editor", -- Float relative to the whole editor UI
+    width = win_width, -- Set width to 80% of editor width
+    height = win_height, -- Set height to 80% of editor height
+    row = math.floor((height - win_height) / 2), -- Centered vertically
+    col = math.floor((width - win_width) / 2), -- Centered horizontally
+    border = "rounded", -- Add a border for aesthetics (can be 'single', 'double', etc.)
+  }
+
+  -- Open the floating window with our newly created buffer
+  local win = vim.api.nvim_open_win(buf, true, win_opts)
+
+  -- Check if the window was created successfully
+  if not win or win == 0 then
+    vim.notify("Failed to create floating window", vim.log.levels.ERROR)
+    return
+  end
+
+  -- Set very specific buffer and window configurations
+  vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf }) -- Auto-remove when the buffer is closed
+  vim.api.nvim_set_option_value("winblend", 10, { win = win }) -- Add slight transparency to the floating window
+
+  -- Now that the floating window is ready, we run the terminal shell in the created buffer
+  -- Open the terminal in the buffer when we're sure the buffer is set up in the float
+  vim.fn.termopen(vim.o.shell, {
+    on_exit = function()
+      -- Safety measure: Ensure the window still exists before trying to close it
+      if vim.api.nvim_win_is_valid(win) then
+        -- Notify the user that the terminal has closed
+        vim.notify("Terminal closed", vim.log.levels.INFO)
+        -- Close and wipe the associated floating window and its buffer
+        vim.api.nvim_win_close(win, true) -- Force close the terminal window
+      end
+    end,
+  })
+
+  -- Switch focus to the terminal window in the floating buffer and enter insert mode
+  vim.api.nvim_set_current_win(win)
+  vim.cmd("startinsert!") -- Automatically enter insert mode within the terminal
 end
 
 ---@function Helper function to add keymaps with common properties

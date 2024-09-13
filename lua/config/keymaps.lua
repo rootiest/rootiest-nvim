@@ -14,6 +14,7 @@ local data = require("data")
 
 -- Add keymapper function
 local add_keymap = data.func.add_keymap
+-- local add_km = require("which-key").add
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━ General Keybinds ━━━━━━━━━━━━━━━━━━━━━━━
 -- Add keymaps for miscellaneous keybinds
@@ -49,6 +50,18 @@ end
 -- Add keymaps for overrides
 add_keymap(data.keys.overrides)
 
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ Custom Mappings ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Visual mode: Move selected block of text up
+add_keymap("K", function()
+  data.func.move_visual(true)
+end, "Move block of text up", "v")
+
+-- Visual mode: Move selected block of text down
+add_keymap("J", function()
+  data.func.move_visual(false)
+end, "Move block of text down", "v")
+
+-- Test Prompt: Enter your name
 add_keymap("<leader>qP", function()
   data.func.InputPrompt("Enter your name: ", function(input)
     if input then
