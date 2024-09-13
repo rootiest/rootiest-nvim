@@ -18,7 +18,7 @@ vim.g.loaded_perl_provider = 0         ---@type integer Options: <0|1>
 -- or ruby
 vim.g.loaded_ruby_provider = 0         ---@type integer Options: <0|1>
 -- Prefer basedpyright for python
-vim.g.lazyvim_python_lsp   = "basedpyright" ---@type string Options: [python lsp]
+vim.g.lazyvim_python_lsp   = "pyright" ---@type string Options: [python lsp]
 -- Open all folds by default
 vim.opt.foldlevel          = 99        ---@type integer Options: <0-99>
 
@@ -43,16 +43,18 @@ vim.g.auto_save       =  true          ---@type boolean Options: <true|false>
 vim.g.blinky          =  true          ---@type boolean Options: <true|false>
 -- Use Rootiest cmd window instead of cmdline
 vim.g.rootiest_cmd    =  false         ---@type boolean Options: <true|false>
+-- Use experimental cmp performance fork
+vim.g.cmp_performance_enabled = true   ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ AI TOOL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.g.aitool          = "codeium"      ---@type string Options: [ai tool]
---        ╭───────────────────────────╮                codeium
---        │                           │                copilot
---        │         AI Tools:         │                tabnine
---        │   Choose an AI provider   │                minuet
---        │      from the list       │                ollama
---        │                           │                none
---        ╰───────────────────────────╯
+vim.g.aitool          = "neocodeium"   ---@type string Options: [ai tool]
+--        ╭───────────────────────────╮                neocodeium
+--        │                           │                codeium
+--        │         AI Tools:         │                copilot
+--        │   Choose an AI provider   │                tabnine
+--        │      from the list       │                minuet
+--        │                           │                ollama
+--        ╰───────────────────────────╯                none
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATUS COLUMN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.g.statuscolumn    = "native"       ---@type string Options: [statuscolumn]
@@ -65,7 +67,7 @@ vim.g.statuscolumn    = "native"       ---@type string Options: [statuscolumn]
 --        ╰───────────────────────────╯
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ BUFFER LINE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.g.tabline         = "none"         ---@type string Options: [tabline]
+vim.g.tabline         = "bufferline"   ---@type string Options: [tabline]
 --        ╭───────────────────────────╮                bufferline
 --        │                           │                barsNlines
 --        │      Tab Lines:           │                none
