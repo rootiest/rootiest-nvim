@@ -67,4 +67,7 @@ return {
     },
     keys = data.keys.gitgraph,
   },
+  { -- Telescope Git Worktree
+    "ThePrimeagen/git-worktree.nvim",
+  },
 }
