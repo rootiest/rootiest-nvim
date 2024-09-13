@@ -6,33 +6,44 @@
 local data = require("data")
 
 return {
-  { --
-    -- Neocodeium
+  { -- Neocodeium
     "monkoose/neocodeium",
     event = "VeryLazy",
     opts = data.types.neocodeium.opts,
     keys = data.keys.neocodeium,
+    enabled = data.cond.neocodeium,
+  },
+  { -- Codeium
+    import = "lazyvim.plugins.extras.coding.codeium",
+    cond = data.cond.codeium,
   },
   { -- Copilot
     import = "lazyvim.plugins.extras.coding.copilot",
-    cond = function()
-      return vim.g.aitool == "copilot"
-    end,
+    cond = data.cond.copilot,
   },
   { -- Tabnine
     import = "lazyvim.plugins.extras.coding.tabnine",
-    cond = function()
-      return vim.g.aitool == "tabnine"
-    end,
+    cond = data.cond.tabnine,
   },
   { -- Minuet-AI
     "milanglacier/minuet-ai.nvim",
     dependencies = data.deps.minuet,
-    config = function()
-      require("minuet").setup({ provider = "openai" })
-    end,
-    cond = function()
-      return vim.g.aitool == "minuet"
-    end,
+    opts = { provider = "openai" },
+    enabled = data.cond.minuet,
+  },
+  -- {
+  --   "jackMort/ChatGPT.nvim",
+  --   event = "VeryLazy",
+  --   opts = {},
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "folke/trouble.nvim",
+  --     "nvim-telescope/telescope.nvim",
+  --   },
+  -- },
+  {
+    "robitx/gp.nvim",
+    opts = {},
   },
 }

@@ -4,27 +4,48 @@
 --          │                     Auto Completion                     │
 --          ╰─────────────────────────────────────────────────────────╯
 local data = require("data")
+local perf = vim.g.cmp_performance_enabled or false
 
-return { --
-  "hrsh7th/nvim-cmp",
-  -- HACK: Experiemental cmp performance fork
-  dev = true,
+--- Function to return the cmp provider
+---@param performance? boolean Whether to use the experimental cmp performance fork
+---@return table provider The cmp provider spec
+local function cmp_provider(performance)
+  if performance then
+    return {
+      url = "yioneko/nvim-cmp",
+      -- Experiemental cmp performance fork
+      dev = true,
+      build = "git clone https://github.com/yioneko/nvim-cmp.git ~/projects/nvim-cmp/",
+    }
+  end
+  return {
+    -- Classic cmp
+    url = "hrsh7th/nvim-cmp",
+    dev = false,
+  }
+end
+
+return { -- cmp
+  cmp_provider(perf).url,
+  build = cmp_provider(perf).build,
+  dev = cmp_provider(perf).dev,
   event = "VeryLazy",
   dependencies = data.deps.cmp,
-  -- :
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
-    local neocodeium = require("neocodeium")
-    local commands = require("neocodeium.commands")
 
     cmp.event:on("menu_opened", function()
-      neocodeium.clear()
+      if data.cond.neocodeium() == true then
+        require("neocodeium").clear()
+      end
     end)
 
     cmp.event:on("menu_closed", function()
-      commands.enable()
-      neocodeium.cycle_or_complete()
+      if data.cond.neocodeium() == true then
+        require("neocodeium.commands").enable()
+        require("neocodeium").cycle_or_complete()
+      end
     end)
 
     local border_opts = {
