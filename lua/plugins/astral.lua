@@ -16,5 +16,5 @@ return { -- Astral
       "default",
     },
   },
-  dev = true, -- Use local codebase
+  dev = vim.g.rootiest_dev or false, -- Use local codebase
 }

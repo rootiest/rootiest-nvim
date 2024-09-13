@@ -45,6 +45,8 @@ vim.g.blinky          =  true          ---@type boolean Options: <true|false>
 vim.g.rootiest_cmd    =  false         ---@type boolean Options: <true|false>
 -- Use experimental cmp performance fork
 vim.g.cmp_performance_enabled = true   ---@type boolean Options: <true|false>
+-- Use dev mode for rootiest plugins
+vim.g.rootiest_dev    =  false         ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ AI TOOL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.g.aitool          = "neocodeium"   ---@type string Options: [ai tool]

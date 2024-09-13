@@ -20,5 +20,5 @@ return { -- Neovim Updater
       desc = "Debug Build Neovim",
     },
   },
-  dev = true,
+  dev = vim.g.rootiest_dev or false,
 }
