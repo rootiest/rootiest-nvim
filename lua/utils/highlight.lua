@@ -118,6 +118,12 @@ function M.setup_indent_highlight()
 
   -- Set colorcolumn
   vim.cmd(":set colorcolumn=120")
+
+  -- Set NeoCodeium suggestion highlight
+  vim.api.nvim_set_hl(0, "NeoCodeiumSuggestion", { link = "Comment" })
+
+  -- Set NeoCodeium label highlight
+  vim.api.nvim_set_hl(0, "NeoCodeiumLabel", { link = "lualine_a_insert" })
 end
 
 --- Function to set up smooth cursor mode highlights
