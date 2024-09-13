@@ -134,10 +134,39 @@ return {
     lazy = false,
     config = data.types.barsNlines.config,
   },
-  {
+  { -- Frecency Telescope extension
     "nvim-telescope/telescope-frecency.nvim",
     config = function()
       require("telescope").load_extension("frecency")
     end,
+  },
+  { -- UndoTree Telescope extension
+    "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "debugloop/telescope-undo.nvim",
+    },
+    opts = function()
+      require("telescope").load_extension("undo")
+      vim.keymap.set("n", "<leader>uU", "<cmd>Telescope undo<cr>")
+      return {
+        extensions = {
+          undo = {},
+        },
+      }
+    end,
+  },
+  { -- UndoTree
+    "mbbill/undotree",
+    config = function()
+      data.func.add_keymap(
+        "<leader>uu",
+        "<cmd>UndotreeToggle<cr>",
+        "Toggle UndoTree"
+      )
+    end,
+  },
+  { -- NumberToggle
+    "sitiom/nvim-numbertoggle",
   },
 }
