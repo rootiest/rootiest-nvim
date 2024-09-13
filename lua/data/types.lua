@@ -9,6 +9,8 @@
 local M = {}
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ Mode Indicators ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--- A collection of functions that return icons and names for
+--- the current mode.
 M.mode = {
   n = { -- Normal mode
     icon = "",
@@ -132,6 +134,35 @@ M.mode = {
       return M.mode.current.icon_text()
     end,
   },
+}
+
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Border Styles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--- Border configuration options
+M.border = {
+  round = function()
+    return {
+      { "╭", "FloatBorder" },
+      { "─", "FloatBorder" },
+      { "╮", "FloatBorder" },
+      { "│", "FloatBorder" },
+      { "╯", "FloatBorder" },
+      { "─", "FloatBorder" },
+      { "╰", "FloatBorder" },
+      { "│", "FloatBorder" },
+    }
+  end,
+  simple = function()
+    return {
+      { "─", "FloatBorder" },
+      { "│", "FloatBorder" },
+      { "─", "FloatBorder" },
+      { "│", "FloatBorder" },
+      { "─", "FloatBorder" },
+      { "│", "FloatBorder" },
+      { "─", "FloatBorder" },
+      { "│", "FloatBorder" },
+    }
+  end,
 }
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Type tables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -427,6 +458,10 @@ M.neocodeium = {
     manual = false,
     silent = true,
     debounce = false,
+    filetypes = {
+      TelescopePrompt = false,
+      ["dap-repl"] = false,
+    },
   },
 }
 
@@ -458,8 +493,11 @@ M.whichkey = {
       },
     },
     triggers = {
+      { "<auto>", mode = { "n", "x" } },
       { "<leader>", mode = { "n", "v" } },
+      { "<localleader>", mode = { "n", "v" } },
       { "s", mode = { "n", "x" } },
+      { "g", mode = { "n", "x" } },
     },
   },
 }
