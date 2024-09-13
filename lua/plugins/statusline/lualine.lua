@@ -17,6 +17,48 @@ if vim.g.statusline == nil then
   vim.g.statusline = "lualine"
 end
 
+-- function to process get_status() and set buffer variable to that data.
+local neocodeium = require("neocodeium")
+local function get_neocodeium_status(ev)
+  local status, server_status = neocodeium.get_status()
+  -- process this data, convert it to custom string/icon etc and set buffer variable
+
+  -- Tables to map serverstatus and status to corresponding symbols
+  local server_status_symbols = {
+    [0] = "󰣺 ", -- Connected
+    [1] = "󱤚 ", -- Connecting
+    [2] = "󰣽 ", -- Disconnected
+  }
+
+  local status_symbols = {
+    [0] = "󰚩 ", -- Enabled
+    [1] = "󱚧 ", -- Disabled Globally
+    [3] = "󱚢 ", -- Disabled for Buffer filetype
+    [5] = "󱚠 ", -- Disabled for Buffer encoding
+    [2] = "󱙻 ", -- Disabled for Buffer (catch-all)
+  }
+
+  -- Handle serverstatus and status fallback (safeguard against any unexpected value)
+  local luacodeium = server_status_symbols[server_status] or "󰣼 "
+  luacodeium = luacodeium .. (status_symbols[status] or "󱙻 ")
+  vim.api.nvim_buf_set_var(ev.buf, "neocodeium_status", luacodeium)
+end
+
+-- Then only some of event fired we invoked this function
+vim.api.nvim_create_autocmd("User", {
+  group = ..., -- set some augroup here
+  pattern = {
+    "NeoCodeiumServerConnecting",
+    "NeoCodeiumServerConnected",
+    "NeoCodeiumServerStopped",
+    "NeoCodeiumEnabled",
+    "NeoCodeiumDisabled",
+    "NeoCodeiumBufEnabled",
+    "NeoCodeiumBufDisabled",
+  },
+  callback = get_neocodeium_status,
+})
+
 return { -- Lualine
   "nvim-lualine/lualine.nvim",
   enabled = data.func.check_global_var("statusline", "lualine", "lualine"),
@@ -191,42 +233,14 @@ return { -- Lualine
             end,
             padding = { left = 0, right = 1 },
           },
-          { -- NeoCodeium Status
-            --- Function to retrieve neocodeium status and provide corresponding symbols
-            --- @return string Status symbols for neocodeium server and state
-            function()
-              local status, serverstatus = require("neocodeium").get_status()
-
-              -- Tables to map serverstatus and status to corresponding symbols
-              local server_status_symbols = {
-                [0] = "󰣺 ", -- Connected
-                [1] = "󱤚 ", -- Connecting
-                [2] = "󰣽 ", -- Disconnected
-              }
-
-              local status_symbols = {
-                [0] = "󰚩 ", -- Enabled
-                [1] = "󱚧 ", -- Disabled Globally
-                [3] = "󱚢 ", -- Disabled for Buffer filetype
-                [5] = "󱚠 ", -- Disabled for Buffer encoding
-                [2] = "󱙻 ", -- Disabled for Buffer (catch-all)
-              }
-
-              -- Handle serverstatus and status fallback (safeguard against any unexpected value)
-              local luacodeium = server_status_symbols[serverstatus] or "󰣼 "
-              luacodeium = luacodeium .. (status_symbols[status] or "󱙻 ")
-
-              return luacodeium
-            end,
-            cond = require("neocodeium").is_enabled
-              and funcs.is_window_wide_enough(100),
-            padding = { left = 0, right = 0 },
-            color = function()
-              return LazyVim.ui.fg("lualine_c_diagnostics_hint_normal")
-            end,
-          },
         },
         lualine_y = {
+          { -- NeoCodeium Status
+            function()
+              return vim.b.neocodeium_status or "󰣽 "
+            end,
+            padding = { left = 0, right = 1 },
+          },
           { -- Wordcount
             function()
               return vim.fn.wordcount().words
@@ -279,6 +293,13 @@ return { -- Lualine
             on_click = function()
               vim.cmd("Neotree reveal toggle")
             end,
+            separator = { left = "", right = "" },
+          },
+          { -- Encoding
+            "encoding",
+            padding = { left = 0, right = 1 },
+            separator = "",
+            icon = "󱁻",
           },
         },
         lualine_z = {
