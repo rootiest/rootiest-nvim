@@ -182,6 +182,13 @@ M.neocodeium = {
     desc = "Cycle or complete (next)",
     mode = "i",
   },
+  { -- NeoCodeium Chat
+    "<leader>ch",
+    function()
+      require("neocodeium").chat()
+    end,
+    desc = "NeoCodeium Chat",
+  },
 }
 
 M.foldnav = {
@@ -325,23 +332,40 @@ M.lazygit = {
   },
 }
 
+---@function Helper function to toggle mini.files explorer
+---@param ... any Optional arguments to pass to mini.files.open
+local minifiles_toggle = function(...)
+  if not require("mini.files").close() then
+    require("mini.files").open(...)
+  end
+end
+
+--- MiniFiles keymaps
 M.minifiles = {
   {
     "<leader>fm",
     function()
-      require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+      minifiles_toggle(vim.api.nvim_buf_get_name(0), true)
     end,
     desc = "Open mini.files (Directory of Current File)",
   },
   {
     "<leader>fM",
     function()
-      require("mini.files").open(vim.uv.cwd(), true)
+      minifiles_toggle(vim.uv.cwd(), true)
     end,
     desc = "Open mini.files (cwd)",
   },
+  { -- Mini.files
+    "<leader>.",
+    function()
+      minifiles_toggle(vim.api.nvim_buf_get_name(0), true)
+    end,
+    desc = "Open mini.files",
+  },
 }
 
+--- Misc keymaps
 M.misc = {
   { -- Yank line (without whitespace)
     lhs = "yo",
@@ -383,11 +407,6 @@ M.misc = {
     lhs = "<leader>\\",
     rhs = "<cmd>Neotree reveal toggle<cr>",
     desc = "Neotree toggle",
-  },
-  { -- Mini.files
-    lhs = "<leader>.",
-    rhs = "<cmd>lua require('mini.files').open()<cr>",
-    desc = "Open mini.files",
   },
   { -- Telescope Frecency
     lhs = "<leader><leader>",
@@ -485,35 +504,35 @@ M.splits = {
       function()
         require("smart-splits").resize_left()
       end,
-      "Resize split left",
+      desc = "Resize split left",
     },
     { -- Resize split downwards
       "<A-j>",
       function()
         require("smart-splits").resize_down()
       end,
-      "Resize split down",
+      desc = "Resize split down",
     },
     { -- Resize split upwards
       "<A-k>",
       function()
         require("smart-splits").resize_up()
       end,
-      "Resize split up",
+      desc = "Resize split up",
     },
     { -- Resize split rightwards
       "<A-l>",
       function()
         require("smart-splits").resize_right()
       end,
-      "Resize split right",
+      desc = "Resize split right",
     },
     { -- Start interactive split resizing
       "<A-r>",
       function()
         require("smart-splits").start_resize_mode()
       end,
-      "Resize split interactively",
+      desc = "Resize split interactively",
     },
   },
   move = {
@@ -522,35 +541,35 @@ M.splits = {
       function()
         require("smart-splits").move_cursor_left()
       end,
-      "Move to split left",
+      desc = "Move to split left",
     },
     { -- Move cursor to split below
       "<C-S-j>",
       function()
         require("smart-splits").move_cursor_down()
       end,
-      "Move to split below",
+      desc = "Move to split below",
     },
     { -- Move cursor to split above
       "<C-S-k>",
       function()
         require("smart-splits").move_cursor_up()
       end,
-      "Move to split above",
+      desc = "Move to split above",
     },
     { -- Move cursor to split right
       "<C-S-l>",
       function()
         require("smart-splits").move_cursor_right()
       end,
-      "Move to split right",
+      desc = "Move to split right",
     },
     { -- Move cursor to previous split
       "<C-\\>",
       function()
         require("smart-splits").move_cursor_previous()
       end,
-      "Move to previous split",
+      desc = "Move to previous split",
     },
   },
   swap = {
@@ -559,28 +578,28 @@ M.splits = {
       function()
         require("smart-splits").swap_buf_left()
       end,
-      "Swap buffer left",
+      desc = "Swap buffer left",
     },
     { -- Swap buffer with the one below
       "<A-S-j>",
       function()
         require("smart-splits").swap_buf_down()
       end,
-      "Swap buffer down",
+      desc = "Swap buffer down",
     },
     { -- Swap buffer with the one above
       "<A-S-k>",
       function()
         require("smart-splits").swap_buf_up()
       end,
-      "Swap buffer up",
+      desc = "Swap buffer up",
     },
     { -- Swap buffer with the one to the right
       "<A-S-l>",
       function()
         require("smart-splits").swap_buf_right()
       end,
-      "Swap buffer right",
+      desc = "Swap buffer right",
     },
   },
 }
