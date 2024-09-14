@@ -410,6 +410,9 @@ M.minifiles = {
         LazyVim.lsp.on_rename(event.data.from, event.data.to)
       end,
     })
+
+    -- include git signs
+    require("config.minifiles")
   end,
 }
 
