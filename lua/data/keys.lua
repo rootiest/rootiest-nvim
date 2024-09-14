@@ -283,6 +283,11 @@ M.groups = {
     group = "CodeActions",
     icon = { icon = "", color = "yellow" },
   },
+  { -- Neovim Updater menu
+    lhs = "<leader>qu",
+    group = "Neovim Updater",
+    icon = { icon = "", color = "red" },
+  },
 }
 
 M.gx = {
