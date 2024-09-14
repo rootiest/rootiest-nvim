@@ -1,5 +1,6 @@
 return { -- Neovim Updater
   "rootiest/nvim-updater.nvim",
+  lazy = false,
   config = function()
     require("nvim_updater").setup({
       source_dir = vim.fn.expand("~/.local/src/neovim"),

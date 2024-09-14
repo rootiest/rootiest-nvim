@@ -154,6 +154,21 @@ return { -- Lualine
           { -- PrettyPath
             LazyVim.lualine.pretty_path(),
             padding = { left = 0, right = 0 },
+            cond = function()
+              return vim.bo.filetype ~= "neovim_updater_term"
+            end,
+          },
+          { -- Neovim Updater
+            function()
+              return "Neovim Updating.."
+            end,
+            icon = "󰅢 ",
+            color = "lualine_a_terminal",
+            separator = { left = "", right = "" },
+            padding = { left = 0, right = 0 },
+            cond = function()
+              return vim.bo.filetype == "neovim_updater_term"
+            end,
           },
         },
         lualine_x = {
