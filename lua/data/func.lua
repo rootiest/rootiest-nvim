@@ -515,6 +515,19 @@ function M.dump_buffer_to_table(register)
   vim.fn.setreg(register, output)
 end
 
+---@function Function to open the frecency picker
+---@return nil
+function M.frecency_picker()
+  -- Trigger the picker
+  require("telescope").extensions.frecency.frecency()
+  -- Remove `A` character that is added by the picker
+  vim.api.nvim_feedkeys(
+    vim.api.nvim_replace_termcodes("<BS>", true, true, true),
+    "n",
+    false
+  )
+end
+
 ---@function Function to reload the user's Neovim configuration
 ---@return nil
 function M.reload_config()

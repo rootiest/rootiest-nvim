@@ -415,7 +415,9 @@ M.misc = {
   },
   { -- Telescope Frecency
     lhs = "<leader><leader>",
-    rhs = "<cmd>Telescope frecency workspace=CWD<cr>",
+    rhs = function()
+      require("data.func").frecency_picker()
+    end,
     desc = "Telescope frecency",
   },
   { -- Exit Neovim
