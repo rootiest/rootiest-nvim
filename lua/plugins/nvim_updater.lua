@@ -8,10 +8,6 @@ return { -- Neovim Updater
       branch = "master",
     })
   end,
-  cmd = {
-    "UpdateNeovim",
-    "RemoveNeovimSource",
-  },
   keys = {
     {
       "<Leader>quU",
