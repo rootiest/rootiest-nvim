@@ -73,3 +73,8 @@ add_keymap("<leader>qP", function()
     end
   end)
 end, "Test Prompt")
+
+-- Paste over text with overwrite
+add_keymap("<leader>cp", function()
+  data.func.paste_overwrite()
+end, "Paste overwrite", "n")

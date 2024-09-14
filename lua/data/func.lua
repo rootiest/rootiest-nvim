@@ -455,6 +455,41 @@ function M.move_visual(up, multiplier)
   vim.cmd("norm gv")
 end
 
+function M.paste_overwrite()
+  -- Get the register contents and type
+  local register = vim.fn.getreginfo(vim.v.register or '"')
+  local regcontents = register.regcontents
+
+  -- Enter Virtual Replace Mode
+  vim.api.nvim_feedkeys("gR", "n", false)
+
+  -- Process each line in the register contents
+  for i, line in ipairs(regcontents) do
+    if i > 1 then
+      -- Handle formatting of multi-line pastes (except for the first line)
+      vim.api.nvim_feedkeys(
+        vim.api.nvim_replace_termcodes("<Esc>0gR", true, false, true),
+        "n",
+        false
+      )
+    end
+
+    -- Paste the current line; add a newline if it's not the last line
+    if i < #regcontents then
+      vim.api.nvim_feedkeys(line .. "\n", "n", false)
+    else
+      vim.api.nvim_feedkeys(line, "n", false)
+    end
+  end
+
+  -- Properly exit Virtual Replace Mode using <Esc>
+  vim.api.nvim_feedkeys(
+    vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
+    "n",
+    false
+  )
+end
+
 ---@function Function to reload the user's Neovim configuration
 ---@return nil
 function M.reload_config()
