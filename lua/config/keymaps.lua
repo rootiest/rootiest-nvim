@@ -14,17 +14,16 @@ local data = require("data")
 
 -- Add keymapper function
 local add_keymap = data.func.add_keymap
--- local add_km = require("which-key").add
-
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━ General Keybinds ━━━━━━━━━━━━━━━━━━━━━━━
--- Add keymaps for miscellaneous keybinds
-for _, item in ipairs(data.keys.misc) do
-  add_keymap(item)
-end
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ Group Keybinds ━━━━━━━━━━━━━━━━━━━━━━━━
 -- Add keymaps for menu groups
 for _, item in ipairs(data.keys.groups) do
+  add_keymap(item)
+end
+
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━ General Keybinds ━━━━━━━━━━━━━━━━━━━━━━━
+-- Add keymaps for miscellaneous keybinds
+for _, item in ipairs(data.keys.misc) do
   add_keymap(item)
 end
 
@@ -49,32 +48,3 @@ end
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Overrides ━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Add keymaps for overrides
 add_keymap(data.keys.overrides)
-
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ Custom Mappings ━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- Visual mode: Move selected block of text up
-add_keymap("K", function()
-  data.func.move_visual(true)
-end, "Move block of text up", "v")
-
--- Visual mode: Move selected block of text down
-add_keymap("J", function()
-  data.func.move_visual(false)
-end, "Move block of text down", "v")
-
--- Test Prompt: Enter your name
-add_keymap("<leader>qP", function()
-  data.func.InputPrompt("Enter your name: ", function(input)
-    if input then
-      -- trim whitespace from end of input
-      input = input:gsub("%s+$", "")
-      print("👋😎 Hello " .. input .. "!")
-    else
-      print("Input was canceled")
-    end
-  end)
-end, "Test Prompt")
-
--- Paste over text with overwrite
-add_keymap("<leader>cp", function()
-  data.func.paste_overwrite()
-end, "Paste overwrite", "n")

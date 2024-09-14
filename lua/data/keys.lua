@@ -440,6 +440,59 @@ M.misc = {
     mode = "n",
     hidden = true,
   },
+  { -- Visual mode: Move selected block of text up
+    lhs = "K",
+    rhs = function()
+      require("data.func").move_visual(true)
+    end,
+    desc = "Move block of text up",
+    mode = "v",
+  },
+  { -- Visual mode: Move selected block of text down
+    lhs = "J",
+    rhs = function()
+      require("data.func").move_visual(false)
+    end,
+    desc = "Move block of text down",
+    mode = "v",
+  },
+  { -- Test Prompt: Enter your name
+    lhs = "<leader>qP",
+    rhs = function()
+      require("data.func").InputPrompt("Enter your name: ", function(input)
+        if input then
+          -- trim whitespace from end of input
+          input = input:gsub("%s+$", "")
+          print("👋😎 Hello " .. input .. "!")
+        else
+          print("Input was canceled")
+        end
+      end)
+    end,
+    desc = "Test Prompt",
+  },
+  { -- Paste over text with overwrite
+    lhs = "<leader>cp",
+    rhs = function()
+      require("data.func").paste_overwrite()
+    end,
+    desc = "Paste overwrite",
+    mode = "n",
+  },
+  { -- Dump buffer contents to a table in register
+    lhs = "<leader>bY",
+    rhs = function()
+      require("data.func").dump_buffer_to_table("+")
+    end,
+    desc = "Yank buffer as table",
+    mode = "n",
+  },
+  { -- Yank buffer
+    lhs = "<leader>by",
+    rhs = "<cmd>%y<cr>",
+    desc = "Yank buffer",
+    mode = "n",
+  },
 }
 
 M.nekifoch = {

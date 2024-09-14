@@ -455,6 +455,8 @@ function M.move_visual(up, multiplier)
   vim.cmd("norm gv")
 end
 
+---@function Function to paste over text with overwrite
+---@return nil
 function M.paste_overwrite()
   -- Get the register contents and type
   local register = vim.fn.getreginfo(vim.v.register or '"')
@@ -488,6 +490,29 @@ function M.paste_overwrite()
     "n",
     false
   )
+end
+
+---@function Function to dump the current buffer to a register and format as a Lua table
+---@param register string? The name of the register to dump the buffer to (defaults to unnamed register if nil)
+---@return nil
+function M.dump_buffer_to_table(register)
+  register = register or "" -- Default to unnamed register if not provided
+
+  -- Get the lines from the current buffer
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+  -- Process the buffer contents
+  local result = {}
+  for _, line in ipairs(lines) do
+    local entry = line:gsub("%.lua$", "") -- Remove ".lua" extension
+    table.insert(result, '"' .. entry .. '"')
+  end
+
+  -- Join the result into a single string and format as a Lua table
+  local output = "{ " .. table.concat(result, ", ") .. " }"
+
+  -- Dump the result into a register
+  vim.fn.setreg(register, output)
 end
 
 ---@function Function to reload the user's Neovim configuration
