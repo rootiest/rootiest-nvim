@@ -1,10 +1,15 @@
 return { -- Neovim Updater
   "rootiest/nvim-updater.nvim",
   config = function()
-    require("nvim_updater").setup({})
+    require("nvim_updater").setup({
+      source_dir = vim.fn.expand("~/.local/src/neovim"),
+      build_type = "RelWithDebInfo",
+      branch = "master",
+    })
   end,
   cmd = {
     "UpdateNeovim",
+    "RemoveNeovimSource",
   },
   keys = {
     {
