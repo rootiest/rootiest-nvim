@@ -519,7 +519,7 @@ end
 ---@return nil
 function M.frecency_picker()
   -- Trigger the picker
-  require("telescope").extensions.frecency.frecency()
+  require("telescope").extensions.frecency.frecency({ workspace = "CWD" })
   -- Remove `A` character that is added by the picker
   vim.api.nvim_feedkeys(
     vim.api.nvim_replace_termcodes("<BS>", true, true, true),

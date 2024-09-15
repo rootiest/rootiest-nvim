@@ -35,13 +35,13 @@ return { -- Alpha
         if pcall(require, "auto-cursorline") then
           require("auto-cursorline").disable({ buffer = true })
         end
-        dashboard.section.footer.val = "⚡ Neovim loaded "
+        dashboard.section.footer.val = "󰇥  Neovim loaded "
           .. stats.loaded
           .. "/"
           .. stats.count
           .. " plugins in "
           .. ms
-          .. "ms"
+          .. "ms 󱐌"
         pcall(vim.cmd.AlphaRedraw)
       end,
     })

@@ -11,16 +11,24 @@ local M = {}
 M.alpha = {
   opts = function()
     local dashboard = require("alpha.themes.dashboard")
-    local logo = [[
-██████╗  ██████╗  ██████╗ ████████╗██╗███████╗███████╗████████╗    ███╗   ██╗██╗   ██╗██╗███╗   ███╗
-██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝██║██╔════╝██╔════╝╚══██╔══╝    ████╗  ██║██║   ██║██║████╗ ████║
-██████╔╝██║   ██║██║   ██║   ██║   ██║█████╗  ███████╗   ██║       ██╔██╗ ██║██║   ██║██║██╔████╔██║
-██╔══██╗██║   ██║██║   ██║   ██║   ██║██╔══╝  ╚════██║   ██║      ██║╚██╗██║╚██╗ ██╔╝██║██║╚██╔╝██║
-██║  ██║╚██████╔╝╚██████╔╝   ██║   ██║███████╗███████║   ██║       ██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║
-╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝╚══════╝╚══════╝   ╚═╝       ╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
-]]
-
-    dashboard.section.header.val = vim.split(logo, "\n")
+    local header = {
+      [[  ███       ███  ]],
+      [[  ████      ████ ]],
+      [[  ████     █████ ]],
+      [[ █ ████    █████ ]],
+      [[ ██ ████   █████ ]],
+      [[ ███ ████  █████ ]],
+      [[ ████ ████ ████ ]],
+      [[ █████  ████████ ]],
+      [[ █████   ███████ ]],
+      [[ █████    ██████ ]],
+      [[ █████     █████ ]],
+      [[ ████      ████ ]],
+      [[  ███       ███  ]],
+      [[                    ]],
+      [[  N  E  O  V  I  M  ]],
+    }
+    dashboard.section.header.val = header
     -- stylua: ignore start
     dashboard.section.buttons.val = {
       ---@diagnostic disable: param-type-mismatch
@@ -30,7 +38,7 @@ M.alpha = {
       dashboard.button("g", " " .. " Grep text", LazyVim.pick("live_grep")),
       dashboard.button("z", " " .. " LazyGit", "<cmd>lua require('config.rootiest').toggle_lazygit_float() <cr>"),
       dashboard.button("c", " " .. " Config", LazyVim.pick.config_files()),
-      dashboard.button("s", " " .. " Restore Session", [[<cmd> lua require("persistence").load() <cr>]]),
+      dashboard.button("s", "󰶮 " .. " Restore Session", [[<cmd> lua require("persistence").load() <cr>]]),
       dashboard.button("S", " " .. " Remote Session", [[<cmd> lua require("config.rootiest").load_remote() <cr>]]),
       dashboard.button("l", "󰒲 " .. " Lazy", "<cmd> Lazy <cr>"),
       dashboard.button("q", " " .. " Quit", "<cmd> qa <cr>"),
@@ -40,8 +48,7 @@ M.alpha = {
       button.opts.hl = "AlphaButtons"
       button.opts.hl_shortcut = "AlphaShortcut"
     end
-    dashboard.section.header.opts.hl = "AlphaHeader"
-    dashboard.section.buttons.opts.hl = "AlphaButtons"
+    dashboard.section.header.opts.hl = "Conditional"
     dashboard.section.footer.opts.hl = "AlphaFooter"
     dashboard.opts.layout[1].val = 10
     return dashboard
@@ -89,7 +96,7 @@ M.dashboard_nvim = {
     { -- Restore Session
       action = 'lua require("persistence").load()',
       desc = " Restore Session",
-      icon = " ",
+      icon = "󰶮 ",
       key = "s",
     },
     { -- Remote Session
