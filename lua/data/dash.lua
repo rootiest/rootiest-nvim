@@ -50,7 +50,8 @@ M.alpha = {
     end
     dashboard.section.header.opts.hl = "Conditional"
     dashboard.section.footer.opts.hl = "AlphaFooter"
-    dashboard.opts.layout[1].val = 10
+    dashboard.opts.layout[1].val =
+      vim.fn.max({ 2, vim.fn.floor(vim.fn.winheight(0) * 0.2) })
     return dashboard
   end,
 }
