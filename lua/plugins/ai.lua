@@ -31,19 +31,17 @@ return {
     opts = { provider = "openai" },
     enabled = data.cond.minuet,
   },
-  -- {
-  --   "jackMort/ChatGPT.nvim",
-  --   event = "VeryLazy",
-  --   opts = {},
-  --   dependencies = {
-  --     "MunifTanjim/nui.nvim",
-  --     "nvim-lua/plenary.nvim",
-  --     "folke/trouble.nvim",
-  --     "nvim-telescope/telescope.nvim",
-  --   },
-  -- },
-  {
+  { -- ChatGPT
+    "jackMort/ChatGPT.nvim",
+    event = "VeryLazy",
+    keys = data.keys.chatgpt.func,
+    opts = data.types.chatgpt,
+    dependencies = data.deps.chatgpt,
+  },
+  { -- GP
     "robitx/gp.nvim",
-    opts = {},
+    lazy = false,
+    opts = data.types.gp,
+    keys = data.keys.gp.func,
   },
 }

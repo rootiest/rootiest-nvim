@@ -30,6 +30,94 @@ M.capsword = {
   },
 }
 
+M.chatgpt = {
+  func = function()
+    -- Add ChatGPT menu
+    require("data.func").add_keymap(M.group.chatgpt)
+    -- Add ChatGPT keys
+    return M.chatgpt.keys
+  end,
+  keys = {
+    {
+      "<leader>cxc",
+      "<cmd>ChatGPT<cr>",
+      desc = "ChatGPT",
+    },
+    {
+      "<leader>cxe",
+      "<cmd>ChatGPTEditWithInstruction<cr>",
+      desc = "Edit with instruction",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>cxg",
+      "<cmd>ChatGPTRun grammar_correction<cr>",
+      desc = "Grammar Correction",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>cxt",
+      "<cmd>ChatGPTRun translate<cr>",
+      desc = "Translate",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>cxk",
+      "<cmd>ChatGPTRun keywords<cr>",
+      desc = "Keywords",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>cxd",
+      "<cmd>ChatGPTRun docstring<cr>",
+      desc = "Docstring",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>cxa",
+      "<cmd>ChatGPTRun add_tests<cr>",
+      desc = "Add Tests",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>cxo",
+      "<cmd>ChatGPTRun optimize_code<cr>",
+      desc = "Optimize Code",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>cxs",
+      "<cmd>ChatGPTRun summarize<cr>",
+      desc = "Summarize",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>cxf",
+      "<cmd>ChatGPTRun fix_bugs<cr>",
+      desc = "Fix Bugs",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>cxr",
+      "<cmd>ChatGPTRun explain_code<cr>",
+      desc = "Explain Code",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>cxr",
+      "<cmd>ChatGPTRun roxygen_edit<cr>",
+      desc = "Roxygen Edit",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>cxl",
+      "<cmd>ChatGPTRun code_readability_analysis<cr>",
+      desc = "Code Readability Analysis",
+      mode = { "n", "v" },
+    },
+  },
+}
+
 M.codesnap = {
   { -- Save selected code snapshot into clipboard
     "<leader>cy",
@@ -69,75 +157,83 @@ M.flash = {
 }
 
 M.minimap = {
-  { -- Toggle minimap
-    "<leader>nt",
-    "<cmd>Neominimap toggle<cr>",
-    desc = "Toggle minimap",
-  },
-  { -- Enable minimap
-    "<leader>no",
-    "<cmd>Neominimap on<cr>",
-    desc = "Enable minimap",
-  },
-  { -- Disable minimap
-    "<leader>nc",
-    "<cmd>Neominimap off<cr>",
-    desc = "Disable minimap",
-  },
-  { -- Refresh minimap
-    "<leader>nf",
-    "<cmd>Neominimap focus<cr>",
-    desc = "Focus on minimap",
-  },
-  { -- Unfocus minimap
-    "<leader>nu",
-    "<cmd>Neominimap unfocus<cr>",
-    desc = "Unfocus minimap",
-  },
-  { -- Toggle focus
-    "<leader>ns",
-    "<cmd>Neominimap toggleFocus<cr>",
-    desc = "Toggle focus on minimap",
-  },
-  { -- Toggle minimap for current window
-    "<leader>nwt",
-    "<cmd>Neominimap winToggle<cr>",
-    desc = "Toggle minimap for current window",
-  },
-  { -- Refresh minimap for current window
-    "<leader>nwr",
-    "<cmd>Neominimap winRefresh<cr>",
-    desc = "Refresh minimap for current window",
-  },
-  { -- Enable minimap for current window
-    "<leader>nwo",
-    "<cmd>Neominimap winOn<cr>",
-    desc = "Enable minimap for current window",
-  },
-  { -- Disable minimap for current window
-    "<leader>nwc",
-    "<cmd>Neominimap winOff<cr>",
-    desc = "Disable minimap for current window",
-  },
-  { -- Toggle minimap for current buffer
-    "<leader>nbt",
-    "<cmd>Neominimap bufToggle<cr>",
-    desc = "Toggle minimap for current buffer",
-  },
-  { -- Refresh minimap for current buffer
-    "<leader>nbr",
-    "<cmd>Neominimap bufRefresh<cr>",
-    desc = "Refresh minimap for current buffer",
-  },
-  { -- Enable minimap for current buffer
-    "<leader>nbo",
-    "<cmd>Neominimap bufOn<cr>",
-    desc = "Enable minimap for current buffer",
-  },
-  { -- Disable minimap for current buffer
-    "<leader>nbc",
-    "<cmd>Neominimap bufOff<cr>",
-    desc = "Disable minimap for current buffer",
+  func = function()
+    -- Add NeoMiniMap menu
+    require("data.func").add_keymap(M.group.minimap)
+    -- Add NeoMiniMap keys
+    return M.minimap.keys
+  end,
+  keys = {
+    { -- Toggle minimap
+      "<leader>nt",
+      "<cmd>Neominimap toggle<cr>",
+      desc = "Toggle minimap",
+    },
+    { -- Enable minimap
+      "<leader>no",
+      "<cmd>Neominimap on<cr>",
+      desc = "Enable minimap",
+    },
+    { -- Disable minimap
+      "<leader>nc",
+      "<cmd>Neominimap off<cr>",
+      desc = "Disable minimap",
+    },
+    { -- Refresh minimap
+      "<leader>nf",
+      "<cmd>Neominimap focus<cr>",
+      desc = "Focus on minimap",
+    },
+    { -- Unfocus minimap
+      "<leader>nu",
+      "<cmd>Neominimap unfocus<cr>",
+      desc = "Unfocus minimap",
+    },
+    { -- Toggle focus
+      "<leader>ns",
+      "<cmd>Neominimap toggleFocus<cr>",
+      desc = "Toggle focus on minimap",
+    },
+    { -- Toggle minimap for current window
+      "<leader>nwt",
+      "<cmd>Neominimap winToggle<cr>",
+      desc = "Toggle minimap for current window",
+    },
+    { -- Refresh minimap for current window
+      "<leader>nwr",
+      "<cmd>Neominimap winRefresh<cr>",
+      desc = "Refresh minimap for current window",
+    },
+    { -- Enable minimap for current window
+      "<leader>nwo",
+      "<cmd>Neominimap winOn<cr>",
+      desc = "Enable minimap for current window",
+    },
+    { -- Disable minimap for current window
+      "<leader>nwc",
+      "<cmd>Neominimap winOff<cr>",
+      desc = "Disable minimap for current window",
+    },
+    { -- Toggle minimap for current buffer
+      "<leader>nbt",
+      "<cmd>Neominimap bufToggle<cr>",
+      desc = "Toggle minimap for current buffer",
+    },
+    { -- Refresh minimap for current buffer
+      "<leader>nbr",
+      "<cmd>Neominimap bufRefresh<cr>",
+      desc = "Refresh minimap for current buffer",
+    },
+    { -- Enable minimap for current buffer
+      "<leader>nbo",
+      "<cmd>Neominimap bufOn<cr>",
+      desc = "Enable minimap for current buffer",
+    },
+    { -- Disable minimap for current buffer
+      "<leader>nbc",
+      "<cmd>Neominimap bufOff<cr>",
+      desc = "Disable minimap for current buffer",
+    },
   },
 }
 
@@ -244,44 +340,257 @@ M.gitgraph = {
 }
 
 M.gist = {
-  { -- Create Gist
-    "<leader>gnc",
-    "<cmd>GistCreate<cr>",
-    desc = "Create Gist",
-    mode = { "n", "x" },
-  },
-  { -- Find Gists
-    "<leader>gnf",
-    "<cmd>GistList<cr>",
-    desc = "Find Gists",
+  func = function()
+    -- Add gists menu
+    require("data.func").add_keymap(M.group.gist)
+    -- Add gists keys
+    return M.gist.keys
+  end,
+  keys = {
+    { -- Create Gist
+      "<leader>gnc",
+      "<cmd>GistCreate<cr>",
+      desc = "Create Gist",
+      mode = { "n", "x" },
+    },
+    { -- Find Gists
+      "<leader>gnf",
+      "<cmd>GistList<cr>",
+      desc = "Find Gists",
+    },
   },
 }
 
-M.groups = {
-  { -- Gists menu
+M.undotree = function()
+  require("data.func").add_keymap(
+    "<leader>uu",
+    "<cmd>UndotreeToggle<cr>",
+    "Toggle UndoTree"
+  )
+end
+
+M.gp = {
+  func = function()
+    -- Use which-key directly
+    if pcall(require, "which-key") then
+      require("which-key").add(M.gp.keys)
+    end
+  end,
+  keys = {
+    -- VISUAL mode mappings
+    -- s, x, v modes are handled the same way by which_key
+    {
+      mode = { "v" },
+      nowait = true,
+      remap = false,
+      {
+        "<C-g><C-t>",
+        ":<C-u>'<,'>GpChatNew tabnew<cr>",
+        desc = "ChatNew tabnew",
+      },
+      {
+        "<C-g><C-v>",
+        ":<C-u>'<,'>GpChatNew vsplit<cr>",
+        desc = "ChatNew vsplit",
+      },
+      {
+        "<C-g><C-x>",
+        ":<C-u>'<,'>GpChatNew split<cr>",
+        desc = "ChatNew split",
+      },
+      { "<C-g>a", ":<C-u>'<,'>GpAppend<cr>", desc = "Visual Append (after)" },
+      {
+        "<C-g>b",
+        ":<C-u>'<,'>GpPrepend<cr>",
+        desc = "Visual Prepend (before)",
+      },
+      { "<C-g>c", ":<C-u>'<,'>GpChatNew<cr>", desc = "Visual Chat New" },
+      { "<C-g>g", group = "generate into new .." },
+      { "<C-g>ge", ":<C-u>'<,'>GpEnew<cr>", desc = "Visual GpEnew" },
+      { "<C-g>gn", ":<C-u>'<,'>GpNew<cr>", desc = "Visual GpNew" },
+      { "<C-g>gp", ":<C-u>'<,'>GpPopup<cr>", desc = "Visual Popup" },
+      { "<C-g>gt", ":<C-u>'<,'>GpTabnew<cr>", desc = "Visual GpTabnew" },
+      { "<C-g>gv", ":<C-u>'<,'>GpVnew<cr>", desc = "Visual GpVnew" },
+      { "<C-g>i", ":<C-u>'<,'>GpImplement<cr>", desc = "Implement selection" },
+      { "<C-g>n", "<cmd>GpNextAgent<cr>", desc = "Next Agent" },
+      { "<C-g>p", ":<C-u>'<,'>GpChatPaste<cr>", desc = "Visual Chat Paste" },
+      { "<C-g>r", ":<C-u>'<,'>GpRewrite<cr>", desc = "Visual Rewrite" },
+      { "<C-g>s", "<cmd>GpStop<cr>", desc = "GpStop" },
+      { "<C-g>t", ":<C-u>'<,'>GpChatToggle<cr>", desc = "Visual Toggle Chat" },
+      { "<C-g>w", group = "Whisper" },
+      { "<C-g>wa", ":<C-u>'<,'>GpWhisperAppend<cr>", desc = "Whisper Append" },
+      {
+        "<C-g>wb",
+        ":<C-u>'<,'>GpWhisperPrepend<cr>",
+        desc = "Whisper Prepend",
+      },
+      { "<C-g>we", ":<C-u>'<,'>GpWhisperEnew<cr>", desc = "Whisper Enew" },
+      { "<C-g>wn", ":<C-u>'<,'>GpWhisperNew<cr>", desc = "Whisper New" },
+      { "<C-g>wp", ":<C-u>'<,'>GpWhisperPopup<cr>", desc = "Whisper Popup" },
+      {
+        "<C-g>wr",
+        ":<C-u>'<,'>GpWhisperRewrite<cr>",
+        desc = "Whisper Rewrite",
+      },
+      { "<C-g>wt", ":<C-u>'<,'>GpWhisperTabnew<cr>", desc = "Whisper Tabnew" },
+      { "<C-g>wv", ":<C-u>'<,'>GpWhisperVnew<cr>", desc = "Whisper Vnew" },
+      { "<C-g>ww", ":<C-u>'<,'>GpWhisper<cr>", desc = "Whisper" },
+      { "<C-g>x", ":<C-u>'<,'>GpContext<cr>", desc = "Visual GpContext" },
+    },
+
+    -- NORMAL mode mappings
+    {
+      mode = { "n" },
+      nowait = true,
+      remap = false,
+      { "<C-g><C-t>", "<cmd>GpChatNew tabnew<cr>", desc = "New Chat tabnew" },
+      { "<C-g><C-v>", "<cmd>GpChatNew vsplit<cr>", desc = "New Chat vsplit" },
+      { "<C-g><C-x>", "<cmd>GpChatNew split<cr>", desc = "New Chat split" },
+      { "<C-g>a", "<cmd>GpAppend<cr>", desc = "Append (after)" },
+      { "<C-g>b", "<cmd>GpPrepend<cr>", desc = "Prepend (before)" },
+      { "<C-g>c", "<cmd>GpChatNew<cr>", desc = "New Chat" },
+      { "<C-g>f", "<cmd>GpChatFinder<cr>", desc = "Chat Finder" },
+      { "<C-g>g", group = "generate into new .." },
+      { "<C-g>ge", "<cmd>GpEnew<cr>", desc = "GpEnew" },
+      { "<C-g>gn", "<cmd>GpNew<cr>", desc = "GpNew" },
+      { "<C-g>gp", "<cmd>GpPopup<cr>", desc = "Popup" },
+      { "<C-g>gt", "<cmd>GpTabnew<cr>", desc = "GpTabnew" },
+      { "<C-g>gv", "<cmd>GpVnew<cr>", desc = "GpVnew" },
+      { "<C-g>n", "<cmd>GpNextAgent<cr>", desc = "Next Agent" },
+      { "<C-g>r", "<cmd>GpRewrite<cr>", desc = "Inline Rewrite" },
+      { "<C-g>s", "<cmd>GpStop<cr>", desc = "GpStop" },
+      { "<C-g>t", "<cmd>GpChatToggle<cr>", desc = "Toggle Chat" },
+      { "<C-g>w", group = "Whisper" },
+      {
+        "<C-g>wa",
+        "<cmd>GpWhisperAppend<cr>",
+        desc = "Whisper Append (after)",
+      },
+      {
+        "<C-g>wb",
+        "<cmd>GpWhisperPrepend<cr>",
+        desc = "Whisper Prepend (before)",
+      },
+      { "<C-g>we", "<cmd>GpWhisperEnew<cr>", desc = "Whisper Enew" },
+      { "<C-g>wn", "<cmd>GpWhisperNew<cr>", desc = "Whisper New" },
+      { "<C-g>wp", "<cmd>GpWhisperPopup<cr>", desc = "Whisper Popup" },
+      {
+        "<C-g>wr",
+        "<cmd>GpWhisperRewrite<cr>",
+        desc = "Whisper Inline Rewrite",
+      },
+      { "<C-g>wt", "<cmd>GpWhisperTabnew<cr>", desc = "Whisper Tabnew" },
+      { "<C-g>wv", "<cmd>GpWhisperVnew<cr>", desc = "Whisper Vnew" },
+      { "<C-g>ww", "<cmd>GpWhisper<cr>", desc = "Whisper" },
+      { "<C-g>x", "<cmd>GpContext<cr>", desc = "Toggle GpContext" },
+    },
+
+    -- INSERT mode mappings
+    {
+      mode = { "i" },
+      nowait = true,
+      remap = false,
+      { "<C-g><C-t>", "<cmd>GpChatNew tabnew<cr>", desc = "New Chat tabnew" },
+      { "<C-g><C-v>", "<cmd>GpChatNew vsplit<cr>", desc = "New Chat vsplit" },
+      { "<C-g><C-x>", "<cmd>GpChatNew split<cr>", desc = "New Chat split" },
+      { "<C-g>a", "<cmd>GpAppend<cr>", desc = "Append (after)" },
+      { "<C-g>b", "<cmd>GpPrepend<cr>", desc = "Prepend (before)" },
+      { "<C-g>c", "<cmd>GpChatNew<cr>", desc = "New Chat" },
+      { "<C-g>f", "<cmd>GpChatFinder<cr>", desc = "Chat Finder" },
+      { "<C-g>g", group = "generate into new .." },
+      { "<C-g>ge", "<cmd>GpEnew<cr>", desc = "GpEnew" },
+      { "<C-g>gn", "<cmd>GpNew<cr>", desc = "GpNew" },
+      { "<C-g>gp", "<cmd>GpPopup<cr>", desc = "Popup" },
+      { "<C-g>gt", "<cmd>GpTabnew<cr>", desc = "GpTabnew" },
+      { "<C-g>gv", "<cmd>GpVnew<cr>", desc = "GpVnew" },
+      { "<C-g>n", "<cmd>GpNextAgent<cr>", desc = "Next Agent" },
+      { "<C-g>r", "<cmd>GpRewrite<cr>", desc = "Inline Rewrite" },
+      { "<C-g>s", "<cmd>GpStop<cr>", desc = "GpStop" },
+      { "<C-g>t", "<cmd>GpChatToggle<cr>", desc = "Toggle Chat" },
+      { "<C-g>w", group = "Whisper" },
+      {
+        "<C-g>wa",
+        "<cmd>GpWhisperAppend<cr>",
+        desc = "Whisper Append (after)",
+      },
+      {
+        "<C-g>wb",
+        "<cmd>GpWhisperPrepend<cr>",
+        desc = "Whisper Prepend (before)",
+      },
+      { "<C-g>we", "<cmd>GpWhisperEnew<cr>", desc = "Whisper Enew" },
+      { "<C-g>wn", "<cmd>GpWhisperNew<cr>", desc = "Whisper New" },
+      { "<C-g>wp", "<cmd>GpWhisperPopup<cr>", desc = "Whisper Popup" },
+      {
+        "<C-g>wr",
+        "<cmd>GpWhisperRewrite<cr>",
+        desc = "Whisper Inline Rewrite",
+      },
+      { "<C-g>wt", "<cmd>GpWhisperTabnew<cr>", desc = "Whisper Tabnew" },
+      { "<C-g>wv", "<cmd>GpWhisperVnew<cr>", desc = "Whisper Vnew" },
+      { "<C-g>ww", "<cmd>GpWhisper<cr>", desc = "Whisper" },
+      { "<C-g>x", "<cmd>GpContext<cr>", desc = "Toggle GpContext" },
+    },
+  },
+}
+
+M.group = {
+  chatgpt = { -- ChatGPT
+    lhs = "<leader>cx",
+    group = "ChatGPT",
+    icon = { icon = "", color = "blue" },
+  },
+  gist = { -- Gists menu
     lhs = "<leader>gn",
     group = "Gists",
     icon = { icon = "", color = "orange" },
   },
+  minimap = { -- MiniMap menu
+    lhs = "<leader>n",
+    group = "MiniMap",
+    icon = { icon = "", color = "green" },
+  },
+  nvimup = { -- Neovim Updater menu
+    lhs = "<leader>qu",
+    group = "Neovim Updater",
+    icon = { icon = "", color = "red" },
+  },
+}
+
+M.groups = {
   { -- Lazy menu
     lhs = "<leader>l",
     group = "Lazy",
     icon = { icon = "󰒲", color = "red" },
   },
-  { -- MiniMap menu
-    lhs = "<leader>n",
-    group = "MiniMap",
-    icon = { icon = "", color = "green" },
+}
+
+M.nvimup = {
+  {
+    "<Leader>quU",
+    ":UpdateNeovim<CR>",
+    desc = "Update Neovim",
   },
-  { -- Code action menu
-    lhs = "<leader>C",
-    group = "CodeActions",
-    icon = { icon = "", color = "yellow" },
+  {
+    "<Leader>quD",
+    function()
+      require("nvim_updater").update_neovim({ build_type = "Debug" })
+    end,
+    desc = "Debug Build Neovim",
   },
-  { -- Neovim Updater menu
-    lhs = "<leader>qu",
-    group = "Neovim Updater",
-    icon = { icon = "", color = "red" },
+  {
+    "<Leader>quR",
+    function()
+      require("nvim_updater").update_neovim({ build_type = "Release" })
+    end,
+    desc = "Release Build Neovim",
+  },
+  {
+    "<Leader>quC",
+    function()
+      require("nvim_updater").remove_source_dir()
+    end,
+    desc = "Clean Neovim Source",
   },
 }
 
@@ -725,9 +1034,8 @@ M.telescope = {
           sources = { "emoji", "kaomoji", "gitmoji", "nerd", "math" },
         })
       end,
-      "i",
-
       desc = "Pick Icon",
+      mode = "i",
     },
   },
   toggleterm = {

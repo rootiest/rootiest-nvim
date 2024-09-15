@@ -6,6 +6,13 @@
 --          ╰─────────────────────────────────────────────────────────╯
 local M = {}
 
+M.chatgpt = {
+  "MunifTanjim/nui.nvim",
+  "nvim-lua/plenary.nvim",
+  "folke/trouble.nvim",
+  "nvim-telescope/telescope.nvim",
+}
+
 --- nvim-cmp dependencies
 ---@return table The nvim-cmp dependencies
 M.cmp = {

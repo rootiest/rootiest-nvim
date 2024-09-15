@@ -74,20 +74,19 @@ function M.setup_indent_highlight()
   require("ibl").setup({
     indent = {
       char = vim.g.indent_char or data.types.ibl.indent_char.none,
+      tab_char = vim.g.tab_char or data.types.ibl.tab_char.simple,
       highlight = {
         "IndentBlanklineIndent",
       },
     },
     scope = {
-      show_start = true,
-      highlight = {
-        "IndentsScopeHighlight",
-        "IndentsScopeHighlight",
-      },
-      char = vim.g.scope_char or data.types.ibl.scope_char.hard,
-    },
-    whitespace = {
-      remove_blankline_trail = true,
+      enabled = false,
+      -- show_start = true,
+      -- highlight = {
+      --   "IndentsScopeHighlight",
+      --   "IndentsScopeHighlight",
+      -- },
+      -- char = vim.g.scope_char or data.types.ibl.scope_char.hard,
     },
     exclude = {
       filetypes = data.types.highlights.exclude,

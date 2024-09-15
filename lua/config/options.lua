@@ -35,14 +35,14 @@ vim.g.useimage        =  true          ---@type boolean Options:  <true|false>
 vim.g.ignore_no_lazy  =  false         ---@type boolean Options:  <true|false>
 -- Enable codesnap for code screenshots
 vim.g.codesnap        =  true          ---@type boolean Options:  <true|false>
+-- Enable encouraging feedback
+vim.g.encourage_me    =  true          ---@type boolean Options:  <true|false>
 -- Enable Auto-hiding cursorline
 vim.g.auto_cursorline =  true          ---@type boolean Options: <true|false>
 -- Enable Auto-save
 vim.g.auto_save       =  true          ---@type boolean Options: <true|false>
 -- Animate blinky cursor
 vim.g.blinky          =  true          ---@type boolean Options: <true|false>
--- Use Rootiest cmd window instead of cmdline
-vim.g.rootiest_cmd    =  false         ---@type boolean Options: <true|false>
 -- Use experimental cmp performance fork
 vim.g.cmp_performance_enabled = true   ---@type boolean Options: <true|false>
 -- Use dev mode for rootiest plugins
@@ -118,5 +118,6 @@ vim.g.completion_round_borders_enabled = true  ---@type boolean Options: <true|f
 
 -- stylua: ignore end
 
--- Post-Config Operations
-require("config.post-ops")
+--  ━━━━━━━━━━━━━━━━━━━━━━━━ Post-Config Functions ━━━━━━━━━━━━━━━━━━━━━━━━
+-- Setup blinky cursor
+require("utils.blinky").setup(vim.g.blinky)

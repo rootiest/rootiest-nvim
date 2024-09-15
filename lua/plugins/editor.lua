@@ -24,6 +24,16 @@ return {
   { -- Treesitter-context
     import = "lazyvim.plugins.extras.ui.treesitter-context",
   },
+  { -- Mini.Indentscope
+    import = "lazyvim.plugins.extras.ui.mini-indentscope",
+  },
+  { -- Mini Indentscope
+    "echasnovski/mini.indentscope",
+    opts = data.types.miniindentscope,
+  },
+  { -- Navic
+    import = "lazyvim.plugins.extras.editor.navic",
+  },
   { -- Trouble
     "folke/trouble.nvim",
     cmd = data.cmd.trouble,
@@ -31,9 +41,7 @@ return {
   },
   { -- Flash
     "folke/flash.nvim",
-    opts = {
-      modes = { char = { jump_labels = true } },
-    },
+    opts = data.types.flash,
     keys = data.keys.flash,
   },
   {
@@ -52,7 +60,7 @@ return {
   { -- NeoMiniMap
     "Isrothy/neominimap.nvim",
     lazy = false,
-    keys = data.keys.minimap,
+    keys = data.keys.minimap.func,
     init = data.types.minimap.init(),
     cond = data.types.minimap.cond(),
   },
@@ -81,16 +89,12 @@ return {
     "gen740/SmoothCursor.nvim",
     event = "BufEnter",
     -- lazy = true,
-    opts = {
-      cursor = "",
-    },
+    opts = data.types.smoothcursor,
   },
   { -- Smart Scrolloff
     "tonymajestro/smart-scrolloff.nvim",
     event = "VeryLazy",
-    opts = {
-      scrolloff_percentage = 0.25,
-    },
+    opts = data.types.smartscrolloff,
   },
   { -- Recorder
     "chrisgrieser/nvim-recorder",
@@ -114,19 +118,13 @@ return {
   { -- Colorful window separators
     "nvim-zh/colorful-winsep.nvim",
     lazy = true,
-    opts = {
-      only_line_seq = false,
-      symbols = data.types.colorful_winsep.symbols,
-      no_exec_files = data.types.colorful_winsep.no_exec_files,
-    },
+    opts = data.types.winsep,
     event = { "WinLeave" },
   },
   { -- Auto Cursorline
     "delphinus/auto-cursorline.nvim",
     enabled = data.func.check_global_var("auto_cursorline", true, true),
-    opts = {
-      wait_ms = 2000,
-    },
+    opts = data.types.autocursorline,
   },
   { -- Bars N Lines
     "OXY2DEV/bars-N-lines.nvim",
@@ -134,31 +132,10 @@ return {
     lazy = false,
     config = data.types.barsNlines.config,
   },
-  { -- UndoTree Telescope extension
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "debugloop/telescope-undo.nvim",
-    },
-    opts = function()
-      require("telescope").load_extension("undo")
-      vim.keymap.set("n", "<leader>uU", "<cmd>Telescope undo<cr>")
-      return {
-        extensions = {
-          undo = {},
-        },
-      }
-    end,
-  },
   { -- UndoTree
     "mbbill/undotree",
-    config = function()
-      data.func.add_keymap(
-        "<leader>uu",
-        "<cmd>UndotreeToggle<cr>",
-        "Toggle UndoTree"
-      )
-    end,
+    opts = {},
+    keys = data.keys.undotree,
   },
   { -- NumberToggle
     "sitiom/nvim-numbertoggle",
@@ -166,8 +143,6 @@ return {
   {
     "folke/noice.nvim",
     optional = true,
-    opts = {
-      presets = { inc_rename = true },
-    },
+    opts = data.types.noice,
   },
 }

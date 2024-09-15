@@ -1,34 +1,14 @@
+local data = require("data")
+
 return { -- Neovim Updater
   "rootiest/nvim-updater.nvim",
   lazy = false,
   opts = {},
-  keys = {
-    {
-      "<Leader>quU",
-      ":UpdateNeovim<CR>",
-      desc = "Update Neovim",
-    },
-    {
-      "<Leader>quD",
-      function()
-        require("nvim_updater").update_neovim({ build_type = "Debug" })
-      end,
-      desc = "Debug Build Neovim",
-    },
-    {
-      "<Leader>quR",
-      function()
-        require("nvim_updater").update_neovim({ build_type = "Release" })
-      end,
-      desc = "Release Build Neovim",
-    },
-    {
-      "<Leader>quC",
-      function()
-        require("nvim_updater").remove_source_dir()
-      end,
-      desc = "Clean Neovim Source",
-    },
-  },
+  keys = function()
+    -- Add Neovim Updater menu
+    data.func.add_keymap(data.keys.group.nvimup)
+    -- Add Neovim Updater keys
+    return data.keys.nvimup
+  end,
   dev = vim.g.rootiest_dev or false,
 }

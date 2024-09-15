@@ -165,6 +165,14 @@ M.border = {
   end,
 }
 
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Cursor Styles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+M.cursors = {
+  smooth = "",
+  block = "█",
+  line = "⎸",
+  underline = "_",
+}
+
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Type tables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 --- General exclusion list for buffers and filetypes
@@ -260,6 +268,51 @@ M.bufferline = {
       end,
     },
   },
+}
+
+--- CodeSnap configuration options
+M.codesnap = {
+  save_path = "~/Pictures/Screenshots/",
+  has_breadcrumbs = true,
+  show_workspace = true,
+  bg_theme = "default",
+  watermark = "Rootiest Snippets",
+  code_font_family = "Iosevka NF",
+  code_font_size = 12,
+}
+
+--- Flash configuration options
+M.flash = {
+  modes = { char = { jump_labels = true } },
+}
+
+--- Smart-Scrolloff configuration options
+M.smartscrolloff = { scrolloff_percentage = 0.25 }
+
+--- AutoCursorline configuration options
+M.autocursorline = { wait_ms = 2000 }
+
+--- SmoothCursor
+M.smoothcursor = {
+  cursor = M.cursors.smooth,
+}
+
+--- Suda configuration options
+M.suda = function()
+  vim.g.suda_smart_edit = 1
+  vim.cmd("let g:suda#prompt = '   Enter Sudo Password  '")
+end
+
+--- Autosave configuration options
+M.autosave = {
+  execution_message = {
+    enabled = false,
+  },
+}
+
+--- Kulala plugin types
+M.kulala = {
+  ft = { "http", "https", "ftp", "ftps" },
 }
 
 --- LazyVim configuration options
@@ -455,6 +508,61 @@ M.gitblame = {
   },
 }
 
+--- ChatGPT configuration options
+M.chatgpt = {
+  openai_params = {
+    model = "gpt-4o-mini",
+  },
+}
+
+-- GP ChatBot configuration options
+M.gp = function()
+  require("which-key").setup({
+    triggers = "<C-g>",
+    mode = M.all_modes,
+  })
+  return {
+    hooks = {
+      -- example of adding command which writes unit tests for the selected code
+      UnitTests = function(gp, params)
+        local template = "I have the following code from {{filename}}:\n\n"
+          .. "```{{filetype}}\n{{selection}}\n```\n\n"
+          .. "Please respond by writing table driven unit tests for the code above."
+        local agent = gp.get_command_agent()
+        gp.Prompt(params, gp.Target.vnew, agent, template)
+      end,
+      -- example of adding command which explains the selected code
+      Explain = function(gp, params)
+        local template = "I have the following code from {{filename}}:\n\n"
+          .. "```{{filetype}}\n{{selection}}\n```\n\n"
+          .. "Please respond by explaining the code above."
+        local agent = gp.get_chat_agent()
+        gp.Prompt(params, gp.Target.popup, agent, template)
+      end,
+      -- example of usig enew as a function specifying type for the new buffer
+      CodeReview = function(gp, params)
+        local template = "I have the following code from {{filename}}:\n\n"
+          .. "```{{filetype}}\n{{selection}}\n```\n\n"
+          .. "Please analyze for code smells and suggest improvements."
+        local agent = gp.get_chat_agent()
+        gp.Prompt(params, gp.Target.enew("markdown"), agent, template)
+      end,
+      -- example of adding command which opens new chat dedicated for translation
+      Translator = function(gp, params)
+        local chat_system_prompt =
+          "You are a Translator, please translate between English and Chinese."
+        gp.cmd.ChatNew(params, chat_system_prompt)
+      end,
+      -- example of making :%GpChatNew a dedicated command which
+      -- opens new chat with the entire current buffer as a context
+      BufferChatNew = function(gp, _)
+        -- call GpChatNew command in range mode on whole buffer
+        vim.api.nvim_command("%" .. gp.config.cmd_prefix .. "ChatNew")
+      end,
+    },
+  }
+end
+
 --- Telescope configuration options
 M.telescope = {
   cmdline = {
@@ -541,51 +649,68 @@ M.whichkey = {
 
 --- Git-Graph plugin options
 M.gitgraph = {
-  --- Git-graph symbols check for kitty
-  symbols = function()
-    if require("data.func").is_kitty() then
-      return {
-        merge_commit = "",
-        commit = "",
-        merge_commit_end = "",
-        commit_end = "",
+  opts = {
+    -- GitGraph Hooks
+    hooks = {
+      -- Check diff of a commit
+      on_select_commit = function(commit)
+        vim.notify("DiffviewOpen " .. commit.hash .. "^!")
+        vim.cmd(":DiffviewOpen " .. commit.hash .. "^!")
+      end,
+      -- Check diff from commit a -> commit b
+      on_select_range_commit = function(from, to)
+        vim.notify("DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
+        vim.cmd(":DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
+      end,
+    },
+    --- Git-graph symbols check for kitty
+    symbols = function()
+      if require("data.func").is_kitty() then
+        return {
+          merge_commit = "",
+          commit = "",
+          merge_commit_end = "",
+          commit_end = "",
 
-        -- Advanced symbols
-        GVER = "",
-        GHOR = "",
-        GCLD = "",
-        GCRD = "╭",
-        GCLU = "",
-        GCRU = "",
-        GLRU = "",
-        GLRD = "",
-        GLUD = "",
-        GRUD = "",
-        GFORKU = "",
-        GFORKD = "",
-        GRUDCD = "",
-        GRUDCU = "",
-        GLUDCD = "",
-        GLUDCU = "",
-        GLRDCL = "",
-        GLRDCR = "",
-        GLRUCL = "",
-        GLRUCR = "",
-      }
-    else
-      -- Fallback
-      return {
-        merge_commit = "",
-        commit = "",
-        merge_commit_end = "",
-        commit_end = "",
-      }
-    end
-  end,
-  -- Git graph timestamp style
-  timestamp = "%H:%M:%S %d-%m-%Y",
-  -- Git graph fields to display
-  fields = { "hash", "timestamp", "author", "branch_name", "tag" },
+          -- Advanced symbols
+          GVER = "",
+          GHOR = "",
+          GCLD = "",
+          GCRD = "╭",
+          GCLU = "",
+          GCRU = "",
+          GLRU = "",
+          GLRD = "",
+          GLUD = "",
+          GRUD = "",
+          GFORKU = "",
+          GFORKD = "",
+          GRUDCD = "",
+          GRUDCU = "",
+          GLUDCD = "",
+          GLUDCU = "",
+          GLRDCL = "",
+          GLRDCR = "",
+          GLRUCL = "",
+          GLRUCR = "",
+        }
+      else
+        -- Fallback
+        return {
+          merge_commit = "",
+          commit = "",
+          merge_commit_end = "",
+          commit_end = "",
+        }
+      end
+    end,
+    format = {
+      -- Git graph timestamp style
+      timestamp = "%H:%M:%S %d-%m-%Y",
+      -- Git graph fields to display
+      fields = { "hash", "timestamp", "author", "branch_name", "tag" },
+    },
+  },
 }
 
 --- Highlights module options
@@ -611,8 +736,18 @@ M.ibl = {
       "󰎼",
       "󰽽",
     },
+    solid = {
+      "▏",
+      "▎",
+      "▍",
+      "▌",
+      "▋",
+      "▊",
+      "▉",
+      "█",
+    },
     none = { " " },
-    basic = { "󰇘" },
+    baric = { "󰇘" },
   },
   scope_char = {
     light = { "" },
@@ -623,6 +758,122 @@ M.ibl = {
     basic = { "" },
     arrow = { "" },
     tab = { "󰌒" },
+  },
+  tab_char = {
+    fancy = {
+      "󰌒",
+      "󰌓",
+      "󰌔",
+      "󰌕",
+      "󰌖",
+      "󰌗",
+      "󰌘",
+      "󰌙",
+      "󰌚",
+      "󰌛",
+    },
+    none = { " " },
+    basic = { "" },
+    simple = { "" },
+    arrow = { "" },
+    tab = { "󰌒" },
+    mini = { "" },
+  },
+}
+
+--- Mini.Indentscope configuration options
+M.miniindentscope = {
+  symbol = M.ibl.scope_char.hard[1],
+  options = { try_as_border = true, border = "both" },
+}
+
+--- Navic Icons
+M.navic = {
+  icons = {
+    classic = {
+      File = "󰈙 ",
+      Module = " ",
+      Namespace = "󰌗 ",
+      Package = " ",
+      Class = "󰌗 ",
+      Method = "󰆧 ",
+      Property = " ",
+      Field = " ",
+      Constructor = " ",
+      Enum = "󰕘",
+      Interface = "󰕘",
+      Function = "󰊕 ",
+      Variable = "󰆧 ",
+      Constant = "󰏿 ",
+      String = "󰀬 ",
+      Number = "󰎠 ",
+      Boolean = "◩ ",
+      Array = "󰅪 ",
+      Object = "󰅩 ",
+      Key = "󰌋 ",
+      Null = "󰟢 ",
+      EnumMember = " ",
+      Struct = "󰌗 ",
+      Event = " ",
+      Operator = "󰆕 ",
+      TypeParameter = "󰊄 ",
+    },
+    trouble = {
+      File = " ",
+      Module = " ",
+      Namespace = " ",
+      Package = " ",
+      Class = " ",
+      Method = " ",
+      Property = " ",
+      Field = " ",
+      Constructor = " ",
+      Enum = " ",
+      Interface = " ",
+      Function = " ",
+      Variable = " ",
+      Constant = " ",
+      String = " ",
+      Number = " ",
+      Boolean = " ",
+      Array = " ",
+      Object = " ",
+      Key = " ",
+      Null = " ",
+      EnumMember = " ",
+      Struct = " ",
+      Event = " ",
+      Operator = " ",
+      TypeParameter = " ",
+    },
+    vscode = {
+      File = " ",
+      Module = " ",
+      Namespace = " ",
+      Package = " ",
+      Class = " ",
+      Method = " ",
+      Property = " ",
+      Field = " ",
+      Constructor = " ",
+      Enum = " ",
+      Interface = " ",
+      Function = " ",
+      Variable = " ",
+      Constant = " ",
+      String = " ",
+      Number = " ",
+      Boolean = " ",
+      Array = " ",
+      Object = " ",
+      Key = " ",
+      Null = " ",
+      EnumMember = " ",
+      Struct = " ",
+      Event = " ",
+      Operator = " ",
+      TypeParameter = " ",
+    },
   },
 }
 
@@ -638,7 +889,6 @@ M.smart_splits = {
     end
   end,
 }
-
 --- Neominiap plugin options
 M.minimap = {
   -- Width of minimap
@@ -737,6 +987,7 @@ M.trouble = {
   opts = {
     modes = {
       symbols = { -- Configure symbols mode
+        focus = true,
         win = {
           type = "split", -- split window
           relative = "win", -- relative to current window
@@ -744,6 +995,22 @@ M.trouble = {
           size = 0.3, -- 30% of the window
         },
       },
+    },
+    icons = {
+      indent = {
+        top = " ",
+        -- middle = "├╴",
+        middle = "",
+        -- last = "└╴",
+        -- last = "-╴",
+        last = "╰╴",
+        fold_open = " ",
+        fold_closed = " ",
+        ws = "  ",
+      },
+      folder_closed = " ",
+      folder_open = " ",
+      kinds = M.navic.icons.vscode,
     },
   },
 }
@@ -1003,6 +1270,9 @@ M.auto_dark_mode = {
 --- Image.nvim enabled filetypes
 M.image = "markdown"
 
+--- Noice configuration options
+M.noice = { presets = { inc_rename = true } }
+
 --- Todo-comments plugin options
 M.todo = {
   keywords = {
@@ -1077,6 +1347,13 @@ M.colorful_winsep = {
     "lazy",
     "neominimap",
   },
+}
+
+--- Colorful Window Separators configuration options
+M.winsep = {
+  only_line_seq = false,
+  symbols = M.colorful_winsep.symbols,
+  no_exec_files = M.colorful_winsep.no_exec_files,
 }
 
 --- Toggleterm plugin options
