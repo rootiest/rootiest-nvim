@@ -6,29 +6,35 @@
 
 local M = {}
 
---- Function to setup the Alpha dashboard options
----@return table The alpha dashboard options
+-- Define default path to the logo art
+M.logo = vim.g.dash_logo or "logo/neovim.txt"
+
+--- Alpha plugin configuration
 M.alpha = {
+  --- Function to setup the Alpha dashboard options
+  ---@return table dashboard The alpha dashboard options
   opts = function()
+    -- Load the alpha plugin dashboard-nvim theme
     local dashboard = require("alpha.themes.dashboard")
-    local header = {
-      [[  ███       ███  ]],
-      [[  ████      ████ ]],
-      [[  ████     █████ ]],
-      [[ █ ████    █████ ]],
-      [[ ██ ████   █████ ]],
-      [[ ███ ████  █████ ]],
-      [[ ████ ████ ████ ]],
-      [[ █████  ████████ ]],
-      [[ █████   ███████ ]],
-      [[ █████    ██████ ]],
-      [[ █████     █████ ]],
-      [[ ████      ████ ]],
-      [[  ███       ███  ]],
-      [[                    ]],
-      [[  N  E  O  V  I  M  ]],
-    }
-    dashboard.section.header.val = header
+
+    --- Function to read the ASCII art from the logo file
+    ---@param logo_path string The path to the logo file
+    ---@return table art The ASCII art lines
+    local function read_ascii_art(logo_path)
+      local lines = {}
+      for line in io.lines(logo_path) do
+        table.insert(lines, line)
+      end
+      return lines
+    end
+
+    -- Read the ASCII art from the logo file
+    local ascii_art_lines = read_ascii_art(M.logo)
+
+    -- Add the ASCII art to the dashboard header
+    dashboard.section.header.val = ascii_art_lines
+
+    -- Add the dashboard buttons
     -- stylua: ignore start
     dashboard.section.buttons.val = {
       ---@diagnostic disable: param-type-mismatch
@@ -43,13 +49,17 @@ M.alpha = {
       dashboard.button("l", "󰒲 " .. " Lazy", "<cmd> Lazy <cr>"),
       dashboard.button("q", " " .. " Quit", "<cmd> qa <cr>"),
     }
-    -- stylua: ignore end
     for _, button in ipairs(dashboard.section.buttons.val) do
       button.opts.hl = "AlphaButtons"
       button.opts.hl_shortcut = "AlphaShortcut"
     end
-    dashboard.section.header.opts.hl = "Conditional"
+    -- stylua: ignore end
+
+    -- Set up highlight groups for the dashboard
+    dashboard.section.header.opts.hl = "Conditional" or "AlphaHeader"
     dashboard.section.footer.opts.hl = "AlphaFooter"
+
+    -- Set up the dashboard layout padding
     local padding = vim.fn.max({ 2, vim.fn.floor(vim.fn.winheight(0) * 0.2) })
     if vim.fn.winheight(0) < 40 then
       padding = 1
@@ -57,75 +67,28 @@ M.alpha = {
       padding = 0
     end
     dashboard.opts.layout[1].val = padding
+
+    -- Return the dashboard options
     return dashboard
   end,
 }
 
+--- Dashboard-nvim plugin configuration
 M.dashboard_nvim = {
+  -- stylua: ignore start
   choices = {
-    { -- Find File
-      action = 'lua LazyVim.pick("find_files")()',
-      desc = " Find File",
-      icon = " ",
-      key = "f",
-    },
-    { -- New File
-      action = "ene | startinsert",
-      desc = " New File",
-      icon = " ",
-      key = "n",
-    },
-    { -- Open Recent Files
-      action = 'lua LazyVim.pick("oldfiles")()',
-      desc = " Recent Files",
-      icon = " ",
-      key = "r",
-    },
-    { -- Find Text
-      action = 'lua LazyVim.pick("live_grep")()',
-      desc = " Find Text",
-      icon = " ",
-      key = "g",
-    },
-    { -- LazyGit
-      action = "LazyGit",
-      desc = " LazyGit",
-      icon = " ",
-      key = "z",
-    },
-    { -- Config
-      action = "lua LazyVim.pick.config_files()()",
-      desc = " Config",
-      icon = " ",
-      key = "c",
-    },
-    { -- Restore Session
-      action = 'lua require("persistence").load()',
-      desc = " Restore Session",
-      icon = "󰶮 ",
-      key = "s",
-    },
-    { -- Remote Session
-      action = 'lua require("config.rootiest").load_remote()',
-      desc = " Remote Session",
-      icon = " ",
-      key = "s",
-    },
-    { -- Lazy
-      action = "Lazy",
-      desc = " Lazy",
-      icon = "󰒲 ",
-      key = "l",
-    },
-    { -- Quit
-      action = function()
-        vim.api.nvim_input("<cmd>qa<cr>")
-      end,
-      desc = " Quit",
-      icon = " ",
-      key = "q",
-    },
+    { action = 'lua LazyVim.pick("find_files")()', desc = " Find File", icon = " ", key = "f"},
+    { action = "ene | startinsert", desc = " New File", icon = " ", key = "n"},
+    { action = 'lua LazyVim.pick("oldfiles")()', desc = " Recent Files", icon = " ", key = "r"},
+    { action = 'lua LazyVim.pick("live_grep")()', desc = " Find Text", icon = " ", key = "g"},
+    { action = "LazyGit", desc = " LazyGit", icon = " ", key = "z"},
+    { action = "lua LazyVim.pick.config_files()()", desc = " Config", icon = " ", key = "c"},
+    { action = 'lua require("persistence").load()', desc = " Restore Session", icon = "󰶮 ", key = "s"},
+    { action = 'lua require("config.rootiest").load_remote()', desc = " Remote Session", icon = " ", key = "s"},
+    { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l"},
+    { action = function() vim.api.nvim_input("<cmd>qa<cr>") end, desc = " Quit", icon = " ", key = "q"},
   },
+  -- stylua: ignore end
 }
 
 return M

@@ -3,7 +3,6 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Dashboard                        │
 --          ╰─────────────────────────────────────────────────────────╯
-local data = require("data")
 
 return { --
   -- Dashboard
@@ -65,7 +64,7 @@ return { --
         file_height = logo_dimensions.height,
       },
       config = {
-        center = data.dash.dashboard_nvim.choices,
+        center = require("data.dash").dashboard_nvim.choices,
         footer = function()
           local stats = require("lazy").stats()
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
@@ -111,5 +110,9 @@ return { --
 
     return opts
   end,
-  enabled = false,
+  enabled = require("data.func").check_global_var(
+    "dashboard",
+    "nvim-dashboard",
+    "alpha"
+  ),
 }

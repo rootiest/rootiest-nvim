@@ -49,7 +49,7 @@ return { -- cmp
     end)
 
     local border_opts = {
-      border = "rounded",
+      border = vim.g.completion_borders or "rounded",
     }
     local window_opts = {
       completion = cmp.config.window.bordered(border_opts),
@@ -75,7 +75,7 @@ return { -- cmp
         end,
       },
       completion = { completeopt = "menu,menuone,noinsert" },
-      window = vim.g.completion_round_borders_enabled and window_opts or {},
+      window = vim.g.completion_borders == "rounded" and window_opts or {},
       mapping = cmp.mapping.preset.insert({
         ["<C-n>"] = cmp.mapping.select_next_item(),
         ["<C-p>"] = cmp.mapping.select_prev_item(),

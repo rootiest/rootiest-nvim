@@ -78,6 +78,21 @@ vim.g.tabline         = "bufferline"   ---@type string Options: [tabline]
 --        │                           │
 --        ╰───────────────────────────╯
 
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ DASHBOARD ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.g.dashboard       = "alpha"        ---@type string Options: [dashboard]
+--        ╭───────────────────────────╮                alpha
+--        │                           │                nvim-dashboard
+--        │      Dashboards:          │                none
+--        │   Choose a plugin from    │
+--        │      the list            │
+--        │                           │
+--        ╰───────────────────────────╯
+
+-- Dashboard logo file
+vim.g.dash_logo = "logo/neovim.txt"    ---@type string Options: [dash logo]
+--  Dashboard header color
+vim.g.DashboardHeaderColor = "#88fc9a"---@type string Options: [hex color]
+
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATUS LINE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.g.statusline      = "lualine"      ---@type string Options: [statusline]
 --        ╭───────────────────────────╮                lualine
@@ -87,7 +102,7 @@ vim.g.statusline      = "lualine"      ---@type string Options: [statusline]
 --        │      the list            │                none 
 --        │                           │
 --        ╰───────────────────────────╯
---
+
 -- Click git components on statusline to open LazyGit
 vim.g.statusline_clickable_git = false ---@type boolean Options: <true|false>
 -- Show wakatime stats on statusline
@@ -107,14 +122,14 @@ vim.g.stats_ignored_players    = {     ---@type string[] Options: [ignored playe
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ COLOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 --  Background color
 vim.o.background           = "dark"    ---@type string Options: <dark|light>
---  Dashboard header color
-vim.g.DashboardHeaderColor = "#88fc9a"---@type string Options: [hex color]
 -- Disable Transparency
 vim.g.disable_transparency = true      ---@type boolean Options: <true|false>
+-- Set colorcolumn
+vim.opt.colorcolumn        = "120"     ---@type string|table Options: [column]
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Completion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Cmp Window Border
-vim.g.completion_round_borders_enabled = true  ---@type boolean Options: <true|false>
+vim.g.completion_borders   = "rounded" ---@type string Options: [round|sharp|flat]
 
 -- stylua: ignore end
 

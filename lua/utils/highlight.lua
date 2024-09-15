@@ -81,12 +81,6 @@ function M.setup_indent_highlight()
     },
     scope = {
       enabled = false,
-      -- show_start = true,
-      -- highlight = {
-      --   "IndentsScopeHighlight",
-      --   "IndentsScopeHighlight",
-      -- },
-      -- char = vim.g.scope_char or data.types.ibl.scope_char.hard,
     },
     exclude = {
       filetypes = data.types.highlights.exclude,
@@ -114,9 +108,6 @@ function M.setup_indent_highlight()
       follow_tw = "80",
     },
   })
-
-  -- Set colorcolumn
-  vim.cmd(":set colorcolumn=120")
 
   -- Set NeoCodeium suggestion highlight
   vim.api.nvim_set_hl(0, "NeoCodeiumSuggestion", { link = "Comment" })

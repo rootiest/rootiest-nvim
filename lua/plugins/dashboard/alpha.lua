@@ -6,8 +6,12 @@
 return { -- Alpha
   "goolord/alpha-nvim",
   event = "VimEnter",
-  enabled = true,
-  opts = require("data").dash.alpha.opts,
+  enabled = require("data.func").check_global_var(
+    "dashboard",
+    "alpha",
+    "alpha"
+  ),
+  opts = require("data.dash").alpha.opts,
   config = function(_, dashboard)
     -- close Lazy and re-open when the dashboard is ready
     if vim.o.filetype == "lazy" then
