@@ -12,11 +12,14 @@ return {
       automatic_installation = true,
     },
   },
-  {
+  { -- luasnip
+    import = "lazyvim.plugins.extras.coding.luasnip",
+  },
+  { -- nvim-treesitter
     "nvim-treesitter/nvim-treesitter",
     opts = data.types.treesitter.opts,
   },
-  { --
+  { -- nvim-lspconfig
     "neovim/nvim-lspconfig",
     opts = data.types.lspconfig.opts,
   },
@@ -50,8 +53,12 @@ return {
     opts = data.types.substitute,
     keys = data.keys.substitute,
   },
-  {
+  { -- Markdown Preview
     "iamcco/markdown-preview.nvim",
     build = "cd app && yarn install",
+  },
+  { -- Comment
+    "numToStr/Comment.nvim",
+    opts = {},
   },
 }

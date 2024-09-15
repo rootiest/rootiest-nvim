@@ -193,4 +193,11 @@ return {
     dependencies = "tsakirist/telescope-lazy.nvim",
     keys = data.keys.telescope.lazy,
   },
+  {
+    "benfowler/telescope-luasnip.nvim",
+    module = "telescope._extensions.luasnip", -- if you wish to lazy-load
+    config = function()
+      require("telescope").load_extension("luasnip")
+    end,
+  },
 }

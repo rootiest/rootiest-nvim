@@ -664,7 +664,7 @@ function M.is_installed(plugins, simple)
   end
 end
 
--- Function to create a floating terminal window
+---@function Function to create a floating terminal window
 function M.open_floating_terminal()
   -- Create a scratch buffer specifically for the terminal
   local buf = vim.api.nvim_create_buf(false, true) -- Create an unnamed, non-file, scratch buffer
