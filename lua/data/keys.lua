@@ -258,11 +258,6 @@ M.gist = {
 }
 
 M.groups = {
-  { -- Icon picker menu
-    lhs = "<leader>I",
-    group = "IconPicker",
-    icon = { icon = "󰥸", color = "orange" },
-  },
   { -- Gists menu
     lhs = "<leader>gn",
     group = "Gists",
@@ -296,25 +291,6 @@ M.gx = {
     "<cmd>Browse<cr>",
     mode = { "n", "x" },
     desc = "Open URL/Link",
-  },
-}
-
-M.iconpicker = {
-  { -- Pick Icon
-    "<leader>Ii",
-    "<cmd>IconPickerNormal<cr>",
-    desc = "Pick Icon",
-  },
-  { -- Yank Icon
-    "<leader>Iy",
-    "<cmd>IconPickerYank<cr>",
-    desc = "Yank Icon",
-  },
-  { -- Insert Icon in insert mode
-    "<C-.>",
-    "<cmd>IconPickerInsert<cr>",
-    desc = "Insert Icon",
-    mode = "i",
   },
 }
 
@@ -413,12 +389,12 @@ M.misc = {
     rhs = "<cmd>Neotree reveal toggle<cr>",
     desc = "Neotree toggle",
   },
-  { -- Telescope Frecency
+  { -- Telescope Find Files
     lhs = "<leader><leader>",
     rhs = function()
-      require("data.func").frecency_picker()
+      LazyVim.pick("find_files")()
     end,
-    desc = "Telescope frecency",
+    desc = "Find Files",
   },
   { -- Exit Neovim
     lhs = "<leader>Q",
@@ -710,6 +686,59 @@ M.overrides = {
     rhs = "<Nop>",
     desc = "Surround",
     mode = { "n", "x" },
+  },
+}
+
+M.telescope = {
+  cmdline = {
+    {
+      ":",
+      function()
+        require("telescope").extensions.cmdline.cmdline()
+      end,
+      desc = "Cmdline",
+    },
+  },
+  lazy = {
+    {
+      "<leader>fz",
+      function()
+        require("telescope").extensions.lazy.lazy()
+      end,
+      desc = "Lazy Picker",
+    },
+  },
+  symbols = {
+    { -- Telescope Symbols
+      "<leader>f.",
+      function()
+        require("telescope.builtin").symbols({
+          sources = { "emoji", "kaomoji", "gitmoji", "nerd", "math" },
+        })
+      end,
+      desc = "Pick Icons",
+    },
+    { -- Pick Icon in insert mode
+      "<C-.>",
+      function()
+        require("telescope.builtin").symbols({
+          sources = { "emoji", "kaomoji", "gitmoji", "nerd", "math" },
+        })
+      end,
+      "i",
+
+      desc = "Pick Icon",
+    },
+  },
+  toggleterm = {
+    { -- Pick ToggleTerms
+      "<leader>ft",
+      function()
+        require("toggleterm-manager").open({})
+      end,
+      desc = "Pick Terminals",
+      mode = "n",
+    },
   },
 }
 

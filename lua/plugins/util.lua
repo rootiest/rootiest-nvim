@@ -50,12 +50,6 @@ return {
       vim.g.unception_block_while_host_edits = true
     end,
   },
-  { -- 🍎 Icon Picker
-    "ziontee113/icon-picker.nvim",
-    lazy = true,
-    opts = { disable_legacy_commands = true },
-    keys = data.keys.iconpicker,
-  },
   { -- Codesnap
     "mistricky/codesnap.nvim",
     enabled = data.func.check_global_var("codesnap", true, true),
@@ -123,14 +117,6 @@ return {
     ft = "help",
     dependencies = data.deps.needs_treesitter,
   },
-  -- { -- Docker-compose logs
-  --   "adelowo/dockercomposelogs.nvim",
-  --   config = function()
-  --     require("dockercomposelogs").setup({})
-  --   end,
-  --   event = "VeryLazy",
-  --   dependencies = data.deps.needs_telescope,
-  -- },
   { -- Suda
     "lambdalisue/vim-suda",
     cmd = data.cmd.suda,
@@ -157,5 +143,54 @@ return {
     opts = {
       enable_line_number = true,
     },
+  },
+  { -- Telescope Cmdline
+    "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "jonarrien/telescope-cmdline.nvim",
+    },
+    keys = data.keys.telescope.cmdline,
+    opts = data.types.telescope.cmdline,
+    config = function(_, opts)
+      require("telescope").setup(opts)
+      require("telescope").load_extension("cmdline")
+    end,
+  },
+  {
+    "prochri/telescope-all-recent.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "kkharji/sqlite.lua",
+      -- optional, if using telescope for vim.ui.select
+      "stevearc/dressing.nvim",
+    },
+    opts = {
+      default = {
+        disable = true, -- disable any unkown pickers (recommended)
+        use_cwd = true, -- differentiate scoring for each picker based on cwd
+        sorting = "frecency", -- sorting: options: 'recent' and 'frecency'
+      },
+    },
+  },
+  { -- Telescope symbols
+    "nvim-telescope/telescope-symbols.nvim",
+    config = function() end,
+    keys = data.keys.telescope.symbols,
+  },
+  { -- Telescope Toggleterm
+    "ryanmsnyder/toggleterm-manager.nvim",
+    dependencies = {
+      "akinsho/nvim-toggleterm.lua",
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim", -- only needed because it's a dependency of telescope
+    },
+    config = true,
+    keys = data.keys.telescope.toggleterm,
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = "tsakirist/telescope-lazy.nvim",
+    keys = data.keys.telescope.lazy,
   },
 }

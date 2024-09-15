@@ -32,7 +32,7 @@ M.alpha = {
     -- stylua: ignore start
     dashboard.section.buttons.val = {
       ---@diagnostic disable: param-type-mismatch
-      dashboard.button("f", " " .. " Find file", [[<cmd>lua require("data.func").frecency_picker() <cr>]]),
+      dashboard.button("f", " " .. " Find file", LazyVim.pick("find_files")),
       dashboard.button("n", " " .. " New file", [[<cmd> ene <BAR> startinsert <cr>]]),
       dashboard.button("r", " " .. " Recent files", LazyVim.pick("oldfiles")),
       dashboard.button("g", " " .. " Grep text", LazyVim.pick("live_grep")),
@@ -64,7 +64,7 @@ M.alpha = {
 M.dashboard_nvim = {
   choices = {
     { -- Find File
-      action = 'lua require("data.func".frecency_picker()()',
+      action = 'lua LazyVim.pick("find_files")()',
       desc = " Find File",
       icon = " ",
       key = "f",

@@ -169,8 +169,8 @@ end
 --- Define user commands
 ---@return nil
 function M.define_commands()
-  -- Define Q abbreviation
-  vim.cmd.cnoreabbrev("Q", "qall")
+  -- Define Q as a usercmd
+  vim.api.nvim_create_user_command("Q", "qall", { desc = "Quit all buffers" })
 
   -- Define yank line command
   vim.api.nvim_create_user_command("YankLine", function()

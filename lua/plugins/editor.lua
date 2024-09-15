@@ -134,12 +134,6 @@ return {
     lazy = false,
     config = data.types.barsNlines.config,
   },
-  { -- Frecency Telescope extension
-    "nvim-telescope/telescope-frecency.nvim",
-    config = function()
-      require("telescope").load_extension("frecency")
-    end,
-  },
   { -- UndoTree Telescope extension
     "nvim-telescope/telescope.nvim",
     dependencies = {
@@ -168,5 +162,12 @@ return {
   },
   { -- NumberToggle
     "sitiom/nvim-numbertoggle",
+  },
+  {
+    "folke/noice.nvim",
+    optional = true,
+    opts = {
+      presets = { inc_rename = true },
+    },
   },
 }

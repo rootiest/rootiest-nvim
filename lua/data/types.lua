@@ -455,6 +455,40 @@ M.gitblame = {
   },
 }
 
+--- Telescope configuration options
+M.telescope = {
+  cmdline = {
+    extensions = {
+      cmdline = {
+        icons = {
+          history = " ",
+          command = " ",
+          number = "󰴍 ",
+          system = "",
+          unknown = "",
+        },
+        picker = {
+          layout_config = {
+            width = vim.fn.floor(vim.o.columns * 0.25),
+            height = vim.fn.floor(vim.o.lines * 0.25),
+          },
+        },
+        completions = {
+          "command",
+        },
+        mappings = {
+          complete = "<Tab>",
+          run_selection = "<C-CR>",
+          run_input = "<CR>",
+        },
+        overseer = {
+          enabled = true,
+        },
+      },
+    },
+  },
+}
+
 --- Neocodeium configuration options
 M.neocodeium = {
   opts = {
