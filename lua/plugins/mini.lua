@@ -12,6 +12,13 @@ return {
   { -- mini.move
     import = "lazyvim.plugins.extras.editor.mini-move",
   },
+  { -- Mini.Indentscope
+    import = "lazyvim.plugins.extras.ui.mini-indentscope",
+  },
+  { -- Mini Indentscope
+    "echasnovski/mini.indentscope",
+    opts = data.types.miniindentscope,
+  },
   { -- mini.align
     "echasnovski/mini.align",
     event = "InsertEnter",
