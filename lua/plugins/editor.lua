@@ -24,13 +24,6 @@ return {
   { -- Treesitter-context
     import = "lazyvim.plugins.extras.ui.treesitter-context",
   },
-  { -- Mini.Indentscope
-    import = "lazyvim.plugins.extras.ui.mini-indentscope",
-  },
-  { -- Mini Indentscope
-    "echasnovski/mini.indentscope",
-    opts = data.types.miniindentscope,
-  },
   { -- Navic
     import = "lazyvim.plugins.extras.editor.navic",
   },
@@ -134,13 +127,29 @@ return {
   },
   { -- UndoTree
     "mbbill/undotree",
-    opts = {},
+    lazy = false,
+    config = function()
+      -- Layout
+      vim.g.undotree_ShortIndicators = 0
+      vim.g.undotree_SplitWidth = 32
+      -- Set focus to the tree when it's toggled
+      vim.g.undotree_SetFocusWhenToggle = 1
+      -- Set up tree shape
+      vim.g.undotree_TreeNodeShape = ""
+      vim.g.undotree_TreeVertShape = ""
+      vim.g.undotree_TreeSplitShape = ""
+      vim.g.undotree_TreeReturnShape = ""
+      -- Hide helpline
+      vim.g.undotree_HelpLine = 0
+      -- Hide diff panel
+      vim.g.undotree_DiffAutoOpen = 0
+    end,
     keys = data.keys.undotree,
   },
   { -- NumberToggle
     "sitiom/nvim-numbertoggle",
   },
-  {
+  { -- Noice
     "folke/noice.nvim",
     optional = true,
     opts = data.types.noice,
