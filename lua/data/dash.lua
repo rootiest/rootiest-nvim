@@ -7,7 +7,11 @@
 local M = {}
 
 -- Define default path to the logo art
-M.logo = vim.g.dash_logo or "logo/neovim.txt"
+local logofile = vim.fn.stdpath("config") .. "/logo/" .. "neovim.txt"
+if vim.g.dash_logo then
+  logofile = vim.fn.stdpath("config") .. "/logo/" .. vim.g.dash_logo
+end
+M.logo = logofile
 
 --- Alpha plugin configuration
 M.alpha = {
