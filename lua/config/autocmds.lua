@@ -54,6 +54,14 @@ autocmd({ "BufEnter", "FocusGained" }, {
   end,
 })
 
+-- LazyGit root detection
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*",
+  callback = function()
+    require("lazygit.utils").project_root_dir()
+  end,
+})
+
 -- TodoFzfLua command override to use Telescope
 -- when fzf-lua is not installed
 autogrp("TodoFzfLua", { clear = true })
