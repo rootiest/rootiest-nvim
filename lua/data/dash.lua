@@ -59,13 +59,19 @@ M.alpha = {
     dashboard.section.header.opts.hl = "Conditional" or "AlphaHeader"
     dashboard.section.footer.opts.hl = "AlphaFooter"
 
-    -- Set up the dashboard layout padding
-    local padding = vim.fn.max({ 2, vim.fn.floor(vim.fn.winheight(0) * 0.2) })
-    if vim.fn.winheight(0) < 40 then
+    -- Calculate the dashboard layout padding
+    local padding = 0
+    if vim.fn.winheight(0) < 60 then
+      padding = vim.fn.max({ 2, vim.fn.floor(vim.fn.winheight(0) * 0.1) })
+    elseif vim.fn.winheight(0) < 40 then
       padding = 1
     elseif vim.fn.winheight(0) < 30 then
       padding = 0
+    else
+      padding = vim.fn.max({ 2, vim.fn.floor(vim.fn.winheight(0) * 0.2) })
     end
+
+    -- Apply the padding to the dashboard layout
     dashboard.opts.layout[1].val = padding
 
     -- Return the dashboard options
