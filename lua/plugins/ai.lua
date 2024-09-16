@@ -34,6 +34,7 @@ return {
   { -- ChatGPT
     "jackMort/ChatGPT.nvim",
     event = "VeryLazy",
+    enabled = data.cond.chatgpt,
     keys = data.keys.chatgpt.func,
     opts = data.types.chatgpt,
     dependencies = data.deps.chatgpt,

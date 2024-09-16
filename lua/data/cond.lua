@@ -25,6 +25,10 @@ M.barsNlines = function()
   return false
 end
 
+M.chatgpt = function()
+  return func.check_global_var("usechatgpt", true, false)
+end
+
 --- Codeium conditional options
 M.codeium = function()
   return func.check_global_var("aitool", "codeium", "neocodeium")

@@ -31,6 +31,8 @@ vim.g.usemusic        =  false         ---@type boolean Options:  <true|false>
 vim.g.usehardtime     =  false         ---@type boolean Options:  <true|false>
 -- Enable Image plugin on compatible terminals
 vim.g.useimage        =  true          ---@type boolean Options:  <true|false>
+-- Enable LazyGit plugin
+vim.g.uselazygit      =  true          ---@type boolean Options:  <true|false>
 -- Ignore missing lazy.nvim plugin manager
 vim.g.ignore_no_lazy  =  false         ---@type boolean Options:  <true|false>
 -- Enable codesnap for code screenshots
@@ -57,6 +59,8 @@ vim.g.aitool          = "neocodeium"   ---@type string Options: [ai tool]
 --        │      from the list       │                minuet
 --        │                           │                ollama
 --        ╰───────────────────────────╯                none
+-- Enable ChatGPT plugin for AI chat
+vim.g.usechatgpt      =  false          ---@type boolean Options:  <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATUS COLUMN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.g.statuscolumn    = "native"       ---@type string Options: [statuscolumn]
