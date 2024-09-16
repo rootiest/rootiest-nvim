@@ -17,7 +17,8 @@ return {
   },
   { -- Mini Indentscope
     "echasnovski/mini.indentscope",
-    opts = data.types.miniindentscope,
+    opts = data.types.miniindentscope.opts,
+    init = data.types.miniindentscope.init,
   },
   { -- mini.align
     "echasnovski/mini.align",

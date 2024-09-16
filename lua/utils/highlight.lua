@@ -70,11 +70,28 @@ function M.setup_indent_highlight()
     end)
   end
 
+  -- Define characters for indent-blankline
+  local tab_char, indent_char
+  if vim.g.tab_char then
+    tab_char = vim.g.tab_char
+  elseif vim.g.tab_char_name then
+    tab_char = data.types.ibl.char[vim.g.tab_char_name]
+  else
+    tab_char = data.types.ibl.char.none
+  end
+  if vim.g.indent_char then
+    indent_char = vim.g.indent_char
+  elseif vim.g.indent_char_name then
+    indent_char = data.types.ibl.char[vim.g.indent_char_name]
+  else
+    indent_char = data.types.ibl.char.none
+  end
+
   -- Configure the indent-blankline plugin
   require("ibl").setup({
     indent = {
-      char = vim.g.indent_char or data.types.ibl.indent_char.none,
-      tab_char = vim.g.tab_char or data.types.ibl.tab_char.simple,
+      char = indent_char,
+      tab_char = tab_char,
       highlight = {
         "IndentBlanklineIndent",
       },

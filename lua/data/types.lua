@@ -723,7 +723,44 @@ M.highlights = {
 
 --- Indent characters
 M.ibl = {
-  indent_char = {
+  char = {
+    none = { " " },
+    light_vert = { "" },
+    scope = { "│" },
+    fancy_vert = { "‖" },
+    strong_vert = { "⦀" },
+    zigzag = { "⦚" },
+    basic = { "" },
+    simple = { "" },
+    arrow = { "" },
+    tab = { "󰌒" },
+    mini = { "" },
+    light_arrow = { "⤑" },
+    block = { "█" },
+    block_75 = { "▓" },
+    block_50 = { "▒" },
+    block_25 = { "░" },
+    block_0 = { " " },
+    baric = { "󰇘" },
+    fish = { "⤕" },
+    dot = { "⋅" },
+    dots = { "⋯" },
+    circle = { "" },
+    dot_circle = { "󱥸" },
+    dot_square = { "󱗽" },
+    dot_hex = { "󱗿" },
+    dot_tri = { "󱗾" },
+    dot_grid = { "󱗼" },
+    solid = {
+      "▏",
+      "▎",
+      "▍",
+      "▌",
+      "▋",
+      "▊",
+      "▉",
+      "█",
+    },
     fancy = {
       "󰎤",
       "󰎧",
@@ -736,31 +773,7 @@ M.ibl = {
       "󰎼",
       "󰽽",
     },
-    solid = {
-      "▏",
-      "▎",
-      "▍",
-      "▌",
-      "▋",
-      "▊",
-      "▉",
-      "█",
-    },
-    none = { " " },
-    baric = { "󰇘" },
-  },
-  scope_char = {
-    light = { "" },
-    hard = { "│" },
-    none = { " " },
-    fancy = { "‖" },
-    strong = { "⦀" },
-    basic = { "" },
-    arrow = { "" },
-    tab = { "󰌒" },
-  },
-  tab_char = {
-    fancy = {
+    funky = {
       "󰌒",
       "󰌓",
       "󰌔",
@@ -772,19 +785,26 @@ M.ibl = {
       "󰌚",
       "󰌛",
     },
-    none = { " " },
-    basic = { "" },
-    simple = { "" },
-    arrow = { "" },
-    tab = { "󰌒" },
-    mini = { "" },
   },
 }
 
 --- Mini.Indentscope configuration options
 M.miniindentscope = {
-  symbol = M.ibl.scope_char.hard[1],
-  options = { try_as_border = true, border = "both" },
+  opts = {
+    options = { try_as_border = true, border = "both" },
+  },
+  init = function()
+    -- Set default scope char
+    local scope_char
+    if vim.g.scope_char then
+      scope_char = vim.g.scope_char
+    elseif vim.g.scope_char_name then
+      scope_char = M.ibl.char[vim.g.scope_char_name][1]
+    else
+      scope_char = M.ibl.char.scope[1]
+    end
+    M.miniindentscope.opts.symbol = scope_char
+  end,
 }
 
 --- Navic Icons

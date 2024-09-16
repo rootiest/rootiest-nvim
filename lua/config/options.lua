@@ -127,6 +127,22 @@ vim.g.disable_transparency = true      ---@type boolean Options: <true|false>
 -- Set colorcolumn
 vim.opt.colorcolumn        = "120"     ---@type string|table Options: [column]
 
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━ Tabs and Indentation ━━━━━━━━━━━━━━━━━━━━━━━━
+-- Define a character to be used in the whitespace to represent tabs/indents.
+--  Tab character
+-- vim.g.tab_char          = "󰌒"       ---@type string Options: [tab char]
+-- -- Indent character
+-- vim.g.indent_char       = "¶"       ---@type string Options: [indent char]
+-- Scope character
+-- vim.g.scope_char        = "|"       ---@type string Options: [scope char]
+-- Alternatively, specify a character/table from the presets
+-- Tab characters
+vim.g.tab_char_name        = "fancy"   ---@type string Options: [tab char]
+-- Indent characters
+vim.g.indent_char_name     = "fancy"   ---@type string Options: [indent char]
+-- Scope characters
+vim.g.scope_char_name      = "scope"   ---@type string Options: [scope char]
+
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Completion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Cmp Window Border
 vim.g.completion_borders   = "rounded" ---@type string Options: [round|sharp|flat]
