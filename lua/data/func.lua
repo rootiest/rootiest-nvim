@@ -424,7 +424,6 @@ function M.move_visual(up, multiplier)
 
   -- escape visual mode
   vim.cmd("norm v")
-
   -- GET REGION
   -- eg region = { [103] = {0,-1}, [104] = {0,-1}, [105] = {0,-1}}
   ---@diagnostic disable-next-line: deprecated

@@ -173,6 +173,48 @@ M.cursors = {
   underline = "_",
 }
 
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Other Styles ━━━━━━━━━━━━━━━━━━━━━━━━━
+M.script_glyphs = {
+  superscript = {
+    "⁰",
+    "¹",
+    "²",
+    "³",
+    "⁴",
+    "⁵",
+    "⁶",
+    "⁷",
+    "⁸",
+    "⁹",
+  },
+  subscript = {
+    "₀",
+    "₁",
+    "₂",
+    "₃",
+    "₄",
+    "₅",
+    "₆",
+    "₇",
+    "₈",
+    "₉",
+  },
+}
+
+M.roman_numerals = {
+  "Ⅰ",
+  "Ⅱ",
+  "Ⅲ",
+  "Ⅳ",
+  "Ⅴ",
+  "Ⅵ",
+  "Ⅶ",
+  "Ⅷ",
+  "Ⅸ",
+  "Ⅹ",
+  "Ⅺ",
+  "Ⅻ",
+}
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Type tables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 --- General exclusion list for buffers and filetypes
@@ -226,6 +268,26 @@ M.arrow = {
   buffer_leader_key = "m", -- Per Buffer Mappings
 }
 
+--- Get the appropriate ordinal suffix for a given number.
+--- @param number number The number to check for the ordinal suffix.
+--- @return string The number with its ordinal suffix.
+local function get_ordinal_suffix(number)
+  -- Determine the last two digits to handle 'teen' cases correctly
+  local suffix = "th" -- Default suffix
+  local last_digit = number % 10
+  local last_two_digits = number % 100
+
+  if last_digit == 1 and last_two_digits ~= 11 then
+    suffix = "st"
+  elseif last_digit == 2 and last_two_digits ~= 12 then
+    suffix = "nd"
+  elseif last_digit == 3 and last_two_digits ~= 13 then
+    suffix = "rd"
+  end
+
+  return tostring(number) .. suffix
+end
+
 --- Bufferline configuration options
 M.bufferline = {
   enabled = function()
@@ -249,14 +311,19 @@ M.bufferline = {
     options = {
       themable = true,
       color_icons = true,
-      numbers = "ordinal",
+      numbers = function(opts)
+        return get_ordinal_suffix(opts.ordinal) .. ":" -- .. " (#" .. opts.id .. ")""
+      end,
       separator_style = "slant",
       auto_toggle_bufferline = true,
       buffer_close_icon = "󱎘",
-      modified_icon = "●",
-      close_icon = "",
-      left_trunc_marker = "󰬨",
-      right_trunc_marker = "󰬪",
+      modified_icon = " ",
+      close_icon = "󱎘",
+      left_trunc_marker = " ",
+      right_trunc_marker = " ",
+      always_show_bufferline = false,
+      show_close_icon = true,
+      show_buffer_close_icon = true,
       diagnostics_indicator = function(_, _, diagnostics_dict, _)
         local s = " "
         for e, n in pairs(diagnostics_dict) do
@@ -909,6 +976,80 @@ M.smart_splits = {
     end
   end,
 }
+
+--  ───────────────────────────── NeoMiniMap ──────────────────────────
+local extmark_handler = {
+  name = "Todo Comment",
+  mode = "icon",
+  namespace = vim.api.nvim_create_namespace("neominimap_todo_comment"),
+  init = function() end,
+  autocmds = {
+    {
+      event = { "TextChanged", "TextChangedI" },
+      opts = {
+        callback = function(apply, args)
+          local bufnr = tonumber(args.buf) ---@cast bufnr integer
+          vim.schedule(function()
+            apply(bufnr)
+          end)
+        end,
+      },
+    },
+    {
+      event = "WinScrolled",
+      opts = {
+        callback = function(apply)
+          local winid = vim.api.nvim_get_current_win()
+          if not winid or not vim.api.nvim_win_is_valid(winid) then
+            return
+          end
+          local bufnr = vim.api.nvim_win_get_buf(winid)
+          vim.schedule(function()
+            if bufnr and vim.api.nvim_buf_is_valid(bufnr) then
+              apply(bufnr)
+            end
+          end)
+        end,
+      },
+    },
+  },
+  get_annotations = function(bufnr)
+    local ok, _ = pcall(require, "todo-comments")
+    if not ok then
+      return {}
+    end
+    local ns_id = vim.api.nvim_get_namespaces()["todo-comments"]
+    local extmarks = vim.api.nvim_buf_get_extmarks(bufnr, ns_id, 0, -1, {
+      details = true,
+    })
+    local icons = {
+      FIX = " ",
+      TODO = " ",
+      HACK = " ",
+      WARN = " ",
+      PERF = " ",
+      NOTE = " ",
+      TEST = "⏲ ",
+    }
+    local id =
+      { FIX = 1, TODO = 2, HACK = 3, WARN = 4, PERF = 5, NOTE = 6, TEST = 7 }
+    return vim.tbl_map(function(extmark)
+      local detail = extmark[4] ---@type vim.api.keyset.extmark_details
+      local group = detail.hl_group ---@type string
+      local kind = string.sub(group, 7)
+      local icon = icons[kind]
+      return {
+        lnum = extmark[2],
+        end_lnum = extmark[2],
+        id = id[kind],
+        highlight = "TodoFg" .. kind, --- You can customize the highlight here.
+        icon = icon,
+        priority = detail.priority,
+      }
+    end, extmarks)
+  end,
+}
+
 --- Neominiap plugin options
 M.minimap = {
   -- Width of minimap
@@ -922,6 +1063,7 @@ M.minimap = {
     "prompt",
     "alpha",
     "dashboard",
+    "qalc",
     -- +general.buf
   },
   -- excluded filetypes
@@ -929,6 +1071,7 @@ M.minimap = {
     "help",
     "dashboard",
     "neorg",
+    "qalc",
   },
 
   --- Function to initialize or manipulate minimap settings
@@ -937,16 +1080,47 @@ M.minimap = {
     vim.g.neominimap = {
       auto_enable = true,
       layout = "float",
-      exclude_filetypes = M.minimap.file,
+      exclude_filetypes = M.minimap.ft,
       exclude_buftypes = M.minimap.buf,
       x_multiplier = 4,
       y_multiplier = 1,
       click = {
         enabled = true,
       },
+      diagnostic = {
+        mode = "icon",
+        icon = {
+          ERROR = "󰅚 ",
+          WARN = "󰀪 ",
+          INFO = "󰌶 ",
+          HINT = " ",
+        },
+      },
+      git = {
+        enabled = true,
+        mode = "sign",
+        priority = 6,
+        icon = {
+          add = "󰐖 ",
+          change = "󰏬 ",
+          delete = "󰍵 ",
+        },
+      },
       search = {
         enabled = true,
-        mode = "line",
+        mode = "icon",
+        icon = "󱋞 ",
+      },
+      treesitter = {
+        enabled = true,
+        priority = 200,
+      },
+      mark = {
+        enabled = true,
+        mode = "icon",
+        priority = 10,
+        key = "m",
+        show_builtins = true,
       },
       split = {
         minimap_width = M.minimap.width,
@@ -955,6 +1129,9 @@ M.minimap = {
       float = {
         window_border = "none",
         minimap_width = M.minimap.width,
+      },
+      handlers = {
+        extmark_handler,
       },
     }
   end,
