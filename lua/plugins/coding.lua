@@ -59,6 +59,10 @@ return {
   },
   { -- Comment
     "numToStr/Comment.nvim",
-    opts = {},
+    opts = {
+      opleader = {
+        line = "gC",
+      },
+    },
   },
 }
