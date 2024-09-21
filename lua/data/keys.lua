@@ -550,10 +550,17 @@ M.group = {
     group = "MiniMap",
     icon = { icon = "", color = "green" },
   },
-  nvimup = { -- Neovim Updater menu
-    lhs = "<leader>qu",
-    group = "Neovim Updater",
-    icon = { icon = "", color = "red" },
+  nvimup = {
+    { -- Neovim Updater menu
+      lhs = "<leader>qu",
+      group = "Neovim Updater",
+      icon = { icon = "", color = "red" },
+    },
+    { -- Neovim Updater Commits menu
+      lhs = "<leader>quc",
+      group = "New Commits",
+      icon = { icon = "", color = "green" },
+    },
   },
 }
 
@@ -566,31 +573,52 @@ M.groups = {
 }
 
 M.nvimup = {
-  {
+  { -- Update Neovim from source
     "<Leader>quU",
     ":UpdateNeovim<CR>",
     desc = "Update Neovim",
   },
-  {
+  { -- Update Neovim from source in debug mode
     "<Leader>quD",
     function()
       require("nvim_updater").update_neovim({ build_type = "Debug" })
     end,
     desc = "Debug Build Neovim",
   },
-  {
+  { -- Update Neovim from source in release mode
     "<Leader>quR",
     function()
       require("nvim_updater").update_neovim({ build_type = "Release" })
     end,
     desc = "Release Build Neovim",
   },
-  {
-    "<Leader>quC",
+  { -- Remove Neovim Source directory
+    "<Leader>quX",
     function()
       require("nvim_updater").remove_source_dir()
     end,
-    desc = "Clean Neovim Source",
+    desc = "Remove Neovim Source",
+  },
+  { -- Show new nvim source commits in Telescope
+    "<Leader>quct",
+    function()
+      require("nvim_updater").show_new_commits_in_telescope()
+    end,
+    desc = "Show New Commits in Telescope",
+  },
+  { -- Show new nvim source commits in DiffView
+    "<Leader>qucd",
+    function()
+      require("nvim_updater").show_new_commits_in_diffview()
+    end,
+    desc = "Show New Commits in DiffView",
+  },
+  { -- Show new nvim source commits in terminal
+    "<Leader>qucc",
+    function()
+      require("nvim_updater").show_new_commits()
+    end,
+    desc = "Show New Commits in terminal",
   },
 }
 
@@ -637,17 +665,24 @@ M.minifiles = {
     function()
       minifiles_toggle(vim.api.nvim_buf_get_name(0), true)
     end,
-    desc = "Open mini.files (Directory of Current File)",
+    desc = "Open mini.files",
   },
   {
     "<leader>fM",
     function()
       minifiles_toggle(vim.uv.cwd(), true)
     end,
-    desc = "Open mini.files (cwd)",
+    desc = "Open mini.files (CWD)",
   },
   { -- Mini.files
     "<leader>.",
+    function()
+      minifiles_toggle(vim.api.nvim_buf_get_name(0), true)
+    end,
+    desc = "Open mini.files",
+  },
+  { -- Mini.files
+    "<leader>sf",
     function()
       minifiles_toggle(vim.api.nvim_buf_get_name(0), true)
     end,
@@ -820,9 +855,19 @@ M.precog = {
 }
 
 M.qalc = {
-  { -- Open Qalc
+  -- { -- Open Qalc
+  --   "<leader>qc",
+  --   "<cmd>Qalc<cr>",
+  --   desc = "Qalc",
+  -- },
+  { -- Set a key mapping to run :Qalc and enter insert mode
     "<leader>qc",
-    "<cmd>Qalc<cr>",
+    function()
+      -- Run the Qalc command
+      vim.cmd("Qalc")
+      -- Enter insert mode directly
+      vim.cmd("startinsert")
+    end,
     desc = "Qalc",
   },
 }
@@ -992,7 +1037,7 @@ M.substitute = {
 M.overrides = {
   { -- De-map 's' to avoid conflicts with mini.surround
     lhs = "s",
-    rhs = "<Nop>",
+    rhs = "<Nop>", -- This disables the keymap
     desc = "Surround",
     mode = { "n", "x" },
   },
@@ -1045,6 +1090,24 @@ M.telescope = {
         require("toggleterm-manager").open({})
       end,
       desc = "Pick Terminals",
+      mode = "n",
+    },
+  },
+  filebrowser = {
+    {
+      "<leader>e",
+      function()
+        require("telescope").extensions.file_browser.file_browser()
+      end,
+      desc = "Telescope File Browser",
+      mode = "n",
+    },
+    {
+      "<leader>sF",
+      function()
+        require("telescope").extensions.file_browser.file_browser()
+      end,
+      desc = "Telescope File Browser",
       mode = "n",
     },
   },

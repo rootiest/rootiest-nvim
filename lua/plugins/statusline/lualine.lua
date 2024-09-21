@@ -12,6 +12,48 @@ local music_stats = require("utils.music_stats")
 local data = require("data")
 local funcs = data.func
 
+-- Setup NeoMiniMap extension
+-- local minimap_extension = require("neominimap.statusline").lualine_default
+local neominimap = require("neominimap.statusline")
+local minimap_extension = {
+  sections = {
+    lualine_a = {
+      neominimap.plugin_name,
+    },
+    lualine_b = {
+      { -- Branch
+        "branch",
+        separator = "",
+        padding = { left = 1, right = 0 },
+      },
+    },
+    lualine_c = {
+      neominimap.shortname,
+    },
+    lualine_y = {
+      { -- Progress
+        "progress",
+        separator = "",
+        padding = { left = 0, right = 1 },
+        icon = "",
+      },
+      neominimap.position,
+    },
+    lualine_z = {
+      { -- Time
+        "datetime",
+        style = "%a %R",
+        icon = " ",
+        padding = { left = 0, right = 1 },
+        on_click = function()
+          vim.cmd("Telescope oldfiles")
+        end,
+      },
+    },
+  },
+  filetypes = { "neominimap" },
+}
+
 -- Use lualine by default
 if vim.g.statusline == nil then
   vim.g.statusline = "lualine"
@@ -248,6 +290,18 @@ return { -- Lualine
             end,
             padding = { left = 0, right = 1 },
           },
+          { -- Neovim Updater Status
+            function()
+              return require("nvim_updater").get_statusline().icon_text
+            end,
+            color = function()
+              return require("nvim_updater").get_statusline().color
+            end,
+            on_click = function()
+              require("nvim_updater").show_new_commits(true)
+            end,
+            padding = { left = 1, right = 1 },
+          },
         },
         lualine_y = {
           { -- NeoCodeium Status
@@ -356,6 +410,7 @@ return { -- Lualine
         "quickfix",
         "symbols-outline",
         "trouble",
+        minimap_extension,
       },
     }
 
