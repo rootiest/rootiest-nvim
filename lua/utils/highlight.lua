@@ -42,6 +42,19 @@ function M.apply_todo_highlights(status_string)
   return status_string
 end
 
+function M.setup_minimap_highlight()
+  vim.api.nvim_set_hl(
+    0,
+    "NeominimapSearchIcon",
+    { link = "NeominimapErrorSign" }
+  )
+  vim.api.nvim_set_hl(
+    0,
+    "NeominimapSearchLine",
+    { link = "NeominimapErrorLine" }
+  )
+end
+
 --- Function to set up indent highlights
 ---@return nil
 function M.setup_indent_highlight()
@@ -204,6 +217,7 @@ function M.setup_autocommands()
       local filetype = vim.bo.filetype
       if not vim.tbl_contains(excluded_filetypes, filetype) then
         M.setup_indent_highlight()
+        M.setup_minimap_highlight()
       else
         if pcall(require, "auto-cursorline") then
           require("auto-cursorline").disable({
