@@ -8,11 +8,17 @@
 -- stylua: ignore start
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Key Options ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.g.mapleader = " "                  ---@type string Options: <leader>
-vim.g.maplocalleader = " "             ---@type string Options: <localleader>
--- vim.g.timeoutlen        = 1000      ---@type integer Options: <ms>
+
+-- Set the mapleader variable to the space key
+vim.g.mapleader            = " "       ---@type string Options: <leader>
+
+-- Set the maplocalleader variable to the space key
+vim.g.maplocalleader       = "\\"      ---@type string Options: <localleader>
+-- Set the timeout length for key combinations
+vim.g.timeoutlen           = 1000      ---@type integer Options: <ms>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ LSP ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 -- We don't need perl
 vim.g.loaded_perl_provider = 0         ---@type integer Options: <0|1>
 -- or ruby
@@ -23,6 +29,7 @@ vim.g.lazyvim_python_lsp   = "pyright" ---@type string Options: [python lsp]
 vim.opt.foldlevel          = 99        ---@type integer Options: <0-99>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROOTIEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 -- Use WakaTime for code stats
 vim.g.usewakatime     =  true          ---@type boolean Options:  <true|false>
 -- Allow music controls and stats
@@ -63,7 +70,7 @@ vim.g.aitool          = "neocodeium"   ---@type string Options: [ai tool]
 vim.g.usechatgpt      =  false          ---@type boolean Options:  <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATUS COLUMN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.g.statuscolumn    = "native"       ---@type string Options: [statuscolumn]
+vim.g.statuscolumn    = "native"        ---@type string Options: [statuscolumn]
 --        ╭───────────────────────────╮                barsNlines
 --        │                           │                native
 --        │      Status Columns:      │
@@ -124,6 +131,7 @@ vim.g.stats_ignored_players    = {     ---@type string[] Options: [ignored playe
                                  }
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ COLOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 --  Background color
 vim.o.background           = "dark"    ---@type string Options: <dark|light>
 -- Disable Transparency
@@ -132,14 +140,13 @@ vim.g.disable_transparency = true      ---@type boolean Options: <true|false>
 vim.opt.colorcolumn        = "120"     ---@type string|table Options: [column]
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━ Tabs and Indentation ━━━━━━━━━━━━━━━━━━━━━━━━
--- Define a character to be used in the whitespace to represent tabs/indents.
---  Tab character
--- vim.g.tab_char          = "󰌒"       ---@type string Options: [tab char]
--- -- Indent character
--- vim.g.indent_char       = "¶"       ---@type string Options: [indent char]
--- Scope character
--- vim.g.scope_char        = "|"       ---@type string Options: [scope char]
--- Alternatively, specify a character/table from the presets
+--  Define characters for tabs, indents, and scopes
+--  Option [2] will override [1] if both are defined
+
+--     ──────────────── [1] Choose a preset character ──────────────────
+-- Specify a character/table from the presets
+-- See: data.types.ibl.char for a list of available characters
+-- This option can provide multi-character cycling configurations
 -- Tab characters
 vim.g.tab_char_name        = "fancy"   ---@type string Options: [tab char]
 -- Indent characters
@@ -147,13 +154,27 @@ vim.g.indent_char_name     = "fancy"   ---@type string Options: [indent char]
 -- Scope characters
 vim.g.scope_char_name      = "scope"   ---@type string Options: [scope char]
 
+--     ──────────────── [2] Choose a specific character ────────────────
+-- Define a character to be used in the whitespace to represent tabs/indents
+-- This option allows use of any single character string
+-- Multi-character cycling configurations are not possible with this option
+-- Multi-character strings are not possible with any of the options
+--  Tab character
+-- vim.g.tab_char          = "󰌒"       ---@type string Options: [tab char]
+-- -- Indent character
+-- vim.g.indent_char       = "¶"       ---@type string Options: [indent char]
+-- Scope character
+-- vim.g.scope_char        = "|"       ---@type string Options: [scope char]
+
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Completion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 -- Cmp Window Border
 vim.g.completion_borders   = "rounded" ---@type string Options: [round|sharp|flat]
 
 -- stylua: ignore end
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━ Post-Config Functions ━━━━━━━━━━━━━━━━━━━━━━━━
+
 -- Setup blinky cursor
 require("utils.blinky").setup(vim.g.blinky)
 
