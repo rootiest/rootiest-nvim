@@ -302,7 +302,7 @@ return { -- Lualine
             end,
             padding = { left = 1, right = 1 },
             cond = function()
-              return not vim.bo.filetype == "neovim_updater_term"
+              return vim.bo.filetype ~= "neovim_updater_term"
             end,
           },
         },
