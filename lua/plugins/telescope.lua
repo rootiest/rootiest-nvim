@@ -36,6 +36,22 @@ local P = { -- Define Telescope Plugins Specs
       },
     },
   },
+  { -- Telescope Heading
+    "crispgm/telescope-heading.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("telescope").setup({
+        extensions = {
+          heading = {
+            treesitter = true,
+          },
+        },
+      })
+      require("telescope").load_extension("heading")
+    end,
+  },
   { -- Telescope Spell checker
     "matkrin/telescope-spell-errors.nvim",
     lazy = true,
@@ -91,6 +107,82 @@ local P = { -- Define Telescope Plugins Specs
         },
       }
     end,
+  },
+  { -- Telescope Software Licenses
+    "chip/telescope-software-licenses.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("telescope").load_extension("software-licenses")
+    end,
+  },
+  { -- Telescope Conventional Commits
+    "olacin/telescope-cc.nvim",
+    config = function()
+      require("telescope").load_extension("conventional_commits")
+    end,
+  },
+  { -- Telescope File Browser
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    config = function()
+      require("telescope").load_extension("file_browser")
+    end,
+    keys = data.keys.telescope.filebrowser,
+  },
+  { -- Cheatsheet
+    "doctorfree/cheatsheet.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      { "nvim-telescope/telescope.nvim" },
+      { "nvim-lua/popup.nvim" },
+      { "nvim-lua/plenary.nvim" },
+    },
+    cmd = "Cheatsheet",
+    config = function()
+      local ctactions = require("cheatsheet.telescope.actions")
+      require("cheatsheet").setup({
+        bundled_cheetsheets = {
+          enabled = {
+            "default",
+            "lua",
+            "markdown",
+            "regex",
+            "netrw",
+            "unicode",
+          },
+          disabled = { "nerd-fonts" },
+        },
+        bundled_plugin_cheatsheets = {
+          enabled = {
+            "auto-session",
+            "goto-preview",
+            "octo.nvim",
+            "telescope.nvim",
+            "vim-easy-align",
+            "vim-sandwich",
+          },
+          disabled = { "gitsigns" },
+        },
+        include_only_installed_plugins = true,
+        telescope_mappings = {
+          ["<CR>"] = ctactions.select_or_fill_commandline,
+          ["<A-CR>"] = ctactions.select_or_execute,
+          ["<C-Y>"] = ctactions.copy_cheat_value,
+          ["<C-E>"] = ctactions.edit_user_cheatsheet,
+        },
+      })
+      require("telescope").load_extension("cheatsheet")
+    end,
+  },
+  { -- Telescope Git Diffs
+    "paopaol/telescope-git-diffs.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+    },
   },
 }
 
