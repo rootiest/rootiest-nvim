@@ -86,7 +86,16 @@ return {
     cmd = data.cmd.qalc,
     keys = data.keys.qalc,
     opts = {
+      bufname = "qalc",
       set_ft = "qalc",
+      yank_default_register = "+",
+      diagnostics = {
+        underline = true,
+        virtual_text = true,
+        signs = true,
+        update_in_insert = true,
+        severity_sort = true,
+      },
     },
   },
   { -- Remote-nvim
@@ -120,5 +129,44 @@ return {
     opts = {
       enable_line_number = true,
     },
+  },
+  { -- Floating Help
+    "Tyler-Barham/floating-help.nvim",
+    opts = {
+      width = 0.8, -- Whole numbers are columns/rows
+      height = 0.9, -- Decimals are a percentage of the editor
+      position = "C", -- NW,N,NW,W,C,E,SW,S,SE (C==center)
+      border = "rounded", -- rounded,double,single
+    },
+    cmd = {
+      "FloatingHelp",
+      "FloatingHelpClose",
+      "FloatingHelpToggle",
+    },
+    init = function()
+      vim.g.floating_help = true
+      -- Only replace cmds, not search; only replace the first instance
+      --- Replace commands in the form of 'cabbr <abbrev> <expansion>'
+      ---@param abbrev string The abbreviation to replace
+      ---@param expansion string The expansion to replace it with
+      local function cmd_abbrev(abbrev, expansion)
+        local cmd = "cabbr "
+          .. abbrev
+          .. ' <c-r>=(getcmdpos() == 1 && getcmdtype() == ":" ? "'
+          .. expansion
+          .. '" : "'
+          .. abbrev
+          .. '")<CR>'
+        vim.cmd(cmd)
+      end
+      -- Replace native help commands with floating help
+      cmd_abbrev("h", "FloatingHelp")
+      cmd_abbrev("help", "FloatingHelp")
+      cmd_abbrev("helpc", "FloatingHelpClose")
+      cmd_abbrev("helpclose", "FloatingHelpClose")
+    end,
+  },
+  { -- Timer
+    "alex-popov-tech/timer.nvim",
   },
 }
