@@ -49,4 +49,9 @@ return {
     opts = data.types.gitgraph.opts,
     keys = data.keys.gitgraph,
   },
+  { -- Diffview
+    "sindrets/diffview.nvim",
+    lazy = false,
+    opts = {},
+  },
 }
