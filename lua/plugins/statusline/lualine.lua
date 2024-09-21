@@ -301,6 +301,9 @@ return { -- Lualine
               require("nvim_updater").show_new_commits(true)
             end,
             padding = { left = 1, right = 1 },
+            cond = function()
+              return not vim.bo.filetype == "neovim_updater_term"
+            end,
           },
         },
         lualine_y = {
