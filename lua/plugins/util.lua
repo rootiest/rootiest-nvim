@@ -125,9 +125,13 @@ return {
     config = data.types.pigeon,
   },
   { -- Discord Presence
-    "andweeb/presence.nvim",
+    "IogaMaster/neocord",
+    event = "VeryLazy",
     opts = {
-      enable_line_number = true,
+      logo = "https://raw.githubusercontent.com/rootiest/rootiest-nvim/b949af32e72db9fc35c18e14e2088710dc36dd15/logo/icon.png",
+      main_image = "logo",
+      blacklist = { "bin: No such file or directory" },
+      file_assets = {},
     },
   },
   { -- Floating Help
