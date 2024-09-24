@@ -6,6 +6,8 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Overrides                        │
 --          ╰─────────────────────────────────────────────────────────╯
+
+-- Load plugin overrides
 return {
   { -- Override build for markdown-preview
     "iamcco/markdown-preview.nvim",
