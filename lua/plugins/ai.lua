@@ -41,8 +41,18 @@ return {
   },
   { -- GP
     "robitx/gp.nvim",
+    enabled = data.cond.gp,
     lazy = false,
     opts = data.types.gp,
     keys = data.keys.gp.func,
+  },
+  { -- Avante
+    "yetone/avante.nvim",
+    enabled = data.cond.avante,
+    event = "VeryLazy",
+    lazy = false,
+    opts = data.types.avante,
+    build = "make",
+    dependencies = data.deps.avante,
   },
 }

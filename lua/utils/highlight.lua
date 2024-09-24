@@ -199,6 +199,30 @@ function M.setup_transparency()
   end
 end
 
+function M.setup_avante_highlights()
+  -- Apply highlights for title
+  set_hl(0, "AvanteTitle", { link = "lualine_a_command" })
+  set_hl(0, "AvanteReversedTitle", {
+    bg = get_bg_color("Normal"),
+    fg = get_bg_color("lualine_a_command"),
+  })
+  -- Apply highlights for subtitle
+  set_hl(0, "AvanteSubtitle", { link = "lualine_a_replace" })
+  set_hl(0, "AvanteReversedSubtitle", {
+    bg = get_bg_color("Normal"),
+    fg = get_bg_color("lualine_a_replace"),
+  })
+  -- Apply highlights for prompt
+  set_hl(0, "AvanteThirdTitle", { link = "lualine_a_insert" })
+  set_hl(0, "AvanteReversedThirdTitle", {
+    bg = get_bg_color("Normal"),
+    fg = get_bg_color("lualine_a_insert"),
+  })
+  -- Apply highlights for hints
+  set_hl(0, "AvanteInlineHint", { link = "LspDiagnosticsVirtualTextHint" })
+  set_hl(0, "AvantePopupHint", { link = "DiagnosticVirtualTextHint" })
+end
+
 --- Function to set up autocommands
 ---@return nil
 function M.setup_autocommands()
@@ -218,6 +242,7 @@ function M.setup_autocommands()
       if not vim.tbl_contains(excluded_filetypes, filetype) then
         M.setup_indent_highlight()
         M.setup_minimap_highlight()
+        M.setup_avante_highlights()
       else
         if pcall(require, "auto-cursorline") then
           require("auto-cursorline").disable({

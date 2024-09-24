@@ -6,6 +6,12 @@
 --          ╰─────────────────────────────────────────────────────────╯
 local M = {}
 
+M.avante = {
+  "stevearc/dressing.nvim",
+  "nvim-lua/plenary.nvim",
+  "MunifTanjim/nui.nvim",
+}
+
 M.chatgpt = {
   "MunifTanjim/nui.nvim",
   "nvim-lua/plenary.nvim",

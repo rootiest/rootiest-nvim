@@ -68,6 +68,10 @@ vim.g.aitool          = "neocodeium"   ---@type string Options: [ai tool]
 --        ╰───────────────────────────╯                none
 -- Enable ChatGPT plugin for AI chat
 vim.g.usechatgpt      =  false          ---@type boolean Options:  <true|false>
+-- Enable Avante plugin for AI chat
+vim.g.useavante       =  true           ---@type boolean Options:  <true|false>
+-- Enable GP plugin for AI chat
+vim.g.usegpai         =  false          ---@type boolean Options:  <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATUS COLUMN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.g.statuscolumn    = "native"        ---@type string Options: [statuscolumn]
@@ -148,9 +152,9 @@ vim.opt.colorcolumn        = "120"     ---@type string|table Options: [column]
 -- See: data.types.ibl.char for a list of available characters
 -- This option can provide multi-character cycling configurations
 -- Tab characters
-vim.g.tab_char_name        = "fancy"   ---@type string Options: [tab char]
+vim.g.tab_char_name        = "none"   ---@type string Options: [tab char]
 -- Indent characters
-vim.g.indent_char_name     = "fancy"   ---@type string Options: [indent char]
+vim.g.indent_char_name     = "none"   ---@type string Options: [indent char]
 -- Scope characters
 vim.g.scope_char_name      = "scope"   ---@type string Options: [scope char]
 

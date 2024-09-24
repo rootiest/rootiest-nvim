@@ -268,25 +268,24 @@ M.arrow = {
   buffer_leader_key = "m", -- Per Buffer Mappings
 }
 
---- Get the appropriate ordinal suffix for a given number.
---- @param number number The number to check for the ordinal suffix.
---- @return string The number with its ordinal suffix.
-local function get_ordinal_suffix(number)
-  -- Determine the last two digits to handle 'teen' cases correctly
-  local suffix = "th" -- Default suffix
-  local last_digit = number % 10
-  local last_two_digits = number % 100
-
-  if last_digit == 1 and last_two_digits ~= 11 then
-    suffix = "st"
-  elseif last_digit == 2 and last_two_digits ~= 12 then
-    suffix = "nd"
-  elseif last_digit == 3 and last_two_digits ~= 13 then
-    suffix = "rd"
-  end
-
-  return tostring(number) .. suffix
-end
+M.avante = {
+  provider = "openai",
+  auto_suggestions_provider = "openai",
+  behaviour = {
+    auto_suggestions = false, -- Experimental stage
+    auto_set_highlight_group = true,
+    auto_set_keymaps = true,
+    auto_apply_diff_after_generation = true,
+    support_paste_from_clipboard = false,
+  },
+  hints = { enabled = false },
+  highlights = {
+    diff = {
+      current = "MiniDiffOverChange",
+      incoming = "MiniDiffOverAdd",
+    },
+  },
+}
 
 --- Bufferline configuration options
 M.bufferline = {
@@ -312,7 +311,8 @@ M.bufferline = {
       themable = true,
       color_icons = true,
       numbers = function(opts)
-        return get_ordinal_suffix(opts.ordinal) .. ":" -- .. " (#" .. opts.id .. ")""
+        local get_suffix = require("data.func").get_ordinal_suffix
+        return get_suffix(opts.ordinal) .. "⦂"
       end,
       separator_style = "slant",
       auto_toggle_bufferline = true,
