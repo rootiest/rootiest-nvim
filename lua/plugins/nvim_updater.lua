@@ -2,6 +2,7 @@ local data = require("data")
 
 return { -- Neovim Updater
   "rootiest/nvim-updater.nvim",
+  lazy = false,
   opts = {
     verbose = false,
     check_for_updates = true,

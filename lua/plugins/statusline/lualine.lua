@@ -197,19 +197,26 @@ return { -- Lualine
             LazyVim.lualine.pretty_path(),
             padding = { left = 0, right = 0 },
             cond = function()
-              return vim.bo.filetype ~= "neovim_updater_term"
+              return not string.find(vim.bo.filetype, "neovim_updater_term")
             end,
           },
           { -- Neovim Updater
             function()
-              return "Neovim Updating.."
+              local ft = vim.bo.filetype
+              if ft == "neovim_updater_term.updating" then
+                return "Neovim Updating.."
+              elseif ft == "neovim_updater_term.cloning" then
+                return "Neovim Source Cloning.."
+              elseif ft == "neovim_updater_term.changes" then
+                return "Neovim Source Changelog"
+              end
             end,
             icon = "󰅢 ",
             color = "lualine_a_terminal",
             separator = { left = "", right = "" },
             padding = { left = 0, right = 0 },
             cond = function()
-              return vim.bo.filetype == "neovim_updater_term"
+              return string.find(vim.bo.filetype, "neovim_updater_term") ~= nil
             end,
           },
         },
@@ -302,7 +309,7 @@ return { -- Lualine
             end,
             padding = { left = 1, right = 1 },
             cond = function()
-              return vim.bo.filetype ~= "neovim_updater_term"
+              return not string.find(vim.bo.filetype, "neovim_updater_term")
             end,
           },
         },
@@ -369,6 +376,7 @@ return { -- Lualine
           },
           { -- Encoding
             "encoding",
+            show_bomb = true,
             padding = { left = 0, right = 1 },
             separator = "",
             icon = "󱁻",
