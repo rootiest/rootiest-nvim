@@ -43,4 +43,18 @@ return {
   { -- Jinja
     "armyers/Vim-Jinja2-Syntax",
   },
+  { -- Render-markdown
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = {
+      heading = {
+        -- Determins if a border is added above and below headings
+        border = true,
+        above = "▂",
+        -- Used below heading for border
+        below = "🮂",
+      },
+      file_types = { "markdown", "Avante" },
+    },
+    ft = { "markdown", "Avante" },
+  },
 }
