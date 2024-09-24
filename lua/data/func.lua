@@ -1149,6 +1149,26 @@ function M.get_bg_color(hlgroup)
   return nil
 end
 
+---@function Function to get the appropriate ordinal suffix for a given number.
+---@param number number The number to check for the ordinal suffix.
+---@return string The number with its ordinal suffix.
+function M.get_ordinal_suffix(number)
+  -- Determine the last two digits to handle 'teen' cases correctly
+  local suffix = "th" -- Default suffix
+  local last_digit = number % 10
+  local last_two_digits = number % 100
+
+  if last_digit == 1 and last_two_digits ~= 11 then
+    suffix = "st"
+  elseif last_digit == 2 and last_two_digits ~= 12 then
+    suffix = "nd"
+  elseif last_digit == 3 and last_two_digits ~= 13 then
+    suffix = "rd"
+  end
+
+  return tostring(number) .. suffix
+end
+
 ---@function Function to check if the window is wide enough
 ---@param width_limit number The minimum width of the window
 ---@return boolean condition true if the window is wide enough, false otherwise
