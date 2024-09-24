@@ -55,7 +55,7 @@ The rootiest neovim configuration you will ever see!
 Your terminal/client application **_must_** have a Nerd Font installed
 and support the Nerd Font glyphs.
 
-Kitty or NeoVide are recommended.
+WezTerm, Kitty, or NeoVide are recommended.
 
 ### Optional
 
