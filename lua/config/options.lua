@@ -53,7 +53,7 @@ vim.g.auto_save       =  true          ---@type boolean Options: <true|false>
 -- Animate blinky cursor
 vim.g.blinky          =  true          ---@type boolean Options: <true|false>
 -- Use experimental cmp performance fork
-vim.g.cmp_performance_enabled = true   ---@type boolean Options: <true|false>
+vim.g.cmp_performance_enabled = false  ---@type boolean Options: <true|false>
 -- Use dev mode for rootiest plugins
 vim.g.rootiest_dev    =  false         ---@type boolean Options: <true|false>
 
