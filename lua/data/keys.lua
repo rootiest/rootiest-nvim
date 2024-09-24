@@ -572,6 +572,155 @@ M.groups = {
   },
 }
 
+M.multicursor = {
+  {
+    "<leader><up>",
+    function()
+      require("multicursor-nvim").addCursor("k")
+    end,
+    mode = { "n", "v" },
+    desc = "Add Cursor Above",
+  },
+  {
+    "<leader><down>",
+    function()
+      require("multicursor-nvim").addCursor("j")
+    end,
+    mode = { "n", "v" },
+    desc = "Add Cursor Below",
+  },
+  {
+    "<c-n>",
+    function()
+      require("multicursor-nvim").addCursor("*")
+    end,
+    desc = "Add Cursor and Skip Word",
+    mode = { "n", "v" },
+  },
+  {
+    "<c-s>",
+    function()
+      require("multicursor-nvim").skipCursor("*")
+    end,
+    desc = "Skip Word",
+    mode = { "n", "v" },
+  },
+  {
+    "<leader><left>",
+    function()
+      require("multicursor-nvim").nextCursor()
+    end,
+    desc = "Next Cursor",
+    mode = { "n", "v" },
+  },
+  {
+    "<leader><right>",
+    function()
+      require("multicursor-nvim").prevCursor()
+    end,
+    desc = "Previous Cursor",
+    mode = { "n", "v" },
+  },
+  {
+    "<leader>x",
+    function()
+      require("multicursor-nvim").deleteCursor()
+    end,
+    desc = "Delete Cursor",
+    mode = { "n", "v" },
+  },
+  {
+    "<c-leftmouse>",
+    function()
+      require("multicursor-nvim").handleMouse()
+    end,
+    desc = "Add/Remove Cursor",
+    mode = "n",
+  },
+  {
+    "<c-q>",
+    function()
+      if require("multicursor-nvim").cursorsEnabled() then
+        require("multicursor-nvim").disableCursors() -- Stop other cursors from moving, allowing main cursor repositioning.
+      else
+        require("multicursor-nvim").addCursor() -- Add a cursor if none are enabled.
+      end
+    end,
+    desc = "Add Cursor",
+    mode = { "n", "v" },
+  },
+  {
+    "<esc>",
+    function()
+      if not require("multicursor-nvim").cursorsEnabled() then
+        require("multicursor-nvim").enableCursors() -- Enable cursors.
+      elseif require("multicursor-nvim").hasCursors() then
+        require("multicursor-nvim").clearCursors() -- Clear all cursors.
+      else
+        -- Default <esc> handler can be defined here if needed.
+      end
+    end,
+    desc = "Escape Handler",
+    mode = "n",
+  },
+  {
+    "<leader>a",
+    function()
+      require("multicursor-nvim").alignCursors()
+    end,
+    desc = "Align Cursors",
+    mode = "n",
+  },
+  {
+    "S",
+    function()
+      require("multicursor-nvim").splitCursors()
+    end,
+    desc = "Split Cursors",
+    mode = "v",
+  },
+  {
+    "I",
+    function()
+      require("multicursor-nvim").insertVisual()
+    end,
+    desc = "Insert Visual",
+    mode = "v",
+  },
+  {
+    "A",
+    function()
+      require("multicursor-nvim").appendVisual()
+    end,
+    desc = "Append Visual",
+    mode = "v",
+  },
+  {
+    "M",
+    function()
+      require("multicursor-nvim").matchCursors()
+    end,
+    desc = "Match Cursors",
+    mode = "v",
+  },
+  {
+    "<leader>t",
+    function()
+      require("multicursor-nvim").transposeCursors(1)
+    end,
+    desc = "Transpose Cursors  ",
+    mode = "v",
+  },
+  {
+    "<leader>T",
+    function()
+      require("multicursor-nvim").transposeCursors(-1)
+    end,
+    desc = "Transpose Cursors  ",
+    mode = "v",
+  },
+}
+
 M.nvimup = {
   { -- Update Neovim from source
     "<Leader>quU",

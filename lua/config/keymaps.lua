@@ -45,6 +45,12 @@ for _, map in ipairs(data.keys.splits.swap) do
   add_keymap(map[1], map[2], map[3], data.types.all_modes)
 end
 
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ MultiCursor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Add keymaps for multicursor
+for _, item in ipairs(data.keys.multicursor) do
+  add_keymap(item)
+end
+
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Overrides ━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Add keymaps for overrides
 add_keymap(data.keys.overrides)
