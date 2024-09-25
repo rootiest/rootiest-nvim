@@ -98,9 +98,6 @@ return {
   { -- Comment Box
     "LudoPinelli/comment-box.nvim",
   },
-  { -- vim-visual-multi
-    "mg979/vim-visual-multi",
-  },
   { -- Todo Comments
     "folke/todo-comments.nvim",
     opts = data.types.todo.opts,
@@ -153,5 +150,37 @@ return {
     "folke/noice.nvim",
     optional = true,
     opts = data.types.noice,
+  },
+  { -- Duck
+    "tamton-aquib/duck.nvim",
+    config = function()
+      local add_km = data.func.add_keymap
+      add_km({
+        lhs = "<leader>uD",
+        group = "Duck",
+        icon = { icon = "󰇥", color = "yellow" },
+      })
+      add_km({
+        "<leader>uDd",
+        function()
+          require("duck").hatch()
+        end,
+        desc = "Hatch",
+      })
+      add_km({
+        "<leader>uDk",
+        function()
+          require("duck").cook()
+        end,
+        desc = "Cook",
+      })
+      add_km({
+        "<leader>uDa",
+        function()
+          require("duck").cook_all()
+        end,
+        desc = "Cook All",
+      })
+    end,
   },
 }
