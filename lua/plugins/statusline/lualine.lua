@@ -138,12 +138,25 @@ return { -- Lualine
       },
       sections = { -- Sections
         lualine_a = {
-          {
-            -- Calls the current.lualine() function to get the mode string
+          { -- Mode
             function()
               return data.types.mode.current.lualine()
             end,
             padding = { left = 1, right = 0 },
+            separator = { left = "", right = "" },
+          },
+          { -- MultiCursors
+            function()
+              return data.func.mc_statusline().icon
+            end,
+            cond = function()
+              return data.func.mc_statusline().enabled
+            end,
+            color = function()
+              return data.func.mc_statusline().color
+            end,
+            padding = { left = 0, right = 0 },
+            separator = { left = "", right = "" },
           },
         },
         lualine_b = {
@@ -405,6 +418,7 @@ return { -- Lualine
             on_click = function()
               vim.cmd("Telescope oldfiles")
             end,
+            separator = { left = "", right = "" },
           },
         },
       },

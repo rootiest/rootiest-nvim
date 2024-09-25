@@ -561,6 +561,11 @@ M.group = {
       group = "New Commits",
       icon = { icon = "", color = "green" },
     },
+    { -- MultiCursor
+      lhs = "<leader>m",
+      group = "MultiCursor",
+      icon = { icon = "󰬸", color = "green" },
+    },
   },
 }
 
@@ -590,7 +595,7 @@ M.multicursor = {
     desc = "Add Cursor Below",
   },
   {
-    "<c-n>",
+    "<leader><c-n>",
     function()
       require("multicursor-nvim").addCursor("*")
     end,
@@ -598,7 +603,7 @@ M.multicursor = {
     mode = { "n", "v" },
   },
   {
-    "<c-s>",
+    "<leader><c-s>",
     function()
       require("multicursor-nvim").skipCursor("*")
     end,
@@ -622,7 +627,7 @@ M.multicursor = {
     mode = { "n", "v" },
   },
   {
-    "<leader>x",
+    "<leader>mx",
     function()
       require("multicursor-nvim").deleteCursor()
     end,
@@ -638,7 +643,7 @@ M.multicursor = {
     mode = "n",
   },
   {
-    "<c-q>",
+    "<leader><c-q>",
     function()
       if require("multicursor-nvim").cursorsEnabled() then
         require("multicursor-nvim").disableCursors() -- Stop other cursors from moving, allowing main cursor repositioning.
@@ -664,7 +669,7 @@ M.multicursor = {
     mode = "n",
   },
   {
-    "<leader>a",
+    "<leader>ma",
     function()
       require("multicursor-nvim").alignCursors()
     end,
@@ -672,7 +677,7 @@ M.multicursor = {
     mode = "n",
   },
   {
-    "S",
+    "<leader>mS",
     function()
       require("multicursor-nvim").splitCursors()
     end,
@@ -680,7 +685,7 @@ M.multicursor = {
     mode = "v",
   },
   {
-    "I",
+    "<leader>mI",
     function()
       require("multicursor-nvim").insertVisual()
     end,
@@ -688,7 +693,7 @@ M.multicursor = {
     mode = "v",
   },
   {
-    "A",
+    "<leader>mA",
     function()
       require("multicursor-nvim").appendVisual()
     end,
@@ -696,7 +701,7 @@ M.multicursor = {
     mode = "v",
   },
   {
-    "M",
+    "<leader>mM",
     function()
       require("multicursor-nvim").matchCursors()
     end,
@@ -704,7 +709,7 @@ M.multicursor = {
     mode = "v",
   },
   {
-    "<leader>t",
+    "<leader>mt",
     function()
       require("multicursor-nvim").transposeCursors(1)
     end,
@@ -712,7 +717,7 @@ M.multicursor = {
     mode = "v",
   },
   {
-    "<leader>T",
+    "<leader>mT",
     function()
       require("multicursor-nvim").transposeCursors(-1)
     end,
@@ -1174,7 +1179,7 @@ M.substitute = {
     mode = "x",
   },
   { -- Substitute visual selection in visual mode
-    "<leader>r",
+    "<leader>m",
     function()
       require("substitute").visual()
     end,

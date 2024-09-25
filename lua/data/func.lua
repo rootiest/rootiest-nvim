@@ -1197,5 +1197,35 @@ function M.exit()
   vim.api.nvim_command("wqall")
 end
 
+---@function Function to render the MultiCursor statusline
+---@return table status The MultiCursor status object
+function M.mc_statusline()
+  local mc = require("multicursor-nvim")
+  local status = {}
+  if mc.hasCursors() then
+    status.enabled = true
+    if vim.fn.mode() == "v" then
+      status.icon = "󰚕 "
+      status.short_text = "V"
+      status.text = "VISUAL"
+      status.color = "lualine_a_visual"
+    else
+      status.icon = "󰬸 "
+      status.short_text = "N"
+      status.text = "NORMAL"
+      status.color = "lualine_a_normal"
+    end
+  else
+    status.enabled = false
+    status.icon = "󰘪 "
+    status.short_text = "NO"
+    status.text = "SINGLE"
+    status.color = "lualine_a_normal"
+  end
+  status.icon_short_text = status.icon .. status.short_text
+  status.icon_text = status.icon .. status.text
+  return status
+end
+
 -- Export the module
 return M
