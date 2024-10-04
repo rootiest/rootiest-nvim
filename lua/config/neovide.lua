@@ -4,16 +4,16 @@
 --          │                         Neovide                         │
 --          ╰─────────────────────────────────────────────────────────╯
 -- Set GUI font
-vim.opt.guifont = "Iosevka:#e-subpixelantialias:h12"
+vim.opt.guifont = "Iosevka Rootiest V2:#e-subpixelantialias:h12"
 -- refresh rate and translucency
-vim.g.neovide_refresh_rate = 170
+vim.g.neovide_refresh_rate = 120
 vim.g.neovide_transparency = 0.85
 vim.g.neovide_window_blurred = true
 -- cursor fx
-vim.g.neovide_cursor_vfx_mode = "railgun"
+vim.g.neovide_cursor_vfx_mode = "pixiedust"
 vim.g.neovide_cursor_smooth_blink = true
 vim.g.neovide_cursor_vfx_particle_density = 16.0
-vim.g.neovide_cursor_vfx_particle_lifetime = 1.6
+vim.g.neovide_cursor_vfx_particle_lifetime = 2.1
 vim.g.neovide_cursor_vfx_particle_phase = 1.2
 vim.g.neovide_cursor_vfx_particle_curl = 1.0
 vim.g.neovide_cursor_animation_length = 0.13
@@ -23,6 +23,8 @@ vim.g.neovide_floating_shadow = true
 vim.g.neovide_floating_z_height = 10
 vim.g.neovide_light_angle_degrees = 45
 vim.g.neovide_light_radius = 5
+vim.g.neovide_floating_blur_amount_x = 2.0
+vim.g.neovide_floating_blur_amount_y = 2.0
 -- scaling
 vim.g.neovide_scale_factor = 1.0
 -- padding
@@ -32,15 +34,19 @@ vim.g.neovide_padding_right = 0
 vim.g.neovide_padding_left = 0
 
 -- Simulate kitty copy-and-paste from system clipboard
--- in normal mode
-vim.cmd(":nnoremap <silent> <C-v> :r !xsel -b<cr>")
-vim.cmd(":nnoremap <silent> <C-c> :w !xsel -i -b<cr>")
--- and in visual mode
-vim.cmd(":vnoremap <silent> <C-v> :r !xsel -b<cr>")
-vim.cmd(":vnoremap <silent> <C-c> :w !xsel -i -b<cr>")
--- and in command mode
-vim.cmd(":cnoremap <silent> <C-v> <C-r>+")
-vim.cmd(":cnoremap <silent> <C-c> <C-r>+")
--- and in insert mode
-vim.cmd(":inoremap <silent> <C-v> <C-r>+")
-vim.cmd(":inoremap <silent> <C-c> <C-r>+")
+
+-- Normal mode
+vim.keymap.set("n", "<C-v>", ":r !xsel -b<CR>", { silent = true })
+vim.keymap.set("n", "<C-c>", ":w !xsel -i -b<CR>", { silent = true })
+
+-- Visual mode
+vim.keymap.set("v", "<C-v>", ":r !xsel -b<CR>", { silent = true })
+vim.keymap.set("v", "<C-c>", ":w !xsel -i -b<CR>", { silent = true })
+
+-- Command mode
+vim.keymap.set("c", "<C-v>", "<C-r>+", { silent = true })
+vim.keymap.set("c", "<C-c>", "<C-r>+", { silent = true })
+
+-- Insert mode
+vim.keymap.set("i", "<C-v>", "<C-r>+", { silent = true })
+vim.keymap.set("i", "<C-c>", "<C-r>+", { silent = true })
