@@ -123,8 +123,17 @@ return { -- Lualine
     vim.o.laststatus = vim.g.lualine_laststatus
 
     -- Define todo-comments component
-    local todos_component =
-      require("todos-lualine").component(data.types.todo.lualine())
+
+    -- Attempt to require the plugin and handle the case where it's not available
+    local status, todos = pcall(require, "todos-lualine")
+
+    local todos_component
+
+    if not status then
+      todos_component = nil -- Set to nil if the plugin is not loaded
+    else
+      todos_component = todos.component(data.types.todo.lualine())
+    end
 
     local opts = {
       options = { -- General options
@@ -147,16 +156,17 @@ return { -- Lualine
           },
           { -- MultiCursors
             function()
-              return data.func.mc_statusline().icon
+              return data.func.mc_statusline().count
+                .. data.func.mc_statusline().icon
             end,
             cond = function()
-              return data.func.mc_statusline().enabled
+              return data.func.mc_statusline().cursors > 1
             end,
             color = function()
               return data.func.mc_statusline().color
             end,
-            padding = { left = 0, right = 0 },
-            separator = { left = "", right = "" },
+            padding = { left = 1, right = 0 },
+            separator = { left = "", right = "" },
           },
         },
         lualine_b = {
@@ -181,6 +191,7 @@ return { -- Lualine
             end,
             cond = function()
               return funcs.is_window_wide_enough(100)
+                and pcall(require, "arrow")
             end,
             padding = { left = 1, right = 0 },
             on_click = function()
@@ -322,6 +333,9 @@ return { -- Lualine
             end,
             padding = { left = 1, right = 1 },
             cond = function()
+              if not pcall(require, "nvim_updater") then
+                return false
+              end
               return not string.find(vim.bo.filetype, "neovim_updater_term")
             end,
           },
@@ -398,6 +412,9 @@ return { -- Lualine
         lualine_z = {
           { -- Recording
             require("recorder").recordingStatus,
+            cond = function()
+              return pcall(require, "recorder")
+            end,
             color = "CurSearch",
             separator = { left = "", right = "" },
           },

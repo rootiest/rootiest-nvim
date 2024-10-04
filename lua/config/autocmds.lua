@@ -55,12 +55,14 @@ autocmd({ "BufEnter", "FocusGained" }, {
 })
 
 -- LazyGit root detection
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "*",
-  callback = function()
-    require("lazygit.utils").project_root_dir()
-  end,
-})
+if pcall(require, "lazygit.utils") then
+  vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "*",
+    callback = function()
+      require("lazygit.utils").project_root_dir()
+    end,
+  })
+end
 
 -- TodoFzfLua command override to use Telescope
 -- when fzf-lua is not installed
@@ -75,43 +77,59 @@ autocmd({ "BufEnter" }, {
 })
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━ Set up Qalc keymappings ━━━━━━━━━━━━━━━━━━━━━━━
--- Create a group for filetype-specific mappings
-vim.api.nvim_create_augroup("QalcFileTypeMappings", { clear = true })
+if pcall(require, "qalc") then
+  -- Create a group for filetype-specific mappings
+  vim.api.nvim_create_augroup("QalcFileTypeMappings", { clear = true })
 
--- Create an autocommand for the qalc filetype
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "qalc",
-  group = "QalcFileTypeMappings",
-  callback = function()
-    -- Set the key mapping: 'y' to run the :QalcYank command in normal mode
-    vim.keymap.set( -- Yank Result
-      "n",
-      "y",
-      ":QalcYank +<CR>",
-      { noremap = true, silent = true }
-    )
-    -- Set the key mapping: 'q' to run the :QalcClose command in normal mode
-    vim.keymap.set( -- Close Qalc
-      "n",
-      "q",
-      ":QalcClose<CR>",
-      { noremap = true, silent = true }
-    )
-  end,
-})
+  -- Create an autocommand for the qalc filetype
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "qalc",
+    group = "QalcFileTypeMappings",
+    callback = function()
+      -- Set the key mapping: 'y' to run the :QalcYank command in normal mode
+      vim.keymap.set( -- Yank Result
+        "n",
+        "y",
+        ":QalcYank +<CR>",
+        { noremap = true, silent = true }
+      )
+      -- Set the key mapping: 'q' to run the :QalcClose command in normal mode
+      vim.keymap.set( -- Close Qalc
+        "n",
+        "q",
+        ":QalcClose<CR>",
+        { noremap = true, silent = true }
+      )
+    end,
+  })
 
--- Define a custom command to close the Qalc buffer
-vim.api.nvim_create_user_command("QalcClose", function()
-  local buf_name = vim.api.nvim_buf_get_name(0)
-  if buf_name ~= "" then
-    vim.cmd("bd!")
-  else
-    -- If the buffer has no name, just remove it without invoking :bd!
-    vim.api.nvim_buf_delete(0, { force = true })
-  end
-end, { bang = true })
+  -- Define a custom command to close the Qalc buffer
+  vim.api.nvim_create_user_command("QalcClose", function()
+    local buf_name = vim.api.nvim_buf_get_name(0)
+    if buf_name ~= "" then
+      vim.cmd("bd!")
+    else
+      -- If the buffer has no name, just remove it without invoking :bd!
+      vim.api.nvim_buf_delete(0, { force = true })
+    end
+  end, { bang = true })
+end
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━ Set up highlights ━━━━━━━━━━━━━━━━━━━━━━━━━━
 local load_highlight = require("utils.highlight")
 load_highlight.setup_autocommands()
 load_highlight.setup_dashboard_highlight()
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    local ev = vim.v.event
+    local content = {}
+    if ev.regtype:sub(1, 1) ~= "" or not ev.visual then
+      return
+    end
+    for _, line in ipairs(ev.regcontents) do
+      table.insert(content, vim.fn.trim(line, "", 2))
+    end
+    vim.fn.setreg("+", content)
+  end,
+})

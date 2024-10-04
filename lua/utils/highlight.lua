@@ -64,80 +64,85 @@ function M.setup_indent_highlight()
   -- Get the foreground color of Error
   local miniiconsred_fg_hex = get_fg_color("Error")
 
-  -- Load the ibl plugin hooks
-  local hooks = require("ibl.hooks")
-  -- create the highlight groups in the highlight setup hook
-  if cursorline_bg_hex then
-    -- Define custom highlight groups for indent
-    hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-      set_hl(
-        0,
-        "IndentBlanklineIndent",
-        { fg = cursorline_bg_hex, nocombine = true }
-      )
-      set_hl(
-        0,
-        "IndentsScopeHighlight",
-        { fg = miniiconsred_fg_hex, nocombine = true }
-      )
-    end)
-  end
+  -- Load the ibl plugin
+  if pcall(require, "ibl") then
+    -- Load the ibl plugin hooks
+    local hooks = require("ibl.hooks")
+    -- create the highlight groups in the highlight setup hook
+    if cursorline_bg_hex then
+      -- Define custom highlight groups for indent
+      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+        set_hl(
+          0,
+          "IndentBlanklineIndent",
+          { fg = cursorline_bg_hex, nocombine = true }
+        )
+        set_hl(
+          0,
+          "IndentsScopeHighlight",
+          { fg = miniiconsred_fg_hex, nocombine = true }
+        )
+      end)
+    end
 
-  -- Define characters for indent-blankline
-  local tab_char, indent_char
-  if vim.g.tab_char then
-    tab_char = vim.g.tab_char
-  elseif vim.g.tab_char_name then
-    tab_char = data.types.ibl.char[vim.g.tab_char_name]
-  else
-    tab_char = data.types.ibl.char.none
-  end
-  if vim.g.indent_char then
-    indent_char = vim.g.indent_char
-  elseif vim.g.indent_char_name then
-    indent_char = data.types.ibl.char[vim.g.indent_char_name]
-  else
-    indent_char = data.types.ibl.char.none
-  end
+    -- Define characters for indent-blankline
+    local tab_char, indent_char
+    if vim.g.tab_char then
+      tab_char = vim.g.tab_char
+    elseif vim.g.tab_char_name then
+      tab_char = data.types.ibl.char[vim.g.tab_char_name]
+    else
+      tab_char = data.types.ibl.char.none
+    end
+    if vim.g.indent_char then
+      indent_char = vim.g.indent_char
+    elseif vim.g.indent_char_name then
+      indent_char = data.types.ibl.char[vim.g.indent_char_name]
+    else
+      indent_char = data.types.ibl.char.none
+    end
 
-  -- Configure the indent-blankline plugin
-  require("ibl").setup({
-    indent = {
-      char = indent_char,
-      tab_char = tab_char,
-      highlight = {
-        "IndentBlanklineIndent",
+    -- Configure the indent-blankline plugin
+    require("ibl").setup({
+      indent = {
+        char = indent_char,
+        tab_char = tab_char,
+        highlight = {
+          "IndentBlanklineIndent",
+        },
       },
-    },
-    scope = {
-      enabled = false,
-    },
-    exclude = {
-      filetypes = data.types.highlights.exclude,
-    },
-  })
+      scope = {
+        enabled = false,
+      },
+      exclude = {
+        filetypes = data.types.highlights.exclude,
+      },
+    })
+  end
 
   -- Configure the deadcolumn plugin
-  require("deadcolumn").setup({
-    scope = "line", ---@type string|fun(): integer
-    modes = function(mode)
-      return mode:find("^[ictRss\x13]") ~= nil
-    end,
-    blending = {
-      threshold = 0.9,
-      colorcode = cursorline_bg_hex,
-      hlgroup = { "Normal", "bg" },
-    },
-    warning = {
-      alpha = 0.4,
-      offset = 0,
-      colorcode = miniiconsred_fg_hex,
-      hlgroup = { "Error", "bg" },
-    },
-    extra = {
-      follow_tw = "80",
-    },
-  })
+  if pcall(require, "deadcolumn") then
+    require("deadcolumn").setup({
+      scope = "line", ---@type string|fun(): integer
+      modes = function(mode)
+        return mode:find("^[ictRss\x13]") ~= nil
+      end,
+      blending = {
+        threshold = 0.9,
+        colorcode = cursorline_bg_hex,
+        hlgroup = { "Normal", "bg" },
+      },
+      warning = {
+        alpha = 0.4,
+        offset = 0,
+        colorcode = miniiconsred_fg_hex,
+        hlgroup = { "Error", "bg" },
+      },
+      extra = {
+        follow_tw = "80",
+      },
+    })
+  end
 
   -- Set NeoCodeium suggestion highlight
   vim.api.nvim_set_hl(0, "NeoCodeiumSuggestion", { link = "Comment" })
@@ -223,6 +228,16 @@ function M.setup_avante_highlights()
   set_hl(0, "AvantePopupHint", { link = "DiagnosticVirtualTextHint" })
 end
 
+function M.setup_multi_cursor_highlight()
+  -- Customize how cursors look.
+  vim.api.nvim_set_hl(0, "MultiCursorCursor", { link = "Cursor" })
+  vim.api.nvim_set_hl(0, "MultiCursorVisual", { link = "Visual" })
+  vim.api.nvim_set_hl(0, "MultiCursorSign", { link = "GitSignsAdd" })
+  vim.api.nvim_set_hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
+  vim.api.nvim_set_hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
+  vim.api.nvim_set_hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
+end
+
 --- Function to set up autocommands
 ---@return nil
 function M.setup_autocommands()
@@ -243,6 +258,7 @@ function M.setup_autocommands()
         M.setup_indent_highlight()
         M.setup_minimap_highlight()
         M.setup_avante_highlights()
+        M.setup_multi_cursor_highlight()
       else
         if pcall(require, "auto-cursorline") then
           require("auto-cursorline").disable({
