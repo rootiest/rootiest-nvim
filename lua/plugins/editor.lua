@@ -64,7 +64,7 @@ return {
   },
   -- { -- DeadColumn
   --   "Bekaboo/deadcolumn.nvim",
-  --   -- event = "BufEnter",
+  --   event = "BufEnter",
   -- },
   { -- Precognition
     "tris203/precognition.nvim",
@@ -183,6 +183,9 @@ return {
       })
     end,
   },
-  { "nvchad/volt", lazy = true },
+  {
+    "rootiest/volt",
+    lazy = true,
+  },
   { "nvchad/minty", lazy = true },
 }
