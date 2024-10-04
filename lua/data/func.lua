@@ -599,13 +599,21 @@ function M.reload_all_plugins()
     }
   end
 
-  -- Get the list of currently loaded plugins
-  local plugins = require("lazy.core.config").plugins
+  -- Try to require the lazy.core.config module
+  local ok, lazy_config = pcall(require, "lazy.core.config")
 
-  -- Iterate over each plugin and reload it if it's not in the exclusion list
-  for plugin_name, _ in pairs(plugins) do
-    if not exclude[plugin_name] then
-      vim.cmd("Lazy reload " .. plugin_name)
+  if not ok then
+    -- Handle the error; the module is not available
+    print("lazy.core.config not found")
+  else
+    -- Get the list of currently loaded plugins
+    local plugins = lazy_config.plugins
+
+    -- Iterate over each plugin and reload it if it's not in the exclusion list
+    for plugin_name, _ in pairs(plugins) do
+      if not exclude[plugin_name] then
+        vim.cmd("Lazy reload " .. plugin_name)
+      end
     end
   end
 end
@@ -1200,8 +1208,25 @@ end
 ---@function Function to render the MultiCursor statusline
 ---@return table status The MultiCursor status object
 function M.mc_statusline()
-  local mc = require("multicursor-nvim")
-  local status = {}
+  -- Define the default status object
+  local status = {
+    enabled = false,
+    icon = "󰘪 ",
+    short_text = "NO",
+    text = "SINGLE",
+    color = "lualine_a_normal",
+    cursors = 1,
+    disabled = 0,
+    installed = false,
+  }
+
+  local ok, mc = pcall(require, "multicursor-nvim")
+  if not ok then
+    -- Handle the case where the plugin is not installed
+    return status
+  end
+
+  status.installed = true
   if mc.numEnabledCursors() > 1 then
     status.enabled = true
     status.cursors = mc.numEnabledCursors()
@@ -1219,14 +1244,6 @@ function M.mc_statusline()
       status.text = "NORMAL"
       status.color = "lualine_a_normal"
     end
-  else
-    status.enabled = false
-    status.icon = "󰘪 "
-    status.short_text = "NO"
-    status.text = "SINGLE"
-    status.color = "lualine_a_normal"
-    status.cursors = 1
-    status.disabled = 0
   end
   status.icon_short_text = status.icon .. status.short_text
   status.icon_text = status.icon .. status.text
