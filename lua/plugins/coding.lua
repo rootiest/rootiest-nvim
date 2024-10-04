@@ -26,6 +26,14 @@ return {
   { -- Yanky
     import = "lazyvim.plugins.extras.coding.yanky",
   },
+  { -- Yanky
+    "gbprod/yanky.nvim",
+    opts = {
+      preserve_cursor_position = {
+        enabled = false,
+      },
+    },
+  },
   { -- VSCode
     import = "lazyvim.plugins.extras.vscode",
   },
