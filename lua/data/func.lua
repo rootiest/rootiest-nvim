@@ -1202,15 +1202,19 @@ end
 function M.mc_statusline()
   local mc = require("multicursor-nvim")
   local status = {}
-  if mc.hasCursors() then
+  if mc.numEnabledCursors() > 1 then
     status.enabled = true
+    status.cursors = mc.numEnabledCursors()
+    status.disabled = mc.numDisabledCursors()
     if vim.fn.mode() == "v" then
-      status.icon = "󰚕 "
+      -- status.icon = "󰚕 "
+      status.icon = "󰆿"
       status.short_text = "V"
       status.text = "VISUAL"
       status.color = "lualine_a_visual"
     else
-      status.icon = "󰬸 "
+      -- status.icon = "󰬸 "
+      status.icon = "󰇀"
       status.short_text = "N"
       status.text = "NORMAL"
       status.color = "lualine_a_normal"
@@ -1221,9 +1225,19 @@ function M.mc_statusline()
     status.short_text = "NO"
     status.text = "SINGLE"
     status.color = "lualine_a_normal"
+    status.cursors = 1
+    status.disabled = 0
   end
   status.icon_short_text = status.icon .. status.short_text
   status.icon_text = status.icon .. status.text
+
+  if status.cursors > 1 and status.disabled > 0 then
+    status.count = status.cursors .. "/" .. status.disabled
+  elseif status.cursors > 1 and status.disabled <= 0 then
+    status.count = status.cursors
+  else
+    status.count = ""
+  end
   return status
 end
 
