@@ -27,6 +27,12 @@ for _, item in ipairs(data.keys.misc) do
   add_keymap(item)
 end
 
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━ Telescope Keybinds ━━━━━━━━━━━━━━━━━━━━━━
+-- Add keymaps for telescope symbols
+for _, item in ipairs(data.keys.telescope.symbols) do
+  add_keymap(item)
+end
+
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ Resizing splits ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Add keymaps for resizing splits
 for _, map in ipairs(data.keys.splits.resize) do

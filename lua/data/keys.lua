@@ -1221,7 +1221,15 @@ M.telescope = {
       "<leader>f.",
       function()
         require("telescope.builtin").symbols({
-          sources = { "emoji", "kaomoji", "gitmoji", "nerd", "math" },
+          sources = {
+            "nerd",
+            "emoji",
+            "kaomoji",
+            "gitmoji",
+            "math",
+            "latex",
+            "julia",
+          },
         })
       end,
       desc = "Pick Icons",
@@ -1230,7 +1238,15 @@ M.telescope = {
       "<C-.>",
       function()
         require("telescope.builtin").symbols({
-          sources = { "emoji", "kaomoji", "gitmoji", "nerd", "math" },
+          sources = {
+            "nerd",
+            "emoji",
+            "kaomoji",
+            "gitmoji",
+            "math",
+            "latex",
+            "julia",
+          },
         })
       end,
       desc = "Pick Icon",

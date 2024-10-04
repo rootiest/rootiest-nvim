@@ -5,7 +5,6 @@
 --          ╰─────────────────────────────────────────────────────────╯
 local data = require("data")
 local perf = vim.g.cmp_performance_enabled or false
-
 --- Function to return the cmp provider
 ---@param performance? boolean Whether to use the experimental cmp performance fork
 ---@return table provider The cmp provider spec
@@ -15,7 +14,8 @@ local function cmp_provider(performance)
       url = "yioneko/nvim-cmp",
       -- Experiemental cmp performance fork
       dev = true,
-      build = "git clone https://github.com/yioneko/nvim-cmp.git ~/projects/nvim-cmp/",
+      branch = "perf-up",
+      build = "git clone -b perf-up https://github.com/yioneko/nvim-cmp.git ~/projects/nvim-cmp/",
     }
   end
   return {
@@ -24,30 +24,28 @@ local function cmp_provider(performance)
     dev = false,
   }
 end
-
+local cmp_repo = cmp_provider(perf)
 return { -- cmp
-  cmp_provider(perf).url,
-  build = cmp_provider(perf).build,
-  dev = cmp_provider(perf).dev,
+  url = cmp_repo.url,
+  build = cmp_repo.build,
+  branch = cmp_repo.branch,
+  dev = cmp_repo.dev,
   event = "VeryLazy",
   dependencies = data.deps.cmp,
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
-
     cmp.event:on("menu_opened", function()
       if data.cond.neocodeium() == true then
         require("neocodeium").clear()
       end
     end)
-
     cmp.event:on("menu_closed", function()
       if data.cond.neocodeium() == true then
         require("neocodeium.commands").enable()
         require("neocodeium").cycle_or_complete()
       end
     end)
-
     local border_opts = {
       border = vim.g.completion_borders or "rounded",
     }
@@ -56,7 +54,6 @@ return { -- cmp
       documentation = cmp.config.window.bordered(border_opts),
     }
     luasnip.config.setup({})
-
     local has_words_before = function()
       unpack = unpack or table.unpack
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -67,7 +64,6 @@ return { -- cmp
             :match("%s")
           == nil
     end
-
     cmp.setup({
       snippet = {
         expand = function(args)
@@ -137,6 +133,18 @@ return { -- cmp
         fields = { "abbr", "kind", "menu" },
         expandable_indicator = true,
         format = function(entry, item)
+          local custom_menu_icon = {
+            calc = "󰃬 Calculator",
+            math = " Math",
+            nerd = " Glyphs",
+            gitmoji = " Gitmoji",
+            emoji = "󰞅 Emoji",
+            conventionalcommits = " Commit Message",
+            path = " Path",
+            buffer = "󰓩 Buffer",
+            dotenv = " Dotenv",
+            cmp_yanky = " History",
+          }
           local color_item =
             require("nvim-highlight-colors").format(entry, { kind = item.kind })
           item = require("lspkind").cmp_format({
@@ -146,11 +154,14 @@ return { -- cmp
             item.kind_hl_group = color_item.abbr_hl_group
             item.kind = color_item.abbr
           end
+          -- if entry.source.name is in the custom_menu_icon table, match its icon
+          if custom_menu_icon[entry.source.name] then
+            item.kind = custom_menu_icon[entry.source.name]
+          end
           return item
         end,
       },
     })
-
     -- `:` cmdline setup.
     cmp.setup.cmdline(":", {
       mapping = cmp.mapping.preset.cmdline(),
@@ -167,7 +178,6 @@ return { -- cmp
         name = "cmp-cmdline-prompt",
       }),
     })
-
     -- Additional setup for cmdline filetype
     cmp.setup.filetype("cmdline", {
       sources = {
@@ -177,19 +187,16 @@ return { -- cmp
         { name = "cmp-cmdline-prompt" },
       },
     })
-
     -- Input filetype
     cmp.setup.filetype("input", {
       sources = {},
     })
-
     -- Custom filetype configuration
     cmp.setup.filetype("config", {
       sources = vim.tbl_filter(function(source)
         return source.name ~= "emoji" and source.name ~= "gitmoji"
       end, cmp.get_config().sources),
     })
-
     -- List of filetypes to disable completion
     local disabled_filetypes = data.types.cmp
     for _, filetype in ipairs(disabled_filetypes) do
