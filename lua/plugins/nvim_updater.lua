@@ -4,6 +4,8 @@ return { -- Neovim Updater
   "rootiest/nvim-updater.nvim",
   lazy = true,
   opts = {
+    build_type = "RelWithDebInfo",
+    branch = "master",
     verbose = false,
     check_for_updates = true,
     update_interval = (60 * 60) * 6, -- 6 hours
