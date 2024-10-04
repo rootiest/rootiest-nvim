@@ -1594,8 +1594,25 @@ M.toggleterm = {
   },
 }
 
+M.ts = { disabled_highlights = { "text" } }
+
+local no_highlight = M.ts.disabled_highlights
+
 M.treesitter = {
   opts = {
+    highlight = {
+      disable = function(lang, buf)
+        if vim.tbl_contains(no_highlight, lang) then
+          return true
+        end
+        local max_filesize = 1000 * 1024 -- 1 MB
+        local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+          return true
+        end
+      end,
+    },
+    auto_install = true,
     ensure_installed = {
       "bash",
       "c",
@@ -1615,6 +1632,7 @@ M.treesitter = {
       "python",
       "query",
       "regex",
+      "ssh_config",
       "toml",
       "tsx",
       "typescript",
