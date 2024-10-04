@@ -53,11 +53,12 @@ vim.g.auto_save       =  true          ---@type boolean Options: <true|false>
 -- Animate blinky cursor
 vim.g.blinky          =  true          ---@type boolean Options: <true|false>
 -- Use experimental cmp performance fork
-vim.g.cmp_performance_enabled = false  ---@type boolean Options: <true|false>
+vim.g.cmp_performance_enabled = true  ---@type boolean Options: <true|false>
 -- Use dev mode for rootiest plugins
 vim.g.rootiest_dev    =  false         ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ AI TOOL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--  Configure the AI completion provider
 vim.g.aitool          = "neocodeium"   ---@type string Options: [ai tool]
 --        ╭───────────────────────────╮                neocodeium
 --        │                           │                codeium
@@ -141,7 +142,7 @@ vim.o.background           = "dark"    ---@type string Options: <dark|light>
 -- Disable Transparency
 vim.g.disable_transparency = true      ---@type boolean Options: <true|false>
 -- Set colorcolumn
-vim.opt.colorcolumn        = "120"     ---@type string|table Options: [column]
+--vim.opt.colorcolumn        = "120"     ---@type string|table Options: [column]
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━ Tabs and Indentation ━━━━━━━━━━━━━━━━━━━━━━━━
 --  Define characters for tabs, indents, and scopes
@@ -168,7 +169,7 @@ vim.g.scope_char_name      = "scope"   ---@type string Options: [scope char]
 -- -- Indent character
 -- vim.g.indent_char       = "¶"       ---@type string Options: [indent char]
 -- Scope character
--- vim.g.scope_char        = "|"       ---@type string Options: [scope char]
+-- vim.g.scope_char        = ""       ---@type string Options: [scope char]
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Completion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

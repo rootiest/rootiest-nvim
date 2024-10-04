@@ -107,7 +107,6 @@ M.lualine = {
 --- Minuet plugin dependencies
 M.minuet = {
   { "nvim-lua/plenary.nvim" },
-  { "hrsh7th/nvim-cmp" },
 }
 
 --- MusicControls plugin dependencies
