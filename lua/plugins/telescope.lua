@@ -61,12 +61,6 @@ local P = { -- Define Telescope Plugins Specs
     end,
     dependencies = data.deps.needs_telescope,
   },
-  { -- Telescope symbols
-    "nvim-telescope/telescope-symbols.nvim",
-    config = function() end,
-    keys = data.keys.telescope.symbols,
-    lazy = false,
-  },
   { -- Telescope Toggleterm
     "ryanmsnyder/toggleterm-manager.nvim",
     dependencies = {
