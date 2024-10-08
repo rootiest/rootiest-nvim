@@ -1,6 +1,6 @@
 # Rootiest Iosevka Fonts
 
-This is a collection of Iosevka font varients that are used in the rootiest configurations.
+This is a collection of Iosevka font variants that are used in the rootiest configurations.
 
 ![Rootiest Iosevka V2 Font - Regular](./iosevka-v2-regular.png)
 
@@ -53,3 +53,5 @@ This font wouldn't be possible without the following projects:
 ## License
 
 This font is licensed under the [MIT License](../LICENSE).
+
+---
