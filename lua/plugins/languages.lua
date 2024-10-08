@@ -45,6 +45,7 @@ return {
   },
   { -- Render-markdown
     "MeanderingProgrammer/render-markdown.nvim",
+    enabled = false,
     opts = {
       heading = {
         -- Determins if a border is added above and below headings
@@ -56,5 +57,16 @@ return {
       file_types = { "markdown", "Avante" },
     },
     ft = { "markdown", "Avante" },
+  },
+  {
+    "OXY2DEV/markview.nvim",
+    ft = { "markdown", "Avante" },
+    opts = function()
+      local presets = require("markview.presets")
+      return {
+        checkboxes = presets.checkboxes.nerd,
+        headings = presets.headings.simple,
+      }
+    end,
   },
 }
