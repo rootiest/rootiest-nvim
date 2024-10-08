@@ -103,7 +103,7 @@ vim.api.nvim_create_autocmd("User", {
 
 return { -- Lualine
   "nvim-lualine/lualine.nvim",
-  enabled = data.func.check_global_var("statusline", "lualine", "lualine"),
+  cond = data.func.check_global_var("statusline", "lualine", "lualine"),
 
   dependencies = data.deps.lualine,
   init = function()
@@ -407,6 +407,9 @@ return { -- Lualine
             padding = { left = 0, right = 1 },
             separator = "",
             icon = "󱁻",
+            on_click = function()
+              vim.cmd("Telescope oldfiles")
+            end,
           },
         },
         lualine_z = {
@@ -433,7 +436,7 @@ return { -- Lualine
             icon = " ",
             padding = { left = 0, right = 1 },
             on_click = function()
-              vim.cmd("Telescope oldfiles")
+              vim.cmd("Telescope buffers")
             end,
             separator = { left = "", right = "" },
           },
