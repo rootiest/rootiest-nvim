@@ -29,8 +29,20 @@ return {
   { -- Yanky
     "gbprod/yanky.nvim",
     opts = {
+      system_clipboard = {
+        sync_with_ring = true,
+        clipboard_register = '"',
+      },
+      highlight = {
+        on_put = true,
+        on_yank = true,
+        timer = 500,
+      },
       preserve_cursor_position = {
-        enabled = false,
+        enabled = true,
+      },
+      textobj = {
+        enabled = true,
       },
     },
   },
@@ -72,5 +84,9 @@ return {
         line = "gC",
       },
     },
+  },
+  {
+    "Chaitanyabsprip/fastaction.nvim",
+    opts = {},
   },
 }
