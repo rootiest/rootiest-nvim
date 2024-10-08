@@ -1258,5 +1258,250 @@ function M.mc_statusline()
   return status
 end
 
+--- Configure conditional spellchecking
+
+---@function This function conditionally enables spellcheck based on the provided parameters.
+---@param spellcheck? boolean Whether to enable spellcheck (default: true)
+---@param filetypes? table|boolean A list of filetypes to enable/disable spellcheck in
+---  (default: nil)
+---  - If true, toggle spellcheck for all filetypes
+---  - If false, enable spellcheck for the current buffer
+---  - If a table, enable spellcheck for the specified filetypes
+---  - If nil, enable spellcheck for the current buffer
+---@return nil
+function M.spellcheck(spellcheck, filetypes)
+  -- Default to true if spellcheck is not provided
+  spellcheck = spellcheck == nil and true or spellcheck
+
+  -- Set up local toggler
+  local function toggle()
+    -- Handle local spellchecking
+    if spellcheck then -- Enable spellcheck for the current buffer
+      vim.opt_local.spell = true
+    else -- Disable spellcheck for the current buffer
+      vim.opt_local.spell = false
+    end
+  end
+
+  -- Handle filetype-specific spellchecking
+  if filetypes then
+    -- Set up description text
+    local desc = "Enable"
+    if not spellcheck then
+      desc = "Disable"
+    end
+
+    -- Make a comma-separated list of filetypes
+    local typedesc
+    if type(filetypes) == "table" then
+      typedesc = table.concat(filetypes, ",")
+    else -- Fallback to a string
+      typedesc = tostring(filetypes)
+    end
+
+    -- If filetypes is a boolean
+    if filetypes == true then
+      filetypes = { "*" } -- Apply to all filetypes
+    elseif filetypes == false then
+      toggle()
+    end
+
+    -- Create an autocommand for the specified filetypes to manage spellcheck
+    vim.api.nvim_create_autocmd("FileType", {
+      group = "Spellcheck",
+      pattern = filetypes,
+      callback = function()
+        vim.opt_local.spell = spellcheck
+      end,
+      desc = desc .. " spellcheck for " .. typedesc,
+    })
+  else
+    -- Handle local spellchecking
+    toggle()
+  end
+end
+
+---@function This function swaps the behavior of `p` and `P`
+---@param default? boolean Whether to use the default behavior (default: true)
+---    - true: swap the behavior of `p` and `P`
+---    - false: revert the behavior of `p` and `P`
+---@return nil
+function M.swap_paste(default)
+  if default == nil then
+    default = true
+  end
+  if default then
+    -- Mapping to swap the behavior of `p` and `P`
+    -- `p` will now paste before the cursor (originally `P`)
+    -- `P` will now paste after the cursor (originally `p`)
+
+    -- Preserve the original actions of `p` and `P` using Vim commands to avoid interference
+
+    -- Set `p` to the original paste after cursor
+    vim.api.nvim_set_keymap("n", "p", '"_dP', { noremap = true, silent = true })
+    -- Set `P` to the original paste before cursor
+    vim.api.nvim_set_keymap(
+      "n",
+      "P",
+      '"_d"0p',
+      { noremap = true, silent = true }
+    )
+  else
+    -- Mapping to revert the behavior of `p` and `P` to their original functions
+    -- `p` will now revert to pasting after the cursor (original behavior)
+    -- `P` will now revert to pasting before the cursor (original behavior)
+
+    -- Remap `p` to its original behavior
+    vim.api.nvim_set_keymap("n", "p", "p", { noremap = true, silent = true })
+
+    -- Remap `P` to its original behavior
+    vim.api.nvim_set_keymap("n", "P", "P", { noremap = true, silent = true })
+  end
+end
+
+---@function This function extracts text between two marked positions in a buffer,
+---          removes empty lines, and trims indentation from the left.
+---@return string? text The extracted and trimmed text
+---          - nil if there is no text in the specified range
+---          - string if the text is in the specified range
+function M.trim_yank()
+  -- Execute the last command in normal mode
+  vim.cmd.normal("!<Esc>")
+
+  -- Get the start and finish positions of the selected text
+  local start = vim.fn.getpos("'<")
+  local finish = vim.fn.getpos("'>")
+
+  -- Get the lines in the specified range
+  local lines = vim.fn.getline(start[2], finish[2])
+
+  -- Ensure lines is a table even if only one line is selected
+  if type(lines) == "string" then
+    lines = { lines }
+  end
+
+  -- Drop empty lines from the selection
+  for i = #lines, 1, -1 do
+    if lines[i] == "" then
+      table.remove(lines, i)
+    end
+  end
+
+  -- Return early if there are no lines to process
+  if #lines == 0 then
+    return
+  end
+
+  -- Find the minimum whitespace (indentation) in the selected lines
+  local ws = 9999
+  for _, line in ipairs(lines) do
+    local lws = line:match("^%s*") -- Extract leading whitespace
+    if lws and #lws < ws then
+      ws = #lws
+    end
+  end
+
+  -- Trim the leading whitespace from each line according to the minimal whitespace found
+  for i, line in ipairs(lines) do
+    lines[i] = line:sub(ws + 1)
+  end
+
+  -- Return the resulting lines as a single concatenated string
+  return table.concat(lines, "\n")
+end
+
+---@function Function to open the lazygit popup in a floaterm
+---@return nil
+function M.open_lazygit_popup()
+  -- Set floaterm border characters
+  vim.g.floaterm_borderchars = "─│─│╭╮╯╰"
+
+  -- Floaterm configuration properties
+  local floaterm_props = {
+    width = "0.98", -- Width of the floaterm
+    height = "0.95", -- Height of the floaterm
+    autoclose = "1", -- Auto close the floaterm when finished
+    command = "lazygit", -- Command to run in the floaterm
+    name = "LazyGit", -- Name of the floaterm
+    title = "LazyGit", -- Title of the floaterm
+    titlepos = "center", -- Title position of the floaterm
+  }
+
+  -- Construct the command string for opening the floaterm with the specified settings
+  local cmd = string.format(
+    "FloatermNew --height=%s --width=%s --name=%s --title=%s --titleposition=%s --autoclose=%s %s",
+    floaterm_props.height,
+    floaterm_props.width,
+    floaterm_props.name,
+    floaterm_props.title,
+    floaterm_props.titlepos,
+    floaterm_props.autoclose,
+    floaterm_props.command
+  )
+
+  -- Execute the command
+  vim.cmd(cmd) -- Using vim.cmd to run the constructed command
+
+  -- Enter insert mode in the floaterm
+  vim.cmd("startinsert")
+end
+
+---@function Function to replace '...' with '…' (ellipsis)
+---@return boolean condition true if the replacement was successful, false otherwise
+function M.replace_ellipsis()
+  -- Get the current line and the cursor position
+  local current_line = vim.api.nvim_get_current_line()
+  local cursor_pos = vim.api.nvim_win_get_cursor(0) -- Get the current cursor position
+
+  -- Check if the current line ends with '...'
+  if current_line:sub(cursor_pos[2] - 2, cursor_pos[2]) == "..." then
+    -- Replace '...' with '…' using string manipulation
+    local new_line = current_line:sub(1, cursor_pos[2] - 3) .. "…"
+
+    -- Set the new line content
+    vim.api.nvim_set_current_line(new_line)
+
+    -- Move cursor to the new position after replacing
+    vim.api.nvim_win_set_cursor(0, { cursor_pos[1], cursor_pos[2] - 2 }) -- Adjust cursor position
+
+    return true
+  end
+
+  return false
+end
+
+---@function Function to automate replacing '...' with '…' (ellipsis)
+---@param enable? boolean whether to enable the replacement on InsertLeave
+---@return boolean result true if the replacement was enabled, false otherwise
+function M.setup_replace_ellipsis(enable)
+  if enable == nil then
+    enable = true
+  end
+
+  -- Create an autogroup to handle the autocmds
+  vim.api.nvim_create_augroup("EllipsisReplace", { clear = true })
+
+  if enable then
+    vim.api.nvim_create_autocmd("InsertLeave", {
+      group = "EllipsisReplace",
+      callback = M.replace_ellipsis,
+    })
+
+    -- Optionally, you could call the function on text change as well
+    vim.api.nvim_create_autocmd("TextChangedI", {
+      group = "EllipsisReplace",
+      callback = M.replace_ellipsis,
+    })
+    return true
+  else
+    -- Remove the autocmds
+    vim.api.nvim_del_augroup_by_id(
+      vim.api.nvim_create_augroup("EllipsisReplace", { clear = true })
+    )
+  end
+
+  return false
+end
+
 -- Export the module
 return M
