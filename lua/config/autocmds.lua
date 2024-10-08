@@ -119,17 +119,3 @@ end
 local load_highlight = require("utils.highlight")
 load_highlight.setup_autocommands()
 load_highlight.setup_dashboard_highlight()
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    local ev = vim.v.event
-    local content = {}
-    if ev.regtype:sub(1, 1) ~= "" or not ev.visual then
-      return
-    end
-    for _, line in ipairs(ev.regcontents) do
-      table.insert(content, vim.fn.trim(line, "", 2))
-    end
-    vim.fn.setreg("+", content)
-  end,
-})
