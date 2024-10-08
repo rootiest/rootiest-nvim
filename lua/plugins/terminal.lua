@@ -15,7 +15,53 @@ return {
     "3rd/image.nvim",
     ft = data.types.image,
     config = function()
-      require("image").setup()
+      require("image").setup({
+        backend = "kitty", -- Kitty will provide the best experience, but you need a compatible terminal
+        kitty_method = "normal",
+        integrations = {
+          markdown = {
+            enabled = true,
+            clear_in_insert_mode = false,
+            download_remote_images = true,
+            only_render_image_at_cursor = false,
+            filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
+          },
+          neorg = {
+            enabled = true,
+            clear_in_insert_mode = false,
+            download_remote_images = true,
+            only_render_image_at_cursor = false,
+            filetypes = { "norg" },
+          },
+          html = {
+            enabled = false,
+          },
+          css = {
+            enabled = false,
+          },
+        },
+        max_width = 200, -- tweak to preference
+        max_height = 40, -- ^
+        max_height_window_percentage = math.huge, -- this is necessary for a good experience
+        max_width_window_percentage = math.huge,
+        window_overlap_clear_enabled = false,
+        window_overlap_clear_ft_ignore = {
+          "cmp_menu",
+          "cmp_docs",
+          "neotree",
+          "neominimap",
+          "minimap",
+          "",
+        },
+        hijack_file_patterns = {
+          "*.png",
+          "*.jpg",
+          "*.jpeg",
+          "*.gif",
+          "*.webp",
+          "*.avif",
+        }, -- render image files as images when opened
+      })
     end,
     cond = function()
       -- Disable image rendering in Neovide
