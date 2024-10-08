@@ -799,7 +799,16 @@ M.indentor = {
 M.lazygit = {
   { -- LazyGit
     "<leader>lg",
-    "<cmd>LazyGit<cr>",
+    function()
+      require("data.func").open_lazygit_popup()
+    end,
+    desc = "LazyGit",
+  },
+    { -- LazyGit
+    "<leader>gg",
+    function()
+      require("data.func").open_lazygit_popup()
+    end,
     desc = "LazyGit",
   },
 }
@@ -852,6 +861,13 @@ M.misc = {
       rootiest.yank_line()
     end,
     desc = "Yank Line-text",
+  },
+  { -- Yank and trim selection
+    lhs = "<leader>y",
+    rhs = function()
+      require("data.func").trim_yank()
+    end,
+    desc = "Yank and trim selection",
   },
   { -- Hardmode
     lhs = "<leader>uH",

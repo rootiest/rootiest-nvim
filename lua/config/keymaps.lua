@@ -60,3 +60,9 @@ end
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Overrides ━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Add keymaps for overrides
 add_keymap(data.keys.overrides)
+
+-- Replace '...' with '…' (ellipsis) on InsertLeave
+data.func.setup_replace_ellipsis(true)
+
+-- Search selected text in visual mode
+add_keymap("/", "*", "Search selected text", "v")
