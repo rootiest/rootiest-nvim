@@ -12,7 +12,7 @@ local data = require("data")
 return {
   {
     "rebelot/heirline.nvim",
-    enabled = data.func.check_global_var("statusline", "heirline", "lualine"),
+    cond = data.func.check_global_var("statusline", "heirline", "lualine"),
     event = "UIEnter",
     opts = {},
   },
