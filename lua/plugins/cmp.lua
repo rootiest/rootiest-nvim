@@ -11,11 +11,12 @@ local perf = vim.g.cmp_performance_enabled or false
 local function cmp_provider(performance)
   if performance then
     return {
-      url = "yioneko/nvim-cmp",
+      -- url = "yioneko/nvim-cmp",
+      url = "iguanacucumber/magazine.nvim",
       -- Experiemental cmp performance fork
       dev = true,
-      branch = "perf-up",
-      build = "git clone -b perf-up https://github.com/yioneko/nvim-cmp.git ~/projects/nvim-cmp/",
+      -- branch = "perf-up",
+      -- build = "git clone -b perf-up https://github.com/yioneko/nvim-cmp.git ~/projects/nvim-cmp/",
     }
   end
   return {
@@ -88,7 +89,6 @@ return { -- cmp
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
-            -- cmp.confirm({ select = true })
           elseif luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
           elseif vim.snippet.active({ direction = 1 }) then
