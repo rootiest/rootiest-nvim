@@ -27,8 +27,10 @@ vim.g.loaded_ruby_provider = 0         ---@type integer Options: <0|1>
 vim.g.lazyvim_python_lsp   = "pyright" ---@type string Options: [python lsp]
 -- Open all folds by default
 vim.opt.foldlevel          = 99        ---@type integer Options: <0-99>
--- Autoformat
-vim.g.autoformat = true               ---@type boolean Options: <true|false>
+-- Auto-format
+vim.g.autoformat           = true      ---@type boolean Options: <true|false>
+-- Auto-save
+vim.g.autosave             = true      ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROOTIEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -50,12 +52,10 @@ vim.g.codesnap        =  true          ---@type boolean Options:  <true|false>
 vim.g.encourage_me    =  true          ---@type boolean Options:  <true|false>
 -- Enable Auto-hiding cursorline
 vim.g.auto_cursorline =  true          ---@type boolean Options: <true|false>
--- Enable Auto-save
-vim.g.auto_save       =  true          ---@type boolean Options: <true|false>
 -- Animate blinky cursor
 vim.g.blinky          =  true          ---@type boolean Options: <true|false>
 -- Use experimental cmp performance fork
-vim.g.cmp_performance_enabled = true   ---@type boolean Options: <true|false>
+vim.g.cmp_performance_enabled = false  ---@type boolean Options: <true|false>
 -- Use dev mode for rootiest plugins
 vim.g.rootiest_dev    =  false         ---@type boolean Options: <true|false>
 
@@ -87,7 +87,7 @@ vim.g.statuscolumn    = "native"        ---@type string Options: [statuscolumn]
 --        ╰───────────────────────────╯
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ BUFFER LINE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.g.tabline         = "bufferline"   ---@type string Options: [tabline]
+vim.g.tabline         = "none"         ---@type string Options: [tabline]
 --        ╭───────────────────────────╮                bufferline
 --        │                           │                barsNlines
 --        │      Tab Lines:           │                none

@@ -10,7 +10,12 @@ local types = require("data.types")
 
 --- Auto Save conditional options
 M.autosave = function()
-  return func.check_global_var("auto_save", true, false)
+  return func.check_global_var("autosave", true, false)
+end
+
+-- Auto Format conditional options
+M.autoformat = function()
+  return func.check_global_var("autoformat", true, false)
 end
 
 --- Bars-N-Lines conditional options
