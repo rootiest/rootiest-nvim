@@ -29,10 +29,10 @@ return {
   },
   { -- Auto-save
     "okuuva/auto-save.nvim",
-    enabled = data.func.check_global_var("auto_save", true, true),
     cmd = data.cmd.autosave,
     event = { "InsertLeave", "TextChanged" },
     opts = data.types.autosave,
+    cond = data.cond.autosave,
   },
   { -- Ripgrep substitute
     "chrisgrieser/nvim-rip-substitute",
@@ -48,7 +48,7 @@ return {
   },
   { -- Codesnap
     "mistricky/codesnap.nvim",
-    enabled = data.func.check_global_var("codesnap", true, true),
+    cond = data.func.check_global_var("codesnap", true, true),
     lazy = true,
     build = "make",
     opts = data.types.codesnap,
@@ -75,7 +75,7 @@ return {
   },
   { -- Music Controls
     "AntonVanAssche/music-controls.nvim",
-    enabled = data.func.check_global_var("usemusic", true, true),
+    cond = data.func.check_global_var("usemusic", true, true),
     dependencies = data.deps.musiccontrols,
     opts = {
       default_player = "YoutubeMusic",
@@ -107,7 +107,7 @@ return {
   },
   { -- Encourage
     "r-cha/encourage.nvim",
-    enabled = data.func.check_global_var("encourage", true, true),
+    cond = data.func.check_global_var("encourage", true, true),
     config = true,
   },
   { -- Helpview

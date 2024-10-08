@@ -113,12 +113,12 @@ return {
   },
   { -- Auto Cursorline
     "delphinus/auto-cursorline.nvim",
-    enabled = data.func.check_global_var("auto_cursorline", true, true),
+    cond = data.func.check_global_var("auto_cursorline", true, true),
     opts = data.types.autocursorline,
   },
   { -- Bars N Lines
     "OXY2DEV/bars-N-lines.nvim",
-    enabled = data.types.barsNlines.enabled,
+    cond = data.types.barsNlines.enabled,
     lazy = false,
     config = data.types.barsNlines.config,
   },

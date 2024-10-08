@@ -14,7 +14,7 @@ return {
   },
   { -- Bufferline
     "akinsho/bufferline.nvim",
-    enabled = data.types.bufferline.enabled,
+    cond = data.types.bufferline.enabled,
     opts = data.types.bufferline.opts,
   },
   { -- Which-Key
