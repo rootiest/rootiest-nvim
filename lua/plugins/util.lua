@@ -204,4 +204,22 @@ return {
       })
     end,
   },
+  {
+    "itsvinayak/nvim-notes.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim", -- Add Telescope as a dependency
+      "folke/which-key.nvim", -- Add WhichKey as a dependency
+    },
+    config = function()
+      require("notes").setup({
+        -- Optional configurations
+        path = "~/.my_notes", -- Custom path for notes
+        log_enabled = true, -- Enable logging
+        log_level = "INFO", -- Set log level to INFO
+      })
+    end,
+  },
+  { -- FloatTerm
+    "voldikss/vim-floaterm",
+  },
 }
