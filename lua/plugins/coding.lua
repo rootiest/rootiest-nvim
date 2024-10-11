@@ -8,9 +8,7 @@ local data = require("data")
 return {
   { -- Mason-lspconfig
     "williamboman/mason-lspconfig.nvim",
-    opts = {
-      automatic_installation = true,
-    },
+    opts = data.types.mason_lsp_config.opts,
   },
   { -- luasnip
     import = "lazyvim.plugins.extras.coding.luasnip",
@@ -28,29 +26,23 @@ return {
   },
   { -- Yanky
     "gbprod/yanky.nvim",
-    opts = {
-      system_clipboard = {
-        sync_with_ring = true,
-        clipboard_register = '"',
-      },
-      highlight = {
-        on_put = true,
-        on_yank = true,
-        timer = 500,
-      },
-      preserve_cursor_position = {
-        enabled = true,
-      },
-      textobj = {
-        enabled = true,
-      },
-    },
+    opts = data.types.yanky,
   },
   { -- VSCode
     import = "lazyvim.plugins.extras.vscode",
   },
   { -- Neogen
     import = "lazyvim.plugins.extras.coding.neogen",
+  },
+  {
+    "folke/lazydev.nvim",
+    opts = {
+      library = {
+        -- Load the wezterm types when the `wezterm` module is required
+        -- Needs `justinsgithub/wezterm-types` to be installed
+        { path = "wezterm-types", mods = { "wezterm" } },
+      },
+    },
   },
   { -- G-code
     "wilriker/gcode.vim",
@@ -73,19 +65,11 @@ return {
     opts = data.types.substitute,
     keys = data.keys.substitute,
   },
-  { -- Markdown Preview
-    "iamcco/markdown-preview.nvim",
-    build = "cd app && yarn install",
-  },
   { -- Comment
     "numToStr/Comment.nvim",
-    opts = {
-      opleader = {
-        line = "gC",
-      },
-    },
+    opts = data.types.comment,
   },
-  {
+  { -- Fast Action
     "Chaitanyabsprip/fastaction.nvim",
     opts = {},
   },

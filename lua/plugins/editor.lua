@@ -62,10 +62,11 @@ return {
     event = "BufReadPre",
     opts = {},
   },
-  -- { -- DeadColumn
-  --   "Bekaboo/deadcolumn.nvim",
-  --   event = "BufEnter",
-  -- },
+  { -- DeadColumn
+    "Bekaboo/deadcolumn.nvim",
+    event = "BufEnter",
+    cond = data.func.check_global_var("dead_column", true, true),
+  },
   { -- Precognition
     "tris203/precognition.nvim",
     lazy = true,
@@ -87,6 +88,7 @@ return {
   { -- Smart Scrolloff
     "tonymajestro/smart-scrolloff.nvim",
     event = "VeryLazy",
+    cond = data.func.check_global_var("smart_scrolloff", true, true),
     opts = data.types.smartscrolloff,
   },
   { -- Recorder
