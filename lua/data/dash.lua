@@ -13,6 +13,21 @@ if vim.g.dash_logo then
 end
 M.logo = logofile
 
+-- Define dashboard button items in a single table
+local dashboard_buttons = {
+  -- stylua: ignore start
+  { key = "f", icon = " ", desc =    " Find File",    action = LazyVim.pick() },
+  { key = "n", icon = " ", desc =    " New File",     action = function() vim.cmd("ene | startinsert") end },
+  { key = "r", icon = " ", desc =   " Recent Files",  action = LazyVim.pick("oldfiles") },
+  { key = "g", icon = " ", desc =    " Find Text",    action = LazyVim.pick("live_grep") },
+  { key = "z", icon = " ", desc =    " LazyGit",      action = function() require("data.func").open_lazygit_popup() end },
+  { key = "c", icon = " ", desc =    " Config",       action = LazyVim.pick.config_files() },
+  { key = "s", icon = "󰶮 ", desc = " Restore Session", action = function() require("persistence").load() end },
+  { key = "S", icon = " ", desc = " Remote Session",  action = function() require("config.rootiest").load_remote() end },
+  { key = "l", icon = "󰒲 ", desc =     " Lazy",        action = function() vim.cmd("Lazy") end },
+  { key = "q", icon = " ", desc =     " Quit",        action = function() vim.api.nvim_input("<cmd>qa<cr>") end },
+} -- stylua: ignore end
+
 --- Alpha plugin configuration
 M.alpha = {
   --- Function to setup the Alpha dashboard options
@@ -38,26 +53,21 @@ M.alpha = {
     -- Add the ASCII art to the dashboard header
     dashboard.section.header.val = ascii_art_lines
 
-    -- Add the dashboard buttons
-    -- stylua: ignore start
-    dashboard.section.buttons.val = {
-      ---@diagnostic disable: param-type-mismatch
-      dashboard.button("f", " " .. " Find file", LazyVim.pick("find_files")),
-      dashboard.button("n", " " .. " New file", [[<cmd> ene <BAR> startinsert <cr>]]),
-      dashboard.button("r", " " .. " Recent files", LazyVim.pick("oldfiles")),
-      dashboard.button("g", " " .. " Grep text", LazyVim.pick("live_grep")),
-      dashboard.button("z", " " .. " LazyGit", "<cmd>lua require('config.rootiest').toggle_lazygit_float() <cr>"),
-      dashboard.button("c", " " .. " Config", LazyVim.pick.config_files()),
-      dashboard.button("s", "󰶮 " .. " Restore Session", [[<cmd> lua require("persistence").load() <cr>]]),
-      dashboard.button("S", " " .. " Remote Session", [[<cmd> lua require("config.rootiest").load_remote() <cr>]]),
-      dashboard.button("l", "󰒲 " .. " Lazy", "<cmd> Lazy <cr>"),
-      dashboard.button("q", " " .. " Quit", "<cmd> qa <cr>"),
-    }
+    -- Add the dashboard buttons from the shared table
+    dashboard.section.buttons.val = {}
+    for _, button in ipairs(dashboard_buttons) do
+      table.insert(
+        dashboard.section.buttons.val,
+        -- Ignore string -> function (param type is valid)
+        ---@diagnostic disable: param-type-mismatch
+        dashboard.button(button.key, button.icon .. button.desc, button.action)
+      )
+    end
+
     for _, button in ipairs(dashboard.section.buttons.val) do
       button.opts.hl = "AlphaButtons"
       button.opts.hl_shortcut = "AlphaShortcut"
     end
-    -- stylua: ignore end
 
     -- Set up highlight groups for the dashboard
     dashboard.section.header.opts.hl = "Conditional" or "AlphaHeader"
@@ -85,20 +95,8 @@ M.alpha = {
 
 --- Dashboard-nvim plugin configuration
 M.dashboard_nvim = {
-  -- stylua: ignore start
-  choices = {
-    { action = 'lua LazyVim.pick("find_files")()', desc = " Find File", icon = " ", key = "f"},
-    { action = "ene | startinsert", desc = " New File", icon = " ", key = "n"},
-    { action = 'lua LazyVim.pick("oldfiles")()', desc = " Recent Files", icon = " ", key = "r"},
-    { action = 'lua LazyVim.pick("live_grep")()', desc = " Find Text", icon = " ", key = "g"},
-    { action = "LazyGit", desc = " LazyGit", icon = " ", key = "z"},
-    { action = "lua LazyVim.pick.config_files()()", desc = " Config", icon = " ", key = "c"},
-    { action = 'lua require("persistence").load()', desc = " Restore Session", icon = "󰶮 ", key = "s"},
-    { action = 'lua require("config.rootiest").load_remote()', desc = " Remote Session", icon = " ", key = "s"},
-    { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l"},
-    { action = function() vim.api.nvim_input("<cmd>qa<cr>") end, desc = " Quit", icon = " ", key = "q"},
-  },
-  -- stylua: ignore end
+  -- Reusing the same table for button choices in dashboard-nvim
+  choices = dashboard_buttons,
 }
 
 return M
