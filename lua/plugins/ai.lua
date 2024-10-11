@@ -54,5 +54,11 @@ return {
     opts = data.types.avante,
     build = "make",
     dependencies = data.deps.avante,
+    keys = function()
+      -- Add keymaps for Avante group
+      for _, item in ipairs(data.keys.group.avante) do
+        data.func.add_keymap(item)
+      end
+    end,
   },
 }

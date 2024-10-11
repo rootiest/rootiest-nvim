@@ -13,7 +13,7 @@ local rootiest = require("config.rootiest")
 
 M.alternate = {
   { -- Toggle Alternate
-    "<leader>a",
+    "<leader>A",
     "<cmd>Alternate<cr>",
     desc = "Toggle Alternate",
   },
@@ -535,6 +535,13 @@ M.gp = {
 }
 
 M.group = {
+  avante = {
+    { -- Avante
+      lhs = "<leader>a",
+      icon = { icon = "", color = "red" },
+      group = "Avante",
+    },
+  },
   chatgpt = { -- ChatGPT
     lhs = "<leader>cx",
     group = "ChatGPT",
@@ -804,7 +811,7 @@ M.lazygit = {
     end,
     desc = "LazyGit",
   },
-    { -- LazyGit
+  { -- LazyGit
     "<leader>gg",
     function()
       require("data.func").open_lazygit_popup()
@@ -906,7 +913,7 @@ M.misc = {
   { -- Telescope Find Files
     lhs = "<leader><leader>",
     rhs = function()
-      LazyVim.pick("find_files")()
+      LazyVim.pick("files")()
     end,
     desc = "Find Files",
   },

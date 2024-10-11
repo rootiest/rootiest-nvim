@@ -27,6 +27,9 @@ return {
   { -- Navic
     import = "lazyvim.plugins.extras.editor.navic",
   },
+  { -- Refactoring
+    import = "lazyvim.plugins.extras.editor.refactoring",
+  },
   { -- Trouble
     "folke/trouble.nvim",
     cmd = data.cmd.trouble,
@@ -37,7 +40,7 @@ return {
     opts = data.types.flash,
     keys = data.keys.flash,
   },
-  {
+  { -- NeoTree
     "nvim-neo-tree/neo-tree.nvim",
     opts = data.types.neotree.opts,
   },
@@ -145,9 +148,9 @@ return {
     end,
     keys = data.keys.undotree,
   },
-  { -- NumberToggle
-    "sitiom/nvim-numbertoggle",
-  },
+  -- { -- NumberToggle
+  --   "sitiom/nvim-numbertoggle",
+  -- },
   { -- Noice
     "folke/noice.nvim",
     optional = true,

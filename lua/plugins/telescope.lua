@@ -7,19 +7,6 @@
 local data = require("data")
 
 local P = { -- Define Telescope Plugins Specs
-  { -- Telescope Cmdline
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "jonarrien/telescope-cmdline.nvim",
-    },
-    keys = data.keys.telescope.cmdline,
-    opts = data.types.telescope.cmdline,
-    config = function(_, opts)
-      require("telescope").setup(opts)
-      require("telescope").load_extension("cmdline")
-    end,
-  },
   { -- Telescope All Recent
     "prochri/telescope-all-recent.nvim",
     dependencies = {
@@ -178,6 +165,19 @@ local P = { -- Define Telescope Plugins Specs
       "sindrets/diffview.nvim",
     },
   },
+  { -- Fzf Lua
+    "ibhagwan/fzf-lua",
+    opts = {},
+  },
 }
+
+if require("data.func").check_global_var("use_telescope", false, true) then
+  P = { { import = "lazyvim.plugins.extras.editor.fzf" } }
+end
+
+if require("data.func").check_global_var("use_fzf_lua", true, false) then
+  table.insert(P, 1, { import = "lazyvim.plugins.extras.editor.fzf" })
+  table.insert(P, 2, { "ibhagwan/fzf-lua", lazy = false, opts = {} })
+end
 
 return P

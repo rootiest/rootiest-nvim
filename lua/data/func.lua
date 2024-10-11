@@ -1245,9 +1245,12 @@ function M.mc_statusline()
       status.color = "lualine_a_normal"
     end
   end
+
+  -- Add the icon and text to the status object
   status.icon_short_text = status.icon .. status.short_text
   status.icon_text = status.icon .. status.text
 
+  -- Update the status object
   if status.cursors > 1 and status.disabled > 0 then
     status.count = status.cursors .. "/" .. status.disabled
   elseif status.cursors > 1 and status.disabled <= 0 then
@@ -1482,6 +1485,7 @@ function M.setup_replace_ellipsis(enable)
   vim.api.nvim_create_augroup("EllipsisReplace", { clear = true })
 
   if enable then
+    -- Add an autocmd to handle the InsertLeave event
     vim.api.nvim_create_autocmd("InsertLeave", {
       group = "EllipsisReplace",
       callback = M.replace_ellipsis,
