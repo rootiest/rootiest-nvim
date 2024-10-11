@@ -371,11 +371,7 @@ M.suda = function()
 end
 
 --- Autosave configuration options
-M.autosave = {
-  execution_message = {
-    enabled = false,
-  },
-}
+M.autosave = {}
 
 --- Kulala plugin types
 M.kulala = {
@@ -390,6 +386,17 @@ M.lazyvim = {
       lazyvim = true,
       neovim = true,
     },
+  },
+}
+
+M.lazy = { -- Lazy.nvim
+  disabled_plugins = {
+    "gzip",
+    "netrwPlugin",
+    "tarPlugin",
+    -- "tohtml",
+    "tutor",
+    "zipPlugin",
   },
 }
 
@@ -1370,6 +1377,34 @@ M.substitute = {
   end,
 }
 
+M.yanky = {
+  system_clipboard = {
+    sync_with_ring = true,
+    clipboard_register = '"',
+  },
+  highlight = {
+    on_put = true,
+    on_yank = true,
+    timer = 500,
+  },
+  preserve_cursor_position = {
+    enabled = true,
+  },
+  textobj = {
+    enabled = true,
+  },
+}
+
+M.comment = {
+  opleader = {
+    line = "gC",
+  },
+}
+
+M.mason_lsp_config = { opts = {
+  automatic_installation = true,
+} }
+
 --- Hightlight-colors plugin options
 M.hightlight_colors = {
   render = "virtual",
@@ -1399,7 +1434,7 @@ M.hightlight_colors = {
 M.catppuccin = {
   background = { -- :h background
     light = "latte",
-    dark = "frappe",
+    dark = "mocha",
   },
   integrations = {
     native_lsp = {
@@ -1553,10 +1588,43 @@ M.winsep = {
   no_exec_files = M.colorful_winsep.no_exec_files,
 }
 
+---@alias Mode "n" | "i" | "?"
+
+--- @class TerminalState
+--- @field mode Mode
+
+--- @class Terminal
+--- @field newline_chr string
+--- @field cmd string
+--- @field direction string the layout style for the terminal
+--- @field id number
+--- @field bufnr number
+--- @field window number
+--- @field job_id number
+--- @field highlights table<string, table<string, string>>
+--- @field dir string the directory for the terminal
+--- @field name string the name of the terminal
+--- @field count number the count that triggers that specific terminal
+--- @field hidden boolean whether or not to include this terminal in the terminals list
+--- @field close_on_exit boolean? whether or not to close the terminal window when the process exits
+--- @field auto_scroll boolean? whether or not to scroll down on terminal output
+--- @field float_opts table<string, any>?
+--- @field display_name string?
+--- @field env table<string, string> environmental variables passed to jobstart()
+--- @field clear_env boolean use clean job environment, passed to jobstart()
+--- @field on_stdout fun(t: Terminal, job: number, data: string[]?, name: string?)?
+--- @field on_stderr fun(t: Terminal, job: number, data: string[], name: string)?
+--- @field on_exit fun(t: Terminal, job: number, exit_code: number?, name: string?)?
+--- @field on_create fun(term:Terminal)?
+--- @field on_open fun(term:Terminal)?
+--- @field on_close fun(term:Terminal)?
+--- @field _display_name fun(term: Terminal): string
+--- @field __state TerminalState
+
 --- Toggleterm plugin options
 M.toggleterm = {
   --- Sets the terminal panel size
-  ---@param term table The terminal object
+  ---@param term Terminal The terminal object
   ---@return number|nil The terminal size
   size = function(term)
     if term.direction == "horizontal" then
@@ -1564,6 +1632,11 @@ M.toggleterm = {
     elseif term.direction == "vertical" then
       return vim.o.columns * 0.4
     end
+  end,
+  --- Function that runs when terminal is opened
+  ---@param term Terminal The ToggleTerm terminal object
+  on_open = function(term)
+    vim.wo[term.window].foldmethod = "manual"
   end,
   open_mapping = [[<c-\>]],
   hide_numbers = true,
