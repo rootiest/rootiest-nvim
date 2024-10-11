@@ -268,22 +268,6 @@ function M.setup_autocommands()
       end
     end,
   })
-  -- Autocommand to trigger setup on ColorScheme
-  autocmd("ColorScheme", {
-    pattern = "*",
-    group = IndentGroup,
-    callback = function()
-      M.setup_indent_highlight()
-    end,
-  })
-  -- Autocommand to trigger setup on ModeChanged
-  autogrp("ModeHighlighting", { clear = true })
-  autocmd("ModeChanged", {
-    group = "ModeHighlighting",
-    callback = function()
-      M.setup_mode_highlight()
-    end,
-  })
 
   -- Create a new augroup for the dashboard
   local dashboardGroup = autogrp("DashboardColors", { clear = true })
@@ -293,35 +277,6 @@ function M.setup_autocommands()
     group = dashboardGroup,
     callback = function()
       M.setup_dashboard_highlight()
-    end,
-  })
-  -- Reapply highlights when the colorscheme changes
-  autocmd("ColorScheme", {
-    pattern = "*",
-    group = dashboardGroup,
-    callback = function()
-      M.setup_dashboard_highlight()
-    end,
-  })
-
-  -- Create a new augroup for the terminal background
-  local terminalGroup = autogrp("TerminalColors", { clear = true })
-  -- Match neovim and terminal background colors
-  autocmd({ "UIEnter", "ColorScheme" }, {
-    group = terminalGroup,
-    callback = function()
-      local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
-      if not normal.bg then
-        return
-      end
-      io.write(string.format("\027]11;#%06x\027\\", normal.bg))
-    end,
-  })
-  -- Reset terminal background on UILeave
-  autocmd("UILeave", {
-    group = terminalGroup,
-    callback = function()
-      io.write("\027]111\027\\")
     end,
   })
 end
