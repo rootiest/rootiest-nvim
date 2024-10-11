@@ -127,6 +127,7 @@ return {
   { -- Discord Presence
     "IogaMaster/neocord",
     event = "VeryLazy",
+    cond = data.func.check_global_var("usediscord", true, true),
     opts = {
       logo = "https://raw.githubusercontent.com/rootiest/rootiest-nvim/b949af32e72db9fc35c18e14e2088710dc36dd15/logo/icon.png",
       main_image = "logo",

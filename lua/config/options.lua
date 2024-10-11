@@ -43,6 +43,8 @@ vim.g.encourage_me         = true     ---@type boolean Options:  <true|false>
 vim.g.usewakatime     =  true          ---@type boolean Options:  <true|false>
 -- Allow music controls and stats
 vim.g.usemusic        =  false         ---@type boolean Options:  <true|false>
+-- Allow discord presence
+vim.g.usediscord      =  false         ---@type boolean Options:  <true|false>
 -- Enable HardTime on startup
 vim.g.usehardtime     =  false         ---@type boolean Options:  <true|false>
 -- Enable Image plugin on compatible terminals
