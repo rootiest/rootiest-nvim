@@ -11,19 +11,18 @@ local perf = vim.g.cmp_performance_enabled or false
 local function cmp_provider(performance)
   if performance then
     return {
-      -- url = "yioneko/nvim-cmp",
-      url = "iguanacucumber/magazine.nvim",
       -- Experiemental cmp performance fork
+      url = "hrsh7th/nvim-cmp",
+      --url = "iguanacucumber/magazine.nvim",
       dev = true,
-      -- branch = "perf-up",
-      -- build = "git clone -b perf-up https://github.com/yioneko/nvim-cmp.git ~/projects/nvim-cmp/",
+    }
+  else
+    return {
+      -- Classic cmp
+      url = "hrsh7th/nvim-cmp",
+      dev = false,
     }
   end
-  return {
-    -- Classic cmp
-    url = "hrsh7th/nvim-cmp",
-    dev = false,
-  }
 end
 local cmp_repo = cmp_provider(perf)
 return { -- cmp
