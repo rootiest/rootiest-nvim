@@ -65,4 +65,4 @@ add_keymap(data.keys.overrides)
 data.func.setup_replace_ellipsis(true)
 
 -- Search selected text in visual mode
-add_keymap("/", "*", "Search selected text", "v")
+add_keymap("/", "*<Esc>", "Search selected text", "v")
