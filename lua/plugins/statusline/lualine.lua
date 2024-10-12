@@ -329,7 +329,10 @@ return { -- Lualine
               return require("nvim_updater").get_statusline().color
             end,
             on_click = function()
-              require("nvim_updater").show_new_commits(true)
+              require("nvim_updater").show_new_commits({
+                isupdate = true,
+                short = true,
+              })
             end,
             padding = { left = 1, right = 1 },
             cond = function()
