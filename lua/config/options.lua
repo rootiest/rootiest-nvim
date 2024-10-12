@@ -56,7 +56,7 @@ vim.g.ignore_no_lazy  =  false         ---@type boolean Options:  <true|false>
 -- Enable codesnap for code screenshots
 vim.g.codesnap        =  true          ---@type boolean Options:  <true|false>
 -- Enable Auto-hiding cursorline
-vim.g.auto_cursorline =  true          ---@type boolean Options: <true|false>
+vim.g.auto_cursorline =  false         ---@type boolean Options: <true|false>
 -- Enable Smart Scrolloff
 vim.g.smart_scrolloff =  false         ---@type boolean Options: <true|false>
 -- Enable Dead Column
