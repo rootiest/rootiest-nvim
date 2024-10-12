@@ -862,6 +862,18 @@ M.minifiles = {
 
 --- Misc keymaps
 M.misc = {
+  { -- Clear search highlight
+    "<leader>s<Esc>",
+    "<cmd>noh<cr><esc>",
+    desc = "Clear search",
+  },
+  { -- Modeline
+    "<leader>cM",
+    function()
+      require("data.func").append_modeline()
+    end,
+    desc = "Add Modeline",
+  },
   { -- Yank line (without whitespace)
     lhs = "yo",
     rhs = function()
