@@ -35,10 +35,6 @@ return { -- Alpha
       callback = function()
         local stats = require("lazy").stats()
         local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-        -- If auto-cursorline is installed, disable it
-        if pcall(require, "auto-cursorline") then
-          require("auto-cursorline").disable({ buffer = true })
-        end
         dashboard.section.footer.val = "󰇥  Neovim loaded "
           .. stats.loaded
           .. "/"
@@ -47,6 +43,12 @@ return { -- Alpha
           .. ms
           .. "ms 󱐌"
         pcall(vim.cmd.AlphaRedraw)
+
+        -- Handle other plugins that may conflict
+        -- If auto-cursorline is installed, disable it
+        if pcall(require, "auto-cursorline") then
+          require("auto-cursorline").disable({ buffer = true })
+        end
       end,
     })
   end,
