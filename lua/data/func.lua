@@ -1507,5 +1507,84 @@ function M.setup_replace_ellipsis(enable)
   return false
 end
 
+--- Function to append modeline after the last line in the buffer.
+--- @return nil
+function M.append_modeline()
+  local tabstop = vim.o.tabstop
+  local shiftwidth = vim.o.shiftwidth
+  local textwidth = vim.o.textwidth
+  local expandtab = vim.o.expandtab
+
+  -- Create the modeline string.
+  local modeline = string.format(
+    " vim: set ts=%d sw=%d tw=%d %set :",
+    tabstop,
+    shiftwidth,
+    textwidth,
+    expandtab and "" or "no"
+  )
+
+  -- Replace the placeholder in the comment string.
+  local commentstring = vim.o.commentstring
+  modeline = commentstring:gsub("%%s", modeline)
+
+  -- Append the modeline after the last line in the buffer.
+  vim.api.nvim_buf_set_lines(0, -1, -1, false, { modeline })
+end
+
+--- Function to remove buffer
+--- Borrowed from LazyVim
+--- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/ui.lua
+---@param buf number?
+function M.bufremove(buf)
+  buf = buf or 0
+  buf = buf == 0 and vim.api.nvim_get_current_buf() or buf
+
+  if vim.bo.modified then
+    local choice = vim.fn.confirm(
+      ("Save changes to %q?"):format(vim.fn.bufname()),
+      "&Yes\n&No\n&Cancel"
+    )
+    if choice == 0 or choice == 3 then -- 0 for <Esc>/<C-c> and 3 for Cancel
+      return
+    end
+    if choice == 1 then -- Yes
+      vim.cmd.write()
+    end
+  end
+
+  for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+    vim.api.nvim_win_call(win, function()
+      if
+        not vim.api.nvim_win_is_valid(win)
+        or vim.api.nvim_win_get_buf(win) ~= buf
+      then
+        return
+      end
+      -- Try using alternate buffer
+      local alt = vim.fn.bufnr("#")
+      if alt ~= buf and vim.fn.buflisted(alt) == 1 then
+        vim.api.nvim_win_set_buf(win, alt)
+        return
+      end
+
+      -- Try using previous buffer
+      ---@diagnostic disable-next-line: param-type-mismatch
+      local has_previous = pcall(vim.cmd, "bprevious")
+      if has_previous and buf ~= vim.api.nvim_win_get_buf(win) then
+        return
+      end
+
+      -- Create new listed buffer
+      local new_buf = vim.api.nvim_create_buf(true, false)
+      vim.api.nvim_win_set_buf(win, new_buf)
+    end)
+  end
+  if vim.api.nvim_buf_is_valid(buf) then
+    ---@diagnostic disable-next-line: param-type-mismatch
+    pcall(vim.cmd, "bdelete! " .. buf)
+  end
+end
+
 -- Export the module
 return M
