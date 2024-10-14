@@ -9,6 +9,7 @@ return { -- Neovim Updater
     verbose = false,
     check_for_updates = true,
     update_interval = (60 * 60) * 6, -- 6 hours
+    notify_updates = false,
     default_keymaps = false,
   },
   keys = function()
