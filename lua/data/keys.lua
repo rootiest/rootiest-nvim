@@ -925,9 +925,16 @@ M.misc = {
   { -- Telescope Find Files
     lhs = "<leader><leader>",
     rhs = function()
-      LazyVim.pick("files")()
+      require("data.func").pick()
     end,
     desc = "Find Files",
+  },
+  { -- Grep files
+    lhs = "<leader>/",
+    rhs = function()
+      require("data.func").pick({ cmd = "live_grep" })
+    end,
+    desc = "Grep Files",
   },
   { -- Exit Neovim
     lhs = "<leader>Q",

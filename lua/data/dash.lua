@@ -16,12 +16,12 @@ M.logo = logofile
 -- Define dashboard button items in a single table
 local dashboard_buttons = {
   -- stylua: ignore start
-  { key = "f", icon = " ", desc =    " Find File",    action = LazyVim.pick() },
+  { key = "f", icon = " ", desc =    " Find File",    action = function() require("data.func").pick() end },
   { key = "n", icon = " ", desc =    " New File",     action = function() vim.cmd("ene | startinsert") end },
-  { key = "r", icon = " ", desc =   " Recent Files",  action = LazyVim.pick("oldfiles") },
-  { key = "g", icon = " ", desc =    " Find Text",    action = LazyVim.pick("live_grep") },
+  { key = "r", icon = " ", desc =   " Recent Files",  action = function() require("data.func").pick("oldfiles") end },
+  { key = "g", icon = " ", desc =    " Find Text",    action = function() require("data.func").pick("live_grep") end },
   { key = "z", icon = " ", desc =    " LazyGit",      action = function() require("data.func").open_lazygit_popup() end },
-  { key = "c", icon = " ", desc =    " Config",       action = LazyVim.pick.config_files() },
+  { key = "c", icon = " ", desc =    " Config",       action = function() require("data.func").pick("config_files") end },
   { key = "s", icon = "󰶮 ", desc = " Restore Session", action = function() require("persistence").load() end },
   { key = "S", icon = " ", desc = " Remote Session",  action = function() require("config.rootiest").load_remote() end },
   { key = "l", icon = "󰒲 ", desc =     " Lazy",        action = function() vim.cmd("Lazy") end },

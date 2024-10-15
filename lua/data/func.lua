@@ -1586,5 +1586,161 @@ function M.bufremove(buf)
   end
 end
 
+--- Function to check if working directory is a git repository
+---@param cwd? boolean|table Check if current working directory is a git repository
+---@param pwd? boolean Check if project directory is a git repository
+---@return boolean is_git_repo  true if working directory or project directory is a git repository, false otherwise
+function M.is_git_repo(cwd, pwd)
+  if type(cwd) == "table" then
+    pwd = cwd.pwd
+    cwd = cwd.cwd
+  end
+
+  if not pwd and not cwd then
+    cwd = true
+    pwd = true
+  end
+
+  local cwd_dir, pwd_dir
+
+  if cwd then
+    -- Get the current working directory
+    cwd_dir = vim.fn.getcwd()
+  end
+
+  if pwd then
+    -- Get the project directory, using Neovim's built-in LSP root detection or fallback to cwd
+    pwd_dir = vim.lsp.buf.list_workspace_folders()[1]
+  end
+
+  -- Helper function to check for a .git directory
+  local function has_git_dir(path)
+    local git_path = path .. "/.git"
+    ---@diagnostic disable-next-line: undefined-field
+    local stat = vim.loop.fs_stat(git_path)
+    return stat and stat.type == "directory"
+  end
+
+  if cwd then
+    -- Check if the current working directory is a git repo
+    if has_git_dir(cwd_dir) then
+      return true
+    end
+  end
+
+  if pwd then
+    -- Check if the project directory is a git repo
+    if has_git_dir(pwd_dir) then
+      return true
+    end
+  end
+
+  -- Not a git repo
+  return false
+end
+
+--- Select and run a picker command based on the given parameters.
+--- If no provider is provided, it will use fzf-lua if available, else telescope.
+--- The default provider can also be set with the `vim.g.lazyvim_picker` variable.
+--- @param cmd string|table? Command to run or a table with fields {cmd, provider, options}
+---   When cmd is a table, it is destructured and the other fields are ignored
+--- @param provider string? Name of the provider, either "fzf-lua" or "telescope" (optional)
+---   "telescope" will be automatically adjusted to "telescope.builtin" when necessary
+--- @param options table? Additional options to pass to the provider's function (optional)
+---   This allows passing additional options to the provider function
+function M.pick(cmd, provider, options)
+  -- Handle case where `cmd` is a table (destructuring the table fields)
+  if type(cmd) == "table" then
+    provider = cmd.provider
+    options = cmd.options
+    cmd = cmd.cmd
+  end
+
+  -- Default the command to "files" if not provided
+  cmd = cmd or "files"
+
+  -- Determine the provider if one is not selected
+  -- (defaults to fzf-lua if available, else telescope)
+  -- Will use vim.g.lazyvim_picker if defined
+  if provider == nil then
+    if vim.g.lazyvim_picker == "fzf" then
+      provider = "fzf-lua"
+    elseif vim.g.lazyvim_picker == "telescope" then
+      provider = "telescope"
+    else
+      local has_fzf, _ = pcall(require, "fzf-lua")
+      if has_fzf then
+        provider = "fzf-lua"
+      else
+        provider = "telescope"
+      end
+    end
+  end
+
+  -- Ensure options is always a table (to avoid errors if nil is passed)
+  options = options or {}
+  -- Error handling for unknown providers
+  if provider ~= "fzf-lua" and provider ~= "telescope" then
+    vim.notify("Unknown provider: " .. provider, vim.log.levels.ERROR)
+    return
+  end
+
+  -- Handle special case where cmd is "FILES" (ignore git repo check)
+  if cmd == "FILES" then
+    if provider == "fzf-lua" then
+      require("fzf-lua").files(options)
+    elseif provider == "telescope" then
+      require("telescope.builtin").find_files(options)
+    end
+    return
+  end
+
+  -- Handle special case where cmd is "config_files"
+  if cmd == "config_files" then
+    if provider == "fzf-lua" then
+      require("fzf-lua").files({ cwd = vim.fn.stdpath("config") })
+    elseif provider == "telescope" then
+      require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })
+    end
+    return
+  end
+
+  -- Check if cmd is "files" and current working directory is a git repo
+  if cmd == "files" then
+    if M.is_git_repo() then
+      -- Use git_files if inside a git repo
+      if provider == "fzf-lua" then
+        require("fzf-lua").git_files(options)
+      elseif provider == "telescope" then
+        require("telescope.builtin").git_files(options)
+      end
+    else
+      -- Otherwise, use regular find_files
+      if provider == "fzf-lua" then
+        require("fzf-lua").files(cmd, options)
+      elseif provider == "telescope" then
+        require("telescope.builtin").find_files(options)
+      end
+    end
+  else
+    if provider == "telescope" then
+      provider = "telescope.builtin"
+    end
+    -- Use `cmd` to identify the picker and call the corresponding function
+    local success, picker = pcall(function()
+      return require(provider)[cmd]
+    end)
+    if not success or type(picker) ~= "function" then
+      vim.notify(
+        "Unknown command: " .. cmd .. " for provider: " .. provider,
+        vim.log.levels.ERROR
+      )
+      return
+    end
+    -- Run the picker with the provided options
+    picker(options)
+  end
+end
+
 -- Export the module
 return M
