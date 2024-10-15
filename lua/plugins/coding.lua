@@ -38,6 +38,9 @@ return {
     "folke/lazydev.nvim",
     opts = {
       library = {
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+        { path = "LazyVim", words = { "LazyVim" } },
+        { path = "lazy.nvim", words = { "LazyVim" } },
         -- Load the wezterm types when the `wezterm` module is required
         -- Needs `justinsgithub/wezterm-types` to be installed
         { path = "wezterm-types", mods = { "wezterm" } },
