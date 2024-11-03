@@ -74,7 +74,8 @@ return {
     build = "cd app && yarn install",
   },
   { -- WezTerm Types
-    "justinsgithub/wezterm-types",
+    "gonstoll/wezterm-types",
+    dev = true,
   },
   {
     "akinsho/flutter-tools.nvim",
