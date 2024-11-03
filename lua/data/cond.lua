@@ -8,6 +8,12 @@ local M = {}
 local func = require("data.func")
 local types = require("data.types")
 
+-- Auto-dark-mode conditional options
+M.auto_dark_mode = function()
+  return func.check_global_var("autodarkmode", true, false)
+    and not func.is_ssh()
+end
+
 --- Auto Save conditional options
 M.autosave = function()
   return func.check_global_var("autosave", true, false)
@@ -139,6 +145,10 @@ end
 
 M.tabnine = function()
   return func.check_global_var("aitool", "tabnine", "neocodeium")
+end
+
+M.todo = function()
+  return vim.bo.readonly == false
 end
 
 --- TMux conditional options
