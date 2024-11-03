@@ -871,6 +871,12 @@ M.minifiles = {
 
 --- Misc keymaps
 M.misc = {
+  { -- jk in insert and visual to escape
+    "jk",
+    "<esc>",
+    mode = { "i", "v" },
+    desc = "Escape",
+  },
   { -- Clear search highlight
     "<leader>s<Esc>",
     "<cmd>noh<cr><esc>",
