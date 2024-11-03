@@ -181,6 +181,15 @@ function M.setup_mode_highlight()
     set_hl(0, "SmoothCursor", { fg = bg_color })
     sign_def("smoothcursor", { text = "" })
   end
+
+  -- Define the custom highlight outside the function
+  local vis_bg_color = get_bg_color("CursorLineNr")
+  local vis_fg_color = get_bg_color("lualine_a_visual")
+  vim.api.nvim_set_hl(
+    0,
+    "StatusColumnVisualHighlight",
+    { fg = vis_fg_color, bg = vis_bg_color }
+  )
 end
 
 --- Function to set up dashboard header highlight
