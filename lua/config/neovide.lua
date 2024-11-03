@@ -33,20 +33,28 @@ vim.g.neovide_padding_bottom = 0
 vim.g.neovide_padding_right = 0
 vim.g.neovide_padding_left = 0
 
--- Simulate kitty copy-and-paste from system clipboard
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━ Clipboard mappings ━━━━━━━━━━━━━━━━━━━━━━
 
--- Normal mode
-vim.keymap.set("n", "<C-v>", ":r !xsel -b<CR>", { silent = true })
-vim.keymap.set("n", "<C-c>", ":w !xsel -i -b<CR>", { silent = true })
+local modes = { "n", "v", "c", "i" }
 
--- Visual mode
-vim.keymap.set("v", "<C-v>", ":r !xsel -b<CR>", { silent = true })
-vim.keymap.set("v", "<C-c>", ":w !xsel -i -b<CR>", { silent = true })
+-- System clipboard mappings
+for _, mode in ipairs(modes) do
+  if mode == "c" or mode == "i" then
+    vim.keymap.set(mode, "<C-v>", "<C-r>+", { silent = true })
+    vim.keymap.set(mode, "<C-c>", "<C-r>+", { silent = true })
+  else
+    vim.keymap.set(mode, "<C-v>", ":r !xsel -b<CR>", { silent = true })
+    vim.keymap.set(mode, "<C-c>", ":w !xsel -i -b<CR>", { silent = true })
+  end
+end
 
--- Command mode
-vim.keymap.set("c", "<C-v>", "<C-r>+", { silent = true })
-vim.keymap.set("c", "<C-c>", "<C-r>+", { silent = true })
-
--- Insert mode
-vim.keymap.set("i", "<C-v>", "<C-r>+", { silent = true })
-vim.keymap.set("i", "<C-c>", "<C-r>+", { silent = true })
+-- Wezterm-style clipboard mappings (Control-Shift)
+for _, mode in ipairs(modes) do
+  if mode == "c" or mode == "i" then
+    vim.keymap.set(mode, "<C-S-v>", "<C-r>+", { silent = true })
+    vim.keymap.set(mode, "<C-S-c>", "<C-r>+", { silent = true })
+  else
+    vim.keymap.set(mode, "<C-S-v>", ":r !xsel -b<CR>", { silent = true })
+    vim.keymap.set(mode, "<C-S-c>", ":w !xsel -i -b<CR>", { silent = true })
+  end
+end
