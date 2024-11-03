@@ -15,40 +15,29 @@
 --          │                        PLUGINS DATA                     │
 --          ╰─────────────────────────────────────────────────────────╯
 
-local M = {}
+local plugins = {}
 
 -- Check if lazy.nvim is installed
 if pcall(require, "lazy") then
   -- If lazy.nvim is installed, return an empty table and do nothing
-  return M
+  return plugins
 else
   -- If lazy.nvim is not installed and vim.g.ignore_no_lazy is not set, display a warning
   if not vim.g.ignore_no_lazy then
     require("data").func.notify("lazy.nvim is not installed", "WARNING")
   end
 
-  -- Function to iterate over files in the directory and load them dynamically
+  -- Try to require plugins manually if we are not using lazy.nvim
   local function read_plugins_dir()
-    -- Get the root path for the plugins directory
+    -- Getting the root path for the current module directory
     local dir_path =
       vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h")
-
-    -- Open the directory
-    local files = vim.fn.readdir(dir_path)
-
-    for _, file in ipairs(files) do
-      -- Skip init.lua
-      if file ~= "init.lua" and file:match(".*%.lua$") then
-        -- Get the module name without the .lua extension
-        local plugin_name = file:sub(1, -5)
-        -- Load the plugin configuration file
-        require("plugins." .. plugin_name)
-      end
-    end
+    -- Load modules from the data directory
+    require("data").load_modules_from_dir(dir_path, "plugins")
   end
 
-  -- Read the directory and load plugin configuration files when lazy.nvim is not installed
+  -- Read the directory and load any additional modules
   read_plugins_dir()
 end
 
-return M
+return plugins
