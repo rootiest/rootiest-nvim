@@ -12,6 +12,20 @@ return {
   { -- Dotfiles plugins
     import = "lazyvim.plugins.extras.util.dot",
   },
+  { -- Env file no diagnostics
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_)
+      vim.api.nvim_create_augroup("EnvFileDiagnostics", { clear = true })
+
+      vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+        group = "EnvFileDiagnostics",
+        pattern = { "*.env", "*.env.*" },
+        callback = function()
+          vim.diagnostic.enable(false)
+        end,
+      })
+    end,
+  },
   { -- Wakatime
     "wakatime/vim-wakatime",
     cond = vim.g.usewakatime,
@@ -120,10 +134,10 @@ return {
     cmd = data.cmd.suda,
     config = data.types.suda,
   },
-  { -- Pigeon
-    "Pheon-Dev/pigeon",
-    config = data.types.pigeon,
-  },
+  -- { -- Pigeon
+  --   "Pheon-Dev/pigeon",
+  --   config = data.types.pigeon,
+  -- },
   { -- Discord Presence
     "IogaMaster/neocord",
     event = "VeryLazy",
@@ -223,4 +237,29 @@ return {
   { -- FloatTerm
     "voldikss/vim-floaterm",
   },
+  { -- bufferlist
+    "EL-MASTOR/bufferlist.nvim",
+    lazy = true,
+    keys = { { "<Leader>bl", desc = "Open bufferlist" } }, -- keymap to load the plugin, it should be the same as keymap.open_buflist
+    opts = {},
+  },
+  { -- showkeys
+    "nvchad/showkeys",
+    cmd = "ShowkeysToggle",
+    opts = {
+      timeout = 1,
+      maxkeys = 5,
+      -- more opts
+    },
+  },
+  {
+    "stevearc/oil.nvim",
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+  },
+  { "https://codeberg.org/jrop/u.nvim/", lazy = true },
 }
