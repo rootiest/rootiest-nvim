@@ -54,4 +54,10 @@ return {
     lazy = false,
     opts = {},
   },
+  { -- Neogit
+    "NeogitOrg/neogit",
+    opts = {
+      graph_style = "kitty",
+    },
+  },
 }
