@@ -113,7 +113,7 @@ return {
     "f-person/auto-dark-mode.nvim",
     lazy = true,
     opts = data.types.auto_dark_mode,
-    cond = not data.func.is_ssh(),
+    cond = data.cond.auto_dark_mode,
   },
   { -- Highlight colors
     "brenoprata10/nvim-highlight-colors",
