@@ -79,7 +79,7 @@ return {
   { -- Zen Mode
     "folke/zen-mode.nvim",
     lazy = true,
-    opts = {},
+    opts = data.types.zen,
     keys = data.keys.zen,
   },
   { -- SmoothCursor
@@ -87,6 +87,7 @@ return {
     event = "BufEnter",
     -- lazy = true,
     opts = data.types.smoothcursor,
+    enabled = false,
   },
   { -- Smart Scrolloff
     "tonymajestro/smart-scrolloff.nvim",
@@ -106,12 +107,15 @@ return {
   { -- Todo Comments
     "folke/todo-comments.nvim",
     opts = data.types.todo.opts,
+    cond = data.types.todo.cond,
+    enabled = true,
   },
   { -- Rainbow Delimeters
     "HiPhish/rainbow-delimiters.nvim",
   },
   { -- Colorful window separators
     "nvim-zh/colorful-winsep.nvim",
+    enabled = false,
     lazy = true,
     opts = data.types.winsep,
     event = { "WinLeave" },
@@ -130,27 +134,9 @@ return {
   { -- UndoTree
     "mbbill/undotree",
     lazy = false,
-    config = function()
-      -- Layout
-      vim.g.undotree_ShortIndicators = 0
-      vim.g.undotree_SplitWidth = 32
-      -- Set focus to the tree when it's toggled
-      vim.g.undotree_SetFocusWhenToggle = 1
-      -- Set up tree shape
-      vim.g.undotree_TreeNodeShape = ""
-      vim.g.undotree_TreeVertShape = ""
-      vim.g.undotree_TreeSplitShape = ""
-      vim.g.undotree_TreeReturnShape = ""
-      -- Hide helpline
-      vim.g.undotree_HelpLine = 0
-      -- Hide diff panel
-      vim.g.undotree_DiffAutoOpen = 0
-    end,
+    config = data.types.undotree,
     keys = data.keys.undotree,
   },
-  -- { -- NumberToggle
-  --   "sitiom/nvim-numbertoggle",
-  -- },
   { -- Noice
     "folke/noice.nvim",
     optional = true,
@@ -158,39 +144,30 @@ return {
   },
   { -- Duck
     "tamton-aquib/duck.nvim",
-    config = function()
-      local add_km = data.func.add_keymap
-      add_km({
-        lhs = "<leader>uD",
-        group = "Duck",
-        icon = { icon = "󰇥", color = "yellow" },
-      })
-      add_km({
-        "<leader>uDd",
-        function()
-          require("duck").hatch()
-        end,
-        desc = "Hatch",
-      })
-      add_km({
-        "<leader>uDk",
-        function()
-          require("duck").cook()
-        end,
-        desc = "Cook",
-      })
-      add_km({
-        "<leader>uDa",
-        function()
-          require("duck").cook_all()
-        end,
-        desc = "Cook All",
-      })
-    end,
+    config = data.types.duck,
   },
-  {
+  { -- Volt
     "rootiest/volt",
     lazy = true,
   },
-  { "nvchad/minty", lazy = true },
+  { -- Minty
+    "nvchad/minty",
+    lazy = true,
+  },
+  {
+    "folke/twilight.nvim",
+    opts = data.types.twilight,
+  },
+  -- { -- vim-footprints
+  --   "axlebedev/vim-footprints",
+  --   init = function()
+  --     vim.g.footprintsColor = "#251519"
+  --     vim.g.footprintsTermColor = "208"
+  --     vim.g.footprintsEasingFunction = "linear"
+  --     vim.g.footprintsHistoryDepth = 20
+  --     vim.g.footprintsExcludeFiletypes = { "magit", "nerdtree", "diff" }
+  --     vim.g.footprintsEnabledByDefault = 1
+  --     vim.g.footprintsOnCurrentLine = 0
+  --   end,
+  -- },
 }
