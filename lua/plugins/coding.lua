@@ -26,6 +26,7 @@ return {
   },
   { -- Yanky
     "gbprod/yanky.nvim",
+    requires = { "kkharji/sqlite.lua" },
     opts = data.types.yanky,
   },
   { -- VSCode
@@ -75,5 +76,16 @@ return {
   { -- Fast Action
     "Chaitanyabsprip/fastaction.nvim",
     opts = {},
+  },
+  { -- Matchup
+    "andymass/vim-matchup",
+    setup = function()
+      -- may set any options here
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    end,
+  },
+  { -- EasyAlign
+    "junegunn/vim-easy-align",
+    keys = data.keys.easyalign,
   },
 }
