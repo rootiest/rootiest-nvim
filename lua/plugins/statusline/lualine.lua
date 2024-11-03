@@ -331,7 +331,7 @@ return { -- Lualine
             on_click = function()
               require("nvim_updater").show_new_commits({
                 isupdate = true,
-                short = true,
+                short = false,
               })
             end,
             padding = { left = 1, right = 1 },

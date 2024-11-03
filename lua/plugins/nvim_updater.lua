@@ -2,7 +2,8 @@ local data = require("data")
 
 return { -- Neovim Updater
   "rootiest/nvim-updater.nvim",
-  lazy = true,
+  version = "*", -- Pin to GitHub releases
+  lazy = false,
   opts = {
     build_type = "RelWithDebInfo",
     branch = "master",
