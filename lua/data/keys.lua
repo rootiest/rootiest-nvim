@@ -145,6 +145,15 @@ M.codesnap = {
   },
 }
 
+M.easyalign = {
+  { -- EasyAlign
+    "<leader>g\\",
+    "<Plug>(EasyAlign)",
+    desc = "EasyAlign",
+    mode = { "n", "x" },
+  },
+}
+
 M.flash = {
   { -- Flash jump to next
     "<CR>",
