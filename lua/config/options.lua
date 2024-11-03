@@ -177,7 +177,9 @@ vim.g.disable_transparency      = true          ---@type boolean Options: <true|
 -- Auto Dark-mode
 vim.g.autodarkmode              = true          ---@type boolean Options: <true|false>
 -- Set colorcolumn
---vim.opt.colorcolumn        = "120"            ---@type string|table Options: [column]
+--vim.opt.colorcolumn           = "120"         ---@type string|table Options: [column]
+--Use Astral colorscheme management
+vim.g.use_astral                = false         ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━ TABS AND INDENTATION ━━━━━━━━━━━━━━━━━━━━━━━━
 
