@@ -8,6 +8,18 @@ local M = {}
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
+M.cpp_picker = function()
+  augroup("cpp_picker", { clear = true })
+  -- C++ Picker
+  autocmd("FileType", {
+    group = "cpp_picker",
+    pattern = { "cpp", "c", "h", "hpp" },
+    callback = function()
+      require("data.func").add_keymap(require("data.keys").cpp_picker)
+    end,
+  })
+end
+
 M.minifiles = {
   ---@function Function to dynamically resize the preview window
   dynamic_resize = function()
