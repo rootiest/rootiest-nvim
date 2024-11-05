@@ -253,6 +253,66 @@ M.all_modes = {
   "t",
 }
 
+M.picker_sets = {
+  pickers = {
+    "fzf-lua",
+    "telescope",
+  },
+  cpp_files = {
+    "cpp",
+    "c",
+    "h",
+    "hpp",
+  },
+  python_files = {
+    "py",
+    "pyw",
+  },
+  nvim_files = {
+    "lua",
+    "vim",
+    "vimdoc",
+  },
+  vim_files = {
+    "vim",
+    "vimdoc",
+  },
+  java_files = {
+    "java",
+    "properties",
+    "xml",
+    "jar",
+    "gradle",
+    "yaml",
+  },
+  js_files = {
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "svelte",
+  },
+  html_files = {
+    "html",
+    "css",
+    "scss",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "svelte",
+  },
+  rust_files = {
+    "rust",
+    "toml",
+    "rs",
+    "rsx",
+    "rsproj",
+  },
+}
+
 --- Filetypes for Alternate plugin
 M.alternate = {
   "cpp",
@@ -391,12 +451,12 @@ M.lazyvim = {
 
 M.lazy = { -- Lazy.nvim
   disabled_plugins = {
-    "gzip",
+    --"gzip",
     "netrwPlugin",
-    "tarPlugin",
+    --"tarPlugin",
     -- "tohtml",
-    "tutor",
-    "zipPlugin",
+    --"tutor",
+    --"zipPlugin",
   },
 }
 
@@ -1333,6 +1393,36 @@ M.barsNlines = {
   end,
 }
 
+M.duck = function()
+  local add_km = require("data.func").add_keymap
+  add_km({
+    lhs = "<leader>uD",
+    group = "Duck",
+    icon = { icon = "󰇥", color = "yellow" },
+  })
+  add_km({
+    "<leader>uDd",
+    function()
+      require("duck").hatch()
+    end,
+    desc = "Hatch",
+  })
+  add_km({
+    "<leader>uDk",
+    function()
+      require("duck").cook()
+    end,
+    desc = "Cook",
+  })
+  add_km({
+    "<leader>uDa",
+    function()
+      require("duck").cook_all()
+    end,
+    desc = "Cook All",
+  })
+end
+
 --- Function to setup Pigeon plugin options
 M.pigeon = function()
   local platform = require("data.func").get_os("platform")
@@ -1377,10 +1467,30 @@ M.substitute = {
   end,
 }
 
+M.undotree = function()
+  -- Layout
+  vim.g.undotree_ShortIndicators = 0
+  vim.g.undotree_SplitWidth = 32
+  -- Set focus to the tree when it's toggled
+  vim.g.undotree_SetFocusWhenToggle = 1
+  -- Set up tree shape
+  vim.g.undotree_TreeNodeShape = ""
+  vim.g.undotree_TreeVertShape = ""
+  vim.g.undotree_TreeSplitShape = ""
+  vim.g.undotree_TreeReturnShape = ""
+  -- Hide helpline
+  vim.g.undotree_HelpLine = 0
+  -- Hide diff panel
+  vim.g.undotree_DiffAutoOpen = 0
+end
+
 M.yanky = {
+  ring = {
+    history_length = 200,
+    storage = "sqlite",
+  },
   system_clipboard = {
     sync_with_ring = true,
-    clipboard_register = '"',
   },
   highlight = {
     on_put = true,
@@ -1477,6 +1587,12 @@ M.catppuccin = {
     overseer = true,
     rainbow_delimiters = true,
     which_key = true,
+    diffview = true,
+    flash = true,
+    fzf = true,
+    ts_rainbow2 = true,
+    ts_rainbow = true,
+    lsp_trouble = true,
   },
 }
 
@@ -1507,47 +1623,61 @@ M.noice = { presets = { inc_rename = true } }
 
 --- Todo-comments plugin options
 M.todo = {
-  keywords = {
-    FIX = {
-      icon = " ", -- icon used for the sign, and in search results
-      color = "error", -- can be a hex color, or a named color
-      alt = { -- a set of other keywords that all map to this FIX keywords
-        "FIXME",
-        "BUG",
-        "FIXIT",
-        "ISSUE",
+  opts = {
+    keywords = {
+      FIX = {
+        icon = " ", -- icon used for the sign, and in search results
+        color = "error", -- can be a hex color, or a named color
+        alt = { -- a set of other keywords that all map to this FIX keywords
+          "FIXME",
+          "BUG",
+          "FIXIT",
+          "ISSUE",
+        },
+      },
+      TODO = { icon = " ", color = "info" },
+      HACK = { icon = " ", color = "warning" },
+      WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+      PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+      NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+      BUST = {
+        icon = "󰇷 ",
+        color = "broken",
+        alt = { "BROKEN", "UNAVAILABLE", "POOP" },
+      },
+      JUNK = {
+        icon = " ",
+        color = "trash",
+        alt = { "TRASH", "WASTE", "DUMP", "GARBAGE" },
+      },
+      TEST = {
+        icon = " ",
+        color = "test",
+        alt = { "TESTING", "PASSED", "FAILED" },
       },
     },
-    TODO = { icon = " ", color = "info" },
-    HACK = { icon = " ", color = "warning" },
-    WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-    NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-    BUST = {
-      icon = "󰇷 ",
-      color = "broken",
-      alt = { "BROKEN", "UNAVAILABLE", "POOP" },
+    colors = {
+      error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+      warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
+      info = { "DiagnosticInfo", "#2563EB" },
+      hint = { "DiagnosticHint", "#10B981" },
+      default = { "Identifier", "#7C3AED" },
+      test = { "Identifier", "#FF00FF" },
+      broken = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+      trash = { "DiagnosticUnnecessary", "Comment", "#DC2626" },
     },
-    JUNK = {
-      icon = " ",
-      color = "trash",
-      alt = { "TRASH", "WASTE", "DUMP", "GARBAGE" },
+    search = {
+      command = "rg",
+      args = {
+        "--no-messages",
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+      },
+      pattern = [[\b(KEYWORDS):]], -- ripgrep regex
     },
-    TEST = {
-      icon = " ",
-      color = "test",
-      alt = { "TESTING", "PASSED", "FAILED" },
-    },
-  },
-  colors = {
-    error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-    warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
-    info = { "DiagnosticInfo", "#2563EB" },
-    hint = { "DiagnosticHint", "#10B981" },
-    default = { "Identifier", "#7C3AED" },
-    test = { "Identifier", "#FF00FF" },
-    broken = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-    trash = { "DiagnosticUnnecessary", "Comment", "#DC2626" },
   },
   lualine = function()
     local config = {
@@ -1559,7 +1689,7 @@ M.todo = {
         "BUST",
         "JUNK",
       },
-      keywords = M.todo.keywords,
+      keywords = M.todo.opts.keywords,
       when_empty = "",
     }
     return config
@@ -1685,6 +1815,11 @@ M.treesitter = {
         end
       end,
     },
+    matchup = {
+      enable = true, -- mandatory, false will disable the whole extension
+      disable = { "c", "ruby" }, -- optional, list of language that will be disabled
+      -- [options]
+    },
     auto_install = true,
     ensure_installed = {
       "bash",
@@ -1713,6 +1848,76 @@ M.treesitter = {
       "vimdoc",
       "xml",
       "yaml",
+    },
+  },
+}
+
+M.twilight = {
+  dimming = {
+    alpha = 0.25, -- amount of dimming
+    -- we try to get the foreground from the highlight groups or fallback color
+    color = { "Normal", "#cdd6f4" },
+    term_bg = "#1e1e2e", -- if guibg=NONE, this will be used to calculate text color
+    inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
+  },
+}
+
+M.zen = {
+  window = {
+    backdrop = 1, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
+    width = 0.9, -- width of the Zen window
+    height = 1, -- height of the Zen window
+    options = {
+      signcolumn = "no", -- disable signcolumn
+      -- number = false, -- disable number column
+      relativenumber = false, -- disable relative numbers
+      cursorline = false, -- disable cursorline
+      cursorcolumn = false, -- disable cursor column
+      foldcolumn = "0", -- disable fold column
+      list = false, -- disable whitespace characters
+    },
+  },
+  plugins = {
+    -- disable some global vim options (vim.o...)
+    -- comment the lines to not apply the options
+    options = {
+      enabled = true,
+      ruler = false, -- disables the ruler text in the cmd line area
+      showcmd = false, -- disables the command in the last line of the screen
+      -- you may turn on/off statusline in zen mode by setting 'laststatus'
+      -- statusline will be shown only if 'laststatus' == 3
+      laststatus = 0, -- turn off the statusline in zen mode
+    },
+    twilight = { enabled = true }, -- enable to start Twilight when zen mode opens
+    gitsigns = { enabled = false }, -- disables git signs
+    tmux = { enabled = false }, -- disables the tmux statusline
+    todo = { enabled = false }, -- if set to "true", todo-comments.nvim highlights will be disabled
+    kitty = {
+      enabled = require("data.func").is_kitty(),
+      font = "+1", -- font size increment
+    },
+    alacritty = {
+      enabled = require("data.func").is_alacritty(),
+      font = "14", -- font size
+    },
+    wezterm = {
+      enabled = require("data.func").is_wezterm(),
+      -- can be either an absolute font size or the number of incremental steps
+      font = "+1", -- (10% increase per step)
+    },
+    neovide = {
+      enabled = require("data.func").is_neovide(),
+      -- Will multiply the current scale factor by this number
+      scale = 1.2,
+      -- disable the Neovide animations while in Zen mode
+      disable_animations = {
+        neovide_animation_length = 0,
+        neovide_cursor_animate_command_line = false,
+        neovide_scroll_animation_length = 0,
+        neovide_position_animation_length = 0,
+        neovide_cursor_animation_length = 0,
+        neovide_cursor_vfx_mode = "",
+      },
     },
   },
 }
