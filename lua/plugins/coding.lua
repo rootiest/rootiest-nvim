@@ -28,9 +28,7 @@ return {
     "gbprod/yanky.nvim",
     requires = { "kkharji/sqlite.lua" },
     opts = data.types.yanky,
-  },
-  { -- VSCode
-    import = "lazyvim.plugins.extras.vscode",
+    keys = data.keys.yanky,
   },
   { -- Neogen
     import = "lazyvim.plugins.extras.coding.neogen",
@@ -87,5 +85,9 @@ return {
   { -- EasyAlign
     "junegunn/vim-easy-align",
     keys = data.keys.easyalign,
+  },
+  { -- Vim-Shebang
+    "vitalk/vim-shebang",
+    lazy = false,
   },
 }
