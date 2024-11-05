@@ -1759,5 +1759,23 @@ function M.pick(cmd, provider, options)
   return false
 end
 
+--- Converts a Windows path to a Unix path
+--- If the path is already in Unix format, it will return the original path.
+--- You can pass any path whose format is uncertain to this function to ensure
+--- the correct format is used.
+---@param path string The path to convert
+---@return string The converted path
+function M.convert_path(path)
+  -- Check if the path is a Windows path (e.g., C:\ or D:\)
+  if path:match("^[A-Za-z]:\\") or path:match("^[A-Za-z]:/") then
+    -- Convert forward slashes (/) to backslashes (\)
+    local converted_path = path:gsub("/", "\\")
+    return converted_path
+  else
+    -- Return the original path if it's not a Windows path
+    return path
+  end
+end
+
 -- Export the module
 return M
