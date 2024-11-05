@@ -154,6 +154,105 @@ M.easyalign = {
   },
 }
 
+M.cipher = {
+  base64 = {
+    {
+      lhs = "g?",
+      rhs = function()
+        require("data.func").base64_encode_text()
+      end,
+      desc = "Base64 Encode",
+      mode = "n",
+    },
+    {
+      lhs = "g?",
+      rhs = function()
+        require("data.func").base64_encode_visual()
+      end,
+      desc = "Base64 Encode",
+      mode = "v",
+    },
+    {
+      lhs = "g/",
+      rhs = function()
+        require("data.func").base64_decode_text()
+      end,
+      desc = "Base64 Decode",
+      mode = "n",
+    },
+    {
+      lhs = "g/",
+      rhs = function()
+        require("data.func").base64_decode_visual()
+      end,
+      desc = "Base64 Decode",
+      mode = "v",
+    },
+  },
+  hex = {
+    {
+      lhs = "g?",
+      rhs = function()
+        require("data.func").hex_encode_text()
+      end,
+      desc = "Hex Encode",
+      mode = "n",
+    },
+    {
+      lhs = "g?",
+      rhs = function()
+        require("data.func").hex_encode_visual()
+      end,
+      desc = "Hex Encode",
+      mode = "v",
+    },
+    {
+      lhs = "g/",
+      rhs = function()
+        require("data.func").hex_decode_text()
+      end,
+      desc = "Hex Decode",
+      mode = "n",
+    },
+    {
+      lhs = "g/",
+      rhs = function()
+        require("data.func").hex_decode_visual()
+      end,
+      desc = "Hex Decode",
+      mode = "v",
+    },
+  },
+  rot47 = {
+    {
+      lhs = "g?",
+      rhs = function()
+        require("data.func").rot47_text()
+      end,
+      desc = "ROT47 Encode",
+      mode = "n",
+    },
+    {
+      lhs = "g?",
+      rhs = function()
+        require("data.func").rot47_visual()
+      end,
+      desc = "ROT47 Encode",
+      mode = "v",
+    },
+  },
+}
+
+M.cpp_picker = {
+  { -- Cpp Picker
+    "<leader>fC",
+    function()
+      require("data.func").search_cpp_files()
+    end,
+    desc = "Pick C++ and H files",
+  },
+}
+
 M.flash = {
   { -- Flash jump to next
     "<CR>",
@@ -590,6 +689,22 @@ M.groups = {
     lhs = "<leader>l",
     group = "Lazy",
     icon = { icon = "󰒲", color = "red" },
+  },
+}
+
+M.help = {
+  { -- Lookup word
+    lhs = "<leader>h",
+    rhs = "<cmd>execute 'help ' . expand('<cword>')<cr>",
+    desc = "Lookup word",
+  },
+  { -- Lookup selection
+    lhs = "<leader>h",
+    rhs = function()
+      require("data.func").help_lookup_visual()
+    end,
+    desc = "Lookup selection",
+    mode = "v",
   },
 }
 
@@ -1356,6 +1471,67 @@ M.transparent = {
       require("transparent").toggle()
     end,
     desc = "Toggle Transparency",
+  },
+}
+
+M.yanky = {
+  { -- Put indent after linewise
+    "]p",
+    "<Plug>(YankyPutIndentAfterLinewise)",
+    desc = "Put indent after linewise",
+  },
+  { -- Put indent before linewise
+    "[p",
+    "<Plug>(YankyPutIndentBeforeLinewise)",
+    desc = "Put indent before linewise",
+  },
+  { -- Put indent after linewise (uppercase)
+    "]P",
+    "<Plug>(YankyPutIndentAfterLinewise)",
+    desc = "Put indent after linewise (uppercase)",
+  },
+  { -- Put indent before linewise (uppercase)
+    "[P",
+    "<Plug>(YankyPutIndentBeforeLinewise)",
+    desc = "Put indent before linewise (uppercase)",
+  },
+  { -- Put indent after shift right
+    ">p",
+    "<Plug>(YankyPutIndentAfterShiftRight)",
+    desc = "Put indent after shift right",
+  },
+  { -- Put indent after shift left
+    "<p",
+    "<Plug>(YankyPutIndentAfterShiftLeft)",
+    desc = "Put indent after shift left",
+  },
+  { -- Put indent before shift right
+    ">P",
+    "<Plug>(YankyPutIndentBeforeShiftRight)",
+    desc = "Put indent before shift right",
+  },
+  { -- Put indent before shift left
+    "<P",
+    "<Plug>(YankyPutIndentBeforeShiftLeft)",
+    desc = "Put indent before shift left",
+  },
+  { -- Put after filter
+    "=p",
+    "<Plug>(YankyPutAfterFilter)",
+    desc = "Put after filter",
+  },
+  { -- Put before filter
+    "=P",
+    "<Plug>(YankyPutBeforeFilter)",
+    desc = "Put before filter",
+  },
+  { -- Last put in operator-pending mode
+    "lp", -- Left-hand side (key combination)
+    function()
+      require("yanky.textobj").last_put()
+    end,
+    desc = "Last put",
+    mode = { "x", "o" },
   },
 }
 
