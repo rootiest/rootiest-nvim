@@ -107,7 +107,7 @@ return {
   { -- Todo Comments
     "folke/todo-comments.nvim",
     opts = data.types.todo.opts,
-    cond = data.types.todo.cond,
+    cond = data.cond.todo,
     enabled = true,
   },
   { -- Rainbow Delimeters
