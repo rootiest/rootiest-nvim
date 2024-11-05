@@ -24,6 +24,9 @@ local plugin_specs = {
     "LazyVim/LazyVim", -- LazyVim
     import = "lazyvim.plugins", -- LazyVim Core Plugins
   },
+  { -- VSCode
+    import = "lazyvim.plugins.extras.vscode",
+  },
   { import = "plugins" }, -- General Plugins
 }
 
