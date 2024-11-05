@@ -1874,5 +1874,80 @@ function M.number()
   return "%s" .. v_hl .. line_display
 end
 
+--- Function to search for the provided filetypes with pickers
+---@param filetypes table A list of filetypes to search for
+function M.pick_filetypes(filetypes)
+  if not pcall(require, "telescope") then
+    if not pcall(require, "fzf-lua") then
+      vim.notify("Picker not found", vim.log.levels.ERROR)
+      return
+    else
+      require("fzf-lua").files({
+        cmd = "fd --type f " .. table.concat(
+          vim.tbl_map(function(ft)
+            return "--extension " .. ft
+          end, filetypes),
+          " "
+        ),
+      })
+      return
+    end
+  else
+    require("telescope.builtin").find_files({
+      find_command = {
+        "fd",
+        "--type",
+        "f",
+        unpack(vim
+          .iter(vim.tbl_map(function(ft)
+            return { "--extension", ft }
+          end, filetypes))
+          :flatten()
+          :totable()),
+      },
+    })
+  end
+end
+
+--- Function to search for cpp files with picker
+function M.search_cpp_files()
+  M.pick_filetypes(require("data.types").picker_sets.cpp_files)
+end
+
+--- Function to search for python files with picker
+function M.search_python_files()
+  M.pick_filetypes(require("data.types").picker_sets.python_files)
+end
+
+--- Function to search for nvim files with picker
+function M.search_nvim_files()
+  M.pick_filetypes(require("data.types").picker_sets.nvim_files)
+end
+
+--- Function to search for vim files with picker
+function M.search_vim_files()
+  M.pick_filetypes(require("data.types").picker_sets.vim_files)
+end
+
+--- Function to search for java files with picker
+function M.search_java_files()
+  M.pick_filetypes(require("data.types").picker_sets.java_files)
+end
+
+--- Function to search for javascript files with picker
+function M.search_js_files()
+  M.pick_filetypes(require("data.types").picker_sets.js_files)
+end
+
+--- Function to search for rust files with picker
+function M.search_rust_files()
+  M.pick_filetypes(require("data.types").picker_sets.rust_files)
+end
+
+--- Function to search for HTML files with picker
+function M.search_html_files()
+  M.pick_filetypes(require("data.types").picker_sets.html_files)
+end
+
 -- Export the module
 return M
