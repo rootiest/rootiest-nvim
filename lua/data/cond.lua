@@ -148,7 +148,14 @@ M.tabnine = function()
 end
 
 M.todo = function()
-  return vim.bo.readonly == false
+  if func.check_global_var("usetodo", true, true) then
+    if vim.bo.readonly == false then
+      if func.dir_is_git_repo(vim.fn.expand("%:p:h")) then
+        return true
+      end
+    end
+  end
+  return false
 end
 
 --- TMux conditional options
