@@ -218,6 +218,19 @@ function M.get_os(format)
   end
 end
 
+---@function Function to check if CWD is a git repo
+---@param dir? string The directory to check, defaults to CWD
+---@return boolean is_git_repo true if working directory is a git repository, false otherwise
+function M.dir_is_git_repo(dir)
+  -- Default to the current working directory if no directory is specified
+  dir = dir or vim.fn.getcwd()
+
+  local result = vim
+    .system({ "git", "-C", dir, "rev-parse", "--is-inside-work-tree" })
+    :wait()
+  return result.code == 0 -- returns true if the command succeeded
+end
+
 ---@function Function to send a notification
 ---@param message string The message to send
 ---@param level string|nil The level of the notification (default: "info")
