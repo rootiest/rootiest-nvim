@@ -66,3 +66,11 @@ data.func.setup_replace_ellipsis(true)
 
 -- Search selected text in visual mode
 add_keymap("/", "*<Esc>", "Search selected text", "v")
+
+-- Use modern cipher instead of rot13
+add_keymap(data.keys.cipher.hex)
+
+-- Help keybinds
+for _, item in ipairs(data.keys.help) do
+  add_keymap(item)
+end
