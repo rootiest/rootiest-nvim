@@ -1698,11 +1698,7 @@ function M.pick(cmd, provider, options)
   end
 
   -- Handle special commands
-  if cmd == "files" and M.is_git_repo() then
-    cmd = "git_files"
-  elseif cmd == "FILES" then
-    cmd = "files"
-  elseif cmd == "config_files" then
+  if cmd == "config_files" then
     cmd = "files"
     options = { cwd = vim.fn.stdpath("config") }
   end
@@ -1735,6 +1731,23 @@ function M.pick(cmd, provider, options)
       local picker = require(current_provider)[cmd]
       picker(options)
       return true -- Picker ran successfully, no need to check further
+    end
+  end
+
+  -- Handle special cases
+  if cmd == "file_browser" then
+    if provider == "mini" then
+      require("mini.files").open()
+      return true
+    elseif provider == "neotree" then
+      vim.cmd("Neotree reveal")
+      return true
+    elseif provider == "oil" then
+      require("oil").open()
+      return true
+    else
+      require("telescope").extensions.file_browser.file_browser()
+      return true
     end
   end
 
