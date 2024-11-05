@@ -1949,5 +1949,447 @@ function M.search_html_files()
   M.pick_filetypes(require("data.types").picker_sets.html_files)
 end
 
+--- Function to apply the Caesar cipher to a given text
+---@param text string The text to be transformed
+---@param shift? number The shift value
+---@return string shifted_text The transformed text
+function M.caesar_cipher(text, shift)
+  shift = shift or 3 -- Default shift is 3 if not provided
+  local shifted_text = ""
+
+  for char in text:gmatch(".") do
+    -- Check if the character is a letter
+    if char:match("%a") then
+      local base = char:match("%u") and 65 or 97 -- Base ASCII for uppercase or lowercase letters
+      local new_char =
+        string.char(((string.byte(char) - base + shift) % 26) + base)
+      shifted_text = shifted_text .. new_char
+    else
+      shifted_text = shifted_text .. char -- Non-letter characters remain the same
+    end
+  end
+
+  return shifted_text
+end
+
+-- Function to apply the Caesar cipher to the current line
+---@param shift number The shift value
+function M.caesar_cipher_text(shift)
+  local shifted_line = M.caesar_cipher(vim.api.nvim_get_current_line(), shift)
+  vim.api.nvim_set_current_line(shifted_line)
+end
+
+--- Function to apply the Caesar cipher to the visual selection
+---@param shift number The shift value
+function M.caesar_cipher_visual(shift)
+  local Range = require("u.range")
+  local range = Range.from_vtext()
+  local text = range:text()
+  local shifted_text = ""
+
+  for char in text:gmatch(".") do
+    if char:match("%a") then
+      local base = char:match("%u") and 65 or 97
+      local new_char =
+        string.char(((string.byte(char) - base + shift) % 26) + base)
+      shifted_text = shifted_text .. new_char
+    else
+      shifted_text = shifted_text .. char
+    end
+  end
+
+  range:replace(shifted_text)
+end
+
+-- Function to encrypt the entire buffer contents using GPG
+function M.encrypt_buffer_with_gpg()
+  -- Get the recipient email address from env variable or user input
+  local recipient = os.getenv("GPG_RECIPIENT")
+  if not recipient then
+    recipient = vim.fn.input("Enter recipient email: ")
+  end
+
+  -- Create a temporary file to hold the plaintext buffer content
+  local temp_filename = os.tmpname()
+  local temp_output_filename = os.tmpname() .. ".gpg" -- Temporary output file for encrypted content
+  local file = io.open(temp_filename, "w")
+
+  if file then
+    -- Get all lines in the current buffer and write them to the temporary file
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    local content = table.concat(lines, "\n")
+    file:write(content)
+    file:close()
+  else
+    print("Failed to create temporary file")
+    return
+  end
+
+  -- Command to encrypt the file using GPG
+  local command = string.format(
+    "gpg -e -a -o %s -r %s %s",
+    temp_output_filename,
+    recipient,
+    temp_filename
+  )
+
+  -- Execute the GPG command
+  local exit_code = os.execute(command)
+
+  -- Check if the GPG command was successful
+  if exit_code == 0 then
+    -- Read the encrypted text from the output file
+    local encrypted_file = io.open(temp_output_filename, "r")
+
+    if encrypted_file then
+      local encrypted_text = encrypted_file:read("*a") -- Read the entire content
+      encrypted_file:close()
+
+      -- Replace the current buffer's contents with the encrypted text, split into lines
+      vim.api.nvim_buf_set_lines(
+        0,
+        0,
+        -1,
+        false,
+        vim.split(encrypted_text, "\n")
+      )
+    else
+      print("Failed to read the encrypted output file.")
+    end
+  else
+    print("GPG command failed. Check your GPG configuration.")
+  end
+
+  -- Clean up temporary files
+  os.remove(temp_filename)
+  os.remove(temp_output_filename)
+end
+
+-- Function to base64 encode the current line or visual selection
+local function base64_encode(input)
+  local b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+  local output = {}
+  local padding = ""
+
+  -- Add padding for any leftover bytes
+  local len = #input
+  if len % 3 == 1 then
+    input = input .. "\0\0"
+    padding = "=="
+  elseif len % 3 == 2 then
+    input = input .. "\0"
+    padding = "="
+  end
+
+  for i = 1, #input, 3 do
+    local b1, b2, b3 =
+      string.byte(input, i),
+      string.byte(input, i + 1),
+      string.byte(input, i + 2)
+
+    local enc1 = bit.rshift(b1, 2)
+    local enc2 = ((b1 % 4) * 16) + bit.rshift(b2, 4)
+    local enc3 = ((b2 % 16) * 4) + bit.rshift(b3, 6)
+    local enc4 = b3 % 64
+
+    table.insert(output, b64:sub(enc1 + 1, enc1 + 1))
+    table.insert(output, b64:sub(enc2 + 1, enc2 + 1))
+    table.insert(output, b64:sub(enc3 + 1, enc3 + 1))
+    table.insert(output, b64:sub(enc4 + 1, enc4 + 1))
+  end
+
+  return table.concat(output):sub(1, -1 - #padding) .. padding
+end
+
+function M.base64_encode_visual()
+  local Range = require("u.range")
+  local range = Range.from_vtext()
+
+  local selected_text = range:text()
+  local encoded_text = base64_encode(selected_text)
+
+  range:replace(encoded_text)
+end
+
+-- Function to encode the current line
+function M.base64_encode_text()
+  -- Get the current line where the cursor is
+  local current_line = vim.api.nvim_get_current_line()
+
+  -- Base64 encode the current line using our function
+  local encoded_line = base64_encode(current_line)
+
+  -- Replace the current line with the encoded line
+  vim.api.nvim_set_current_line(encoded_line)
+end
+
+-- Function to base64 decode a string
+local function base64_decode(input)
+  local b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+  local output = {}
+  local padding = input:sub(-2) == "==" and 2
+    or (input:sub(-1) == "=" and 1 or 0)
+
+  -- Remove any padding characters
+  input = input:gsub("=", "")
+
+  for i = 1, #input, 4 do
+    local c1, c2, c3, c4 =
+      b64:find(input:sub(i, i)) - 1,
+      b64:find(input:sub(i + 1, i + 1)) - 1,
+      b64:find(input:sub(i + 2, i + 2)) - 1,
+      b64:find(input:sub(i + 3, i + 3)) - 1
+
+    local b1 = bit.lshift(c1, 2) + bit.rshift(c2, 4)
+    local b2 = bit.lshift(c2 % 16, 4) + bit.rshift(c3, 2)
+    local b3 = bit.lshift(c3 % 4, 6) + c4
+
+    table.insert(output, string.char(b1))
+    if i < #input - 2 or padding < 2 then
+      table.insert(output, string.char(b2))
+    end
+    if i < #input - 3 or padding < 1 then
+      table.insert(output, string.char(b3))
+    end
+  end
+
+  return table.concat(output)
+end
+
+-- Function to decode the current visual selection
+function M.base64_decode_visual()
+  local Range = require("u.range")
+  local range = Range.from_vtext()
+
+  local selected_text = range:text()
+  local decoded_text = base64_decode(selected_text)
+
+  range:replace(decoded_text)
+end
+
+-- Function to decode the current line
+function M.base64_decode_text()
+  -- Get the current line where the cursor is
+  local current_line = vim.api.nvim_get_current_line()
+
+  -- Base64 decode the current line using our function
+  local decoded_line = base64_decode(current_line)
+
+  -- Replace the current line with the decoded line
+  vim.api.nvim_set_current_line(decoded_line)
+end
+
+--- Applies the ROT47 cipher to the given string while preserving newline characters.
+-- @param input_string The string to be transformed with the ROT47 cipher.
+-- @return The transformed string after applying ROT47, maintaining the original structure.
+local function rot47(input_string)
+  local result = {}
+  for i = 1, #input_string do
+    local char = input_string:sub(i, i)
+    local ascii = string.byte(char)
+
+    -- Check for newline characters
+    if char == "\n" then
+      -- Preserve newline characters without modification
+      table.insert(result, char)
+    elseif ascii >= 33 and ascii <= 126 then
+      -- Apply ROT47 cipher for characters in the range of printable ASCII
+      ascii = ((ascii - 33 + 47) % 94) + 33
+      table.insert(result, string.char(ascii))
+    else
+      -- Preserve other non-printable characters unchanged
+      table.insert(result, char)
+    end
+  end
+  return table.concat(result)
+end
+
+--- Applies the ROT47 cipher to the current line while preserving newline characters.
+function M.rot47_text()
+  -- Get the current line where the cursor is
+  local current_line = vim.api.nvim_get_current_line()
+
+  -- Base64 encode the current line using our function
+  local encoded_line = rot47(current_line)
+
+  -- Replace the current line with the encoded line
+  vim.api.nvim_set_current_line(encoded_line)
+end
+
+--- Applies the ROT47 cipher to the visual selection while preserving newline characters.
+function M.rot47_visual()
+  local Range = require("u.range")
+  local range = Range.from_vtext()
+
+  local selected_text = range:text()
+  local transformed_text = rot47(selected_text)
+
+  range:replace(transformed_text)
+end
+
+--- Converts a given string into its hexadecimal representation while preserving newlines.
+-- @param input_string The string to be transformed into hexadecimal.
+-- @return The hexadecimal encoded string, preserving the original structure.
+local function hex_encode(input_string)
+  local result = {}
+
+  for i = 1, #input_string do
+    local char = input_string:sub(i, i)
+
+    -- Check for newline characters
+    if char == "\n" then
+      -- Preserve newline characters without modification
+      table.insert(result, char)
+    else
+      -- Convert each character to its hexadecimal representation
+      local hex = string.format("%02X", string.byte(char))
+      table.insert(result, hex)
+    end
+  end
+
+  return table.concat(result)
+end
+
+--- Decodes a given hexadecimal encoded string back to its original form while preserving newlines.
+-- @param hex_string The hexadecimal encoded string to be decoded.
+-- @return The decoded string, preserving the original structure.
+local function hex_decode(hex_string)
+  local result = {}
+  local i = 1
+
+  while i <= #hex_string do
+    local char = hex_string:sub(i, i)
+
+    -- Check for newline characters
+    if char == "\n" then
+      -- Preserve newline characters without modification
+      table.insert(result, char)
+      i = i + 1
+    elseif i + 1 <= #hex_string then
+      -- Check for valid hexadecimal pairs
+      local hex_pair = hex_string:sub(i, i + 1)
+
+      -- Convert the hexadecimal pair to corresponding character
+      if hex_pair:match("^[0-9A-Fa-f][0-9A-Fa-f]$") then
+        local byte = tonumber(hex_pair, 16) -- Convert to number
+        table.insert(result, string.char(byte)) -- Convert number to character
+        i = i + 2 -- Move to the next pair
+      else
+        -- If not a valid pair, treat it as a single character and continue
+        table.insert(result, char)
+        i = i + 1
+      end
+    else
+      -- If this is the last character (without a pair), add it as is
+      table.insert(result, char)
+      i = i + 1
+    end
+  end
+
+  return table.concat(result)
+end
+
+--- Applies the hex encoding to the current line while preserving newline characters.
+function M.hex_encode_text()
+  -- Get the current line where the cursor is
+  local current_line = vim.api.nvim_get_current_line()
+
+  -- Hex encode the current line using our function
+  local encoded_line = hex_encode(current_line)
+
+  -- Replace the current line with the encoded line
+  vim.api.nvim_set_current_line(encoded_line)
+end
+
+--- Applies the hex encoding to the visual selection while preserving newline characters.
+function M.hex_encode_visual()
+  local Range = require("u.range")
+  local range = Range.from_vtext()
+
+  local selected_text = range:text()
+  local transformed_text = hex_encode(selected_text)
+
+  range:replace(transformed_text)
+end
+
+--- Reverses the hex encoding of the current line while preserving newline characters.
+function M.hex_decode_text()
+  -- Get the current line where the cursor is
+  local current_line = vim.api.nvim_get_current_line()
+
+  -- Hex decode the current line using our function
+  local decoded_line = hex_decode(current_line)
+
+  -- Replace the current line with the decoded line
+  vim.api.nvim_set_current_line(decoded_line)
+end
+
+--- Reverses the hex encoding of the visual selection while preserving newline characters.
+function M.hex_decode_visual()
+  local Range = require("u.range")
+  local range = Range.from_vtext()
+
+  local selected_text = range:text()
+  local transformed_text = hex_decode(selected_text)
+
+  range:replace(transformed_text)
+end
+
+--- Function to lookup selection in help docs
+function M.help_lookup_visual()
+  local Range = require("u.range")
+  local range = Range.from_vtext()
+  local selected_text = range:text()
+  vim.api.nvim_command("help " .. selected_text)
+end
+
+--- Function to lookup word in help docs
+function M.help_lookup_word()
+  local Range = require("u.range")
+  local range = Range.from_text_object("iw")
+  if range then
+    local selected_text = range:text()
+    vim.api.nvim_command("help " .. selected_text)
+  end
+end
+
+--- Function to look up a string in the help docs
+---@param string string The string to be looked up
+function M.help_lookup_string(string)
+  vim.api.nvim_command("help " .. string)
+end
+
+--- Function to add single-quotes around a string
+---@param text string The text to be wrapped in single quotes
+---@return string wrapped_text The text wrapped in single quotes
+function M.wrap_in_quotes(text)
+  return "'" .. text .. "'"
+end
+
+--- Function to add double-quotes around a string
+---@param text string The text to be wrapped in double quotes
+---@return string wrapped_text The text wrapped in double quotes
+function M.wrap_in_quotes_double(text)
+  return '"' .. text .. '"'
+end
+
+--- Function to lookup the word (quoted)
+function M.help_lookup_quoted()
+  local Range = require("u.range")
+  local range = Range.from_text_object("iw")
+  if range then
+    local selected_text = range:text()
+    M.help_lookup_string(M.wrap_in_quotes(selected_text))
+  end
+end
+
+--- Function to lookup the selection (quoted)
+function M.help_lookup_quoted_visual()
+  local Range = require("u.range")
+  local range = Range.from_vtext()
+  local selected_text = range:text()
+  M.help_lookup_string(M.wrap_in_quotes(selected_text))
+end
+
 -- Export the module
 return M
