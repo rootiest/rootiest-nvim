@@ -9,8 +9,10 @@ return {
   { -- mini.animate
     import = "lazyvim.plugins.extras.ui.mini-animate",
   },
-  { -- mini.move
-    import = "lazyvim.plugins.extras.editor.mini-move",
+  {
+    "echasnovski/mini.move",
+    event = "VeryLazy",
+    opts = {},
   },
   { -- Mini.Indentscope
     import = "lazyvim.plugins.extras.ui.mini-indentscope",
