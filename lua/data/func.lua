@@ -1829,5 +1829,50 @@ function M.to_api_range(range)
   return sr - 1, sc, er - 1, ec
 end
 
+function M.number()
+  local nu = vim.opt.number:get()
+  local rnu = vim.opt.relativenumber:get()
+  local cur_line = vim.fn.line(".") == vim.v.lnum and vim.v.lnum or vim.v.relnum
+
+  local width = vim.opt.numberwidth:get()
+  local l_count_width = #tostring(vim.api.nvim_buf_line_count(0))
+  width = width >= l_count_width and width or l_count_width
+
+  local function pad_start(n)
+    local len = width - #tostring(n)
+    return len < 1 and n or (" "):rep(len) .. n
+  end
+
+  local v_hl = ""
+
+  local mode = vim.fn.strtrans(vim.fn.mode()):lower():gsub("%W", "")
+  if mode == "v" then
+    -- Define the custom highlight outside the function
+    local bg_color = M.get_bg_color("CursorLineNr")
+    local fg_color = M.get_bg_color("lualine_a_visual")
+    vim.api.nvim_set_hl(
+      0,
+      "StatusColumnVisualHighlight",
+      { fg = fg_color, bg = bg_color }
+    )
+
+    local v_range = M.get_visual_range()
+    local is_in_range = vim.v.lnum >= v_range[1] and vim.v.lnum <= v_range[3]
+    v_hl = is_in_range and "%#StatusColumnVisualHighlight#" or ""
+  end
+
+  local line_display = ""
+  if nu and rnu then
+    line_display = pad_start(cur_line)
+  elseif nu then
+    line_display = pad_start(vim.v.lnum)
+  elseif rnu then
+    line_display = pad_start(vim.v.relnum)
+  end
+
+  -- Include `%s` for signs, followed by the custom line number output
+  return "%s" .. v_hl .. line_display
+end
+
 -- Export the module
 return M
