@@ -167,7 +167,7 @@ local P = { -- Define Telescope Plugins Specs
   },
   { -- Fzf Lua
     "ibhagwan/fzf-lua",
-    opts = {},
+    opts = { "telescope", fzf_colors = true },
   },
   {
     "danielfalk/smart-open.nvim",
