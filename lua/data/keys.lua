@@ -243,6 +243,41 @@ M.cipher = {
   },
 }
 
+M.cmd_mode = function()
+  if not require("data.func").is_installed("which_key", { load = true }) then
+    -- Disable the original `q:` mapping
+    vim.keymap.set("n", "q:", "<Nop>", { noremap = true, silent = true })
+
+    -- Remap `q:` functionality to `<Leader>q:`
+    vim.keymap.set(
+      "n",
+      "<Leader>q:",
+      "q:",
+      { noremap = true, silent = false, desc = "Command Mode" }
+    )
+  else
+    -- Disable the original `q:` mapping and hide it from which-key
+    require("which-key").add({
+      lhs = "q:",
+      rhs = "<Nop>",
+      mode = "n",
+      hidden = true,
+      noremap = true,
+      silent = true,
+    })
+
+    -- Remap `q:` functionality to `<Leader>q:`
+    require("which-key").add({
+      lhs = "<Leader>q:",
+      rhs = "q:",
+      mode = "n",
+      noremap = true,
+      silent = false,
+      desc = "Command Mode",
+    })
+  end
+end
+
 M.cpp_picker = {
   { -- Cpp Picker
     "<leader>fC",
