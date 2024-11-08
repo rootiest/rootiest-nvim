@@ -1,4 +1,4 @@
-# Rootiest NeoVim Configuration
+# Rootiest Neovim Configuration
 
 [![Plugins](https://dotfyle.com/rootiest/rootiest-nvim/badges/plugins?style=flat)](https://dotfyle.com/rootiest/rootiest-nvim)
 [![Leaderkey](https://dotfyle.com/rootiest/rootiest-nvim/badges/leaderkey?style=flat)](https://dotfyle.com/rootiest/rootiest-nvim)
@@ -39,7 +39,7 @@ The rootiest neovim configuration you will ever see!
 ## Pre-requisites
 
 > Note:
-> While NeoVim may run without these prerequisites,
+> While Neovim may run without these prerequisites,
 > functionality will be limited.  
 > For the full experience, it is recommended to install the pre-requisites.
 
@@ -70,13 +70,13 @@ WezTerm, Kitty, or NeoVide are recommended.
 - [kitty](https://sw.kovidgoyal.net/kitty/) -
   A fast, feature-rich, GPU based terminal emulator
 - [NeoVide](https://neovide.dev/) -
-  A fast, feature-rich, and modern NeoVim GUI
+  A fast, feature-rich, and modern Neovim GUI
 - [fish](https://fishshell.com/) -
   A smart and user-friendly command line shell
 
 ## Installation
 
-1. Install [NeoVim](https://github.com/neovim/neovim/blob/master/INSTALL.md) (0.9+)
+1. Install [Neovim](https://github.com/neovim/neovim/blob/master/INSTALL.md) (0.9+)
 2. Install Pre-requisites
 3. Backup your current nvim configuration (if you have one)
 
@@ -94,8 +94,8 @@ WezTerm, Kitty, or NeoVide are recommended.
 
 ## Keep your current nvim configuration
 
-This will download and open the Rootiest NeoVim configuration  
-without replacing your current NeoVim configuration.
+This will download and open the Rootiest Neovim configuration  
+without replacing your current Neovim configuration.
 
 1. Clone the repository
 
@@ -127,7 +127,7 @@ without replacing your current NeoVim configuration.
 - ToggleTerm, fzf-lua, neotree, etc. for quick access to files and terminal
 - Many UI elements to enhance the experience
 - LSP support for many languages and automatic setup for many more
-- Remotely spawn a NeoVim instance over ssh, in a container, or from a git repo
+- Remotely spawn a Neovim instance over ssh, in a container, or from a git repo
 - Dashboard logo adjusts to the size of the window
 - Beautiful, unique, and feature-rich lualine statusline
 - When available, git-blame, WakaTime and music player stats components displayed
@@ -148,23 +148,23 @@ without replacing your current NeoVim configuration.
 Features and
 
 <details>
-   <summary>Main NeoVim PDE</summary>
+   <summary>Main Neovim PDE</summary>
 
-![NeoVim UI](.screenshots/nvim-ui.png)
+![Neovim UI](.screenshots/nvim-ui.png)
 
 </details>
 
 <details>
    <summary>Dashboard</summary>
 
-![NeoVim Dashboard](.screenshots/dashboard.png)
+![Neovim Dashboard](.screenshots/dashboard.png)
 
 </details>
 
 <details>
    <summary>Markdown view with inline images</summary>
 
-![NeoVim Markdown](.screenshots/markdown.png)
+![Neovim Markdown](.screenshots/markdown.png)
 
 </details>
 
@@ -191,11 +191,20 @@ vim.g.useimage    = true      --Options:  true, false
 
 ## Companion Tools
 
-[Rootiest Kitty Conf](https://github.com/rootiest/rootiest-kitty) -
-A kitty configuration that is designed to work with this NeoVim configuration
+[Rootiest WezTerm](https://github.com/rootiest/rootiest-wezterm) -
+A wezterm configuration that is designed to work with this Neovim config.
 
-[Rootiest Fish Conf](https://github.com/rootiest/rootiest-fish-conf) -
-A fish configuration that pairs well with this NeoVim configuration
+[Rootiest Kitty](https://github.com/rootiest/rootiest-kitty) -
+A kitty configuration that is designed to work with this Neovim configuration
+
+[Rootiest Fish](https://github.com/rootiest/rootiest-fish-conf) -
+A fish configuration that pairs well with this Neovim configuration
+
+[Rootiest Tmux](https://github.com/rootiest/rootiest-tmux) -
+A tmux configuration that is designed to work with this Neovim config.
+
+[Rootiest Iosevka Font](https://github.com/rootiest/rootiest-iosevka) -
+A custom Iosevka font that is designed by developers, for developers.
 
 [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/) -
 A collection of fonts that includes many icons and glyphs used in this configuration.
