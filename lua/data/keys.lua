@@ -935,13 +935,6 @@ M.lazygit = {
     end,
     desc = "LazyGit",
   },
-  { -- LazyGit
-    "<leader>gg",
-    function()
-      require("data.func").open_lazygit_popup()
-    end,
-    desc = "LazyGit",
-  },
 }
 
 ---@function Helper function to toggle mini.files explorer

@@ -21,7 +21,7 @@ local dashboard_buttons = {
   { key = "r", icon = " ", desc =   " Recent Files",  action = function() require("data.func").pick("oldfiles") end },
   { key = "g", icon = " ", desc =    " Grep Text",    action = function() require("data.func").pick("live_grep") end },
   { key = "p", icon = "󰙅 ", desc =    " Pick Tree",    action = function() require("data.func").pick("file_browser", "mini") end },
-  { key = "z", icon = " ", desc =    " LazyGit",      action = function() require("data.func").open_lazygit_popup() end },
+  { key = "z", icon = " ", desc =    " LazyGit",      action = function() Snacks.lazygit() end },
   { key = "c", icon = " ", desc =    " Config",       action = function() require("data.func").pick("config_files") end },
   { key = "s", icon = "󰶮 ", desc = " Restore Session", action = function() require("persistence").load() end },
   { key = "S", icon = " ", desc = " Remote Session",  action = function() require("config.rootiest").load_remote() end },
