@@ -636,52 +636,80 @@ end
 ---  Options:
 ---   - string: The name of the plugin module to check.
 ---   - table: A list of plugin modules to check.
----@param simple boolean|nil Whether to use a simple check (pcall(require, plugin)).
+---@param opts? table Additional options for the function.
+---   - load (boolean): Whether to preload the plugin if found.
+---   - simple (boolean): Whether to use a simple check (pcall(require, plugin)).
 ---@return boolean|table condition The installed state of the plugin(s).
 ---   - boolean: The installed state of the plugin.
 ---   - table: A list of installed states of the plugins.
----     - boolean: The installed state of the plugin.
 ---  The return type is determined based on the input type.
 ---  If the input is a table of plugin modules, the return type is a table.
-function M.is_installed(plugins, simple)
+function M.is_installed(plugins, opts)
+  opts = opts or {}
   local is_single = type(plugins) == "string"
-  if type(plugins) == "string" then
+  if type(plugins) ~= "table" then
     plugins = { plugins }
   end
 
+  local load_plug = opts.load or false
+  local simple = opts.simple or false
   local installed_plugins = {}
+
   for _, plugin in ipairs(plugins) do
     local installed = false
-    if simple then
-      installed = pcall(require, plugin)
-    else
-      local lazy_installed = pcall(require, "lazy")
-      if lazy_installed then
-        installed = require("lazy.core.config").plugins[plugin] ~= nil
-      end
-      local packer_installed = pcall(require, "packer_plugins")
-      if packer_installed then
-        ---@diagnostic disable-next-line: undefined-field
-        installed = _G.packer_plugins and _G.packer_plugins[plugin] ~= nil
-      end
-      if vim.fn.exists("g:plugs") == 1 then
-        installed = vim.g.plugs[plugin] ~= nil
-      end
-      if not installed then
-        local has_plug = pcall(require, plugin)
-        if has_plug then
-          installed = true
+
+    local function check_plugin(name)
+      if simple then
+        return pcall(require, name)
+      else
+        local lazy_installed = pcall(require, "lazy")
+        if lazy_installed and require("lazy.core.config").plugins[name] then
+          return true
         end
+        local packer_installed = pcall(require, "packer_plugins")
+        if
+          packer_installed
+          ---@diagnostic disable-next-line: undefined-field
+          and _G.packer_plugins
+          ---@diagnostic disable-next-line: undefined-field
+          and _G.packer_plugins[name]
+        then
+          return true
+        end
+        if vim.fn.exists("g:plugs") == 1 and vim.g.plugs[name] then
+          return true
+        end
+        return pcall(require, name)
       end
     end
+
+    -- Initial check with the plugin name as-is
+    installed = check_plugin(plugin)
+
+    -- If not installed, try replacing hyphens with underscores
+    if not installed and plugin:find("-") then
+      local underscored_name = plugin:gsub("-", "_")
+      installed = check_plugin(underscored_name)
+    end
+
     installed_plugins[plugin] = installed
   end
 
-  if is_single then
-    return installed_plugins[plugins[1]]
-  else
-    return installed_plugins
+  -- Optionally preload the plugin(s)
+  if load_plug then
+    local lazy_installed = pcall(require, "lazy")
+    if lazy_installed then
+      for _, plugin in ipairs(plugins) do
+        if installed_plugins[plugin] then
+          require("lazy").load({ plugins = { plugin } })
+        end
+      end
+    else
+      M.notify("Unable to preload plugin(s)", "ERROR", "Lazy not found")
+    end
   end
+
+  return is_single and installed_plugins[plugins[1]] or installed_plugins
 end
 
 ---@function Function to create a floating terminal window
