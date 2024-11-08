@@ -43,6 +43,9 @@ end
 
 require("lazy").setup({
   spec = plugin_specs,
+  rocks = {
+    hererocks = true,
+  },
   defaults = {
     lazy = false,
     version = false,
