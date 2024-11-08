@@ -41,13 +41,6 @@ return {
     dependencies = data.deps.gx,
     config = true,
   },
-  { -- Auto-save
-    "okuuva/auto-save.nvim",
-    cmd = data.cmd.autosave,
-    event = { "InsertLeave", "TextChanged" },
-    opts = data.types.autosave,
-    cond = data.cond.autosave,
-  },
   { -- Ripgrep substitute
     "chrisgrieser/nvim-rip-substitute",
     event = "InsertEnter",
