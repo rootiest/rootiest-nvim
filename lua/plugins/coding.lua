@@ -3,23 +3,22 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                         Coding                          │
 --          ╰─────────────────────────────────────────────────────────╯
-local data = require("data")
 
 return {
   { -- Mason-lspconfig
     "williamboman/mason-lspconfig.nvim",
-    opts = data.types.mason_lsp_config.opts,
+    opts = require("data.types").mason_lsp_config.opts,
   },
   { -- luasnip
     import = "lazyvim.plugins.extras.coding.luasnip",
   },
   { -- nvim-treesitter
     "nvim-treesitter/nvim-treesitter",
-    opts = data.types.treesitter.opts,
+    opts = require("data.types").treesitter.opts,
   },
   { -- nvim-lspconfig
     "neovim/nvim-lspconfig",
-    opts = data.types.lspconfig.opts,
+    opts = require("data.types").lspconfig.opts,
   },
   { -- Yanky
     import = "lazyvim.plugins.extras.coding.yanky",
@@ -27,8 +26,8 @@ return {
   { -- Yanky
     "gbprod/yanky.nvim",
     requires = { "kkharji/sqlite.lua" },
-    opts = data.types.yanky,
-    keys = data.keys.yanky,
+    opts = require("data.types").yanky,
+    keys = require("data.keys").yanky,
   },
   { -- Neogen
     import = "lazyvim.plugins.extras.coding.neogen",
@@ -52,24 +51,24 @@ return {
   { -- Alternate
     "ton/vim-alternate",
     lazy = true,
-    ft = data.types.alternate,
-    keys = data.keys.alternate,
+    ft = require("data.types").alternate,
+    keys = require("data.keys").alternate,
   },
   { -- Tailwind
     "luckasRanarison/tailwind-tools.nvim",
     lazy = true,
-    dependencies = data.deps.needs_treesitter,
+    dependencies = require("data.deps").needs_treesitter,
     opts = {},
   },
   { -- Substitute
     "gbprod/substitute.nvim",
     lazy = true,
-    opts = data.types.substitute,
-    keys = data.keys.substitute,
+    opts = require("data.types").substitute,
+    keys = require("data.keys").substitute,
   },
   { -- Comment
     "numToStr/Comment.nvim",
-    opts = data.types.comment,
+    opts = require("data.types").comment,
   },
   { -- Fast Action
     "Chaitanyabsprip/fastaction.nvim",
@@ -84,7 +83,7 @@ return {
   },
   { -- EasyAlign
     "junegunn/vim-easy-align",
-    keys = data.keys.easyalign,
+    keys = require("data.keys").easyalign,
   },
   { -- Vim-Shebang
     "vitalk/vim-shebang",

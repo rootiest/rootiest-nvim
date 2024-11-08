@@ -3,7 +3,6 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                         Themes                          │
 --          ╰─────────────────────────────────────────────────────────╯
-local data = require("data")
 
 return {
   { -- Tokyonight
@@ -19,7 +18,7 @@ return {
     lazy = false, -- Override
     priority = 1000,
     name = "catppuccin",
-    opts = data.types.catppuccin,
+    opts = require("data.types").catppuccin,
   },
   { -- Ayu
     "Shatur/neovim-ayu",
@@ -100,24 +99,24 @@ return {
     "zenbones-theme/zenbones.nvim",
     name = "zenbones",
     lazy = true,
-    dependencies = data.deps.zenbones,
+    dependencies = require("data.deps").zenbones,
   },
   --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ UTILITIES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   { -- Transparent
     "xiyaowong/transparent.nvim",
     lazy = true,
-    keys = data.keys.transparent,
-    cmd = data.cmd.transparent,
+    keys = require("data.keys").transparent,
+    cmd = require("data.cmd").transparent,
   },
   { -- Auto Dark Mode
     "f-person/auto-dark-mode.nvim",
     lazy = true,
-    opts = data.types.auto_dark_mode,
-    cond = data.cond.auto_dark_mode,
+    opts = require("data.types").auto_dark_mode,
+    cond = require("data.cond").auto_dark_mode,
   },
   { -- Highlight colors
     "brenoprata10/nvim-highlight-colors",
     event = "BufReadPre",
-    opts = data.types.hightlight_colors,
+    opts = require("data.types").hightlight_colors,
   },
 }

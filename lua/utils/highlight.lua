@@ -6,12 +6,9 @@
 
 local M = {}
 
--- Load utils
-local data = require("data")
-local funcs = data.func
 -- Readability functions
-local get_bg_color = funcs.get_bg_color
-local get_fg_color = funcs.get_fg_color
+local get_bg_color = require("data.func").get_bg_color
+local get_fg_color = require("data.func").get_fg_color
 local set_hl = vim.api.nvim_set_hl
 local sign_def = vim.fn.sign_define
 
@@ -90,16 +87,16 @@ function M.setup_indent_highlight()
     if vim.g.tab_char then
       tab_char = vim.g.tab_char
     elseif vim.g.tab_char_name then
-      tab_char = data.types.ibl.char[vim.g.tab_char_name]
+      tab_char = require("data.types").ibl.char[vim.g.tab_char_name]
     else
-      tab_char = data.types.ibl.char.none
+      tab_char = require("data.types").ibl.char.none
     end
     if vim.g.indent_char then
       indent_char = vim.g.indent_char
     elseif vim.g.indent_char_name then
-      indent_char = data.types.ibl.char[vim.g.indent_char_name]
+      indent_char = require("data.types").ibl.char[vim.g.indent_char_name]
     else
-      indent_char = data.types.ibl.char.none
+      indent_char = require("data.types").ibl.char.none
     end
 
     -- Configure the indent-blankline plugin
@@ -115,7 +112,7 @@ function M.setup_indent_highlight()
         enabled = false,
       },
       exclude = {
-        filetypes = data.types.highlights.exclude,
+        filetypes = require("data.types").highlights.exclude,
       },
     })
   end
@@ -206,7 +203,7 @@ end
 --- Function to set up transparency of the editor
 ---@return nil
 function M.setup_transparency()
-  if data.func.is_kitty() and not vim.g.disable_transparency then
+  if require("data.func").is_kitty() and not vim.g.disable_transparency then
     vim.cmd("TransparentEnable")
   else
     vim.cmd("TransparentDisable")
@@ -254,7 +251,7 @@ function M.setup_autocommands()
   local autocmd = vim.api.nvim_create_autocmd
 
   -- List of filetypes to exclude
-  local excluded_filetypes = data.types.highlights.exclude
+  local excluded_filetypes = require("data.types").highlights.exclude
 
   -- Create a new augroup for the IndentHighlight
   local IndentGroup = autogrp("IndentHighlight", { clear = true })

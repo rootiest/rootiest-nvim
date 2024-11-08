@@ -3,7 +3,6 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                     Auto Completion                     │
 --          ╰─────────────────────────────────────────────────────────╯
-local data = require("data")
 local perf = vim.g.cmp_performance_enabled or false
 --- Function to return the cmp provider
 ---@param performance? boolean Whether to use the experimental cmp performance fork
@@ -31,17 +30,17 @@ return { -- cmp
   branch = cmp_repo.branch,
   dev = cmp_repo.dev,
   event = "VeryLazy",
-  dependencies = data.deps.cmp,
+  dependencies = require("data.deps").cmp,
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
     cmp.event:on("menu_opened", function()
-      if data.cond.neocodeium() == true then
+      if require("data.cond").neocodeium() == true then
         require("neocodeium").clear()
       end
     end)
     cmp.event:on("menu_closed", function()
-      if data.cond.neocodeium() == true then
+      if require("data.cond").neocodeium() == true then
         require("neocodeium.commands").enable()
         require("neocodeium").cycle_or_complete()
       end
@@ -197,7 +196,7 @@ return { -- cmp
       end, cmp.get_config().sources),
     })
     -- List of filetypes to disable completion
-    local disabled_filetypes = data.types.cmp
+    local disabled_filetypes = require("data.types").cmp
     for _, filetype in ipairs(disabled_filetypes) do
       cmp.setup.filetype(filetype, {
         sources = {},

@@ -3,7 +3,6 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                          Debug                          │
 --          ╰─────────────────────────────────────────────────────────╯
-local data = require("data")
 
 return {
   { -- DAP Core
@@ -21,9 +20,9 @@ return {
   { -- Neotest
     "nvim-neotest/neotest",
     opts = {
-      adapters = data.deps.neotest.adapters,
+      adapters = require("data.deps").neotest.adapters,
     },
-    dependencies = data.deps.neotest.deps,
+    dependencies = require("data.deps").neotest.deps,
   },
   { -- Profiling
     "stevearc/profile.nvim",

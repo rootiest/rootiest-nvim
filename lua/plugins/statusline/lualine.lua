@@ -9,8 +9,6 @@
 
 local wakatime_stats = require("utils.wakatime_stats")
 local music_stats = require("utils.music_stats")
-local data = require("data")
-local funcs = data.func
 
 -- Setup NeoMiniMap extension
 -- local minimap_extension = require("neominimap.statusline").lualine_default
@@ -103,9 +101,13 @@ vim.api.nvim_create_autocmd("User", {
 
 return { -- Lualine
   "nvim-lualine/lualine.nvim",
-  cond = data.func.check_global_var("statusline", "lualine", "lualine"),
+  cond = require("data.func").check_global_var(
+    "statusline",
+    "lualine",
+    "lualine"
+  ),
 
-  dependencies = data.deps.lualine,
+  dependencies = require("data.deps").lualine,
   init = function()
     vim.g.lualine_laststatus = vim.o.laststatus
     if vim.fn.argc(-1) > 0 then
@@ -132,7 +134,7 @@ return { -- Lualine
     if not status then
       todos_component = nil -- Set to nil if the plugin is not loaded
     else
-      todos_component = todos.component(data.types.todo.lualine())
+      todos_component = todos.component(require("data.types").todo.lualine())
     end
 
     local opts = {
@@ -149,21 +151,21 @@ return { -- Lualine
         lualine_a = {
           { -- Mode
             function()
-              return data.types.mode.current.lualine()
+              return require("data.types").mode.current.lualine()
             end,
             padding = { left = 1, right = 0 },
             separator = { left = "", right = "" },
           },
           { -- MultiCursors
             function()
-              return data.func.mc_statusline().count
-                .. data.func.mc_statusline().icon
+              return require("data.func").mc_statusline().count
+                .. require("data.func").mc_statusline().icon
             end,
             cond = function()
-              return data.func.mc_statusline().cursors > 1
+              return require("data.func").mc_statusline().cursors > 1
             end,
             color = function()
-              return data.func.mc_statusline().color
+              return require("data.func").mc_statusline().color
             end,
             padding = { left = 1, right = 0 },
             separator = { left = "", right = "" },
@@ -178,7 +180,7 @@ return { -- Lualine
           { -- Todo
             todos_component,
             cond = function()
-              return funcs.is_window_wide_enough(100)
+              return require("data.func").is_window_wide_enough(100)
             end,
             padding = { left = 1, right = 0 },
             on_click = function()
@@ -190,7 +192,7 @@ return { -- Lualine
               return require("arrow.statusline").text_for_statusline_with_icons()
             end,
             cond = function()
-              return funcs.is_window_wide_enough(100)
+              return require("data.func").is_window_wide_enough(100)
                 and pcall(require, "arrow")
             end,
             padding = { left = 1, right = 0 },
@@ -290,7 +292,7 @@ return { -- Lualine
                 end
               end,
               cond = function()
-                return funcs.is_window_wide_enough(200)
+                return require("data.func").is_window_wide_enough(200)
               end,
               padding = { left = 0, right = 0 },
               on_click = function()
@@ -308,7 +310,7 @@ return { -- Lualine
               return wakatime_stats.get_color()
             end,
             cond = function()
-              return funcs.is_window_wide_enough(100)
+              return require("data.func").is_window_wide_enough(100)
             end,
             padding = { left = 0, right = 1 },
           },
@@ -317,7 +319,7 @@ return { -- Lualine
               return music_stats.get_icon_with_text()
             end,
             cond = function()
-              return funcs.is_window_wide_enough(100)
+              return require("data.func").is_window_wide_enough(100)
             end,
             padding = { left = 0, right = 1 },
           },
@@ -356,7 +358,7 @@ return { -- Lualine
             end,
             icon = " ",
             cond = function()
-              return funcs.is_window_wide_enough(80)
+              return require("data.func").is_window_wide_enough(80)
             end,
             padding = { left = 0, right = 1 },
             on_click = function()
@@ -368,7 +370,7 @@ return { -- Lualine
             separator = "",
             padding = { left = 0, right = 1 },
             cond = function()
-              return funcs.is_window_wide_enough(60)
+              return require("data.func").is_window_wide_enough(60)
             end,
             icon = "",
             on_click = function()
@@ -379,7 +381,7 @@ return { -- Lualine
             "location",
             padding = { left = 0, right = 1 },
             cond = function()
-              return funcs.is_window_wide_enough(40)
+              return require("data.func").is_window_wide_enough(40)
             end,
             on_click = function()
               vim.cmd("Telescope grep_string")
@@ -388,14 +390,14 @@ return { -- Lualine
           { -- Selection
             "selection_count",
             cond = function()
-              return funcs.is_window_wide_enough(120)
+              return require("data.func").is_window_wide_enough(120)
             end,
             padding = { left = 0, right = 1 },
           },
           { -- Filesize
             "filesize",
             cond = function()
-              return funcs.is_window_wide_enough(100)
+              return require("data.func").is_window_wide_enough(100)
             end,
             padding = { left = 0, right = 1 },
             icon = "",

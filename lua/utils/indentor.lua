@@ -53,11 +53,9 @@ end
 --- Create keymaps for the module
 ---@return nil
 function M.setup()
-  -- Load the data module
-  local data = require("data")
   -- Create keymaps
-  for _, map in ipairs(data.keys.indentor) do
-    data.func.add_keymap(map[1], map[2], map[3], map[4])
+  for _, map in ipairs(require("data.keys").indentor) do
+    require("data.func").add_keymap(map[1], map[2], map[3], map[4])
   end
 end
 

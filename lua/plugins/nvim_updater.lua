@@ -1,4 +1,6 @@
-local data = require("data")
+--          ╭─────────────────────────────────────────────────────────╮
+--          │                      Nvim-Updater                       │
+--          ╰─────────────────────────────────────────────────────────╯
 
 return { -- Neovim Updater
   "rootiest/nvim-updater.nvim",
@@ -15,9 +17,9 @@ return { -- Neovim Updater
   },
   keys = function()
     -- Add Neovim Updater menu
-    data.func.add_keymap(data.keys.group.nvimup)
+    require("data.func").add_keymap(require("data.keys").group.nvimup)
     -- Add Neovim Updater keys
-    return data.keys.nvimup
+    return require("data.keys").nvimup
   end,
   dev = vim.g.rootiest_dev or false,
 }

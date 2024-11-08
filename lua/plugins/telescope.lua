@@ -4,8 +4,6 @@
 ---@module "plugins.telescope"
 --- This module defines the telescope plugins specs for the Neovim configuration.
 
-local data = require("data")
-
 local P = { -- Define Telescope Plugins Specs
   { -- Telescope All Recent
     "prochri/telescope-all-recent.nvim",
@@ -42,11 +40,11 @@ local P = { -- Define Telescope Plugins Specs
   { -- Telescope Spell checker
     "matkrin/telescope-spell-errors.nvim",
     lazy = true,
-    cmd = data.cmd.spell_errors,
+    cmd = require("data.cmd").spell_errors,
     config = function()
       require("telescope").load_extension("spell_errors")
     end,
-    dependencies = data.deps.needs_telescope,
+    dependencies = require("data.deps").needs_telescope,
   },
   { -- Telescope Toggleterm
     "ryanmsnyder/toggleterm-manager.nvim",
@@ -56,12 +54,12 @@ local P = { -- Define Telescope Plugins Specs
       "nvim-lua/plenary.nvim", -- only needed because it's a dependency of telescope
     },
     config = true,
-    keys = data.keys.telescope.toggleterm,
+    keys = require("data.keys").telescope.toggleterm,
   },
   { -- Telescope Lazy
     "nvim-telescope/telescope.nvim",
     dependencies = "tsakirist/telescope-lazy.nvim",
-    keys = data.keys.telescope.lazy,
+    keys = require("data.keys").telescope.lazy,
   },
   { -- Telescope Luasnip
     "benfowler/telescope-luasnip.nvim",
@@ -78,6 +76,7 @@ local P = { -- Define Telescope Plugins Specs
     dependencies = {
       "nvim-lua/plenary.nvim",
       "debugloop/telescope-undo.nvim",
+      "jonarrien/telescope-cmdline.nvim",
     },
     opts = function()
       require("telescope").load_extension("undo")
@@ -111,7 +110,7 @@ local P = { -- Define Telescope Plugins Specs
     config = function()
       require("telescope").load_extension("file_browser")
     end,
-    keys = data.keys.telescope.filebrowser,
+    keys = require("data.keys").telescope.filebrowser,
   },
   { -- Cheatsheet
     "doctorfree/cheatsheet.nvim",

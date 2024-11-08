@@ -7,12 +7,14 @@
 --          │                        Heirline                         │
 --          ╰─────────────────────────────────────────────────────────╯
 
-local data = require("data")
-
 return {
   {
     "rebelot/heirline.nvim",
-    cond = data.func.check_global_var("statusline", "heirline", "lualine"),
+    cond = require("data.func").check_global_var(
+      "statusline",
+      "heirline",
+      "lualine"
+    ),
     event = "UIEnter",
     opts = {},
   },

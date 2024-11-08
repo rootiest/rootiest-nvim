@@ -3,61 +3,60 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        AI Tools                         │
 --          ╰─────────────────────────────────────────────────────────╯
-local data = require("data")
 
 return {
   { -- Neocodeium
     "monkoose/neocodeium",
     event = "VeryLazy",
-    opts = data.types.neocodeium.opts,
-    keys = data.keys.neocodeium,
-    cond = data.cond.neocodeium,
+    opts = require("data.types").neocodeium.opts,
+    keys = require("data.keys").neocodeium,
+    cond = require("data.cond").neocodeium,
   },
   { -- Codeium
     import = "lazyvim.plugins.extras.coding.codeium",
-    cond = data.cond.codeium,
+    cond = require("data.cond").codeium,
   },
   { -- Copilot
     import = "lazyvim.plugins.extras.coding.copilot",
-    cond = data.cond.copilot,
+    cond = require("data.cond").copilot,
   },
   { -- Tabnine
     import = "lazyvim.plugins.extras.coding.tabnine",
-    cond = data.cond.tabnine,
+    cond = require("data.cond").tabnine,
   },
   { -- Minuet-AI
     "milanglacier/minuet-ai.nvim",
-    dependencies = data.deps.minuet,
+    dependencies = require("data.deps").minuet,
     opts = { provider = "openai" },
-    cond = data.cond.minuet,
+    cond = require("data.cond").minuet,
   },
   { -- ChatGPT
     "jackMort/ChatGPT.nvim",
     event = "VeryLazy",
-    cond = data.cond.chatgpt,
-    keys = data.keys.chatgpt.func,
-    opts = data.types.chatgpt,
-    dependencies = data.deps.chatgpt,
+    cond = require("data.cond").chatgpt,
+    keys = require("data.keys").chatgpt.func,
+    opts = require("data.types").chatgpt,
+    dependencies = require("data.deps").chatgpt,
   },
   { -- GP
     "robitx/gp.nvim",
-    cond = data.cond.gp,
+    cond = require("data.cond").gp,
     lazy = false,
-    opts = data.types.gp,
-    keys = data.keys.gp.func,
+    opts = require("data.types").gp,
+    keys = require("data.keys").gp.func,
   },
   { -- Avante
     "yetone/avante.nvim",
-    cond = data.cond.avante,
+    cond = require("data.cond").avante,
     event = "VeryLazy",
     lazy = false,
-    opts = data.types.avante,
+    opts = require("data.types").avante,
     build = "make",
-    dependencies = data.deps.avante,
+    dependencies = require("data.deps").avante,
     keys = function()
       -- Add keymaps for Avante group
-      for _, item in ipairs(data.keys.group.avante) do
-        data.func.add_keymap(item)
+      for _, item in ipairs(require("data.keys").group.avante) do
+        require("data.func").add_keymap(item)
       end
     end,
   },

@@ -3,7 +3,6 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                         Editor                          │
 --          ╰─────────────────────────────────────────────────────────╯
-local data = require("data")
 
 return {
   { -- Aerial
@@ -32,21 +31,21 @@ return {
   },
   { -- Trouble
     "folke/trouble.nvim",
-    cmd = data.cmd.trouble,
-    opts = data.types.trouble.opts,
+    cmd = require("data.cmd").trouble,
+    opts = require("data.types").trouble.opts,
   },
   { -- Flash
     "folke/flash.nvim",
-    opts = data.types.flash,
-    keys = data.keys.flash,
+    opts = require("data.types").flash,
+    keys = require("data.keys").flash,
   },
   { -- NeoTree
     "nvim-neo-tree/neo-tree.nvim",
-    opts = data.types.neotree.opts,
+    opts = require("data.types").neotree.opts,
   },
   { -- Arrow
     "otavioschwanck/arrow.nvim",
-    opts = data.types.arrow,
+    opts = require("data.types").arrow,
   },
   { -- indent-blankline
     "lukas-reineke/indent-blankline.nvim",
@@ -56,9 +55,9 @@ return {
   { -- NeoMiniMap
     "Isrothy/neominimap.nvim",
     lazy = false,
-    keys = data.keys.minimap.func,
-    init = data.types.minimap.init(),
-    cond = data.types.minimap.cond(),
+    keys = require("data.keys").minimap.func,
+    init = require("data.types").minimap.init(),
+    cond = require("data.types").minimap.cond(),
   },
   { -- Persistence
     "folke/persistence.nvim",
@@ -68,37 +67,37 @@ return {
   { -- DeadColumn
     "Bekaboo/deadcolumn.nvim",
     event = "BufEnter",
-    cond = data.func.check_global_var("dead_column", true, true),
+    cond = require("data.func").check_global_var("dead_column", true, true),
   },
   { -- Precognition
     "tris203/precognition.nvim",
     lazy = true,
     opts = {},
-    keys = data.keys.precog,
+    keys = require("data.keys").precog,
   },
   { -- Zen Mode
     "folke/zen-mode.nvim",
     lazy = true,
-    opts = data.types.zen,
-    keys = data.keys.zen,
+    opts = require("data.types").zen,
+    keys = require("data.keys").zen,
   },
   { -- SmoothCursor
     "gen740/SmoothCursor.nvim",
     event = "BufEnter",
     -- lazy = true,
-    opts = data.types.smoothcursor,
+    opts = require("data.types").smoothcursor,
     enabled = false,
   },
   { -- Smart Scrolloff
     "tonymajestro/smart-scrolloff.nvim",
     event = "VeryLazy",
-    cond = data.func.check_global_var("smart_scrolloff", true, true),
-    opts = data.types.smartscrolloff,
+    cond = require("data.func").check_global_var("smart_scrolloff", true, true),
+    opts = require("data.types").smartscrolloff,
   },
   { -- Recorder
     "chrisgrieser/nvim-recorder",
     event = "VeryLazy",
-    dependencies = data.deps.recorder,
+    dependencies = require("data.deps").recorder,
     opts = {},
   },
   { -- Comment Box
@@ -106,8 +105,8 @@ return {
   },
   { -- Todo Comments
     "folke/todo-comments.nvim",
-    opts = data.types.todo.opts,
-    cond = data.cond.todo,
+    opts = require("data.types").todo.opts,
+    cond = require("data.cond").todo,
     enabled = true,
   },
   { -- Rainbow Delimeters
@@ -117,34 +116,34 @@ return {
     "nvim-zh/colorful-winsep.nvim",
     enabled = false,
     lazy = true,
-    opts = data.types.winsep,
+    opts = require("data.types").winsep,
     event = { "WinLeave" },
   },
   { -- Auto Cursorline
     "delphinus/auto-cursorline.nvim",
-    cond = data.func.check_global_var("auto_cursorline", true, true),
-    opts = data.types.autocursorline,
+    cond = require("data.func").check_global_var("auto_cursorline", true, true),
+    opts = require("data.types").autocursorline,
   },
   { -- Bars N Lines
     "OXY2DEV/bars-N-lines.nvim",
-    cond = data.types.barsNlines.enabled,
+    cond = require("data.types").barsNlines.enabled,
     lazy = false,
-    config = data.types.barsNlines.config,
+    config = require("data.types").barsNlines.config,
   },
   { -- UndoTree
     "mbbill/undotree",
     lazy = false,
-    config = data.types.undotree,
-    keys = data.keys.undotree,
+    config = require("data.types").undotree,
+    keys = require("data.keys").undotree,
   },
   { -- Noice
     "folke/noice.nvim",
     optional = true,
-    opts = data.types.noice,
+    opts = require("data.types").noice,
   },
   { -- Duck
     "tamton-aquib/duck.nvim",
-    config = data.types.duck,
+    config = require("data.types").duck,
   },
   { -- Volt
     "rootiest/volt",
@@ -156,7 +155,7 @@ return {
   },
   {
     "folke/twilight.nvim",
-    opts = data.types.twilight,
+    opts = require("data.types").twilight,
   },
   -- { -- vim-footprints
   --   "axlebedev/vim-footprints",

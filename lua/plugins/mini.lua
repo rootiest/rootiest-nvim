@@ -3,7 +3,6 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                          Mini                           │
 --          ╰─────────────────────────────────────────────────────────╯
-local data = require("data")
 
 return {
   { -- mini.animate
@@ -19,8 +18,8 @@ return {
   },
   { -- Mini Indentscope
     "echasnovski/mini.indentscope",
-    opts = data.types.miniindentscope.opts,
-    init = data.types.miniindentscope.init,
+    opts = require("data.types").miniindentscope.opts,
+    init = require("data.types").miniindentscope.init,
   },
   { -- mini.align
     "echasnovski/mini.align",
@@ -33,7 +32,7 @@ return {
     "echasnovski/mini.splitjoin",
     event = "InsertEnter",
     opts = {
-      mappings = data.keys.splitjoin,
+      mappings = require("data.keys").splitjoin,
     },
   },
   { -- mini.surround
@@ -42,9 +41,9 @@ return {
   },
   { -- mini.files
     "echasnovski/mini.files",
-    opts = data.types.minifiles.opts,
-    keys = data.keys.minifiles,
-    config = data.types.minifiles.config,
+    opts = require("data.types").minifiles.opts,
+    keys = require("data.keys").minifiles,
+    config = require("data.types").minifiles.config,
   },
   { -- mini.icons
     "echasnovski/mini.icons",

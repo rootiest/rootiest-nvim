@@ -3,7 +3,6 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Utilities                        │
 --          ╰─────────────────────────────────────────────────────────╯
-local data = require("data")
 
 return {
   { -- Chezmoi
@@ -33,19 +32,19 @@ return {
   { -- Link following
     "chrishrb/gx.nvim",
     lazy = true,
-    cmd = data.cmd.gx,
-    keys = data.keys.gx,
+    cmd = require("data.cmd").gx,
+    keys = require("data.keys").gx,
     init = function()
       vim.g.netrw_nogx = 1
     end,
-    dependencies = data.deps.gx,
+    dependencies = require("data.deps").gx,
     config = true,
   },
   { -- Ripgrep substitute
     "chrisgrieser/nvim-rip-substitute",
     event = "InsertEnter",
-    cmd = data.cmd.ripsub,
-    keys = data.keys.ripsub,
+    cmd = require("data.cmd").ripsub,
+    keys = require("data.keys").ripsub,
   },
   { -- Unception
     "samjwill/nvim-unception",
@@ -55,21 +54,21 @@ return {
   },
   { -- Codesnap
     "mistricky/codesnap.nvim",
-    cond = data.func.check_global_var("codesnap", true, true),
+    cond = require("data.func").check_global_var("codesnap", true, true),
     lazy = true,
     build = "make",
-    opts = data.types.codesnap,
-    cmd = data.cmd.codesnap,
-    keys = data.keys.codesnap,
+    opts = require("data.types").codesnap,
+    cmd = require("data.cmd").codesnap,
+    keys = require("data.keys").codesnap,
   },
   { -- Kulala
     "mistweaverco/kulala.nvim",
-    ft = data.types.kulala.ft,
+    ft = require("data.types").kulala.ft,
     opts = {},
   },
   { -- Hardtime
     "m4xshen/hardtime.nvim",
-    dependencies = data.deps.hardtime,
+    dependencies = require("data.deps").hardtime,
     opts = function()
       return { enabled = vim.g.usehardtime }
     end,
@@ -78,20 +77,20 @@ return {
     "dmtrKovalenko/caps-word.nvim",
     lazy = true,
     opts = {},
-    keys = data.keys.capsword,
+    keys = require("data.keys").capsword,
   },
   { -- Music Controls
     "AntonVanAssche/music-controls.nvim",
-    cond = data.func.check_global_var("usemusic", true, true),
-    dependencies = data.deps.musiccontrols,
+    cond = require("data.func").check_global_var("usemusic", true, true),
+    dependencies = require("data.deps").musiccontrols,
     opts = {
       default_player = "YoutubeMusic",
     },
   },
   { -- Qalc
     "Apeiros-46B/qalc.nvim",
-    cmd = data.cmd.qalc,
-    keys = data.keys.qalc,
+    cmd = require("data.cmd").qalc,
+    keys = require("data.keys").qalc,
     opts = {
       bufname = "qalc",
       set_ft = "qalc",
@@ -109,32 +108,32 @@ return {
     "amitds1997/remote-nvim.nvim",
     lazy = true,
     version = "*", -- Pin to GitHub releases
-    dependencies = data.deps.remotenvim,
+    dependencies = require("data.deps").remotenvim,
     config = true,
   },
   { -- Encourage
     "r-cha/encourage.nvim",
-    cond = data.func.check_global_var("encourage", true, true),
+    cond = require("data.func").check_global_var("encourage", true, true),
     config = true,
   },
   { -- Helpview
     "OXY2DEV/helpview.nvim",
     ft = "help",
-    dependencies = data.deps.needs_treesitter,
+    dependencies = require("data.deps").needs_treesitter,
   },
   { -- Suda
     "lambdalisue/vim-suda",
-    cmd = data.cmd.suda,
-    config = data.types.suda,
+    cmd = require("data.cmd").suda,
+    config = require("data.types").suda,
   },
   -- { -- Pigeon
   --   "Pheon-Dev/pigeon",
-  --   config = data.types.pigeon,
+  --   config = require('data.types').pigeon,
   -- },
   { -- Discord Presence
     "IogaMaster/neocord",
     event = "VeryLazy",
-    cond = data.func.check_global_var("usediscord", true, true),
+    cond = require("data.func").check_global_var("usediscord", true, true),
     opts = {
       logo = "https://raw.githubusercontent.com/rootiest/rootiest-nvim/b949af32e72db9fc35c18e14e2088710dc36dd15/logo/icon.png",
       main_image = "logo",
