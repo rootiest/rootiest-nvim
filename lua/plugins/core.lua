@@ -6,7 +6,7 @@
 local data = require("data")
 
 return {
-  require("config.rocks").plugin_spec,
+  -- require("config.rocks").plugin_spec,
   { -- LazyVim
     "LazyVim/LazyVim",
     priority = 900,

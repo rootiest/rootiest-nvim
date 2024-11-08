@@ -17,6 +17,7 @@ return {
     config = function()
       require("image").setup({
         backend = "kitty", -- Kitty will provide the best experience, but you need a compatible terminal
+        processor = "magick_cli",
         kitty_method = "normal",
         integrations = {
           markdown = {
