@@ -46,15 +46,38 @@ require("lazy").setup({
   rocks = {
     hererocks = true,
   },
+  ---@diagnostic disable-next-line: assign-type-mismatch
+  dev = {
+    fallback = true,
+  },
+  install = {
+    missing = true,
+    colorscheme = { "catppuccin-mocha", "tokyonight", "default" },
+  },
   defaults = {
-    lazy = false,
-    version = false,
+    lazy = true,
+    version = nil,
     event = "VeryLazy",
   },
-  checker = { enabled = true },
+  checker = {
+    -- automatically check for plugin updates
+    enabled = true,
+    notify = true,
+    frequency = 3600,
+    check_pinned = false,
+  },
+  change_detection = {
+    -- automatically check for config file changes and reload the ui
+    enabled = true,
+    notify = false,
+  },
   performance = {
+    cache = {
+      enabled = true,
+    },
+    reset_packpath = true,
     rtp = {
-      reset = false,
+      reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
       disabled_plugins = require("data.types").lazy.disabled_plugins,
     },
   },
