@@ -64,7 +64,7 @@ vim.g.dead_column               = false         ---@type boolean Options: <true|
 -- Animate blinky cursor
 vim.g.blinky                    = true          ---@type boolean Options: <true|false>
 -- Enable todo-comments features
-vim.g.usetodo                   = true          ---@type boolean Options: <true|false>
+vim.g.usetodo                   = false         ---@type boolean Options: <true|false>
 -- Use experimental cmp performance fork
 vim.g.cmp_performance_enabled   = true          ---@type boolean Options: <true|false>
 -- Use dev mode for rootiest plugins
