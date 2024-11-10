@@ -102,6 +102,7 @@ return {
   },
   { -- Comment Box
     "LudoPinelli/comment-box.nvim",
+    lazy = false,
   },
   { -- Todo Comments
     "folke/todo-comments.nvim",
