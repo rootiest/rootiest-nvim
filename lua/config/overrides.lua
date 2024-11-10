@@ -30,6 +30,8 @@ require("data.keys").cmd_mode()
 --  ━━━━━━━━━━━━━━━━━━━━━━━━ Additional Overrides ━━━━━━━━━━━━━━━━━━━━━
 
 if vim.g.is_termux then
-  -- Disable NeoMiniMap
-  vim.cmd("NeoMiniMap off")
+  if require("data.func").is_installed("neominimap") then
+    -- Disable NeoMiniMap
+    vim.cmd("Neominimap off")
+  end
 end
