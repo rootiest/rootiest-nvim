@@ -197,7 +197,7 @@ A wezterm configuration that is designed to work with this Neovim config.
 [Rootiest Kitty](https://github.com/rootiest/rootiest-kitty) -
 A kitty configuration that is designed to work with this Neovim configuration
 
-[Rootiest Fish](https://github.com/rootiest/rootiest-fish-conf) -
+[Rootiest Fish](https://github.com/rootiest/rootiest-fish) -
 A fish configuration that pairs well with this Neovim configuration
 
 [Rootiest Tmux](https://github.com/rootiest/rootiest-tmux) -
