@@ -15,5 +15,6 @@ local prefix = vim.env.PREFIX
 if prefix ~= nil then
   if prefix:match("com.termux") then
     vim.g.useimage = false
+    vim.g.is_termux = true
   end
 end

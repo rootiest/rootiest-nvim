@@ -132,9 +132,11 @@ end
 
 -- Perform setup
 M.setup = function()
-  M.bootstrap()
-  M.ensure_luarocks()
-  M.load_rocks()
+  if not vim.g.is_termux then
+    M.bootstrap()
+    M.ensure_luarocks()
+    M.load_rocks()
+  end
 end
 
 -- Execute the setup function
