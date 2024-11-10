@@ -225,5 +225,6 @@ A collection of fonts that includes many icons and glyphs used in this configura
 ## Credits
 
 - [Folke Lamaitre](https://github.com/folke)
+- [Evgeni Chasnovski](https://github.com/echasnovski)
 - [LazyVim](https://github.com/LazyVim/LazyVim)
 - [Elijah Manor](https://github.com/elijahmanor/elijahmanor)
