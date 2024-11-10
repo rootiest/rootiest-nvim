@@ -89,4 +89,27 @@ return {
     "vitalk/vim-shebang",
     lazy = false,
   },
+  {
+    "oskarrrrrrr/symbols.nvim",
+    cmd = { "Symbols", "SymbolsToggle", "SymbolsOpen", "SymbolsClose" },
+    config = function()
+      local r = require("symbols.recipes")
+      require("symbols").setup(r.DefaultFilters, r.AsciiSymbols, {
+        sidebar = {
+          auto_peek = false,
+          show_guide_lines = true,
+          chars = {
+            folded = "",
+            unfolded = "",
+            guide_vert = "",
+            guide_middle_item = "",
+            guide_last_item = "",
+          },
+          preview = {
+            show_always = true,
+          },
+        },
+      })
+    end,
+  },
 }
