@@ -71,7 +71,11 @@ return {
   },
   { -- Markdown Preview
     "iamcco/markdown-preview.nvim",
-    build = "cd app && yarn install",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
   },
   { -- WezTerm Types
     "gonstoll/wezterm-types",
