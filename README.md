@@ -115,7 +115,10 @@ without replacing your current Neovim configuration.
 
 ## Features
 
-- Comfortable keybindings and IDE-like features
+- Comfortable keybindings and PDE-like features
+- Automatically check for Neovim updates
+- Able to build Neovim updates from source for nightly or any release (on Linux)
+- Built like a distro. Highly customizable and extensible without writing any code!
 - Designed to be quick to load and easy to use without compromising on features
 - Leans heavily on lazy and luarocks for plugin management and lazy-loading
 - Catppuccin theme is default but a selection of others are also included
@@ -177,9 +180,12 @@ Features and
 
 ## Options
 
-Options are configured in the `config/options.lua` file under the `ROOTIEST` header.
+Options are configured in the `config/options.lua` file.
 
-The default values are:
+All of the options are documented showing their possible values.
+
+This file allows you to select between various plugins and configurations without
+needing to write any configuration code yourself.
 
 ```lua
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROOTIEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -192,16 +198,16 @@ vim.g.useimage    = true      --Options:  true, false
 ## Companion Tools
 
 [Rootiest WezTerm](https://github.com/rootiest/rootiest-wezterm) -
-A wezterm configuration that is designed to work with this Neovim config.
+A wezterm configuration that is designed to work with this Neovim configuration.
 
 [Rootiest Kitty](https://github.com/rootiest/rootiest-kitty) -
-A kitty configuration that is designed to work with this Neovim configuration
+A kitty configuration that is designed to work with this Neovim configuration.
 
 [Rootiest Fish](https://github.com/rootiest/rootiest-fish) -
-A fish configuration that pairs well with this Neovim configuration
+A fish configuration that pairs well with this Neovim configuration.
 
 [Rootiest Tmux](https://github.com/rootiest/rootiest-tmux) -
-A tmux configuration that is designed to work with this Neovim config.
+A tmux configuration that is designed to work with this Neovim configuration.
 
 [Rootiest Iosevka Font](https://github.com/rootiest/rootiest-iosevka) -
 A custom Iosevka font that is designed by developers, for developers.
