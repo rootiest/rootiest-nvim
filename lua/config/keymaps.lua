@@ -55,22 +55,4 @@ for _, item in ipairs(require("data.keys").multicursor) do
 end
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Overrides ━━━━━━━━━━━━━━━━━━━━━━━━━━
--- Add keymaps for overrides
-add_keymap(require("data.keys").overrides)
-
--- Replace '...' with '…' (ellipsis) on InsertLeave
-require("data.func").setup_replace_ellipsis(true)
-
--- Search selected text in visual mode
-add_keymap("/", "*<Esc>", "Search selected text", "v")
-
--- Use modern cipher instead of rot13
-add_keymap(require("data.keys").cipher.hex)
-
--- Help keybinds
-for _, item in ipairs(require("data.keys").help) do
-  add_keymap(item)
-end
-
--- Remap Command Mode List
-require("data.keys").cmd_mode()
+require("config.overrides")
