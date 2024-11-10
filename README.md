@@ -209,6 +209,9 @@ A fish configuration that pairs well with this Neovim configuration.
 [Rootiest Tmux](https://github.com/rootiest/rootiest-tmux) -
 A tmux configuration that is designed to work with this Neovim configuration.
 
+[Rootiest Vim](https://github.com/rootiest/rootiest-vim) -
+A Vim configuration that pairs well with this Neovim configuration.
+
 [Rootiest Iosevka Font](https://github.com/rootiest/rootiest-iosevka) -
 A custom Iosevka font that is designed by developers, for developers.
 
