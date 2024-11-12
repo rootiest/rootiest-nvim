@@ -9,13 +9,13 @@
 
 return {
   {
-    "rebelot/heirline.nvim",
-    cond = require("data.func").check_global_var(
-      "statusline",
-      "heirline",
-      "lualine"
+    'rebelot/heirline.nvim',
+    cond = require('data.func').check_global_var(
+      'statusline',
+      'heirline',
+      'lualine'
     ),
-    event = "UIEnter",
+    event = 'UIEnter',
     opts = {},
   },
 }

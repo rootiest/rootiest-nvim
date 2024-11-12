@@ -4,7 +4,7 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                          Lazy                           │
 --          ╰─────────────────────────────────────────────────────────╯
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.uv.fs_stat(lazypath) then
   -- stylua: ignore
   vim.fn.system({
@@ -21,27 +21,28 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 local plugin_specs = {
   {
-    "LazyVim/LazyVim", -- LazyVim
-    import = "lazyvim.plugins", -- LazyVim Core Plugins
+    'LazyVim/LazyVim', -- LazyVim
+    import = 'lazyvim.plugins', -- LazyVim Core Plugins
   },
   { -- VSCode
-    import = "lazyvim.plugins.extras.vscode",
+    import = 'lazyvim.plugins.extras.vscode',
   },
-  { import = "plugins" }, -- General Plugins
+  { import = 'plugins' }, -- General Plugins
 }
 
 -- Automatically import all subdirectories of `lua/plugins`
-local plugin_dirs = vim.fn.glob("~/.config/nvim/lua/plugins/*", true, true)
+local plugin_dirs = vim.fn.glob('~/.config/nvim/lua/plugins/*', true, true)
 for _, dir in ipairs(plugin_dirs) do
   if vim.fn.isdirectory(dir) == 1 then
     table.insert( -- Add directory to the plugin import table
       plugin_specs,
-      { import = "plugins." .. vim.fn.fnamemodify(dir, ":t") }
+      { import = 'plugins.' .. vim.fn.fnamemodify(dir, ':t') }
     )
   end
 end
 
-require("lazy").setup({
+-- Initialize Lazy plugin manager
+require('lazy').setup({
   spec = plugin_specs,
   rocks = {
     hererocks = true,
@@ -52,12 +53,12 @@ require("lazy").setup({
   },
   install = {
     missing = true,
-    colorscheme = { "catppuccin-mocha", "tokyonight", "default" },
+    colorscheme = { 'catppuccin-mocha', 'tokyonight', 'default' },
   },
   defaults = {
     lazy = true,
     version = nil,
-    event = "VeryLazy",
+    event = 'VeryLazy',
   },
   checker = {
     -- automatically check for plugin updates
@@ -78,7 +79,7 @@ require("lazy").setup({
     reset_packpath = true,
     rtp = {
       reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
-      disabled_plugins = require("data.types").lazy.disabled_plugins,
+      disabled_plugins = require('data.types').lazy.disabled_plugins,
     },
   },
   profiling = {
@@ -86,7 +87,7 @@ require("lazy").setup({
     require = true,
   },
   ui = {
-    border = "rounded",
-    title = " Plugin Manager ",
+    border = 'rounded',
+    title = ' Plugin Manager ',
   },
 })

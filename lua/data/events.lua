@@ -6,42 +6,42 @@
 local M = {}
 
 --- DEFAULT ---
-M.default = "VeryLazy"
+M.default = 'VeryLazy'
 
 --- Alpha events
-M.alpha = { "VimEnter" }
+M.alpha = { 'VimEnter' }
 
 --- Auto Save events
-M.autosave = { "InsertLeave", "TextChanged" }
+M.autosave = { 'InsertLeave', 'TextChanged' }
 
 --- Colorful Window Separators events
-M.colorfulwinsep = { "WinLeave" }
+M.colorfulwinsep = { 'WinLeave' }
 
 --- Dashboard-Nvim events
-M.dashboard = { "UIEnter" }
+M.dashboard = { 'UIEnter' }
 
 --- Dead Column
-M.deadcolumn = { "BufEnter" }
+M.deadcolumn = { 'BufEnter' }
 
 --- Heirline events
-M.heirline = { "UIEnter" }
+M.heirline = { 'UIEnter' }
 
 --- Highlight Colors events
-M.highlightcolor = { "BufReadPre" }
+M.highlightcolor = { 'BufReadPre' }
 
 --- Mini.Align events
-M.minialign = { "InsertEnter" }
+M.minialign = { 'InsertEnter' }
 
 --- Mini.SplitJoin events
-M.minisplitjoin = { "InsertEnter" }
+M.minisplitjoin = { 'InsertEnter' }
 
 --- Discord Presence events
-M.presence = { "BufReadPre" }
+M.presence = { 'BufReadPre' }
 
 --- RipGrep Substitute events
-M.ripsub = { "InsertEnter" }
+M.ripsub = { 'InsertEnter' }
 
 --- SmoothCursor events
-M.smoothcursor = { "BufEnter" }
+M.smoothcursor = { 'BufEnter' }
 
 return M

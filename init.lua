@@ -53,19 +53,19 @@
 
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROOTIEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Rootiest Configuration
-require("config.rootiest").setup() -- Set up Rootiest options
+require('config.rootiest').setup() -- Set up Rootiest options
 
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ LAZY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Load Lazy package manager and plugins
-require("config.lazy") -- Bootstrap lazy.nvim and initialize plugins
+require('config.lazy') -- Bootstrap lazy.nvim and initialize plugins
 
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROCKS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Load LuaRocks package manager and plugins
-require("config.rocks") -- Bootstrap LuaRocks and initialize plugins
+require('config.rocks') -- Bootstrap LuaRocks and initialize plugins
 
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PROFILING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Load profiling package
-require("config.profile") -- Set profiling options with environment variables:
+require('config.profile') -- Set profiling options with environment variables:
 --    ╭─────────────────────────────────────────────────────────────────────╮
 --    │   NVIM_PROFILE=1                      Start profiling at startup    │
 --    │   NVIM_PROFILE_MODULE="lualine"       Set profiling target module   │

@@ -10,15 +10,15 @@ local M = {}
 ---@function Check if the terminal is kitty
 ---@return boolean condition true if the terminal is kitty, false otherwise
 function M.is_kitty()
-  local term = os.getenv("TERM") or ""
-  local kit = string.find(term, "kitty")
+  local term = os.getenv('TERM') or ''
+  local kit = string.find(term, 'kitty')
   return kit ~= nil
 end
 
 ---@function Check if using kitty-scrollback
 ---@return boolean condition true if using kitty-scrollback, false otherwise
 function M.is_kitty_scrollback()
-  if vim.env.KITTY_SCROLLBACK_NVIM == "true" then
+  if vim.env.KITTY_SCROLLBACK_NVIM == 'true' then
     return true
   end
   return false
@@ -27,21 +27,21 @@ end
 ---@function Check if the terminal is alacritty
 ---@return boolean condition true if the terminal is alacritty, false otherwise
 function M.is_alacritty()
-  local term = os.getenv("TERM") or ""
-  local alc = string.find(term, "alacritty")
+  local term = os.getenv('TERM') or ''
+  local alc = string.find(term, 'alacritty')
   return alc ~= nil
 end
 
 ---@function Check if the terminal is tmux
 ---@return boolean condition true if the terminal is tmux, false otherwise
 function M.is_tmux()
-  local tterm = os.getenv("TERM")
-  if tterm and string.find(tterm, "screen") then
-    if os.getenv("TMUX") then
+  local tterm = os.getenv('TERM')
+  if tterm and string.find(tterm, 'screen') then
+    if os.getenv('TMUX') then
       return true
     end
   else
-    if tterm and string.find(tterm, "tmux") then
+    if tterm and string.find(tterm, 'tmux') then
       return true
     end
   end
@@ -51,8 +51,8 @@ end
 ---@function Check if the terminal is wezterm
 ---@return boolean condition true if the terminal is wezterm, false otherwise
 function M.is_wezterm()
-  local wterm = os.getenv("TERM_PROGRAM")
-  if wterm and string.find(wterm, "WezTerm") then
+  local wterm = os.getenv('TERM_PROGRAM')
+  if wterm and string.find(wterm, 'WezTerm') then
     return true
   end
   return false
@@ -71,7 +71,7 @@ end
 ---@function Check if the terminal is ssh
 ---@return boolean condition true if the terminal is ssh, false otherwise
 function M.is_ssh()
-  local ssh = os.getenv("SSH_TTY") or false
+  local ssh = os.getenv('SSH_TTY') or false
   if ssh then
     return true
   end
@@ -81,7 +81,7 @@ end
 ---@function Check if OS is Windows
 ---@return boolean condition true if the OS is Windows, false otherwise
 function M.is_windows()
-  local win = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
+  local win = vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1
   if win then
     return true
   end
@@ -91,7 +91,7 @@ end
 ---@function Check if OS is macOS
 ---@return boolean condition true if the OS is macOS, false otherwise
 function M.is_mac()
-  local mac = vim.fn.has("macunix")
+  local mac = vim.fn.has('macunix')
   if mac == 1 then
     return true
   end
@@ -101,7 +101,7 @@ end
 ---@function Check if OS is Linux
 ---@return boolean condition true if the OS is Linux, false otherwise
 function M.is_linux()
-  local lin = vim.fn.has("unix")
+  local lin = vim.fn.has('unix')
   if lin == 1 then
     return true
   end
@@ -119,101 +119,101 @@ end
 function M.get_os(format)
   ---@diagnostic disable-next-line: undefined-field
   local uname = vim.loop and vim.loop.os_uname and vim.loop.os_uname() or {}
-  local os_name = uname.sysname or "unknown"
+  local os_name = uname.sysname or 'unknown'
 
-  if os_name == "Windows_NT" then
-    if format == "platform" then
-      return "windows"
-    elseif format == "short" then
-      return "Win"
-    elseif format == "code" then
-      return "win"
+  if os_name == 'Windows_NT' then
+    if format == 'platform' then
+      return 'windows'
+    elseif format == 'short' then
+      return 'Win'
+    elseif format == 'code' then
+      return 'win'
     else
-      return "Windows"
+      return 'Windows'
     end
-  elseif os_name == "Darwin" then
-    if format == "platform" then
-      return "osx"
-    elseif format == "short" then
-      return "macOS"
-    elseif format == "code" then
-      return "osx"
+  elseif os_name == 'Darwin' then
+    if format == 'platform' then
+      return 'osx'
+    elseif format == 'short' then
+      return 'macOS'
+    elseif format == 'code' then
+      return 'osx'
     else
-      return "macOS"
+      return 'macOS'
     end
-  elseif os_name == "Linux" then
+  elseif os_name == 'Linux' then
     -- Check if the system is running Android
     if vim.env.ANDROID_ROOT then
-      if format == "platform" then
-        return "linux"
-      elseif format == "short" then
-        return "Android"
-      elseif format == "code" then
-        return "android"
+      if format == 'platform' then
+        return 'linux'
+      elseif format == 'short' then
+        return 'Android'
+      elseif format == 'code' then
+        return 'android'
       else
-        return "Android"
+        return 'Android'
       end
     end
 
     -- Determine the Linux distribution
-    local distro = "Linux"
-    local release_file = "/etc/os-release"
+    local distro = 'Linux'
+    local release_file = '/etc/os-release'
 
-    local fd = io.open(release_file, "r")
+    local fd = io.open(release_file, 'r')
     if fd then
       for line in fd:lines() do
-        if line:match("^ID=") then
-          distro = line:gsub("ID=", ""):gsub('"', "")
+        if line:match('^ID=') then
+          distro = line:gsub('ID=', ''):gsub('"', '')
           break
         end
       end
       fd:close()
     end
 
-    if format == "platform" then
-      return "linux"
-    elseif format == "short" then
-      return "Linux"
-    elseif format == "code" then
+    if format == 'platform' then
+      return 'linux'
+    elseif format == 'short' then
+      return 'Linux'
+    elseif format == 'code' then
       return distro
     else
-      return "Linux (" .. distro .. ")"
+      return 'Linux (' .. distro .. ')'
     end
   else
     -- Falback tests
     if M.is_mac() then
-      if format == "platform" then
-        return "osx"
-      elseif format == "short" then
-        return "macOS"
-      elseif format == "code" then
-        return "osx"
+      if format == 'platform' then
+        return 'osx'
+      elseif format == 'short' then
+        return 'macOS'
+      elseif format == 'code' then
+        return 'osx'
       else
-        return "macOS"
+        return 'macOS'
       end
     elseif M.is_linux() then
-      if format == "platform" then
-        return "linux"
-      elseif format == "short" then
-        return "Linux"
-      elseif format == "code" then
-        return "linux"
+      if format == 'platform' then
+        return 'linux'
+      elseif format == 'short' then
+        return 'Linux'
+      elseif format == 'code' then
+        return 'linux'
       else
-        return "Linux"
+        return 'Linux'
       end
     elseif M.is_windows() then
-      if format == "platform" then
-        return "windows"
-      elseif format == "short" then
-        return "Win"
-      elseif format == "code" then
-        return "win"
+      if format == 'platform' then
+        return 'windows'
+      elseif format == 'short' then
+        return 'Win'
+      elseif format == 'code' then
+        return 'win'
       else
-        return "Windows"
+        return 'Windows'
       end
     else
       -- Failed to determine OS
-      return "Unknown OS"
+      return 'Unknown OS'
     end
   end
 end
@@ -226,7 +226,7 @@ function M.dir_is_git_repo(dir)
   dir = dir or vim.fn.getcwd()
 
   local result = vim
-    .system({ "git", "-C", dir, "rev-parse", "--is-inside-work-tree" })
+    .system({ 'git', '-C', dir, 'rev-parse', '--is-inside-work-tree' })
     :wait()
   return result.code == 0 -- returns true if the command succeeded
 end
@@ -237,7 +237,7 @@ end
 ---@param title string|nil The title of the notification
 ---@return boolean condition true if the notification was sent successfully, false otherwise
 function M.notify(message, level, title)
-  level = level or "info"
+  level = level or 'info'
   if title then
     vim.notify(message, vim.log.levels[level:upper()], { title = title })
   else
@@ -253,32 +253,32 @@ end
 function M.ConfirmPrompt(prompt, action)
   -- Validate the action parameter
   local function perform_action()
-    if type(action) == "function" then
+    if type(action) == 'function' then
       action() -- Call the function
-    elseif type(action) == "string" then
+    elseif type(action) == 'string' then
       vim.cmd(action) -- Run the Vim command
     else
       M.notify(
-        "Action must be a function or a string",
-        "ERROR",
-        "Configuration Error"
+        'Action must be a function or a string',
+        'ERROR',
+        'Configuration Error'
       )
     end
   end
   -- Create a new buffer
   local buf = vim.api.nvim_create_buf(false, true) -- Create a new empty buffer
   -- Set the prompt text in the buffer
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { prompt, "y/n: " })
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { prompt, 'y/n: ' })
   -- Create a floating window to display the buffer
   local win_height = 2 -- Height of floating window
   local win_width = math.floor(vim.o.columns * 0.25) -- Width of floating window
   local row = math.floor((vim.o.lines - win_height) / 2) -- Position row
   local col = math.floor((vim.o.columns - win_width) / 2) -- Position column
-  local win_border = "rounded"
-  local style = "minimal"
+  local win_border = 'rounded'
+  local style = 'minimal'
   -- Create a floating window
   local win = vim.api.nvim_open_win(buf, true, {
-    relative = "editor",
+    relative = 'editor',
     width = win_width,
     height = win_height,
     col = col,
@@ -297,7 +297,7 @@ function M.ConfirmPrompt(prompt, action)
   -- Define the no function
   local no = function()
     vim.api.nvim_win_close(win, true)
-    M.notify("Action Canceled", "INFO", "Info")
+    M.notify('Action Canceled', 'INFO', 'Info')
   end
   -- Define buffer-specific key mappings
   local keymaps = {
@@ -310,13 +310,13 @@ function M.ConfirmPrompt(prompt, action)
     q = function()
       no()
     end,
-    ["<Esc>"] = function()
+    ['<Esc>'] = function()
       no()
     end,
   }
   -- Set the key mappings
   for key, callback in pairs(keymaps) do
-    vim.api.nvim_buf_set_keymap(buf, "n", key, "", {
+    vim.api.nvim_buf_set_keymap(buf, 'n', key, '', {
       noremap = true,
       nowait = true,
       callback = callback,
@@ -334,25 +334,25 @@ function M.InputPrompt(prompt, callback)
   local buf = vim.api.nvim_create_buf(false, true) -- Create a new empty buffer
 
   -- Set the buffer name
-  vim.api.nvim_buf_set_name(buf, "Input")
+  vim.api.nvim_buf_set_name(buf, 'Input')
   -- Set the buffer filetype (e.g., for custom behavior or syntax highlighting)
-  vim.bo[buf].filetype = "input"
+  vim.bo[buf].filetype = 'input'
   -- Set the buffer type to "nofile" to avoid editing or saving the buffer
-  vim.bo[buf].buftype = "nofile"
+  vim.bo[buf].buftype = 'nofile'
   -- Set the prompt text in the buffer
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { prompt, "Input: " })
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { prompt, 'Input: ' })
 
   -- Create a floating window to display the buffer
   local win_height = 2 -- Height of floating window
   local win_width = math.floor(vim.o.columns * 0.25) -- Width of floating window
   local row = math.floor((vim.o.lines - win_height) / 2) -- Position row
   local col = math.floor((vim.o.columns - win_width) / 2) -- Position column
-  local win_border = "rounded"
-  local style = "minimal"
+  local win_border = 'rounded'
+  local style = 'minimal'
 
   -- Create a floating window
   local win = vim.api.nvim_open_win(buf, true, {
-    relative = "editor",
+    relative = 'editor',
     width = win_width,
     height = win_height,
     col = col,
@@ -364,11 +364,11 @@ function M.InputPrompt(prompt, callback)
   -- Move the cursor to the end of the buffer
   vim.api.nvim_win_set_cursor(win, { 2, 8 })
   -- Set input mode
-  vim.api.nvim_command("startinsert")
+  vim.api.nvim_command('startinsert')
 
   -- Function to close the window
   local function exit_win()
-    vim.api.nvim_command("stopinsert")
+    vim.api.nvim_command('stopinsert')
     vim.api.nvim_win_close(win, true)
   end
 
@@ -398,18 +398,18 @@ function M.InputPrompt(prompt, callback)
 
   -- Define buffer-specific key mappings
   local keymaps = {
-    ["<CR>"] = yes,
-    ["<Esc>"] = no,
+    ['<CR>'] = yes,
+    ['<Esc>'] = no,
   }
 
   -- Set the key mappings
   for key, keyback in pairs(keymaps) do
-    vim.api.nvim_buf_set_keymap(buf, "n", key, "", {
+    vim.api.nvim_buf_set_keymap(buf, 'n', key, '', {
       noremap = true,
       nowait = true,
       callback = keyback,
     })
-    vim.api.nvim_buf_set_keymap(buf, "i", key, "", {
+    vim.api.nvim_buf_set_keymap(buf, 'i', key, '', {
       noremap = true,
       nowait = true,
       callback = keyback,
@@ -436,7 +436,7 @@ function M.move_visual(up, multiplier)
   end
 
   -- escape visual mode
-  vim.cmd("norm v")
+  vim.cmd('norm v')
   -- GET REGION
   -- eg region = { [103] = {0,-1}, [104] = {0,-1}, [105] = {0,-1}}
   ---@diagnostic disable-next-line: deprecated
@@ -461,10 +461,10 @@ function M.move_visual(up, multiplier)
 
   -- EXECUTE
   local new_pos = offset > 0 and bottom + offset or top + offset
-  vim.cmd(string.format("silent %d, %d move %d", top, bottom, new_pos))
+  vim.cmd(string.format('silent %d, %d move %d', top, bottom, new_pos))
   -- eg :silent 104, 106 move 107
 
-  vim.cmd("norm gv")
+  vim.cmd('norm gv')
 end
 
 ---@function Function to paste over text with overwrite
@@ -475,31 +475,31 @@ function M.paste_overwrite()
   local regcontents = register.regcontents
 
   -- Enter Virtual Replace Mode
-  vim.api.nvim_feedkeys("gR", "n", false)
+  vim.api.nvim_feedkeys('gR', 'n', false)
 
   -- Process each line in the register contents
   for i, line in ipairs(regcontents) do
     if i > 1 then
       -- Handle formatting of multi-line pastes (except for the first line)
       vim.api.nvim_feedkeys(
-        vim.api.nvim_replace_termcodes("<Esc>0gR", true, false, true),
-        "n",
+        vim.api.nvim_replace_termcodes('<Esc>0gR', true, false, true),
+        'n',
         false
       )
     end
 
     -- Paste the current line; add a newline if it's not the last line
     if i < #regcontents then
-      vim.api.nvim_feedkeys(line .. "\n", "n", false)
+      vim.api.nvim_feedkeys(line .. '\n', 'n', false)
     else
-      vim.api.nvim_feedkeys(line, "n", false)
+      vim.api.nvim_feedkeys(line, 'n', false)
     end
   end
 
   -- Properly exit Virtual Replace Mode using <Esc>
   vim.api.nvim_feedkeys(
-    vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
-    "n",
+    vim.api.nvim_replace_termcodes('<Esc>', true, false, true),
+    'n',
     false
   )
 end
@@ -508,7 +508,7 @@ end
 ---@param register string? The name of the register to dump the buffer to (defaults to unnamed register if nil)
 ---@return nil
 function M.dump_buffer_to_table(register)
-  register = register or "" -- Default to unnamed register if not provided
+  register = register or '' -- Default to unnamed register if not provided
 
   -- Get the lines from the current buffer
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
@@ -516,12 +516,12 @@ function M.dump_buffer_to_table(register)
   -- Process the buffer contents
   local result = {}
   for _, line in ipairs(lines) do
-    local entry = line:gsub("%.lua$", "") -- Remove ".lua" extension
+    local entry = line:gsub('%.lua$', '') -- Remove ".lua" extension
     table.insert(result, '"' .. entry .. '"')
   end
 
   -- Join the result into a single string and format as a Lua table
-  local output = "{ " .. table.concat(result, ", ") .. " }"
+  local output = '{ ' .. table.concat(result, ', ') .. ' }'
 
   -- Dump the result into a register
   vim.fn.setreg(register, output)
@@ -531,14 +531,14 @@ end
 ---@return nil
 function M.reload_config()
   -- Notify the user about the reload process
-  M.notify("Reloading configuration...", "WARN", "Reloading Config")
+  M.notify('Reloading configuration...', 'WARN', 'Reloading Config')
   -- 1. Save all buffers
-  vim.cmd("silent! wa")
+  vim.cmd('silent! wa')
   -- 2. Record the list of open buffers to reopen later
   local buffer_list = vim.api.nvim_list_bufs()
   local buffers_to_reopen = {}
   for _, buf in ipairs(buffer_list) do
-    if vim.api.nvim_buf_is_loaded(buf) and vim.fn.bufname(buf) ~= "" then
+    if vim.api.nvim_buf_is_loaded(buf) and vim.fn.bufname(buf) ~= '' then
       table.insert(
         buffers_to_reopen,
         { buf = buf, file = vim.api.nvim_buf_get_name(buf) }
@@ -546,26 +546,26 @@ function M.reload_config()
     end
   end
   -- 3. Close all buffers
-  vim.cmd("silent! bufdo! bwipeout")
+  vim.cmd('silent! bufdo! bwipeout')
   -- 4. Clear loaded lua modules related to your custom configuration
   for name, _ in pairs(package.loaded) do
     -- Replace 'userconfig' and 'plugin' with your actual config module names
-    if name:match("^userconfig") or name:match("^plugins") then
+    if name:match('^userconfig') or name:match('^plugins') then
       package.loaded[name] = nil
     end
   end
   -- 5. Reload the vim script (init.lua)
-  vim.cmd("source $MYVIMRC")
+  vim.cmd('source $MYVIMRC')
   -- 6. Reopen the buffers
   for _, bufinfo in ipairs(buffers_to_reopen) do
     local buf = vim.fn.bufadd(bufinfo.file)
-    vim.cmd("buffer " .. buf)
+    vim.cmd('buffer ' .. buf)
     vim.api.nvim_buf_call(buf, function()
       -- You could also restore the exact cursor position if desired
       vim.cmd('silent! normal! g`"')
     end)
   end -- Notify the user that the config has been reloaded
-  M.notify("Configuration reloaded successfully!", "INFO", "Reloaded Config")
+  M.notify('Configuration reloaded successfully!', 'INFO', 'Reloaded Config')
 end
 
 ---@function Function to reload all plugins.
@@ -595,29 +595,29 @@ function M.reload_all_plugins()
   if vim.g.plugin_reloader.exclusion_list then
     -- Use global variable if provided
     exclude = vim.g.plugin_reloader.exclusion_list
-  elseif pcall(require, "data.types") then
+  elseif pcall(require, 'data.types') then
     -- Use data.types if available
-    exclude = require("data.types").plugin_reloader.exclusion_list
+    exclude = require('data.types').plugin_reloader.exclusion_list
   else
     -- Fallback to default
     exclude = {
-      ["lazy.nvim"] = true,
-      ["noice.nvim"] = true,
-      ["unception.nvim"] = true,
-      ["nvim-unception"] = true,
-      ["nui.nvim"] = true,
-      ["packer.nvim"] = true,
-      ["trouble.nvim"] = true,
-      ["which-key.nvim"] = true,
+      ['lazy.nvim'] = true,
+      ['noice.nvim'] = true,
+      ['unception.nvim'] = true,
+      ['nvim-unception'] = true,
+      ['nui.nvim'] = true,
+      ['packer.nvim'] = true,
+      ['trouble.nvim'] = true,
+      ['which-key.nvim'] = true,
     }
   end
 
   -- Try to require the lazy.core.config module
-  local ok, lazy_config = pcall(require, "lazy.core.config")
+  local ok, lazy_config = pcall(require, 'lazy.core.config')
 
   if not ok then
     -- Handle the error; the module is not available
-    print("lazy.core.config not found")
+    print('lazy.core.config not found')
   else
     -- Get the list of currently loaded plugins
     local plugins = lazy_config.plugins
@@ -625,7 +625,7 @@ function M.reload_all_plugins()
     -- Iterate over each plugin and reload it if it's not in the exclusion list
     for plugin_name, _ in pairs(plugins) do
       if not exclude[plugin_name] then
-        vim.cmd("Lazy reload " .. plugin_name)
+        vim.cmd('Lazy reload ' .. plugin_name)
       end
     end
   end
@@ -646,8 +646,8 @@ end
 ---  If the input is a table of plugin modules, the return type is a table.
 function M.is_installed(plugins, opts)
   opts = opts or {}
-  local is_single = type(plugins) == "string"
-  if type(plugins) ~= "table" then
+  local is_single = type(plugins) == 'string'
+  if type(plugins) ~= 'table' then
     plugins = { plugins }
   end
 
@@ -662,11 +662,11 @@ function M.is_installed(plugins, opts)
       if simple then
         return pcall(require, name)
       else
-        local lazy_installed = pcall(require, "lazy")
-        if lazy_installed and require("lazy.core.config").plugins[name] then
+        local lazy_installed = pcall(require, 'lazy')
+        if lazy_installed and require('lazy.core.config').plugins[name] then
           return true
         end
-        local packer_installed = pcall(require, "packer_plugins")
+        local packer_installed = pcall(require, 'packer_plugins')
         if
           packer_installed
           ---@diagnostic disable-next-line: undefined-field
@@ -676,7 +676,7 @@ function M.is_installed(plugins, opts)
         then
           return true
         end
-        if vim.fn.exists("g:plugs") == 1 and vim.g.plugs[name] then
+        if vim.fn.exists('g:plugs') == 1 and vim.g.plugs[name] then
           return true
         end
         return pcall(require, name)
@@ -687,8 +687,8 @@ function M.is_installed(plugins, opts)
     installed = check_plugin(plugin)
 
     -- If not installed, try replacing hyphens with underscores
-    if not installed and plugin:find("-") then
-      local underscored_name = plugin:gsub("-", "_")
+    if not installed and plugin:find('-') then
+      local underscored_name = plugin:gsub('-', '_')
       installed = check_plugin(underscored_name)
     end
 
@@ -697,15 +697,15 @@ function M.is_installed(plugins, opts)
 
   -- Optionally preload the plugin(s)
   if load_plug then
-    local lazy_installed = pcall(require, "lazy")
+    local lazy_installed = pcall(require, 'lazy')
     if lazy_installed then
       for _, plugin in ipairs(plugins) do
         if installed_plugins[plugin] then
-          require("lazy").load({ plugins = { plugin } })
+          require('lazy').load({ plugins = { plugin } })
         end
       end
     else
-      M.notify("Unable to preload plugin(s)", "ERROR", "Lazy not found")
+      M.notify('Unable to preload plugin(s)', 'ERROR', 'Lazy not found')
     end
   end
 
@@ -718,7 +718,7 @@ function M.open_floating_terminal()
   local buf = vim.api.nvim_create_buf(false, true) -- Create an unnamed, non-file, scratch buffer
 
   if not buf or buf == 0 then
-    vim.notify("Failed to create buffer", vim.log.levels.ERROR)
+    vim.notify('Failed to create buffer', vim.log.levels.ERROR)
     return
   end
 
@@ -732,13 +732,13 @@ function M.open_floating_terminal()
 
   -- Define settings of the floating window, sizing it to 80% of the full editor size
   local win_opts = {
-    style = "minimal", -- Minimal UI, no status line or tab line
-    relative = "editor", -- Float relative to the whole editor UI
+    style = 'minimal', -- Minimal UI, no status line or tab line
+    relative = 'editor', -- Float relative to the whole editor UI
     width = win_width, -- Set width to 80% of editor width
     height = win_height, -- Set height to 80% of editor height
     row = math.floor((height - win_height) / 2), -- Centered vertically
     col = math.floor((width - win_width) / 2), -- Centered horizontally
-    border = "rounded", -- Add a border for aesthetics (can be 'single', 'double', etc.)
+    border = 'rounded', -- Add a border for aesthetics (can be 'single', 'double', etc.)
   }
 
   -- Open the floating window with our newly created buffer
@@ -746,13 +746,13 @@ function M.open_floating_terminal()
 
   -- Check if the window was created successfully
   if not win or win == 0 then
-    vim.notify("Failed to create floating window", vim.log.levels.ERROR)
+    vim.notify('Failed to create floating window', vim.log.levels.ERROR)
     return
   end
 
   -- Set very specific buffer and window configurations
-  vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf }) -- Auto-remove when the buffer is closed
-  vim.api.nvim_set_option_value("winblend", 10, { win = win }) -- Add slight transparency to the floating window
+  vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = buf }) -- Auto-remove when the buffer is closed
+  vim.api.nvim_set_option_value('winblend', 10, { win = win }) -- Add slight transparency to the floating window
 
   -- Now that the floating window is ready, we run the terminal shell in the created buffer
   -- Open the terminal in the buffer when we're sure the buffer is set up in the float
@@ -761,7 +761,7 @@ function M.open_floating_terminal()
       -- Safety measure: Ensure the window still exists before trying to close it
       if vim.api.nvim_win_is_valid(win) then
         -- Notify the user that the terminal has closed
-        vim.notify("Terminal closed", vim.log.levels.INFO)
+        vim.notify('Terminal closed', vim.log.levels.INFO)
         -- Close and wipe the associated floating window and its buffer
         vim.api.nvim_win_close(win, true) -- Force close the terminal window
       end
@@ -770,7 +770,7 @@ function M.open_floating_terminal()
 
   -- Switch focus to the terminal window in the floating buffer and enter insert mode
   vim.api.nvim_set_current_win(win)
-  vim.cmd("startinsert!") -- Automatically enter insert mode within the terminal
+  vim.cmd('startinsert!') -- Automatically enter insert mode within the terminal
 end
 
 ---@function Helper function to add keymaps with common properties
@@ -837,8 +837,8 @@ function M.add_keymap(
   hidden
 )
   -- Check if which-key.nvim is installed
-  if M.is_installed("which-key.nvim") and not bufnr then
-    require("which-key").add({
+  if M.is_installed('which-key.nvim') and not bufnr then
+    require('which-key').add({
       -- stylua: ignore start
       {
         lhs,                 -- The keybind
@@ -854,12 +854,12 @@ function M.add_keymap(
     return true
   else
     -- Handle the case where lhs is a table
-    if type(lhs) == "table" then
+    if type(lhs) == 'table' then
       for _, keymap in ipairs(lhs) do
         -- Set default values or use provided ones
         local keymap_rhs = keymap.rhs or rhs
         local keymap_desc = keymap.desc or desc
-        local keymap_mode = keymap.mode or mode or "n"
+        local keymap_mode = keymap.mode or mode or 'n'
         local keymap_icon = keymap.icon or icon
         local keymap_group = keymap.group or group
         local keymap_lhs = keymap.lhs
@@ -876,15 +876,15 @@ function M.add_keymap(
             )
           else
             if -- Check if the keymap is compatible with buffer-based keymaps
-              type(keymap_mode) == "table" or type(keymap_rhs) == "function"
+              type(keymap_mode) == 'table' or type(keymap_rhs) == 'function'
             then
               -- The keymap is incompatible with buffer-based keymaps
               local msg = string.format(
-                "Mapping incompatible with buffer-based keymaps:\n%s%s",
+                'Mapping incompatible with buffer-based keymaps:\n%s%s',
                 vim.inspect(keymap_lhs), -- Convert lhs to a readable format
-                keymap_desc and ("\nDescription: " .. keymap_desc) or ""
+                keymap_desc and ('\nDescription: ' .. keymap_desc) or ''
               )
-              M.notify(msg, "WARN")
+              M.notify(msg, 'WARN')
               return false
             end
             -- Apply the keymap using vim.api.nvim_buf_set_keymap
@@ -900,11 +900,11 @@ function M.add_keymap(
         else
           -- The keymap requires which-key.nvim
           local msg = string.format(
-            "Mapping requires which-key.nvim:\n%s%s",
+            'Mapping requires which-key.nvim:\n%s%s',
             vim.inspect(keymap_lhs), -- Convert lhs to a readable format
-            keymap_desc and ("\nDescription: " .. keymap_desc) or ""
+            keymap_desc and ('\nDescription: ' .. keymap_desc) or ''
           )
-          M.notify(msg, "WARN")
+          M.notify(msg, 'WARN')
           return false
         end
       end
@@ -913,7 +913,7 @@ function M.add_keymap(
       if not group and not icon then
         if not bufnr then
           vim.keymap.set(
-            mode or "n", -- Default to "n" (normal mode) if mode is not provided
+            mode or 'n', -- Default to "n" (normal mode) if mode is not provided
             lhs, -- The keybind
             ---@diagnostic disable-next-line: param-type-mismatch
             rhs, -- Function to execute when the key is pressed
@@ -921,21 +921,21 @@ function M.add_keymap(
           )
         else
           if -- Check if the keymap is compatible with buffer-based keymaps
-            type(mode) == "table" or type(rhs) == "function"
+            type(mode) == 'table' or type(rhs) == 'function'
           then
             -- The keymap is incompatible with buffer-based keymaps
             local msg = string.format(
-              "Mapping incompatible with buffer-based keymaps:\n%s%s",
+              'Mapping incompatible with buffer-based keymaps:\n%s%s',
               vim.inspect(lhs), -- Convert lhs to a readable format
-              desc and ("\nDescription: " .. desc) or ""
+              desc and ('\nDescription: ' .. desc) or ''
             )
-            M.notify(msg, "WARN")
+            M.notify(msg, 'WARN')
             return false
           end
           -- Apply the keymap using vim.api.nvim_buf_set_keymap
           vim.api.nvim_buf_set_keymap(
             bufnr,
-            mode or "n",
+            mode or 'n',
             lhs,
             ---@diagnostic disable-next-line: param-type-mismatch
             rhs,
@@ -945,11 +945,11 @@ function M.add_keymap(
         return true
       else
         local msg = string.format(
-          "Mapping requires which-key.nvim:\n%s%s",
+          'Mapping requires which-key.nvim:\n%s%s',
           vim.inspect(lhs), -- Convert lhs to a readable format
-          desc and ("\nDescription: " .. desc) or ""
+          desc and ('\nDescription: ' .. desc) or ''
         )
-        M.notify(msg, "WARN")
+        M.notify(msg, 'WARN')
         return false
       end
     end
@@ -968,7 +968,7 @@ function M.rm_keymap(
   mode, -- Mode(s) in which the keybind should be removed
   bufnr -- Buffer number to remove the keymap from
 )
-  mode = mode or "n" -- Default to "n" (normal mode) if mode is not provided
+  mode = mode or 'n' -- Default to "n" (normal mode) if mode is not provided
 
   ---@class Keymap
   ---@field lhs string The keybind
@@ -1015,12 +1015,12 @@ end
 ---@return boolean condition true if the mark was removed, false otherwise
 function M.rm_mark(mark)
   -- Get a list of marks in the current buffer
-  local marks = vim.fn.getmarklist(vim.fn.bufnr("%"))
+  local marks = vim.fn.getmarklist(vim.fn.bufnr('%'))
   -- Check if the mark exists
   for _, m in ipairs(marks) do
     if m.mark == mark then
       -- Mark exists, remove it
-      vim.cmd("delmarks " .. mark)
+      vim.cmd('delmarks ' .. mark)
       return true -- Indicate that the mark was removed
     end
   end
@@ -1036,7 +1036,7 @@ end
 ---@function Function to check if buffer is empty
 ---@return boolean condition true if buffer is empty, false otherwise
 function M.is_buffer_empty()
-  return vim.fn.empty(vim.fn.expand("%:t")) == 1
+  return vim.fn.empty(vim.fn.expand('%:t')) == 1
 end
 
 ---@function Function to check if buffer is read-only
@@ -1049,7 +1049,7 @@ end
 ---@param filepath string The path to the file
 ---@return boolean condition true if file exists, false otherwise
 function M.file_exists(filepath)
-  local f = io.open(filepath, "r")
+  local f = io.open(filepath, 'r')
   if f then
     f:close()
   end
@@ -1059,22 +1059,22 @@ end
 ---@function Function to get the current git branch
 ---@return string branch git branch name or "No branch"
 function M.get_git_branch()
-  local branch = vim.fn.systemlist("git rev-parse --abbrev-ref HEAD")[1]
-  if branch and branch ~= "" then
+  local branch = vim.fn.systemlist('git rev-parse --abbrev-ref HEAD')[1]
+  if branch and branch ~= '' then
     return branch
   else
-    return "No branch"
+    return 'No branch'
   end
 end
 
 ---@function Function to get the current git commit hash
 ---@return string The current git commit hash or "No commit hash"
 function M.get_git_commit_hash()
-  local commit_hash = vim.fn.systemlist("git rev-parse --short HEAD")[1]
-  if commit_hash and commit_hash ~= "" then
+  local commit_hash = vim.fn.systemlist('git rev-parse --short HEAD')[1]
+  if commit_hash and commit_hash ~= '' then
     return commit_hash
   else
-    return "No commit hash"
+    return 'No commit hash'
   end
 end
 
@@ -1084,12 +1084,12 @@ end
 function M.run_shell_command(cmd)
   local handle = io.popen(cmd)
   if handle then
-    local result = handle:read("*a")
+    local result = handle:read('*a')
     handle:close()
     return result
   else
     -- Handle the error case where `handle` is nil
-    M.notify("Failed to run the command: " .. cmd, "ERROR")
+    M.notify('Failed to run the command: ' .. cmd, 'ERROR')
     return nil
   end
 end
@@ -1098,24 +1098,24 @@ end
 ---@param format string The format of the dimensions
 ---@return string|table dimensions dimensions of the current window
 function M.get_ws_dimensions(format)
-  format = format or "verbose"
+  format = format or 'verbose'
   local dimensions = {
     width = tonumber(vim.opt.columns:get()) or 0,
     height = tonumber(vim.opt.lines:get()) or 0,
   }
-  if format == "verbose" then
+  if format == 'verbose' then
     return string.format(
-      "Width: %d cells\nHeight: %d cells",
+      'Width: %d cells\nHeight: %d cells',
       dimensions.width,
       dimensions.height
     )
-  elseif format == "basic" then
-    return string.format("%dx%d", dimensions.width, dimensions.height)
-  elseif format == "raw" then
+  elseif format == 'basic' then
+    return string.format('%dx%d', dimensions.width, dimensions.height)
+  elseif format == 'raw' then
     return dimensions
   else
     -- Trigger an error if the format is not valid
-    error("Invalid format: " .. format)
+    error('Invalid format: ' .. format)
   end
 end
 
@@ -1150,10 +1150,10 @@ end
 ---@return table output The split string
 function M.split_string(inputstr, sep)
   if sep == nil then
-    sep = "%s"
+    sep = '%s'
   end
   local output = {}
-  for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
+  for str in string.gmatch(inputstr, '([^' .. sep .. ']+)') do
     table.insert(output, str)
   end
   return output
@@ -1163,7 +1163,7 @@ end
 ---@param rgb table The RGB color
 ---@return string hex The hexadecimal color
 function M.rgb_to_hex(rgb)
-  return string.format("#%02x%02x%02x", rgb[1], rgb[2], rgb[3])
+  return string.format('#%02x%02x%02x', rgb[1], rgb[2], rgb[3])
 end
 
 ---@function Function to get the foreground color of a highlight group
@@ -1203,16 +1203,16 @@ end
 ---@return string The number with its ordinal suffix.
 function M.get_ordinal_suffix(number)
   -- Determine the last two digits to handle 'teen' cases correctly
-  local suffix = "th" -- Default suffix
+  local suffix = 'th' -- Default suffix
   local last_digit = number % 10
   local last_two_digits = number % 100
 
   if last_digit == 1 and last_two_digits ~= 11 then
-    suffix = "st"
+    suffix = 'st'
   elseif last_digit == 2 and last_two_digits ~= 12 then
-    suffix = "nd"
+    suffix = 'nd'
   elseif last_digit == 3 and last_two_digits ~= 13 then
-    suffix = "rd"
+    suffix = 'rd'
   end
 
   return tostring(number) .. suffix
@@ -1237,13 +1237,13 @@ end
 ---@function Function to get the current date
 ---@return string|osdate date The current date
 function M.get_date()
-  return os.date("%Y-%m-%d")
+  return os.date('%Y-%m-%d')
 end
 
 ---@function Function to exit neovim
 ---@return nil
 function M.exit()
-  vim.api.nvim_command("wqall")
+  vim.api.nvim_command('wqall')
 end
 
 ---@function Function to render the MultiCursor statusline
@@ -1252,16 +1252,16 @@ function M.mc_statusline()
   -- Define the default status object
   local status = {
     enabled = false,
-    icon = "󰘪 ",
-    short_text = "NO",
-    text = "SINGLE",
-    color = "lualine_a_normal",
+    icon = '󰘪 ',
+    short_text = 'NO',
+    text = 'SINGLE',
+    color = 'lualine_a_normal',
     cursors = 1,
     disabled = 0,
     installed = false,
   }
 
-  local ok, mc = pcall(require, "multicursor-nvim")
+  local ok, mc = pcall(require, 'multicursor-nvim')
   if not ok then
     -- Handle the case where the plugin is not installed
     return status
@@ -1272,18 +1272,18 @@ function M.mc_statusline()
     status.enabled = true
     status.cursors = mc.numEnabledCursors()
     status.disabled = mc.numDisabledCursors()
-    if vim.fn.mode() == "v" then
+    if vim.fn.mode() == 'v' then
       -- status.icon = "󰚕 "
-      status.icon = "󰆿"
-      status.short_text = "V"
-      status.text = "VISUAL"
-      status.color = "lualine_a_visual"
+      status.icon = '󰆿'
+      status.short_text = 'V'
+      status.text = 'VISUAL'
+      status.color = 'lualine_a_visual'
     else
       -- status.icon = "󰬸 "
-      status.icon = "󰇀"
-      status.short_text = "N"
-      status.text = "NORMAL"
-      status.color = "lualine_a_normal"
+      status.icon = '󰇀'
+      status.short_text = 'N'
+      status.text = 'NORMAL'
+      status.color = 'lualine_a_normal'
     end
   end
 
@@ -1293,11 +1293,11 @@ function M.mc_statusline()
 
   -- Update the status object
   if status.cursors > 1 and status.disabled > 0 then
-    status.count = status.cursors .. "/" .. status.disabled
+    status.count = status.cursors .. '/' .. status.disabled
   elseif status.cursors > 1 and status.disabled <= 0 then
     status.count = status.cursors
   else
-    status.count = ""
+    status.count = ''
   end
   return status
 end
@@ -1330,34 +1330,34 @@ function M.spellcheck(spellcheck, filetypes)
   -- Handle filetype-specific spellchecking
   if filetypes then
     -- Set up description text
-    local desc = "Enable"
+    local desc = 'Enable'
     if not spellcheck then
-      desc = "Disable"
+      desc = 'Disable'
     end
 
     -- Make a comma-separated list of filetypes
     local typedesc
-    if type(filetypes) == "table" then
-      typedesc = table.concat(filetypes, ",")
+    if type(filetypes) == 'table' then
+      typedesc = table.concat(filetypes, ',')
     else -- Fallback to a string
       typedesc = tostring(filetypes)
     end
 
     -- If filetypes is a boolean
     if filetypes == true then
-      filetypes = { "*" } -- Apply to all filetypes
+      filetypes = { '*' } -- Apply to all filetypes
     elseif filetypes == false then
       toggle()
     end
 
     -- Create an autocommand for the specified filetypes to manage spellcheck
-    vim.api.nvim_create_autocmd("FileType", {
-      group = "Spellcheck",
+    vim.api.nvim_create_autocmd('FileType', {
+      group = 'Spellcheck',
       pattern = filetypes,
       callback = function()
         vim.opt_local.spell = spellcheck
       end,
-      desc = desc .. " spellcheck for " .. typedesc,
+      desc = desc .. ' spellcheck for ' .. typedesc,
     })
   else
     -- Handle local spellchecking
@@ -1382,11 +1382,11 @@ function M.swap_paste(default)
     -- Preserve the original actions of `p` and `P` using Vim commands to avoid interference
 
     -- Set `p` to the original paste after cursor
-    vim.api.nvim_set_keymap("n", "p", '"_dP', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', 'p', '"_dP', { noremap = true, silent = true })
     -- Set `P` to the original paste before cursor
     vim.api.nvim_set_keymap(
-      "n",
-      "P",
+      'n',
+      'P',
       '"_d"0p',
       { noremap = true, silent = true }
     )
@@ -1396,10 +1396,10 @@ function M.swap_paste(default)
     -- `P` will now revert to pasting before the cursor (original behavior)
 
     -- Remap `p` to its original behavior
-    vim.api.nvim_set_keymap("n", "p", "p", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', 'p', 'p', { noremap = true, silent = true })
 
     -- Remap `P` to its original behavior
-    vim.api.nvim_set_keymap("n", "P", "P", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', 'P', 'P', { noremap = true, silent = true })
   end
 end
 
@@ -1410,7 +1410,7 @@ end
 ---          - string if the text is in the specified range
 function M.trim_yank()
   -- Execute the last command in normal mode
-  vim.cmd.normal("!<Esc>")
+  vim.cmd.normal('!<Esc>')
 
   -- Get the start and finish positions of the selected text
   local start = vim.fn.getpos("'<")
@@ -1420,13 +1420,13 @@ function M.trim_yank()
   local lines = vim.fn.getline(start[2], finish[2])
 
   -- Ensure lines is a table even if only one line is selected
-  if type(lines) == "string" then
+  if type(lines) == 'string' then
     lines = { lines }
   end
 
   -- Drop empty lines from the selection
   for i = #lines, 1, -1 do
-    if lines[i] == "" then
+    if lines[i] == '' then
       table.remove(lines, i)
     end
   end
@@ -1439,7 +1439,7 @@ function M.trim_yank()
   -- Find the minimum whitespace (indentation) in the selected lines
   local ws = 9999
   for _, line in ipairs(lines) do
-    local lws = line:match("^%s*") -- Extract leading whitespace
+    local lws = line:match('^%s*') -- Extract leading whitespace
     if lws and #lws < ws then
       ws = #lws
     end
@@ -1451,29 +1451,29 @@ function M.trim_yank()
   end
 
   -- Return the resulting lines as a single concatenated string
-  return table.concat(lines, "\n")
+  return table.concat(lines, '\n')
 end
 
 ---@function Function to open the lazygit popup in a floaterm
 ---@return nil
 function M.open_lazygit_popup()
   -- Set floaterm border characters
-  vim.g.floaterm_borderchars = "─│─│╭╮╯╰"
+  vim.g.floaterm_borderchars = '─│─│╭╮╯╰'
 
   -- Floaterm configuration properties
   local floaterm_props = {
-    width = "0.98", -- Width of the floaterm
-    height = "0.95", -- Height of the floaterm
-    autoclose = "1", -- Auto close the floaterm when finished
-    command = "lazygit", -- Command to run in the floaterm
-    name = "LazyGit", -- Name of the floaterm
-    title = "LazyGit", -- Title of the floaterm
-    titlepos = "center", -- Title position of the floaterm
+    width = '0.98', -- Width of the floaterm
+    height = '0.95', -- Height of the floaterm
+    autoclose = '1', -- Auto close the floaterm when finished
+    command = 'lazygit', -- Command to run in the floaterm
+    name = 'LazyGit', -- Name of the floaterm
+    title = 'LazyGit', -- Title of the floaterm
+    titlepos = 'center', -- Title position of the floaterm
   }
 
   -- Construct the command string for opening the floaterm with the specified settings
   local cmd = string.format(
-    "FloatermNew --height=%s --width=%s --name=%s --title=%s --titleposition=%s --autoclose=%s %s",
+    'FloatermNew --height=%s --width=%s --name=%s --title=%s --titleposition=%s --autoclose=%s %s',
     floaterm_props.height,
     floaterm_props.width,
     floaterm_props.name,
@@ -1487,7 +1487,7 @@ function M.open_lazygit_popup()
   vim.cmd(cmd) -- Using vim.cmd to run the constructed command
 
   -- Enter insert mode in the floaterm
-  vim.cmd("startinsert")
+  vim.cmd('startinsert')
 end
 
 ---@function Function to replace '...' with '…' (ellipsis)
@@ -1498,9 +1498,9 @@ function M.replace_ellipsis()
   local cursor_pos = vim.api.nvim_win_get_cursor(0) -- Get the current cursor position
 
   -- Check if the current line ends with '...'
-  if current_line:sub(cursor_pos[2] - 2, cursor_pos[2]) == "..." then
+  if current_line:sub(cursor_pos[2] - 2, cursor_pos[2]) == '...' then
     -- Replace '...' with '…' using string manipulation
-    local new_line = current_line:sub(1, cursor_pos[2] - 3) .. "…"
+    local new_line = current_line:sub(1, cursor_pos[2] - 3) .. '…'
 
     -- Set the new line content
     vim.api.nvim_set_current_line(new_line)
@@ -1523,25 +1523,25 @@ function M.setup_replace_ellipsis(enable)
   end
 
   -- Create an autogroup to handle the autocmds
-  vim.api.nvim_create_augroup("EllipsisReplace", { clear = true })
+  vim.api.nvim_create_augroup('EllipsisReplace', { clear = true })
 
   if enable then
     -- Add an autocmd to handle the InsertLeave event
-    vim.api.nvim_create_autocmd("InsertLeave", {
-      group = "EllipsisReplace",
+    vim.api.nvim_create_autocmd('InsertLeave', {
+      group = 'EllipsisReplace',
       callback = M.replace_ellipsis,
     })
 
     -- Optionally, you could call the function on text change as well
-    vim.api.nvim_create_autocmd("TextChangedI", {
-      group = "EllipsisReplace",
+    vim.api.nvim_create_autocmd('TextChangedI', {
+      group = 'EllipsisReplace',
       callback = M.replace_ellipsis,
     })
     return true
   else
     -- Remove the autocmds
     vim.api.nvim_del_augroup_by_id(
-      vim.api.nvim_create_augroup("EllipsisReplace", { clear = true })
+      vim.api.nvim_create_augroup('EllipsisReplace', { clear = true })
     )
   end
 
@@ -1558,16 +1558,16 @@ function M.append_modeline()
 
   -- Create the modeline string.
   local modeline = string.format(
-    " vim: set ts=%d sw=%d tw=%d %set :",
+    ' vim: set ts=%d sw=%d tw=%d %set :',
     tabstop,
     shiftwidth,
     textwidth,
-    expandtab and "" or "no"
+    expandtab and '' or 'no'
   )
 
   -- Replace the placeholder in the comment string.
   local commentstring = vim.o.commentstring
-  modeline = commentstring:gsub("%%s", modeline)
+  modeline = commentstring:gsub('%%s', modeline)
 
   -- Append the modeline after the last line in the buffer.
   vim.api.nvim_buf_set_lines(0, -1, -1, false, { modeline })
@@ -1583,8 +1583,8 @@ function M.bufremove(buf)
 
   if vim.bo.modified then
     local choice = vim.fn.confirm(
-      ("Save changes to %q?"):format(vim.fn.bufname()),
-      "&Yes\n&No\n&Cancel"
+      ('Save changes to %q?'):format(vim.fn.bufname()),
+      '&Yes\n&No\n&Cancel'
     )
     if choice == 0 or choice == 3 then -- 0 for <Esc>/<C-c> and 3 for Cancel
       return
@@ -1603,7 +1603,7 @@ function M.bufremove(buf)
         return
       end
       -- Try using alternate buffer
-      local alt = vim.fn.bufnr("#")
+      local alt = vim.fn.bufnr('#')
       if alt ~= buf and vim.fn.buflisted(alt) == 1 then
         vim.api.nvim_win_set_buf(win, alt)
         return
@@ -1611,7 +1611,7 @@ function M.bufremove(buf)
 
       -- Try using previous buffer
       ---@diagnostic disable-next-line: param-type-mismatch
-      local has_previous = pcall(vim.cmd, "bprevious")
+      local has_previous = pcall(vim.cmd, 'bprevious')
       if has_previous and buf ~= vim.api.nvim_win_get_buf(win) then
         return
       end
@@ -1623,7 +1623,7 @@ function M.bufremove(buf)
   end
   if vim.api.nvim_buf_is_valid(buf) then
     ---@diagnostic disable-next-line: param-type-mismatch
-    pcall(vim.cmd, "bdelete! " .. buf)
+    pcall(vim.cmd, 'bdelete! ' .. buf)
   end
 end
 
@@ -1632,7 +1632,7 @@ end
 ---@param pwd? boolean Check if project directory is a git repository
 ---@return boolean is_git_repo  true if working directory or project directory is a git repository, false otherwise
 function M.is_git_repo(cwd, pwd)
-  if type(cwd) == "table" then
+  if type(cwd) == 'table' then
     pwd = cwd.pwd
     cwd = cwd.cwd
   end
@@ -1656,10 +1656,10 @@ function M.is_git_repo(cwd, pwd)
 
   -- Helper function to check for a .git directory
   local function has_git_dir(path)
-    local git_path = path .. "/.git"
+    local git_path = path .. '/.git'
     ---@diagnostic disable-next-line: undefined-field
     local stat = vim.loop.fs_stat(git_path)
-    return stat and stat.type == "directory"
+    return stat and stat.type == 'directory'
   end
 
   if cwd then
@@ -1698,40 +1698,40 @@ end
 ---@return boolean success  true if the picker command was successful, false otherwise
 function M.pick(cmd, provider, options)
   -- Handle case where `cmd` is a table (destructuring the table fields)
-  if type(cmd) == "table" then
+  if type(cmd) == 'table' then
     provider = cmd.provider
     options = cmd.options
     cmd = cmd.cmd
   end
 
   -- Default the command to "files" if not provided
-  cmd = cmd or "files"
+  cmd = cmd or 'files'
 
   -- Determine the provider if one is not selected
   -- (defaults to fzf-lua if available, else telescope)
   -- Will use vim.g.lazyvim_picker if defined
   if provider == nil then
-    if vim.g.lazyvim_picker == "fzf" then
-      provider = "fzf-lua"
-    elseif vim.g.lazyvim_picker == "telescope" then
-      provider = "telescope"
+    if vim.g.lazyvim_picker == 'fzf' then
+      provider = 'fzf-lua'
+    elseif vim.g.lazyvim_picker == 'telescope' then
+      provider = 'telescope'
     else
-      local has_fzf, _ = pcall(require, "fzf-lua")
+      local has_fzf, _ = pcall(require, 'fzf-lua')
       if has_fzf then
-        provider = "fzf-lua"
+        provider = 'fzf-lua'
       else
-        provider = "telescope"
+        provider = 'telescope'
       end
     end
   end
 
   -- Handle special commands
-  if cmd == "config_files" then
-    cmd = "files"
-    options = { cwd = vim.fn.stdpath("config") }
+  if cmd == 'config_files' then
+    cmd = 'files'
+    options = { cwd = vim.fn.stdpath('config') }
   end
-  if cmd == "files" and provider == "telescope" then
-    cmd = "find_files"
+  if cmd == 'files' and provider == 'telescope' then
+    cmd = 'find_files'
   end
 
   -- Helper function to check if a picker command exists for a given provider
@@ -1739,7 +1739,7 @@ function M.pick(cmd, provider, options)
     local success, picker = pcall(function()
       return require(provide)[commd]
     end)
-    return success and type(picker) == "function"
+    return success and type(picker) == 'function'
   end
 
   -- Ensure options is always a table (to avoid errors if nil is passed)
@@ -1747,12 +1747,12 @@ function M.pick(cmd, provider, options)
 
   -- Define available providers in the order of fallback preference
   local providers =
-    { provider, provider == "fzf-lua" and "telescope" or "fzf-lua" }
+    { provider, provider == 'fzf-lua' and 'telescope' or 'fzf-lua' }
 
   -- Try running the picker for the first provider (or fallback to the second if not available)
   for _, current_provider in ipairs(providers) do
-    if current_provider == "telescope" then
-      current_provider = "telescope.builtin"
+    if current_provider == 'telescope' then
+      current_provider = 'telescope.builtin'
     end
 
     if has_picker(current_provider, cmd) then
@@ -1763,25 +1763,25 @@ function M.pick(cmd, provider, options)
   end
 
   -- Handle special cases
-  if cmd == "file_browser" then
-    if provider == "mini" then
-      require("mini.files").open()
+  if cmd == 'file_browser' then
+    if provider == 'mini' then
+      require('mini.files').open()
       return true
-    elseif provider == "neotree" then
-      vim.cmd("Neotree reveal")
+    elseif provider == 'neotree' then
+      vim.cmd('Neotree reveal')
       return true
-    elseif provider == "oil" then
-      require("oil").open()
+    elseif provider == 'oil' then
+      require('oil').open()
       return true
     else
-      require("telescope").extensions.file_browser.file_browser()
+      require('telescope').extensions.file_browser.file_browser()
       return true
     end
   end
 
   -- If no provider supports the cmd, throw an error
   vim.notify(
-    "Unknown command: " .. cmd .. " for providers: fzf-lua, telescope",
+    'Unknown command: ' .. cmd .. ' for providers: fzf-lua, telescope',
     vim.log.levels.ERROR
   )
   return false
@@ -1795,9 +1795,9 @@ end
 ---@return string The converted path
 function M.convert_path(path)
   -- Check if the path is a Windows path (e.g., C:\ or D:\)
-  if path:match("^[A-Za-z]:\\") or path:match("^[A-Za-z]:/") then
+  if path:match('^[A-Za-z]:\\') or path:match('^[A-Za-z]:/') then
     -- Convert forward slashes (/) to backslashes (\)
-    local converted_path = path:gsub("/", "\\")
+    local converted_path = path:gsub('/', '\\')
     return converted_path
   else
     -- Return the original path if it's not a Windows path
@@ -1806,13 +1806,13 @@ function M.convert_path(path)
 end
 
 function M.char_on_pos(pos)
-  pos = pos or vim.fn.getpos(".")
+  pos = pos or vim.fn.getpos('.')
   return tostring(vim.fn.getline(pos[1])):sub(pos[2], pos[2])
 end
 
 -- From: https://neovim.discourse.group/t/how-do-you-work-with-strings-with-multibyte-characters-in-lua/2437/4
 function M.char_byte_count(s, i)
-  if not s or s == "" then
+  if not s or s == '' then
     return 1
   end
 
@@ -1831,8 +1831,8 @@ function M.char_byte_count(s, i)
 end
 
 function M.get_visual_range()
-  local sr, sc = unpack(vim.fn.getpos("v"), 2, 3)
-  local er, ec = unpack(vim.fn.getpos("."), 2, 3)
+  local sr, sc = unpack(vim.fn.getpos('v'), 2, 3)
+  local er, ec = unpack(vim.fn.getpos('.'), 2, 3)
 
   -- To correct work with non-single byte chars
   local byte_c = M.char_byte_count(M.char_on_pos({ er, ec }))
@@ -1860,7 +1860,7 @@ end
 function M.number()
   local nu = vim.opt.number:get()
   local rnu = vim.opt.relativenumber:get()
-  local cur_line = vim.fn.line(".") == vim.v.lnum and vim.v.lnum or vim.v.relnum
+  local cur_line = vim.fn.line('.') == vim.v.lnum and vim.v.lnum or vim.v.relnum
 
   local width = vim.opt.numberwidth:get()
   local l_count_width = #tostring(vim.api.nvim_buf_line_count(0))
@@ -1868,28 +1868,28 @@ function M.number()
 
   local function pad_start(n)
     local len = width - #tostring(n)
-    return len < 1 and n or (" "):rep(len) .. n
+    return len < 1 and n or (' '):rep(len) .. n
   end
 
-  local v_hl = ""
+  local v_hl = ''
 
-  local mode = vim.fn.strtrans(vim.fn.mode()):lower():gsub("%W", "")
-  if mode == "v" then
+  local mode = vim.fn.strtrans(vim.fn.mode()):lower():gsub('%W', '')
+  if mode == 'v' then
     -- Define the custom highlight outside the function
-    local bg_color = M.get_bg_color("CursorLineNr")
-    local fg_color = M.get_bg_color("lualine_a_visual")
+    local bg_color = M.get_bg_color('CursorLineNr')
+    local fg_color = M.get_bg_color('lualine_a_visual')
     vim.api.nvim_set_hl(
       0,
-      "StatusColumnVisualHighlight",
+      'StatusColumnVisualHighlight',
       { fg = fg_color, bg = bg_color }
     )
 
     local v_range = M.get_visual_range()
     local is_in_range = vim.v.lnum >= v_range[1] and vim.v.lnum <= v_range[3]
-    v_hl = is_in_range and "%#StatusColumnVisualHighlight#" or ""
+    v_hl = is_in_range and '%#StatusColumnVisualHighlight#' or ''
   end
 
-  local line_display = ""
+  local line_display = ''
   if nu and rnu then
     line_display = pad_start(cur_line)
   elseif nu then
@@ -1899,36 +1899,36 @@ function M.number()
   end
 
   -- Include `%s` for signs, followed by the custom line number output
-  return "%s" .. v_hl .. line_display
+  return '%s' .. v_hl .. line_display
 end
 
 --- Function to search for the provided filetypes with pickers
 ---@param filetypes table A list of filetypes to search for
 function M.pick_filetypes(filetypes)
-  if not pcall(require, "telescope") then
-    if not pcall(require, "fzf-lua") then
-      vim.notify("Picker not found", vim.log.levels.ERROR)
+  if not pcall(require, 'telescope') then
+    if not pcall(require, 'fzf-lua') then
+      vim.notify('Picker not found', vim.log.levels.ERROR)
       return
     else
-      require("fzf-lua").files({
-        cmd = "fd --type f " .. table.concat(
+      require('fzf-lua').files({
+        cmd = 'fd --type f ' .. table.concat(
           vim.tbl_map(function(ft)
-            return "--extension " .. ft
+            return '--extension ' .. ft
           end, filetypes),
-          " "
+          ' '
         ),
       })
       return
     end
   else
-    require("telescope.builtin").find_files({
+    require('telescope.builtin').find_files({
       find_command = {
-        "fd",
-        "--type",
-        "f",
+        'fd',
+        '--type',
+        'f',
         unpack(vim
           .iter(vim.tbl_map(function(ft)
-            return { "--extension", ft }
+            return { '--extension', ft }
           end, filetypes))
           :flatten()
           :totable()),
@@ -1939,42 +1939,42 @@ end
 
 --- Function to search for cpp files with picker
 function M.search_cpp_files()
-  M.pick_filetypes(require("data.types").picker_sets.cpp_files)
+  M.pick_filetypes(require('data.types').picker_sets.cpp_files)
 end
 
 --- Function to search for python files with picker
 function M.search_python_files()
-  M.pick_filetypes(require("data.types").picker_sets.python_files)
+  M.pick_filetypes(require('data.types').picker_sets.python_files)
 end
 
 --- Function to search for nvim files with picker
 function M.search_nvim_files()
-  M.pick_filetypes(require("data.types").picker_sets.nvim_files)
+  M.pick_filetypes(require('data.types').picker_sets.nvim_files)
 end
 
 --- Function to search for vim files with picker
 function M.search_vim_files()
-  M.pick_filetypes(require("data.types").picker_sets.vim_files)
+  M.pick_filetypes(require('data.types').picker_sets.vim_files)
 end
 
 --- Function to search for java files with picker
 function M.search_java_files()
-  M.pick_filetypes(require("data.types").picker_sets.java_files)
+  M.pick_filetypes(require('data.types').picker_sets.java_files)
 end
 
 --- Function to search for javascript files with picker
 function M.search_js_files()
-  M.pick_filetypes(require("data.types").picker_sets.js_files)
+  M.pick_filetypes(require('data.types').picker_sets.js_files)
 end
 
 --- Function to search for rust files with picker
 function M.search_rust_files()
-  M.pick_filetypes(require("data.types").picker_sets.rust_files)
+  M.pick_filetypes(require('data.types').picker_sets.rust_files)
 end
 
 --- Function to search for HTML files with picker
 function M.search_html_files()
-  M.pick_filetypes(require("data.types").picker_sets.html_files)
+  M.pick_filetypes(require('data.types').picker_sets.html_files)
 end
 
 --- Function to apply the Caesar cipher to a given text
@@ -1983,12 +1983,12 @@ end
 ---@return string shifted_text The transformed text
 function M.caesar_cipher(text, shift)
   shift = shift or 3 -- Default shift is 3 if not provided
-  local shifted_text = ""
+  local shifted_text = ''
 
-  for char in text:gmatch(".") do
+  for char in text:gmatch('.') do
     -- Check if the character is a letter
-    if char:match("%a") then
-      local base = char:match("%u") and 65 or 97 -- Base ASCII for uppercase or lowercase letters
+    if char:match('%a') then
+      local base = char:match('%u') and 65 or 97 -- Base ASCII for uppercase or lowercase letters
       local new_char =
         string.char(((string.byte(char) - base + shift) % 26) + base)
       shifted_text = shifted_text .. new_char
@@ -2010,14 +2010,14 @@ end
 --- Function to apply the Caesar cipher to the visual selection
 ---@param shift number The shift value
 function M.caesar_cipher_visual(shift)
-  local Range = require("u.range")
+  local Range = require('u.range')
   local range = Range.from_vtext()
   local text = range:text()
-  local shifted_text = ""
+  local shifted_text = ''
 
-  for char in text:gmatch(".") do
-    if char:match("%a") then
-      local base = char:match("%u") and 65 or 97
+  for char in text:gmatch('.') do
+    if char:match('%a') then
+      local base = char:match('%u') and 65 or 97
       local new_char =
         string.char(((string.byte(char) - base + shift) % 26) + base)
       shifted_text = shifted_text .. new_char
@@ -2032,30 +2032,30 @@ end
 -- Function to encrypt the entire buffer contents using GPG
 function M.encrypt_buffer_with_gpg()
   -- Get the recipient email address from env variable or user input
-  local recipient = os.getenv("GPG_RECIPIENT")
+  local recipient = os.getenv('GPG_RECIPIENT')
   if not recipient then
-    recipient = vim.fn.input("Enter recipient email: ")
+    recipient = vim.fn.input('Enter recipient email: ')
   end
 
   -- Create a temporary file to hold the plaintext buffer content
   local temp_filename = os.tmpname()
-  local temp_output_filename = os.tmpname() .. ".gpg" -- Temporary output file for encrypted content
-  local file = io.open(temp_filename, "w")
+  local temp_output_filename = os.tmpname() .. '.gpg' -- Temporary output file for encrypted content
+  local file = io.open(temp_filename, 'w')
 
   if file then
     -- Get all lines in the current buffer and write them to the temporary file
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-    local content = table.concat(lines, "\n")
+    local content = table.concat(lines, '\n')
     file:write(content)
     file:close()
   else
-    print("Failed to create temporary file")
+    print('Failed to create temporary file')
     return
   end
 
   -- Command to encrypt the file using GPG
   local command = string.format(
-    "gpg -e -a -o %s -r %s %s",
+    'gpg -e -a -o %s -r %s %s',
     temp_output_filename,
     recipient,
     temp_filename
@@ -2067,10 +2067,10 @@ function M.encrypt_buffer_with_gpg()
   -- Check if the GPG command was successful
   if exit_code == 0 then
     -- Read the encrypted text from the output file
-    local encrypted_file = io.open(temp_output_filename, "r")
+    local encrypted_file = io.open(temp_output_filename, 'r')
 
     if encrypted_file then
-      local encrypted_text = encrypted_file:read("*a") -- Read the entire content
+      local encrypted_text = encrypted_file:read('*a') -- Read the entire content
       encrypted_file:close()
 
       -- Replace the current buffer's contents with the encrypted text, split into lines
@@ -2079,13 +2079,13 @@ function M.encrypt_buffer_with_gpg()
         0,
         -1,
         false,
-        vim.split(encrypted_text, "\n")
+        vim.split(encrypted_text, '\n')
       )
     else
-      print("Failed to read the encrypted output file.")
+      print('Failed to read the encrypted output file.')
     end
   else
-    print("GPG command failed. Check your GPG configuration.")
+    print('GPG command failed. Check your GPG configuration.')
   end
 
   -- Clean up temporary files
@@ -2095,18 +2095,18 @@ end
 
 -- Function to base64 encode the current line or visual selection
 local function base64_encode(input)
-  local b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+  local b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
   local output = {}
-  local padding = ""
+  local padding = ''
 
   -- Add padding for any leftover bytes
   local len = #input
   if len % 3 == 1 then
-    input = input .. "\0\0"
-    padding = "=="
+    input = input .. '\0\0'
+    padding = '=='
   elseif len % 3 == 2 then
-    input = input .. "\0"
-    padding = "="
+    input = input .. '\0'
+    padding = '='
   end
 
   for i = 1, #input, 3 do
@@ -2130,7 +2130,7 @@ local function base64_encode(input)
 end
 
 function M.base64_encode_visual()
-  local Range = require("u.range")
+  local Range = require('u.range')
   local range = Range.from_vtext()
 
   local selected_text = range:text()
@@ -2153,13 +2153,13 @@ end
 
 -- Function to base64 decode a string
 local function base64_decode(input)
-  local b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+  local b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
   local output = {}
-  local padding = input:sub(-2) == "==" and 2
-    or (input:sub(-1) == "=" and 1 or 0)
+  local padding = input:sub(-2) == '==' and 2
+    or (input:sub(-1) == '=' and 1 or 0)
 
   -- Remove any padding characters
-  input = input:gsub("=", "")
+  input = input:gsub('=', '')
 
   for i = 1, #input, 4 do
     local c1, c2, c3, c4 =
@@ -2186,7 +2186,7 @@ end
 
 -- Function to decode the current visual selection
 function M.base64_decode_visual()
-  local Range = require("u.range")
+  local Range = require('u.range')
   local range = Range.from_vtext()
 
   local selected_text = range:text()
@@ -2217,7 +2217,7 @@ local function rot47(input_string)
     local ascii = string.byte(char)
 
     -- Check for newline characters
-    if char == "\n" then
+    if char == '\n' then
       -- Preserve newline characters without modification
       table.insert(result, char)
     elseif ascii >= 33 and ascii <= 126 then
@@ -2246,7 +2246,7 @@ end
 
 --- Applies the ROT47 cipher to the visual selection while preserving newline characters.
 function M.rot47_visual()
-  local Range = require("u.range")
+  local Range = require('u.range')
   local range = Range.from_vtext()
 
   local selected_text = range:text()
@@ -2265,12 +2265,12 @@ local function hex_encode(input_string)
     local char = input_string:sub(i, i)
 
     -- Check for newline characters
-    if char == "\n" then
+    if char == '\n' then
       -- Preserve newline characters without modification
       table.insert(result, char)
     else
       -- Convert each character to its hexadecimal representation
-      local hex = string.format("%02X", string.byte(char))
+      local hex = string.format('%02X', string.byte(char))
       table.insert(result, hex)
     end
   end
@@ -2289,7 +2289,7 @@ local function hex_decode(hex_string)
     local char = hex_string:sub(i, i)
 
     -- Check for newline characters
-    if char == "\n" then
+    if char == '\n' then
       -- Preserve newline characters without modification
       table.insert(result, char)
       i = i + 1
@@ -2298,7 +2298,7 @@ local function hex_decode(hex_string)
       local hex_pair = hex_string:sub(i, i + 1)
 
       -- Convert the hexadecimal pair to corresponding character
-      if hex_pair:match("^[0-9A-Fa-f][0-9A-Fa-f]$") then
+      if hex_pair:match('^[0-9A-Fa-f][0-9A-Fa-f]$') then
         local byte = tonumber(hex_pair, 16) -- Convert to number
         table.insert(result, string.char(byte)) -- Convert number to character
         i = i + 2 -- Move to the next pair
@@ -2331,7 +2331,7 @@ end
 
 --- Applies the hex encoding to the visual selection while preserving newline characters.
 function M.hex_encode_visual()
-  local Range = require("u.range")
+  local Range = require('u.range')
   local range = Range.from_vtext()
 
   local selected_text = range:text()
@@ -2354,7 +2354,7 @@ end
 
 --- Reverses the hex encoding of the visual selection while preserving newline characters.
 function M.hex_decode_visual()
-  local Range = require("u.range")
+  local Range = require('u.range')
   local range = Range.from_vtext()
 
   local selected_text = range:text()
@@ -2365,26 +2365,26 @@ end
 
 --- Function to lookup selection in help docs
 function M.help_lookup_visual()
-  local Range = require("u.range")
+  local Range = require('u.range')
   local range = Range.from_vtext()
   local selected_text = range:text()
-  vim.api.nvim_command("help " .. selected_text)
+  vim.api.nvim_command('help ' .. selected_text)
 end
 
 --- Function to lookup word in help docs
 function M.help_lookup_word()
-  local Range = require("u.range")
-  local range = Range.from_text_object("iw")
+  local Range = require('u.range')
+  local range = Range.from_text_object('iw')
   if range then
     local selected_text = range:text()
-    vim.api.nvim_command("help " .. selected_text)
+    vim.api.nvim_command('help ' .. selected_text)
   end
 end
 
 --- Function to look up a string in the help docs
 ---@param string string The string to be looked up
 function M.help_lookup_string(string)
-  vim.api.nvim_command("help " .. string)
+  vim.api.nvim_command('help ' .. string)
 end
 
 --- Function to add single-quotes around a string
@@ -2403,8 +2403,8 @@ end
 
 --- Function to lookup the word (quoted)
 function M.help_lookup_quoted()
-  local Range = require("u.range")
-  local range = Range.from_text_object("iw")
+  local Range = require('u.range')
+  local range = Range.from_text_object('iw')
   if range then
     local selected_text = range:text()
     M.help_lookup_string(M.wrap_in_quotes(selected_text))
@@ -2413,7 +2413,7 @@ end
 
 --- Function to lookup the selection (quoted)
 function M.help_lookup_quoted_visual()
-  local Range = require("u.range")
+  local Range = require('u.range')
   local range = Range.from_vtext()
   local selected_text = range:text()
   M.help_lookup_string(M.wrap_in_quotes(selected_text))

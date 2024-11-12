@@ -6,62 +6,62 @@
 
 return {
   { -- mini.animate
-    import = "lazyvim.plugins.extras.ui.mini-animate",
+    import = 'lazyvim.plugins.extras.ui.mini-animate',
   },
   {
-    "echasnovski/mini.move",
-    event = "VeryLazy",
+    'echasnovski/mini.move',
+    event = 'VeryLazy',
     opts = {},
   },
   { -- Mini.Indentscope
-    import = "lazyvim.plugins.extras.ui.mini-indentscope",
+    import = 'lazyvim.plugins.extras.ui.mini-indentscope',
   },
   { -- Mini Indentscope
-    "echasnovski/mini.indentscope",
-    opts = require("data.types").miniindentscope.opts,
-    init = require("data.types").miniindentscope.init,
+    'echasnovski/mini.indentscope',
+    opts = require('data.types').miniindentscope.opts,
+    init = require('data.types').miniindentscope.init,
   },
   { -- mini.align
-    "echasnovski/mini.align",
-    event = "InsertEnter",
+    'echasnovski/mini.align',
+    event = 'InsertEnter',
     config = function()
-      require("mini.align").setup()
+      require('mini.align').setup()
     end,
   },
   { -- mini.splitjoin
-    "echasnovski/mini.splitjoin",
-    event = "InsertEnter",
+    'echasnovski/mini.splitjoin',
+    event = 'InsertEnter',
     opts = {
-      mappings = require("data.keys").splitjoin,
+      mappings = require('data.keys').splitjoin,
     },
   },
   { -- mini.surround
-    "echasnovski/mini.surround",
+    'echasnovski/mini.surround',
     opts = {},
   },
   { -- mini.files
-    "echasnovski/mini.files",
-    opts = require("data.types").minifiles.opts,
-    keys = require("data.keys").minifiles,
-    config = require("data.types").minifiles.config,
+    'echasnovski/mini.files',
+    opts = require('data.types').minifiles.opts,
+    keys = require('data.keys').minifiles,
+    config = require('data.types').minifiles.config,
   },
   { -- mini.icons
-    "echasnovski/mini.icons",
+    'echasnovski/mini.icons',
     lazy = true,
     opts = {
       file = {
-        [".keep"] = { glyph = "󰊢", hl = "MiniIconsGrey" },
-        ["devcontainer.json"] = { glyph = "", hl = "MiniIconsAzure" },
+        ['.keep'] = { glyph = '󰊢', hl = 'MiniIconsGrey' },
+        ['devcontainer.json'] = { glyph = '', hl = 'MiniIconsAzure' },
       },
       filetype = {
-        dotenv = { glyph = "", hl = "MiniIconsYellow" },
+        dotenv = { glyph = '', hl = 'MiniIconsYellow' },
       },
     },
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field
-      package.preload["nvim-web-devicons"] = function()
-        require("mini.icons").mock_nvim_web_devicons()
-        return package.loaded["nvim-web-devicons"]
+      package.preload['nvim-web-devicons'] = function()
+        require('mini.icons').mock_nvim_web_devicons()
+        return package.loaded['nvim-web-devicons']
       end
     end,
   },

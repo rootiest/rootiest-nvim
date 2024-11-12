@@ -7,7 +7,7 @@
 --          │                         No Statusline                     │
 --          ╰─────────────────────────────────────────────────────────╯
 
-if vim.g.statusline ~= "none" then
+if vim.g.statusline ~= 'none' then
   return {}
 end
 

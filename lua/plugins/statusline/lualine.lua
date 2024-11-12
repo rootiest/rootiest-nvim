@@ -7,12 +7,12 @@
 --          │                         Lualine                         │
 --          ╰─────────────────────────────────────────────────────────╯
 
-local wakatime_stats = require("utils.wakatime_stats")
-local music_stats = require("utils.music_stats")
+local wakatime_stats = require('utils.wakatime_stats')
+local music_stats = require('utils.music_stats')
 
 -- Setup NeoMiniMap extension
 -- local minimap_extension = require("neominimap.statusline").lualine_default
-local neominimap = require("neominimap.statusline")
+local neominimap = require('neominimap.statusline')
 local minimap_extension = {
   sections = {
     lualine_a = {
@@ -20,8 +20,8 @@ local minimap_extension = {
     },
     lualine_b = {
       { -- Branch
-        "branch",
-        separator = "",
+        'branch',
+        separator = '',
         padding = { left = 1, right = 0 },
       },
     },
@@ -30,89 +30,89 @@ local minimap_extension = {
     },
     lualine_y = {
       { -- Progress
-        "progress",
-        separator = "",
+        'progress',
+        separator = '',
         padding = { left = 0, right = 1 },
-        icon = "",
+        icon = '',
       },
       neominimap.position,
     },
     lualine_z = {
       { -- Time
-        "datetime",
-        style = "%a %R",
-        icon = " ",
+        'datetime',
+        style = '%a %R',
+        icon = ' ',
         padding = { left = 0, right = 1 },
         on_click = function()
-          vim.cmd("Telescope oldfiles")
+          vim.cmd('Telescope oldfiles')
         end,
       },
     },
   },
-  filetypes = { "neominimap" },
+  filetypes = { 'neominimap' },
 }
 
 -- Use lualine by default
 if vim.g.statusline == nil then
-  vim.g.statusline = "lualine"
+  vim.g.statusline = 'lualine'
 end
 
 -- function to process get_status() and set buffer variable to that data.
-local neocodeium = require("neocodeium")
+local neocodeium = require('neocodeium')
 local function get_neocodeium_status(ev)
   local status, server_status = neocodeium.get_status()
   -- process this data, convert it to custom string/icon etc and set buffer variable
 
   -- Tables to map serverstatus and status to corresponding symbols
   local server_status_symbols = {
-    [0] = "󰣺 ", -- Connected
-    [1] = "󱤚 ", -- Connecting
-    [2] = "󰣽 ", -- Disconnected
+    [0] = '󰣺 ', -- Connected
+    [1] = '󱤚 ', -- Connecting
+    [2] = '󰣽 ', -- Disconnected
   }
 
   local status_symbols = {
-    [0] = "󰚩 ", -- Enabled
-    [1] = "󱚧 ", -- Disabled Globally
-    [3] = "󱚢 ", -- Disabled for Buffer filetype
-    [5] = "󱚠 ", -- Disabled for Buffer encoding
-    [2] = "󱙻 ", -- Disabled for Buffer (catch-all)
+    [0] = '󰚩 ', -- Enabled
+    [1] = '󱚧 ', -- Disabled Globally
+    [3] = '󱚢 ', -- Disabled for Buffer filetype
+    [5] = '󱚠 ', -- Disabled for Buffer encoding
+    [2] = '󱙻 ', -- Disabled for Buffer (catch-all)
   }
 
   -- Handle serverstatus and status fallback (safeguard against any unexpected value)
-  local luacodeium = server_status_symbols[server_status] or "󰣼 "
-  luacodeium = luacodeium .. (status_symbols[status] or "󱙻 ")
-  vim.api.nvim_buf_set_var(ev.buf, "neocodeium_status", luacodeium)
+  local luacodeium = server_status_symbols[server_status] or '󰣼 '
+  luacodeium = luacodeium .. (status_symbols[status] or '󱙻 ')
+  vim.api.nvim_buf_set_var(ev.buf, 'neocodeium_status', luacodeium)
 end
 
 -- Then only some of event fired we invoked this function
-vim.api.nvim_create_autocmd("User", {
+vim.api.nvim_create_autocmd('User', {
   group = ..., -- set some augroup here
   pattern = {
-    "NeoCodeiumServerConnecting",
-    "NeoCodeiumServerConnected",
-    "NeoCodeiumServerStopped",
-    "NeoCodeiumEnabled",
-    "NeoCodeiumDisabled",
-    "NeoCodeiumBufEnabled",
-    "NeoCodeiumBufDisabled",
+    'NeoCodeiumServerConnecting',
+    'NeoCodeiumServerConnected',
+    'NeoCodeiumServerStopped',
+    'NeoCodeiumEnabled',
+    'NeoCodeiumDisabled',
+    'NeoCodeiumBufEnabled',
+    'NeoCodeiumBufDisabled',
   },
   callback = get_neocodeium_status,
 })
 
 return { -- Lualine
-  "nvim-lualine/lualine.nvim",
-  cond = require("data.func").check_global_var(
-    "statusline",
-    "lualine",
-    "lualine"
+  'nvim-lualine/lualine.nvim',
+  cond = require('data.func').check_global_var(
+    'statusline',
+    'lualine',
+    'lualine'
   ),
 
-  dependencies = require("data.deps").lualine,
+  dependencies = require('data.deps').lualine,
   init = function()
     vim.g.lualine_laststatus = vim.o.laststatus
     if vim.fn.argc(-1) > 0 then
       -- set an empty statusline till lualine loads
-      vim.o.statusline = " "
+      vim.o.statusline = ' '
     else
       -- hide the statusline on the starter page
       vim.o.laststatus = 0
@@ -127,84 +127,84 @@ return { -- Lualine
     -- Define todo-comments component
 
     -- Attempt to require the plugin and handle the case where it's not available
-    local status, todos = pcall(require, "todos-lualine")
+    local status, todos = pcall(require, 'todos-lualine')
 
     local todos_component
 
     if not status then
       todos_component = nil -- Set to nil if the plugin is not loaded
     else
-      todos_component = todos.component(require("data.types").todo.lualine())
+      todos_component = todos.component(require('data.types').todo.lualine())
     end
 
     local opts = {
       options = { -- General options
-        theme = "auto",
+        theme = 'auto',
         globalstatus = vim.o.laststatus == 3,
         disabled_filetypes = {
-          statusline = { "dashboard", "alpha", "ministarter" },
+          statusline = { 'dashboard', 'alpha', 'ministarter' },
         },
-        section_separators = { left = "", right = "" },
-        component_separators = { left = "", right = "" },
+        section_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' },
       },
       sections = { -- Sections
         lualine_a = {
           { -- Mode
             function()
-              return require("data.types").mode.current.lualine()
+              return require('data.types').mode.current.lualine()
             end,
             padding = { left = 1, right = 0 },
-            separator = { left = "", right = "" },
+            separator = { left = '', right = '' },
           },
           { -- MultiCursors
             function()
-              return require("data.func").mc_statusline().count
-                .. require("data.func").mc_statusline().icon
+              return require('data.func').mc_statusline().count
+                .. require('data.func').mc_statusline().icon
             end,
             cond = function()
-              return require("data.func").mc_statusline().cursors > 1
+              return require('data.func').mc_statusline().cursors > 1
             end,
             color = function()
-              return require("data.func").mc_statusline().color
+              return require('data.func').mc_statusline().color
             end,
             padding = { left = 1, right = 0 },
-            separator = { left = "", right = "" },
+            separator = { left = '', right = '' },
           },
         },
         lualine_b = {
           { -- Branch
-            "branch",
-            separator = "",
+            'branch',
+            separator = '',
             padding = { left = 1, right = 0 },
           },
           { -- Todo
             todos_component,
             cond = function()
-              return require("data.func").is_window_wide_enough(100)
+              return require('data.func').is_window_wide_enough(100)
             end,
             padding = { left = 1, right = 0 },
             on_click = function()
-              vim.cmd("TodoTelescope")
+              vim.cmd('TodoTelescope')
             end,
           },
           { -- Arrow
             function()
-              return require("arrow.statusline").text_for_statusline_with_icons()
+              return require('arrow.statusline').text_for_statusline_with_icons()
             end,
             cond = function()
-              return require("data.func").is_window_wide_enough(100)
-                and pcall(require, "arrow")
+              return require('data.func').is_window_wide_enough(100)
+                and pcall(require, 'arrow')
             end,
             padding = { left = 1, right = 0 },
             on_click = function()
-              vim.cmd("Arrow open")
+              vim.cmd('Arrow open')
             end,
           },
         },
         lualine_c = {
           LazyVim.lualine.root_dir(),
           { -- Diagnostics
-            "diagnostics",
+            'diagnostics',
             symbols = {
               error = icons.diagnostics.Error,
               warn = icons.diagnostics.Warn,
@@ -214,35 +214,35 @@ return { -- Lualine
             padding = { left = 0, right = 0 },
           },
           { -- Filetype
-            "filetype",
+            'filetype',
             icon_only = true,
-            separator = "",
+            separator = '',
             padding = { left = 1, right = 0 },
           },
           { -- PrettyPath
             LazyVim.lualine.pretty_path(),
             padding = { left = 0, right = 0 },
             cond = function()
-              return not string.find(vim.bo.filetype, "neovim_updater_term")
+              return not string.find(vim.bo.filetype, 'neovim_updater_term')
             end,
           },
           { -- Neovim Updater
             function()
               local ft = vim.bo.filetype
-              if ft == "neovim_updater_term.updating" then
-                return "Neovim Updating.."
-              elseif ft == "neovim_updater_term.cloning" then
-                return "Neovim Source Cloning.."
-              elseif ft == "neovim_updater_term.changes" then
-                return "Neovim Source Changelog"
+              if ft == 'neovim_updater_term.updating' then
+                return 'Neovim Updating..'
+              elseif ft == 'neovim_updater_term.cloning' then
+                return 'Neovim Source Cloning..'
+              elseif ft == 'neovim_updater_term.changes' then
+                return 'Neovim Source Changelog'
               end
             end,
-            icon = "󰅢 ",
-            color = "lualine_a_terminal",
-            separator = { left = "", right = "" },
+            icon = '󰅢 ',
+            color = 'lualine_a_terminal',
+            separator = { left = '', right = '' },
             padding = { left = 0, right = 0 },
             cond = function()
-              return string.find(vim.bo.filetype, "neovim_updater_term") ~= nil
+              return string.find(vim.bo.filetype, 'neovim_updater_term') ~= nil
             end,
           },
         },
@@ -268,7 +268,7 @@ return { -- Lualine
             color = function() return LazyVim.ui.fg("Special") end,
           },
           { -- Diff
-            "diff",
+            'diff',
             symbols = {
               added = icons.git.added,
               modified = icons.git.modified,
@@ -276,7 +276,7 @@ return { -- Lualine
               padding = { left = 0, right = 0 },
               on_click = function()
                 if vim.g.statusline_clickable_git ~= false then
-                  require("config.rootiest").toggle_lazygit_float()
+                  require('config.rootiest').toggle_lazygit_float()
                 end
               end,
             },
@@ -292,12 +292,12 @@ return { -- Lualine
                 end
               end,
               cond = function()
-                return require("data.func").is_window_wide_enough(200)
+                return require('data.func').is_window_wide_enough(200)
               end,
               padding = { left = 0, right = 0 },
               on_click = function()
                 if vim.g.statusline_clickable_git ~= false then
-                  require("config.rootiest").toggle_lazygit_float()
+                  require('config.rootiest').toggle_lazygit_float()
                 end
               end,
             },
@@ -310,7 +310,7 @@ return { -- Lualine
               return wakatime_stats.get_color()
             end,
             cond = function()
-              return require("data.func").is_window_wide_enough(100)
+              return require('data.func').is_window_wide_enough(100)
             end,
             padding = { left = 0, right = 1 },
           },
@@ -319,36 +319,36 @@ return { -- Lualine
               return music_stats.get_icon_with_text()
             end,
             cond = function()
-              return require("data.func").is_window_wide_enough(100)
+              return require('data.func').is_window_wide_enough(100)
             end,
             padding = { left = 0, right = 1 },
           },
           { -- Neovim Updater Status
             function()
-              return require("nvim_updater").get_statusline().icon_text
+              return require('nvim_updater').get_statusline().icon_text
             end,
             color = function()
-              return require("nvim_updater").get_statusline().color
+              return require('nvim_updater').get_statusline().color
             end,
             on_click = function()
-              require("nvim_updater").show_new_commits({
+              require('nvim_updater').show_new_commits({
                 isupdate = true,
                 short = false,
               })
             end,
             padding = { left = 1, right = 1 },
             cond = function()
-              if not pcall(require, "nvim_updater") then
+              if not pcall(require, 'nvim_updater') then
                 return false
               end
-              return not string.find(vim.bo.filetype, "neovim_updater_term")
+              return not string.find(vim.bo.filetype, 'neovim_updater_term')
             end,
           },
         },
         lualine_y = {
           { -- NeoCodeium Status
             function()
-              return vim.b.neocodeium_status or "󰣽 "
+              return vim.b.neocodeium_status or '󰣽 '
             end,
             padding = { left = 0, right = 1 },
           },
@@ -356,125 +356,125 @@ return { -- Lualine
             function()
               return vim.fn.wordcount().words
             end,
-            icon = " ",
+            icon = ' ',
             cond = function()
-              return require("data.func").is_window_wide_enough(80)
+              return require('data.func').is_window_wide_enough(80)
             end,
             padding = { left = 0, right = 1 },
             on_click = function()
-              vim.cmd("Telescope current_buffer_fuzzy_find")
+              vim.cmd('Telescope current_buffer_fuzzy_find')
             end,
           },
           { -- Progress
-            "progress",
-            separator = "",
+            'progress',
+            separator = '',
             padding = { left = 0, right = 1 },
             cond = function()
-              return require("data.func").is_window_wide_enough(60)
+              return require('data.func').is_window_wide_enough(60)
             end,
-            icon = "",
+            icon = '',
             on_click = function()
-              vim.cmd("Telescope grep_string")
+              vim.cmd('Telescope grep_string')
             end,
           },
           { -- Location
-            "location",
+            'location',
             padding = { left = 0, right = 1 },
             cond = function()
-              return require("data.func").is_window_wide_enough(40)
+              return require('data.func').is_window_wide_enough(40)
             end,
             on_click = function()
-              vim.cmd("Telescope grep_string")
+              vim.cmd('Telescope grep_string')
             end,
           },
           { -- Selection
-            "selection_count",
+            'selection_count',
             cond = function()
-              return require("data.func").is_window_wide_enough(120)
+              return require('data.func').is_window_wide_enough(120)
             end,
             padding = { left = 0, right = 1 },
           },
           { -- Filesize
-            "filesize",
+            'filesize',
             cond = function()
-              return require("data.func").is_window_wide_enough(100)
+              return require('data.func').is_window_wide_enough(100)
             end,
             padding = { left = 0, right = 1 },
-            icon = "",
+            icon = '',
             on_click = function()
-              vim.cmd("Neotree reveal toggle")
+              vim.cmd('Neotree reveal toggle')
             end,
-            separator = { left = "", right = "" },
+            separator = { left = '', right = '' },
           },
           { -- Encoding
-            "encoding",
+            'encoding',
             show_bomb = true,
             padding = { left = 0, right = 1 },
-            separator = "",
-            icon = "󱁻",
+            separator = '',
+            icon = '󱁻',
             on_click = function()
-              vim.cmd("Telescope oldfiles")
+              vim.cmd('Telescope oldfiles')
             end,
           },
         },
         lualine_z = {
           { -- Recording
-            require("recorder").recordingStatus,
+            require('recorder').recordingStatus,
             cond = function()
-              return pcall(require, "recorder")
+              return pcall(require, 'recorder')
             end,
-            color = "CurSearch",
-            separator = { left = "", right = "" },
+            color = 'CurSearch',
+            separator = { left = '', right = '' },
           },
           { -- Search
-            "searchcount",
-            color = "CurSearch",
-            separator = { left = "", right = "" },
-            icon = "󰍉 ",
+            'searchcount',
+            color = 'CurSearch',
+            separator = { left = '', right = '' },
+            icon = '󰍉 ',
             on_click = function()
-              vim.cmd("Telescope current_buffer_fuzzy_find")
+              vim.cmd('Telescope current_buffer_fuzzy_find')
             end,
           },
           { -- Time
-            "datetime",
-            style = "%a %R",
-            icon = " ",
+            'datetime',
+            style = '%a %R',
+            icon = ' ',
             padding = { left = 0, right = 1 },
             on_click = function()
-              vim.cmd("Telescope buffers")
+              vim.cmd('Telescope buffers')
             end,
-            separator = { left = "", right = "" },
+            separator = { left = '', right = '' },
           },
         },
       },
       extensions = {
-        "neo-tree",
-        "lazy",
-        "aerial",
-        "fugitive",
-        "fzf",
-        "mason",
-        "overseer",
-        "toggleterm",
-        "nvim-dap-ui",
-        "quickfix",
-        "symbols-outline",
-        "trouble",
+        'neo-tree',
+        'lazy',
+        'aerial',
+        'fugitive',
+        'fzf',
+        'mason',
+        'overseer',
+        'toggleterm',
+        'nvim-dap-ui',
+        'quickfix',
+        'symbols-outline',
+        'trouble',
         minimap_extension,
       },
     }
 
     -- do not add trouble symbols if aerial is enabled
     -- And allow it to be overriden for some buffer types (see autocmds)
-    if vim.g.trouble_lualine and LazyVim.has("trouble.nvim") then
-      local trouble = require("trouble")
+    if vim.g.trouble_lualine and LazyVim.has('trouble.nvim') then
+      local trouble = require('trouble')
       local symbols = trouble.statusline({
-        mode = "symbols",
+        mode = 'symbols',
         groups = {},
         title = false,
         filter = { range = true },
-        format = "{kind_icon}{symbol.name:Normal}",
-        hl_group = "lualine_c_normal",
+        format = '{kind_icon}{symbol.name:Normal}',
+        hl_group = 'lualine_c_normal',
       })
       table.insert(opts.sections.lualine_c, {
         symbols and symbols.get,

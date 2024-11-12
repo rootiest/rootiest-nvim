@@ -7,9 +7,9 @@
 local M = {}
 
 -- Define default path to the logo art
-local logofile = vim.fn.stdpath("config") .. "/logo/" .. "neovim.txt"
+local logofile = vim.fn.stdpath('config') .. '/logo/' .. 'neovim.txt'
 if vim.g.dash_logo then
-  logofile = vim.fn.stdpath("config") .. "/logo/" .. vim.g.dash_logo
+  logofile = vim.fn.stdpath('config') .. '/logo/' .. vim.g.dash_logo
 end
 M.logo = logofile
 
@@ -25,7 +25,7 @@ local dashboard_buttons = {
   { key = "c", icon = " ", desc =    " Config",       action = function() require("data.func").pick("config_files") end },
   { key = "s", icon = "󰶮 ", desc = " Restore Session", action = function() require("persistence").load() end },
   { key = "S", icon = " ", desc = " Remote Session",  action = function() require("config.rootiest").load_remote() end },
-  { key = "l", icon = "󰒲 ", desc =     " Lazy",        action = function() vim.cmd("Lazy") end },
+  { key = "l", icon = "󰒲 ", desc =     " Lazy",        action = function() vim.cmd("Lazy ") end },
   { key = "q", icon = " ", desc =     " Quit",        action = function() vim.api.nvim_input("<cmd>qa<cr>") end },
 } -- stylua: ignore end
 
@@ -35,7 +35,7 @@ M.alpha = {
   ---@return table dashboard The alpha dashboard options
   opts = function()
     -- Load the alpha plugin dashboard-nvim theme
-    local dashboard = require("alpha.themes.dashboard")
+    local dashboard = require('alpha.themes.dashboard')
 
     --- Function to read the ASCII art from the logo file
     ---@param logo_path string The path to the logo file
@@ -66,13 +66,13 @@ M.alpha = {
     end
 
     for _, button in ipairs(dashboard.section.buttons.val) do
-      button.opts.hl = "AlphaButtons"
-      button.opts.hl_shortcut = "AlphaShortcut"
+      button.opts.hl = 'AlphaButtons'
+      button.opts.hl_shortcut = 'AlphaShortcut'
     end
 
     -- Set up highlight groups for the dashboard
-    dashboard.section.header.opts.hl = "Conditional" or "AlphaHeader"
-    dashboard.section.footer.opts.hl = "AlphaFooter"
+    dashboard.section.header.opts.hl = 'Conditional' or 'AlphaHeader'
+    dashboard.section.footer.opts.hl = 'AlphaFooter'
 
     -- Calculate the dashboard layout padding
     local padding = 0

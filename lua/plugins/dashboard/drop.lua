@@ -3,7 +3,7 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 return {
-  "folke/drop.nvim",
+  'folke/drop.nvim',
   lazy = true,
   opts = {},
 }

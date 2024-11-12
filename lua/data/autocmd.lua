@@ -9,13 +9,13 @@ local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 M.cpp_picker = function()
-  augroup("cpp_picker", { clear = true })
+  augroup('cpp_picker', { clear = true })
   -- C++ Picker
-  autocmd("FileType", {
-    group = "cpp_picker",
-    pattern = { "cpp", "c", "h", "hpp" },
+  autocmd('FileType', {
+    group = 'cpp_picker',
+    pattern = { 'cpp', 'c', 'h', 'hpp' },
     callback = function()
-      require("data.func").add_keymap(require("data.keys").cpp_picker)
+      require('data.func').add_keymap(require('data.keys').cpp_picker)
     end,
   })
 end
@@ -28,9 +28,9 @@ M.minifiles = {
       if vim.g.minifiles_width ~= nil then
         multiplier = vim.g.minifiles_width
       end
-      if package.loaded["mini.files"] then
+      if package.loaded['mini.files'] then
         -- Obtain the existing config
-        local config = require("mini.files").config
+        local config = require('mini.files').config
         -- Update the width_preview based on the current window size
         if multiplier > 1 then
           -- If the multiplier is greater than 1, use as the preview width
@@ -40,7 +40,7 @@ M.minifiles = {
           config.windows.width_preview = math.floor(vim.o.columns * multiplier)
         end
         -- Apply the updated config
-        require("mini.files").setup(config)
+        require('mini.files').setup(config)
       end
     end
 
@@ -48,21 +48,21 @@ M.minifiles = {
     local is_mini_files_active = false
 
     -- Autocommand group to handle dynamic resizing
-    augroup("MiniFilesDynamicWidth", { clear = true })
+    augroup('MiniFilesDynamicWidth', { clear = true })
 
     -- Handle mini.files open event to set the flag
-    autocmd("User", {
-      group = "MiniFilesDynamicWidth",
-      pattern = "MiniFilesExplorerOpen",
+    autocmd('User', {
+      group = 'MiniFilesDynamicWidth',
+      pattern = 'MiniFilesExplorerOpen',
       callback = function()
         is_mini_files_active = true
       end,
     })
 
     -- Handle mini.files close event to reset the flag and update the preview width
-    autocmd("User", {
-      group = "MiniFilesDynamicWidth",
-      pattern = "MiniFilesExplorerClose",
+    autocmd('User', {
+      group = 'MiniFilesDynamicWidth',
+      pattern = 'MiniFilesExplorerClose',
       callback = function()
         is_mini_files_active = false
         update_width_preview()
@@ -70,14 +70,14 @@ M.minifiles = {
     })
 
     -- Handle window resize event
-    autocmd("VimResized", {
-      group = "MiniFilesDynamicWidth",
+    autocmd('VimResized', {
+      group = 'MiniFilesDynamicWidth',
       callback = function()
         if is_mini_files_active then
           -- Defer the update until mini.files closes
-          autocmd("User", {
-            group = "MiniFilesDynamicWidth",
-            pattern = "MiniFilesExplorerClose",
+          autocmd('User', {
+            group = 'MiniFilesDynamicWidth',
+            pattern = 'MiniFilesExplorerClose',
             callback = update_width_preview,
             once = true, -- Ensure this runs only once
           })

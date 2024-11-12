@@ -2,9 +2,9 @@
 --          │             Setup Git Signs for Mini.Files              │
 --          ╰─────────────────────────────────────────────────────────╯
 
-local nsMiniFiles = vim.api.nvim_create_namespace("mini_files_git")
+local nsMiniFiles = vim.api.nvim_create_namespace('mini_files_git')
 local autocmd = vim.api.nvim_create_autocmd
-local _, MiniFiles = pcall(require, "mini.files")
+local _, MiniFiles = pcall(require, 'mini.files')
 
 -- Cache for git status
 local gitStatusCache = {}
@@ -33,7 +33,7 @@ local function mapSymbols(status)
     -- stylua: ignore end
   }
 
-  local result = statusMap[status] or { symbol = "?", hlGroup = "NonText" }
+  local result = statusMap[status] or { symbol = '?', hlGroup = 'NonText' }
   return result.symbol, result.hlGroup
 end
 
@@ -48,7 +48,7 @@ local function fetchGitStatus(cwd, callback)
     end
   end
   vim.system(
-    { "git", "status", "--ignored", "--porcelain" },
+    { 'git', 'status', '--ignored', '--porcelain' },
     { text = true, cwd = cwd },
     on_exit
   )
@@ -57,7 +57,7 @@ end
 ---@param str string?
 local function escapePattern(str)
   ---@diagnostic disable-next-line: need-check-nil
-  return str:gsub("([%^%$%(%)%%%.%[%]%*%+%-%?])", "%%%1")
+  return str:gsub('([%^%$%(%)%%%.%[%]%*%+%-%?])', '%%%1')
 end
 
 ---@param buf_id integer
@@ -66,10 +66,10 @@ end
 local function updateMiniWithGit(buf_id, gitStatusMap)
   vim.schedule(function()
     local nlines = vim.api.nvim_buf_line_count(buf_id)
-    local cwd = vim.fs.root(buf_id, ".git")
+    local cwd = vim.fs.root(buf_id, '.git')
     local escapedcwd = escapePattern(cwd)
-    if vim.fn.has("win32") == 1 then
-      escapedcwd = escapedcwd:gsub("\\", "/")
+    if vim.fn.has('win32') == 1 then
+      escapedcwd = escapedcwd:gsub('\\', '/')
     end
 
     for i = 1, nlines do
@@ -77,7 +77,7 @@ local function updateMiniWithGit(buf_id, gitStatusMap)
       if not entry then
         break
       end
-      local relativePath = entry.path:gsub("^" .. escapedcwd .. "/", "")
+      local relativePath = entry.path:gsub('^' .. escapedcwd .. '/', '')
       local status = gitStatusMap[relativePath]
 
       if status then
@@ -99,19 +99,19 @@ end
 local function parseGitStatus(content)
   local gitStatusMap = {}
   -- lua match is faster than vim.split (in my experience )
-  for line in content:gmatch("[^\r\n]+") do
-    local status, filePath = string.match(line, "^(..)%s+(.*)")
+  for line in content:gmatch('[^\r\n]+') do
+    local status, filePath = string.match(line, '^(..)%s+(.*)')
     -- Split the file path into parts
     local parts = {}
-    for part in filePath:gmatch("[^/]+") do
+    for part in filePath:gmatch('[^/]+') do
       table.insert(parts, part)
     end
     -- Start with the root directory
-    local currentKey = ""
+    local currentKey = ''
     for i, part in ipairs(parts) do
       if i > 1 then
         -- Concatenate parts with a separator to create a unique key
-        currentKey = currentKey .. "/" .. part
+        currentKey = currentKey .. '/' .. part
       else
         currentKey = part
       end
@@ -133,11 +133,11 @@ end
 ---@return nil
 local function updateGitStatus(buf_id)
   ---@diagnostic disable-next-line: param-type-mismatch
-  if not vim.fs.root(vim.uv.cwd(), ".git") then
+  if not vim.fs.root(vim.uv.cwd(), '.git') then
     return
   end
 
-  local cwd = vim.fn.expand("%:p:h")
+  local cwd = vim.fn.expand('%:p:h')
   local currentTime = os.time()
   if
     gitStatusCache[cwd]
@@ -162,12 +162,12 @@ local function clearCache()
 end
 
 local function augroup(name)
-  return vim.api.nvim_create_augroup("MiniFiles_" .. name, { clear = true })
+  return vim.api.nvim_create_augroup('MiniFiles_' .. name, { clear = true })
 end
 
-autocmd("User", {
-  group = augroup("start"),
-  pattern = "MiniFilesExplorerOpen",
+autocmd('User', {
+  group = augroup('start'),
+  pattern = 'MiniFilesExplorerOpen',
   -- pattern = { "minifiles" },
   callback = function()
     local bufnr = vim.api.nvim_get_current_buf()
@@ -175,20 +175,20 @@ autocmd("User", {
   end,
 })
 
-autocmd("User", {
-  group = augroup("close"),
-  pattern = "MiniFilesExplorerClose",
+autocmd('User', {
+  group = augroup('close'),
+  pattern = 'MiniFilesExplorerClose',
   callback = function()
     clearCache()
   end,
 })
 
-autocmd("User", {
-  group = augroup("update"),
-  pattern = "MiniFilesBufferUpdate",
+autocmd('User', {
+  group = augroup('update'),
+  pattern = 'MiniFilesBufferUpdate',
   callback = function(sii)
     local bufnr = sii.data.buf_id
-    local cwd = vim.fn.expand("%:p:h")
+    local cwd = vim.fn.expand('%:p:h')
     if gitStatusCache[cwd] then
       updateMiniWithGit(bufnr, gitStatusCache[cwd].statusMap)
     end

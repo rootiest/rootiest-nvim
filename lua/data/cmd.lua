@@ -8,92 +8,92 @@ local M = {}
 
 --- Autosave plugin cmds
 M.autosave = {
-  "ASToggle",
+  'ASToggle',
 }
 
 --- Codesnap plugin cmds
 M.codesnap = {
-  "CodeSnap",
-  "CodeSnapSave",
-  "CodeSnapHighlight",
-  "CodeSnapASCII",
+  'CodeSnap',
+  'CodeSnapSave',
+  'CodeSnapHighlight',
+  'CodeSnapASCII',
 }
 
 --- Gists plugin cmds
 M.gist = {
-  "GistCreate",
-  "GistCreateFromFile",
-  "GistsList",
+  'GistCreate',
+  'GistCreateFromFile',
+  'GistsList',
 }
 
 --- Gx plugin cmds
 M.gx = {
-  "Browse",
+  'Browse',
 }
 
 --- Kitty-Scrollback plugin cmds
 M.kitty_scrollback = {
-  "KittyScrollbackGenerateKittens",
-  "KittyScrollbackCheckHealth",
+  'KittyScrollbackGenerateKittens',
+  'KittyScrollbackCheckHealth',
 }
 
 --- LazyGit plugin cmds
 M.lazygit = {
-  "LazyGit",
-  "LazyGitConfig",
-  "LazyGitCurrentFile",
-  "LazyGitFilter",
-  "LazyGitFilterCurrentFile",
+  'LazyGit',
+  'LazyGitConfig',
+  'LazyGitCurrentFile',
+  'LazyGitFilter',
+  'LazyGitFilterCurrentFile',
 }
 
 --- Nekifoch plugin cmds
-M.nekifoch = "Nekifoch"
+M.nekifoch = 'Nekifoch'
 
 --- Thanks plugin cmds
 M.thanks = {
-  "ThanksAll",
-  "ThanksGithubAuth",
-  "ThanksGithubLogout",
-  "ThanksClearCache",
+  'ThanksAll',
+  'ThanksGithubAuth',
+  'ThanksGithubLogout',
+  'ThanksClearCache',
 }
 
 --- Gitlinker plugin cmds
 M.gitlinker = {
-  "GitLink",
+  'GitLink',
 }
 
 --- Qalc plugin cmds
 M.qalc = {
-  "Qalc",
-  "QalcAttach",
-  "QalcYank",
+  'Qalc',
+  'QalcAttach',
+  'QalcYank',
 }
 
 --- Ripsub plugin cmds
 M.ripsub = {
-  "RipSubstitute",
+  'RipSubstitute',
 }
 
 M.spell_errors = {
-  "Telescope spell_errors",
+  'Telescope spell_errors',
 }
 
 --- Suda plugin cmds
 M.suda = {
-  "SudaWrite",
-  "SudaRead",
+  'SudaWrite',
+  'SudaRead',
 }
 
 --- Transparent plugin cmds
 M.transparent = {
-  "TransparentEnable",
-  "TransparentDisable",
-  "TransparentToggle",
+  'TransparentEnable',
+  'TransparentDisable',
+  'TransparentToggle',
 }
 
 --- Trouble plugin cmds
 M.trouble = {
-  "Trouble",
+  'Trouble',
 }
 
 return M

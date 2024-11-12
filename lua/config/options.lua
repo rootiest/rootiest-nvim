@@ -8,6 +8,8 @@
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ KEYS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+vim.opt.foldlevel = 99
+
 -- Set the mapleader variable to the space key
 vim.g.mapleader                 = " "           ---@type string Options: <leader>
 
@@ -68,7 +70,7 @@ vim.g.usetodo                   = false         ---@type boolean Options: <true|
 -- Use experimental cmp performance fork
 vim.g.cmp_performance_enabled   = true          ---@type boolean Options: <true|false>
 -- Use dev mode for rootiest plugins
-vim.g.rootiest_dev              = false         ---@type boolean Options: <true|false>
+vim.g.rootiest_dev              = true          ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PICKER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -104,6 +106,9 @@ vim.g.usechatgpt                = false         ---@type boolean Options:  <true
 vim.g.useavante                 = true          ---@type boolean Options:  <true|false>
 -- Enable GP plugin for AI chat
 vim.g.usegpai                   = false         ---@type boolean Options:  <true|false>
+
+----- Use Blink instead of nvim-cmp -----
+vim.g.useblinkcmp                = true         ---@type boolean Options:  <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATUS COLUMN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

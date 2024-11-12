@@ -8,7 +8,7 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 -- If basic statusline is not enabled, return an empty table
-if vim.g.statusline ~= "basic" then
+if vim.g.statusline ~= 'basic' then
   return {}
 end
 

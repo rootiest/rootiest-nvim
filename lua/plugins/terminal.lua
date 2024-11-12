@@ -6,32 +6,32 @@
 
 return {
   { -- Smart-Splits
-    "mrjones2014/smart-splits.nvim",
+    'mrjones2014/smart-splits.nvim',
     lazy = false,
-    build = require("data.types").smart_splits.build(),
+    build = require('data.types').smart_splits.build(),
   },
   { -- Image Renderer
-    "3rd/image.nvim",
-    ft = require("data.types").image,
+    '3rd/image.nvim',
+    ft = require('data.types').image,
     config = function()
-      require("image").setup({
-        backend = "kitty", -- Kitty will provide the best experience, but you need a compatible terminal
-        processor = "magick_cli",
-        kitty_method = "normal",
+      require('image').setup({
+        backend = 'kitty', -- Kitty will provide the best experience, but you need a compatible terminal
+        processor = 'magick_cli',
+        kitty_method = 'normal',
         integrations = {
           markdown = {
             enabled = true,
             clear_in_insert_mode = false,
             download_remote_images = true,
             only_render_image_at_cursor = false,
-            filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
+            filetypes = { 'markdown', 'vimwiki' }, -- markdown extensions (ie. quarto) can go here
           },
           neorg = {
             enabled = true,
             clear_in_insert_mode = false,
             download_remote_images = true,
             only_render_image_at_cursor = false,
-            filetypes = { "norg" },
+            filetypes = { 'norg' },
           },
           html = {
             enabled = false,
@@ -46,20 +46,20 @@ return {
         max_width_window_percentage = math.huge,
         window_overlap_clear_enabled = false,
         window_overlap_clear_ft_ignore = {
-          "cmp_menu",
-          "cmp_docs",
-          "neotree",
-          "neominimap",
-          "minimap",
-          "",
+          'cmp_menu',
+          'cmp_docs',
+          'neotree',
+          'neominimap',
+          'minimap',
+          '',
         },
         hijack_file_patterns = {
-          "*.png",
-          "*.jpg",
-          "*.jpeg",
-          "*.gif",
-          "*.webp",
-          "*.avif",
+          '*.png',
+          '*.jpg',
+          '*.jpeg',
+          '*.gif',
+          '*.webp',
+          '*.avif',
         }, -- render image files as images when opened
       })
     end,
@@ -73,51 +73,51 @@ return {
     end,
   },
   { -- ToggleTerm
-    "akinsho/toggleterm.nvim",
-    event = "VeryLazy",
-    keys = require("data.keys").toggleterm,
+    'akinsho/toggleterm.nvim',
+    event = 'VeryLazy',
+    keys = require('data.keys').toggleterm,
     config = function()
-      require("toggleterm").setup(require("data.types").toggleterm)
+      require('toggleterm').setup(require('data.types').toggleterm)
     end,
   },
   { -- Kitty-Runner
-    "jghauser/kitty-runner.nvim",
-    cond = require("data.func").is_kitty(),
+    'jghauser/kitty-runner.nvim',
+    cond = require('data.func').is_kitty(),
   },
   { -- Kitty-Scrollback
-    "mikesmithgh/kitty-scrollback.nvim",
+    'mikesmithgh/kitty-scrollback.nvim',
     enabled = true,
     lazy = true,
-    cmd = require("data.cmd").kitty_scrollback,
-    event = { "User KittyScrollbackLaunch" },
-    version = "*",
+    cmd = require('data.cmd').kitty_scrollback,
+    event = { 'User KittyScrollbackLaunch' },
+    version = '*',
     config = function() -- Using Kitty-Scrollback
-      if require("data.func").is_kitty_scrollback() then
-        require("kitty-scrollback").setup()
+      if require('data.func').is_kitty_scrollback() then
+        require('kitty-scrollback').setup()
       end
     end,
-    cond = require("data.func").is_kitty_scrollback(),
+    cond = require('data.func').is_kitty_scrollback(),
   },
   { -- Nekifoch
-    "NeViRAIDE/nekifoch.nvim",
+    'NeViRAIDE/nekifoch.nvim',
     lazy = true,
-    cmd = require("data.cmd").nekifoch,
+    cmd = require('data.cmd').nekifoch,
     opts = {
-      kitty_conf_path = vim.env.HOME .. "/.kittyoverrides",
+      kitty_conf_path = vim.env.HOME .. '/.kittyoverrides',
     },
-    keys = require("data.keys").nekifoch,
-    cond = require("data.func").is_kitty(),
+    keys = require('data.keys').nekifoch,
+    cond = require('data.func').is_kitty(),
   },
   { -- WezTerm
-    "willothy/wezterm.nvim",
+    'willothy/wezterm.nvim',
     config = true,
-    cond = require("data.func").is_wezterm(),
+    cond = require('data.func').is_wezterm(),
   },
   { -- Tmux
-    "aserowy/tmux.nvim",
+    'aserowy/tmux.nvim',
     config = function()
-      return require("tmux").setup()
+      return require('tmux').setup()
     end,
-    cond = require("data.func").is_tmux(),
+    cond = require('data.func').is_tmux(),
   },
 }

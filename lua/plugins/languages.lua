@@ -3,66 +3,67 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                        Languages                        │
 --          ╰─────────────────────────────────────────────────────────╯
+
 return {
   { -- none-ls
-    import = "lazyvim.plugins.extras.lsp.none-ls",
+    import = 'lazyvim.plugins.extras.lsp.none-ls',
   },
   { -- JSON
-    import = "lazyvim.plugins.extras.lang.json",
+    import = 'lazyvim.plugins.extras.lang.json',
   },
   { -- Markdown
-    import = "lazyvim.plugins.extras.lang.markdown",
+    import = 'lazyvim.plugins.extras.lang.markdown',
   },
   { -- Toml
-    import = "lazyvim.plugins.extras.lang.toml",
+    import = 'lazyvim.plugins.extras.lang.toml',
   },
   { -- Git
-    import = "lazyvim.plugins.extras.lang.git",
+    import = 'lazyvim.plugins.extras.lang.git',
   },
   { -- Python
-    import = "lazyvim.plugins.extras.lang.python",
+    import = 'lazyvim.plugins.extras.lang.python',
   },
   { -- Yaml
-    import = "lazyvim.plugins.extras.lang.yaml",
+    import = 'lazyvim.plugins.extras.lang.yaml',
   },
   { -- clangd
-    import = "lazyvim.plugins.extras.lang.clangd",
+    import = 'lazyvim.plugins.extras.lang.clangd',
   },
   { -- cmake
-    import = "lazyvim.plugins.extras.lang.cmake",
+    import = 'lazyvim.plugins.extras.lang.cmake',
   },
   { -- Docker
-    import = "lazyvim.plugins.extras.lang.docker",
+    import = 'lazyvim.plugins.extras.lang.docker',
   },
   { -- Java
-    import = "lazyvim.plugins.extras.lang.java",
+    import = 'lazyvim.plugins.extras.lang.java',
   },
   { -- Sql
-    import = "lazyvim.plugins.extras.lang.sql",
+    import = 'lazyvim.plugins.extras.lang.sql',
   },
   { -- Jinja
-    "armyers/Vim-Jinja2-Syntax",
+    'armyers/Vim-Jinja2-Syntax',
   },
   { -- Render-markdown
-    "MeanderingProgrammer/render-markdown.nvim",
+    'MeanderingProgrammer/render-markdown.nvim',
     enabled = false,
     opts = {
       heading = {
         -- Determins if a border is added above and below headings
         border = true,
-        above = "▂",
+        above = '▂',
         -- Used below heading for border
-        below = "🮂",
+        below = '🮂',
       },
-      file_types = { "markdown", "Avante" },
+      file_types = { 'markdown', 'Avante' },
     },
-    ft = { "markdown", "Avante" },
+    ft = { 'markdown', 'Avante' },
   },
   {
-    "OXY2DEV/markview.nvim",
-    ft = { "markdown", "Avante" },
+    'OXY2DEV/markview.nvim',
+    ft = { 'markdown', 'Avante' },
     opts = function()
-      local presets = require("markview.presets")
+      local presets = require('markview.presets')
       return {
         checkboxes = presets.checkboxes.nerd,
         headings = presets.headings.simple,
@@ -70,23 +71,23 @@ return {
     end,
   },
   { -- Markdown Preview
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    ft = { 'markdown' },
     build = function()
-      vim.fn["mkdp#util#install"]()
+      vim.fn['mkdp#util#install']()
     end,
   },
   { -- WezTerm Types
-    "gonstoll/wezterm-types",
+    'gonstoll/wezterm-types',
     dev = true,
   },
   {
-    "akinsho/flutter-tools.nvim",
+    'akinsho/flutter-tools.nvim',
     lazy = false,
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "stevearc/dressing.nvim", -- optional for vim.ui.select
+      'nvim-lua/plenary.nvim',
+      'stevearc/dressing.nvim', -- optional for vim.ui.select
     },
     opts = {},
   },

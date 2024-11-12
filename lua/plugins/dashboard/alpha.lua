@@ -3,51 +3,52 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                          ALPHA                          │
 --          ╰─────────────────────────────────────────────────────────╯
+
 return { -- Alpha
-  "goolord/alpha-nvim",
-  event = "VimEnter",
-  enabled = require("data.func").check_global_var(
-    "dashboard",
-    "alpha",
-    "alpha"
+  'goolord/alpha-nvim',
+  event = 'VimEnter',
+  enabled = require('data.func').check_global_var(
+    'dashboard',
+    'alpha',
+    'alpha'
   ),
-  opts = require("data.dash").alpha.opts,
+  opts = require('data.dash').alpha.opts,
   config = function(_, dashboard)
     -- close Lazy and re-open when the dashboard is ready
-    if vim.o.filetype == "lazy" then
+    if vim.o.filetype == 'lazy' then
       vim.cmd.close()
-      vim.api.nvim_create_autocmd("User", {
+      vim.api.nvim_create_autocmd('User', {
         once = true,
-        pattern = "AlphaReady",
+        pattern = 'AlphaReady',
         callback = function()
-          require("lazy").show()
+          require('lazy').show()
         end,
       })
     end
 
     -- Setup the dashboard
-    require("alpha").setup(dashboard.opts)
+    require('alpha').setup(dashboard.opts)
 
     -- Open Alpha when Vim is started with no file arguments
-    vim.api.nvim_create_autocmd("User", {
+    vim.api.nvim_create_autocmd('User', {
       once = true,
-      pattern = "LazyVimStarted",
+      pattern = 'LazyVimStarted',
       callback = function()
-        local stats = require("lazy").stats()
+        local stats = require('lazy').stats()
         local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-        dashboard.section.footer.val = "󰇥  Neovim loaded "
+        dashboard.section.footer.val = '󰇥  Neovim loaded '
           .. stats.loaded
-          .. "/"
+          .. '/'
           .. stats.count
-          .. " plugins in "
+          .. ' plugins in '
           .. ms
-          .. "ms 󱐌"
+          .. 'ms 󱐌'
         pcall(vim.cmd.AlphaRedraw)
 
         -- Handle other plugins that may conflict
         -- If auto-cursorline is installed, disable it
-        if pcall(require, "auto-cursorline") then
-          require("auto-cursorline").disable({ buffer = true })
+        if pcall(require, 'auto-cursorline') then
+          require('auto-cursorline').disable({ buffer = true })
         end
       end,
     })

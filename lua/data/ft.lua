@@ -5,6 +5,6 @@
 --          ╰─────────────────────────────────────────────────────────╯
 local M = {}
 
-M.helpview = "help"
+M.helpview = 'help'
 
 return M

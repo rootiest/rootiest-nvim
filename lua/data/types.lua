@@ -13,79 +13,79 @@ local M = {}
 --- the current mode.
 M.mode = {
   n = { -- Normal mode
-    icon = "",
-    name = "NORMAL",
-    color = "Special",
+    icon = '',
+    name = 'NORMAL',
+    color = 'Special',
   },
   no = { -- Operator-pending mode
-    icon = "",
-    name = "NORMAL OPERATOR PENDING",
-    color = "Special",
+    icon = '',
+    name = 'NORMAL OPERATOR PENDING',
+    color = 'Special',
   },
   nov = { -- Operator-pending (charwise) mode
-    icon = "",
-    name = "NORMAL OP (CHARWISE)",
-    color = "Special",
+    icon = '',
+    name = 'NORMAL OP (CHARWISE)',
+    color = 'Special',
   },
   nt = { -- Terminal-mode within Normal mode
-    icon = "",
-    name = "NORMAL TERMINAL",
-    color = "Special",
+    icon = '',
+    name = 'NORMAL TERMINAL',
+    color = 'Special',
   },
   i = { -- Insert mode
-    icon = "",
-    name = "INSERT",
-    color = "Special",
+    icon = '',
+    name = 'INSERT',
+    color = 'Special',
   },
   ic = { -- Insert completion mode
-    icon = "",
-    name = "INSERT COMPLETION",
-    color = "Special",
+    icon = '',
+    name = 'INSERT COMPLETION',
+    color = 'Special',
   },
   R = { -- Replace mode
-    icon = "",
-    name = "REPLACE",
-    color = "Special",
+    icon = '',
+    name = 'REPLACE',
+    color = 'Special',
   },
   Rv = { -- Virtual replace mode
-    icon = "",
-    name = "REPLACE VIRT",
-    color = "Special",
+    icon = '',
+    name = 'REPLACE VIRT',
+    color = 'Special',
   },
   v = { -- Visual mode
-    icon = "󰸿",
-    name = "VISUAL",
-    color = "Special",
+    icon = '󰸿',
+    name = 'VISUAL',
+    color = 'Special',
   },
   V = { -- Visual Line mode
-    icon = "󰸽",
-    name = "VISUAL LINE",
-    color = "Special",
+    icon = '󰸽',
+    name = 'VISUAL LINE',
+    color = 'Special',
   },
-  [""] = { -- Visual Block mode
-    icon = "󰹀",
-    name = "VISUAL BLOCK",
-    color = "Special",
+  [''] = { -- Visual Block mode
+    icon = '󰹀',
+    name = 'VISUAL BLOCK',
+    color = 'Special',
   },
   c = { -- Command mode
-    icon = "󰑮",
-    name = "COMMAND",
-    color = "Special",
+    icon = '󰑮',
+    name = 'COMMAND',
+    color = 'Special',
   },
   s = { -- Select mode
-    icon = "",
-    name = "SELECT",
-    color = "Special",
+    icon = '',
+    name = 'SELECT',
+    color = 'Special',
   },
   S = { -- Select Line mode
-    icon = "",
-    name = "SELECT LINE",
-    color = "Special",
+    icon = '',
+    name = 'SELECT LINE',
+    color = 'Special',
   },
   t = { -- Terminal mode
-    icon = "",
-    name = "INSERT TERMINAL",
-    color = "Special",
+    icon = '',
+    name = 'INSERT TERMINAL',
+    color = 'Special',
   },
 
   --- A collection of functions that return icons and names for
@@ -103,7 +103,7 @@ M.mode = {
       end
       -- Fallback to single-character mode if full mode isn't available
       local fallback_mode = current_mode:sub(1, 1)
-      return M.mode[fallback_mode] and M.mode[fallback_mode].icon or ""
+      return M.mode[fallback_mode] and M.mode[fallback_mode].icon or ''
     end,
 
     --- Returns the name of the current mode
@@ -117,14 +117,14 @@ M.mode = {
       end
       -- Fallback to single-character mode if full mode isn't available
       local fallback_mode = current_mode:sub(1, 1)
-      return M.mode[fallback_mode] and M.mode[fallback_mode].name or "UNKNOWN"
+      return M.mode[fallback_mode] and M.mode[fallback_mode].name or 'UNKNOWN'
     end,
 
     --- Returns a string representing the current mode with icon and name
     --- Ex: " NORMAL"
     ---@return string|function icon_text The current mode icon and name
     icon_text = function()
-      return M.mode.current.icon() .. " " .. M.mode.current.name()
+      return M.mode.current.icon() .. ' ' .. M.mode.current.name()
     end,
 
     --- Returns a string representing the current mode with icon and name
@@ -141,79 +141,79 @@ M.mode = {
 M.border = {
   round = function()
     return {
-      { "╭", "FloatBorder" },
-      { "─", "FloatBorder" },
-      { "╮", "FloatBorder" },
-      { "│", "FloatBorder" },
-      { "╯", "FloatBorder" },
-      { "─", "FloatBorder" },
-      { "╰", "FloatBorder" },
-      { "│", "FloatBorder" },
+      { '╭', 'FloatBorder' },
+      { '─', 'FloatBorder' },
+      { '╮', 'FloatBorder' },
+      { '│', 'FloatBorder' },
+      { '╯', 'FloatBorder' },
+      { '─', 'FloatBorder' },
+      { '╰', 'FloatBorder' },
+      { '│', 'FloatBorder' },
     }
   end,
   simple = function()
     return {
-      { "─", "FloatBorder" },
-      { "│", "FloatBorder" },
-      { "─", "FloatBorder" },
-      { "│", "FloatBorder" },
-      { "─", "FloatBorder" },
-      { "│", "FloatBorder" },
-      { "─", "FloatBorder" },
-      { "│", "FloatBorder" },
+      { '─', 'FloatBorder' },
+      { '│', 'FloatBorder' },
+      { '─', 'FloatBorder' },
+      { '│', 'FloatBorder' },
+      { '─', 'FloatBorder' },
+      { '│', 'FloatBorder' },
+      { '─', 'FloatBorder' },
+      { '│', 'FloatBorder' },
     }
   end,
 }
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Cursor Styles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 M.cursors = {
-  smooth = "",
-  block = "█",
-  line = "⎸",
-  underline = "_",
+  smooth = '',
+  block = '█',
+  line = '⎸',
+  underline = '_',
 }
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Other Styles ━━━━━━━━━━━━━━━━━━━━━━━━━
 M.script_glyphs = {
   superscript = {
-    "⁰",
-    "¹",
-    "²",
-    "³",
-    "⁴",
-    "⁵",
-    "⁶",
-    "⁷",
-    "⁸",
-    "⁹",
+    '⁰',
+    '¹',
+    '²',
+    '³',
+    '⁴',
+    '⁵',
+    '⁶',
+    '⁷',
+    '⁸',
+    '⁹',
   },
   subscript = {
-    "₀",
-    "₁",
-    "₂",
-    "₃",
-    "₄",
-    "₅",
-    "₆",
-    "₇",
-    "₈",
-    "₉",
+    '₀',
+    '₁',
+    '₂',
+    '₃',
+    '₄',
+    '₅',
+    '₆',
+    '₇',
+    '₈',
+    '₉',
   },
 }
 
 M.roman_numerals = {
-  "Ⅰ",
-  "Ⅱ",
-  "Ⅲ",
-  "Ⅳ",
-  "Ⅴ",
-  "Ⅵ",
-  "Ⅶ",
-  "Ⅷ",
-  "Ⅸ",
-  "Ⅹ",
-  "Ⅺ",
-  "Ⅻ",
+  'Ⅰ',
+  'Ⅱ',
+  'Ⅲ',
+  'Ⅳ',
+  'Ⅴ',
+  'Ⅵ',
+  'Ⅶ',
+  'Ⅷ',
+  'Ⅸ',
+  'Ⅹ',
+  'Ⅺ',
+  'Ⅻ',
 }
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Type tables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -221,116 +221,116 @@ M.roman_numerals = {
 M.general = {
   -- Excluded buffer types
   buf = {
-    "help",
-    "alpha",
-    "dashboard",
-    "neo-tree",
-    "Trouble",
-    "trouble",
-    "lazy",
-    "mason",
-    "notify",
-    "toggleterm",
-    "lazyterm",
+    'help',
+    'alpha',
+    'dashboard',
+    'neo-tree',
+    'Trouble',
+    'trouble',
+    'lazy',
+    'mason',
+    'notify',
+    'toggleterm',
+    'lazyterm',
   },
   -- excluded filetypes
   ft = {
-    "help",
-    "dashboard",
-    "neorg",
+    'help',
+    'dashboard',
+    'neorg',
   },
 }
 
 --- All-modes table for keymaps
 M.all_modes = {
-  "n",
-  "i",
-  "v",
-  "x",
-  "s",
-  "o",
-  "c",
-  "t",
+  'n',
+  'i',
+  'v',
+  'x',
+  's',
+  'o',
+  'c',
+  't',
 }
 
 M.picker_sets = {
   pickers = {
-    "fzf-lua",
-    "telescope",
+    'fzf-lua',
+    'telescope',
   },
   cpp_files = {
-    "cpp",
-    "c",
-    "h",
-    "hpp",
+    'cpp',
+    'c',
+    'h',
+    'hpp',
   },
   python_files = {
-    "py",
-    "pyw",
+    'py',
+    'pyw',
   },
   nvim_files = {
-    "lua",
-    "vim",
-    "vimdoc",
+    'lua',
+    'vim',
+    'vimdoc',
   },
   vim_files = {
-    "vim",
-    "vimdoc",
+    'vim',
+    'vimdoc',
   },
   java_files = {
-    "java",
-    "properties",
-    "xml",
-    "jar",
-    "gradle",
-    "yaml",
+    'java',
+    'properties',
+    'xml',
+    'jar',
+    'gradle',
+    'yaml',
   },
   js_files = {
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue",
-    "svelte",
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+    'vue',
+    'svelte',
   },
   html_files = {
-    "html",
-    "css",
-    "scss",
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue",
-    "svelte",
+    'html',
+    'css',
+    'scss',
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+    'vue',
+    'svelte',
   },
   rust_files = {
-    "rust",
-    "toml",
-    "rs",
-    "rsx",
-    "rsproj",
+    'rust',
+    'toml',
+    'rs',
+    'rsx',
+    'rsproj',
   },
 }
 
 --- Filetypes for Alternate plugin
 M.alternate = {
-  "cpp",
-  "h",
-  "hpp",
-  "c",
+  'cpp',
+  'h',
+  'hpp',
+  'c',
 }
 
 --- Arrow config options
 M.arrow = {
   show_icons = true,
-  leader_key = ";", -- Recommended to be a single key
-  buffer_leader_key = "m", -- Per Buffer Mappings
+  leader_key = ';', -- Recommended to be a single key
+  buffer_leader_key = 'm', -- Per Buffer Mappings
 }
 
 M.avante = {
-  provider = "openai",
-  auto_suggestions_provider = "openai",
+  provider = 'openai',
+  auto_suggestions_provider = 'openai',
   behaviour = {
     auto_suggestions = false, -- Experimental stage
     auto_set_highlight_group = true,
@@ -341,8 +341,8 @@ M.avante = {
   hints = { enabled = false },
   highlights = {
     diff = {
-      current = "MiniDiffOverChange",
-      incoming = "MiniDiffOverAdd",
+      current = 'MiniDiffOverChange',
+      incoming = 'MiniDiffOverAdd',
     },
   },
 }
@@ -351,15 +351,15 @@ M.avante = {
 M.bufferline = {
   enabled = function()
     if
-      require("data.func").check_global_var(
-        "tabline",
-        "bufferline",
-        "bufferline"
+      require('data.func').check_global_var(
+        'tabline',
+        'bufferline',
+        'bufferline'
       )
-      or require("data.func").check_global_var(
-        "tabline",
-        "barsNlines",
-        "bufferline"
+      or require('data.func').check_global_var(
+        'tabline',
+        'barsNlines',
+        'bufferline'
       )
     then
       return true
@@ -371,24 +371,24 @@ M.bufferline = {
       themable = true,
       color_icons = true,
       numbers = function(opts)
-        local get_suffix = require("data.func").get_ordinal_suffix
-        return get_suffix(opts.ordinal) .. "⦂"
+        local get_suffix = require('data.func').get_ordinal_suffix
+        return get_suffix(opts.ordinal) .. '⦂'
       end,
-      separator_style = "slant",
+      separator_style = 'slant',
       auto_toggle_bufferline = true,
-      buffer_close_icon = "󱎘",
-      modified_icon = " ",
-      close_icon = "󱎘",
-      left_trunc_marker = " ",
-      right_trunc_marker = " ",
+      buffer_close_icon = '󱎘',
+      modified_icon = ' ',
+      close_icon = '󱎘',
+      left_trunc_marker = ' ',
+      right_trunc_marker = ' ',
       always_show_bufferline = false,
       show_close_icon = true,
       show_buffer_close_icon = true,
       diagnostics_indicator = function(_, _, diagnostics_dict, _)
-        local s = " "
+        local s = ' '
         for e, n in pairs(diagnostics_dict) do
-          local sym = e == "error" and " "
-            or (e == "warning" and " " or " ")
+          local sym = e == 'error' and ' '
+            or (e == 'warning' and ' ' or ' ')
           s = s .. sym .. n
         end
         return s
@@ -399,12 +399,12 @@ M.bufferline = {
 
 --- CodeSnap configuration options
 M.codesnap = {
-  save_path = "~/Pictures/Screenshots/",
+  save_path = '~/Pictures/Screenshots/',
   has_breadcrumbs = true,
   show_workspace = true,
-  bg_theme = "default",
-  watermark = "Rootiest Snippets",
-  code_font_family = "Iosevka NF",
+  bg_theme = 'default',
+  watermark = 'Rootiest Snippets',
+  code_font_family = 'Iosevka NF',
   code_font_size = 12,
 }
 
@@ -435,13 +435,13 @@ M.autosave = {}
 
 --- Kulala plugin types
 M.kulala = {
-  ft = { "http", "https", "ftp", "ftps" },
+  ft = { 'http', 'https', 'ftp', 'ftps' },
 }
 
 --- LazyVim configuration options
 M.lazyvim = {
   opts = {
-    colorscheme = vim.g.my_colorscheme or "catppuccin-mocha",
+    colorscheme = vim.g.my_colorscheme or 'catppuccin-mocha',
     news = {
       lazyvim = true,
       neovim = true,
@@ -452,7 +452,7 @@ M.lazyvim = {
 M.lazy = { -- Lazy.nvim
   disabled_plugins = {
     --"gzip",
-    "netrwPlugin",
+    'netrwPlugin',
     --"tarPlugin",
     -- "tohtml",
     --"tutor",
@@ -462,8 +462,8 @@ M.lazy = { -- Lazy.nvim
 
 --- Nvim-cmp excluded filetypes
 M.cmp = {
-  "dashboard",
-  "qalc",
+  'dashboard',
+  'qalc',
 }
 
 M.neotree = {
@@ -471,11 +471,11 @@ M.neotree = {
     default_component_configs = {
       git_status = {
         symbols = {
-          untracked = "󱀶",
-          ignored = "",
-          unstaged = "󰄱",
-          staged = "󰱒",
-          conflict = "",
+          untracked = '󱀶',
+          ignored = '',
+          unstaged = '󰄱',
+          staged = '󰱒',
+          conflict = '',
         },
       },
     },
@@ -498,42 +498,42 @@ M.minifiles = {
     },
   },
   config = function(_, opts)
-    require("mini.files").setup(opts)
+    require('mini.files').setup(opts)
 
     local show_dotfiles = true
     local filter_show = function(_)
       return true
     end
     local filter_hide = function(fs_entry)
-      return not vim.startswith(fs_entry.name, ".")
+      return not vim.startswith(fs_entry.name, '.')
     end
 
     local toggle_dotfiles = function()
       show_dotfiles = not show_dotfiles
       local new_filter = show_dotfiles and filter_show or filter_hide
-      require("mini.files").refresh({ content = { filter = new_filter } })
+      require('mini.files').refresh({ content = { filter = new_filter } })
     end
 
     local map_split = function(buf_id, lhs, direction, close_on_file)
       local rhs = function()
         local new_target_window
-        local cur_target_window = require("mini.files").get_target_window()
+        local cur_target_window = require('mini.files').get_target_window()
         if cur_target_window ~= nil then
           vim.api.nvim_win_call(cur_target_window, function()
-            vim.cmd("belowright " .. direction .. " split")
+            vim.cmd('belowright ' .. direction .. ' split')
             new_target_window = vim.api.nvim_get_current_win()
           end)
 
-          require("mini.files").set_target_window(new_target_window)
-          require("mini.files").go_in({ close_on_file = close_on_file })
+          require('mini.files').set_target_window(new_target_window)
+          require('mini.files').go_in({ close_on_file = close_on_file })
         end
       end
 
-      local desc = "Open in " .. direction .. " split"
+      local desc = 'Open in ' .. direction .. ' split'
       if close_on_file then
-        desc = desc .. " and close"
+        desc = desc .. ' and close'
       end
-      vim.keymap.set("n", lhs, rhs, { buffer = buf_id, desc = desc })
+      vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = desc })
     end
 
     local files_set_cwd = function()
@@ -545,79 +545,79 @@ M.minifiles = {
       end
     end
 
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "MiniFilesBufferCreate",
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesBufferCreate',
       callback = function(args)
         local buf_id = args.data.buf_id
 
         vim.keymap.set(
-          "n",
-          opts.mappings and opts.mappings.toggle_hidden or "g.",
+          'n',
+          opts.mappings and opts.mappings.toggle_hidden or 'g.',
           toggle_dotfiles,
-          { buffer = buf_id, desc = "Toggle hidden files" }
+          { buffer = buf_id, desc = 'Toggle hidden files' }
         )
 
         vim.keymap.set(
-          "n",
-          opts.mappings and opts.mappings.change_cwd or "gc",
+          'n',
+          opts.mappings and opts.mappings.change_cwd or 'gc',
           files_set_cwd,
-          { buffer = args.data.buf_id, desc = "Set cwd" }
+          { buffer = args.data.buf_id, desc = 'Set cwd' }
         )
 
         map_split(
           buf_id,
-          opts.mappings and opts.mappings.go_in_horizontal or "<C-w>s",
-          "horizontal",
+          opts.mappings and opts.mappings.go_in_horizontal or '<C-w>s',
+          'horizontal',
           false
         )
         map_split(
           buf_id,
-          opts.mappings and opts.mappings.go_in_vertical or "<C-w>v",
-          "vertical",
+          opts.mappings and opts.mappings.go_in_vertical or '<C-w>v',
+          'vertical',
           false
         )
         map_split(
           buf_id,
-          opts.mappings and opts.mappings.go_in_horizontal_plus or "<C-w>S",
-          "horizontal",
+          opts.mappings and opts.mappings.go_in_horizontal_plus or '<C-w>S',
+          'horizontal',
           true
         )
         map_split(
           buf_id,
-          opts.mappings and opts.mappings.go_in_vertical_plus or "<C-w>V",
-          "vertical",
+          opts.mappings and opts.mappings.go_in_vertical_plus or '<C-w>V',
+          'vertical',
           true
         )
       end,
     })
 
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "MiniFilesActionRename",
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesActionRename',
       callback = function(event)
         LazyVim.lsp.on_rename(event.data.from, event.data.to)
       end,
     })
 
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "MiniFilesActionRename",
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesActionRename',
       callback = function(event)
         Snacks.rename.on_rename_file(event.data.from, event.data.to)
       end,
     })
 
     -- include git signs
-    require("config.minifiles")
+    require('config.minifiles')
   end,
 }
 
 --- Git-Blame configuration options
 M.gitblame = {
   opts = function()
-    if vim.g.statusline == "lualine" or vim.g.statusline == nil then
+    if vim.g.statusline == 'lualine' or vim.g.statusline == nil then
       -- Get the current lualine configuration
-      local config = require("lualine").get_config()
-      local git_blame = require("gitblame")
-      local funcs = require("data.func")
+      local config = require('lualine').get_config()
+      local git_blame = require('gitblame')
+      local funcs = require('data.func')
       -- Define the width limit for displaying the Git blame component
       local width_limit = 245 -- Adjust this value as needed
       -- Add Git-blame to lualine_c section
@@ -627,78 +627,78 @@ M.gitblame = {
           return git_blame.is_blame_text_available()
             and funcs.is_window_wide_enough(width_limit)
         end,
-        color = { fg = funcs.get_fg_color("GitSignsCurrentLineBlame") },
+        color = { fg = funcs.get_fg_color('GitSignsCurrentLineBlame') },
         padding = { left = 1, right = 0 },
         on_click = function()
           if vim.g.statusline_clickable_git ~= false then
-            require("config.rootiest").toggle_lazygit_float()
+            require('config.rootiest').toggle_lazygit_float()
           end
         end,
       })
       -- Apply the lualine configuration
-      require("lualine").setup(config)
+      require('lualine').setup(config)
     end
     -- Return the git-blame options
     return M.gitblame.style
   end,
   style = {
     display_virtual_text = 0, -- Disable virtual text
-    date_format = "%r", -- Relative date format
-    message_when_not_committed = "  Not yet committed",
-    message_template = "<author> • <date> • <summary>",
+    date_format = '%r', -- Relative date format
+    message_when_not_committed = '  Not yet committed',
+    message_template = '<author> • <date> • <summary>',
   },
 }
 
 --- ChatGPT configuration options
 M.chatgpt = {
   openai_params = {
-    model = "gpt-4o-mini",
+    model = 'gpt-4o-mini',
   },
 }
 
 -- GP ChatBot configuration options
 M.gp = function()
-  require("which-key").setup({
-    triggers = "<C-g>",
+  require('which-key').setup({
+    triggers = '<C-g>',
     mode = M.all_modes,
   })
   return {
     hooks = {
       -- example of adding command which writes unit tests for the selected code
       UnitTests = function(gp, params)
-        local template = "I have the following code from {{filename}}:\n\n"
-          .. "```{{filetype}}\n{{selection}}\n```\n\n"
-          .. "Please respond by writing table driven unit tests for the code above."
+        local template = 'I have the following code from {{filename}}:\n\n'
+          .. '```{{filetype}}\n{{selection}}\n```\n\n'
+          .. 'Please respond by writing table driven unit tests for the code above.'
         local agent = gp.get_command_agent()
         gp.Prompt(params, gp.Target.vnew, agent, template)
       end,
       -- example of adding command which explains the selected code
       Explain = function(gp, params)
-        local template = "I have the following code from {{filename}}:\n\n"
-          .. "```{{filetype}}\n{{selection}}\n```\n\n"
-          .. "Please respond by explaining the code above."
+        local template = 'I have the following code from {{filename}}:\n\n'
+          .. '```{{filetype}}\n{{selection}}\n```\n\n'
+          .. 'Please respond by explaining the code above.'
         local agent = gp.get_chat_agent()
         gp.Prompt(params, gp.Target.popup, agent, template)
       end,
       -- example of usig enew as a function specifying type for the new buffer
       CodeReview = function(gp, params)
-        local template = "I have the following code from {{filename}}:\n\n"
-          .. "```{{filetype}}\n{{selection}}\n```\n\n"
-          .. "Please analyze for code smells and suggest improvements."
+        local template = 'I have the following code from {{filename}}:\n\n'
+          .. '```{{filetype}}\n{{selection}}\n```\n\n'
+          .. 'Please analyze for code smells and suggest improvements.'
         local agent = gp.get_chat_agent()
-        gp.Prompt(params, gp.Target.enew("markdown"), agent, template)
+        gp.Prompt(params, gp.Target.enew('markdown'), agent, template)
       end,
       -- example of adding command which opens new chat dedicated for translation
       Translator = function(gp, params)
         local chat_system_prompt =
-          "You are a Translator, please translate between English and Chinese."
+          'You are a Translator, please translate between English and Chinese.'
         gp.cmd.ChatNew(params, chat_system_prompt)
       end,
       -- example of making :%GpChatNew a dedicated command which
       -- opens new chat with the entire current buffer as a context
       BufferChatNew = function(gp, _)
         -- call GpChatNew command in range mode on whole buffer
-        vim.api.nvim_command("%" .. gp.config.cmd_prefix .. "ChatNew")
+        vim.api.nvim_command('%' .. gp.config.cmd_prefix .. 'ChatNew')
       end,
     },
   }
@@ -710,11 +710,11 @@ M.telescope = {
     extensions = {
       cmdline = {
         icons = {
-          history = " ",
-          command = " ",
-          number = "󰴍 ",
-          system = "",
-          unknown = "",
+          history = ' ',
+          command = ' ',
+          number = '󰴍 ',
+          system = '',
+          unknown = '',
         },
         picker = {
           layout_config = {
@@ -723,12 +723,12 @@ M.telescope = {
           },
         },
         completions = {
-          "command",
+          'command',
         },
         mappings = {
-          complete = "<Tab>",
-          run_selection = "<C-CR>",
-          run_input = "<CR>",
+          complete = '<Tab>',
+          run_selection = '<C-CR>',
+          run_input = '<CR>',
         },
         overseer = {
           enabled = true,
@@ -746,7 +746,7 @@ M.neocodeium = {
     debounce = false,
     filetypes = {
       TelescopePrompt = false,
-      ["dap-repl"] = false,
+      ['dap-repl'] = false,
     },
   },
 }
@@ -763,7 +763,7 @@ M.lspconfig = {
   opts = {
     setup = {
       clangd = function(_, opts)
-        opts.capabilities.offsetEncoding = { "utf-16" }
+        opts.capabilities.offsetEncoding = { 'utf-16' }
       end,
     },
   },
@@ -772,18 +772,18 @@ M.lspconfig = {
 --- Which-Key configuration options
 M.whichkey = {
   opts = {
-    preset = "modern",
+    preset = 'modern',
     win = {
       wo = {
         winblend = 10,
       },
     },
     triggers = {
-      { "<auto>", mode = { "n", "x" } },
-      { "<leader>", mode = { "n", "v" } },
-      { "<localleader>", mode = { "n", "v" } },
-      { "s", mode = { "n", "x" } },
-      { "g", mode = { "n", "x" } },
+      { '<auto>', mode = { 'n', 'x' } },
+      { '<leader>', mode = { 'n', 'v' } },
+      { '<localleader>', mode = { 'n', 'v' } },
+      { 's', mode = { 'n', 'x' } },
+      { 'g', mode = { 'n', 'x' } },
     },
   },
 }
@@ -795,61 +795,61 @@ M.gitgraph = {
     hooks = {
       -- Check diff of a commit
       on_select_commit = function(commit)
-        vim.notify("DiffviewOpen " .. commit.hash .. "^!")
-        vim.cmd(":DiffviewOpen " .. commit.hash .. "^!")
+        vim.notify('DiffviewOpen ' .. commit.hash .. '^!')
+        vim.cmd(':DiffviewOpen ' .. commit.hash .. '^!')
       end,
       -- Check diff from commit a -> commit b
       on_select_range_commit = function(from, to)
-        vim.notify("DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
-        vim.cmd(":DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
+        vim.notify('DiffviewOpen ' .. from.hash .. '~1..' .. to.hash)
+        vim.cmd(':DiffviewOpen ' .. from.hash .. '~1..' .. to.hash)
       end,
     },
     --- Git-graph symbols check for kitty
     symbols = function()
-      if require("data.func").is_kitty() then
+      if require('data.func').is_kitty() then
         return {
-          merge_commit = "",
-          commit = "",
-          merge_commit_end = "",
-          commit_end = "",
+          merge_commit = '',
+          commit = '',
+          merge_commit_end = '',
+          commit_end = '',
 
           -- Advanced symbols
-          GVER = "",
-          GHOR = "",
-          GCLD = "",
-          GCRD = "╭",
-          GCLU = "",
-          GCRU = "",
-          GLRU = "",
-          GLRD = "",
-          GLUD = "",
-          GRUD = "",
-          GFORKU = "",
-          GFORKD = "",
-          GRUDCD = "",
-          GRUDCU = "",
-          GLUDCD = "",
-          GLUDCU = "",
-          GLRDCL = "",
-          GLRDCR = "",
-          GLRUCL = "",
-          GLRUCR = "",
+          GVER = '',
+          GHOR = '',
+          GCLD = '',
+          GCRD = '╭',
+          GCLU = '',
+          GCRU = '',
+          GLRU = '',
+          GLRD = '',
+          GLUD = '',
+          GRUD = '',
+          GFORKU = '',
+          GFORKD = '',
+          GRUDCD = '',
+          GRUDCU = '',
+          GLUDCD = '',
+          GLUDCU = '',
+          GLRDCL = '',
+          GLRDCR = '',
+          GLRUCL = '',
+          GLRUCR = '',
         }
       else
         -- Fallback
         return {
-          merge_commit = "",
-          commit = "",
-          merge_commit_end = "",
-          commit_end = "",
+          merge_commit = '',
+          commit = '',
+          merge_commit_end = '',
+          commit_end = '',
         }
       end
     end,
     format = {
       -- Git graph timestamp style
-      timestamp = "%H:%M:%S %d-%m-%Y",
+      timestamp = '%H:%M:%S %d-%m-%Y',
       -- Git graph fields to display
-      fields = { "hash", "timestamp", "author", "branch_name", "tag" },
+      fields = { 'hash', 'timestamp', 'author', 'branch_name', 'tag' },
     },
   },
 }
@@ -865,66 +865,66 @@ M.highlights = {
 --- Indent characters
 M.ibl = {
   char = {
-    none = { " " },
-    light_vert = { "" },
-    scope = { "│" },
-    fancy_vert = { "‖" },
-    strong_vert = { "⦀" },
-    zigzag = { "⦚" },
-    basic = { "" },
-    simple = { "" },
-    arrow = { "" },
-    tab = { "󰌒" },
-    mini = { "" },
-    light_arrow = { "⤑" },
-    block = { "█" },
-    block_75 = { "▓" },
-    block_50 = { "▒" },
-    block_25 = { "░" },
-    block_0 = { " " },
-    baric = { "󰇘" },
-    fish = { "⤕" },
-    dot = { "⋅" },
-    dots = { "⋯" },
-    circle = { "" },
-    dot_circle = { "󱥸" },
-    dot_square = { "󱗽" },
-    dot_hex = { "󱗿" },
-    dot_tri = { "󱗾" },
-    dot_grid = { "󱗼" },
+    none = { ' ' },
+    light_vert = { '' },
+    scope = { '│' },
+    fancy_vert = { '‖' },
+    strong_vert = { '⦀' },
+    zigzag = { '⦚' },
+    basic = { '' },
+    simple = { '' },
+    arrow = { '' },
+    tab = { '󰌒' },
+    mini = { '' },
+    light_arrow = { '⤑' },
+    block = { '█' },
+    block_75 = { '▓' },
+    block_50 = { '▒' },
+    block_25 = { '░' },
+    block_0 = { ' ' },
+    baric = { '󰇘' },
+    fish = { '⤕' },
+    dot = { '⋅' },
+    dots = { '⋯' },
+    circle = { '' },
+    dot_circle = { '󱥸' },
+    dot_square = { '󱗽' },
+    dot_hex = { '󱗿' },
+    dot_tri = { '󱗾' },
+    dot_grid = { '󱗼' },
     solid = {
-      "▏",
-      "▎",
-      "▍",
-      "▌",
-      "▋",
-      "▊",
-      "▉",
-      "█",
+      '▏',
+      '▎',
+      '▍',
+      '▌',
+      '▋',
+      '▊',
+      '▉',
+      '█',
     },
     fancy = {
-      "󰎤",
-      "󰎧",
-      "󰎪",
-      "󰎭",
-      "󰎱",
-      "󰎳",
-      "󰎶",
-      "󰎹",
-      "󰎼",
-      "󰽽",
+      '󰎤',
+      '󰎧',
+      '󰎪',
+      '󰎭',
+      '󰎱',
+      '󰎳',
+      '󰎶',
+      '󰎹',
+      '󰎼',
+      '󰽽',
     },
     funky = {
-      "󰌒",
-      "󰌓",
-      "󰌔",
-      "󰌕",
-      "󰌖",
-      "󰌗",
-      "󰌘",
-      "󰌙",
-      "󰌚",
-      "󰌛",
+      '󰌒',
+      '󰌓',
+      '󰌔',
+      '󰌕',
+      '󰌖',
+      '󰌗',
+      '󰌘',
+      '󰌙',
+      '󰌚',
+      '󰌛',
     },
   },
 }
@@ -932,7 +932,7 @@ M.ibl = {
 --- Mini.Indentscope configuration options
 M.miniindentscope = {
   opts = {
-    options = { try_as_border = true, border = "both" },
+    options = { try_as_border = true, border = 'both' },
   },
   init = function()
     -- Set default scope char
@@ -952,88 +952,88 @@ M.miniindentscope = {
 M.navic = {
   icons = {
     classic = {
-      File = "󰈙 ",
-      Module = " ",
-      Namespace = "󰌗 ",
-      Package = " ",
-      Class = "󰌗 ",
-      Method = "󰆧 ",
-      Property = " ",
-      Field = " ",
-      Constructor = " ",
-      Enum = "󰕘",
-      Interface = "󰕘",
-      Function = "󰊕 ",
-      Variable = "󰆧 ",
-      Constant = "󰏿 ",
-      String = "󰀬 ",
-      Number = "󰎠 ",
-      Boolean = "◩ ",
-      Array = "󰅪 ",
-      Object = "󰅩 ",
-      Key = "󰌋 ",
-      Null = "󰟢 ",
-      EnumMember = " ",
-      Struct = "󰌗 ",
-      Event = " ",
-      Operator = "󰆕 ",
-      TypeParameter = "󰊄 ",
+      File = '󰈙 ',
+      Module = ' ',
+      Namespace = '󰌗 ',
+      Package = ' ',
+      Class = '󰌗 ',
+      Method = '󰆧 ',
+      Property = ' ',
+      Field = ' ',
+      Constructor = ' ',
+      Enum = '󰕘',
+      Interface = '󰕘',
+      Function = '󰊕 ',
+      Variable = '󰆧 ',
+      Constant = '󰏿 ',
+      String = '󰀬 ',
+      Number = '󰎠 ',
+      Boolean = '◩ ',
+      Array = '󰅪 ',
+      Object = '󰅩 ',
+      Key = '󰌋 ',
+      Null = '󰟢 ',
+      EnumMember = ' ',
+      Struct = '󰌗 ',
+      Event = ' ',
+      Operator = '󰆕 ',
+      TypeParameter = '󰊄 ',
     },
     trouble = {
-      File = " ",
-      Module = " ",
-      Namespace = " ",
-      Package = " ",
-      Class = " ",
-      Method = " ",
-      Property = " ",
-      Field = " ",
-      Constructor = " ",
-      Enum = " ",
-      Interface = " ",
-      Function = " ",
-      Variable = " ",
-      Constant = " ",
-      String = " ",
-      Number = " ",
-      Boolean = " ",
-      Array = " ",
-      Object = " ",
-      Key = " ",
-      Null = " ",
-      EnumMember = " ",
-      Struct = " ",
-      Event = " ",
-      Operator = " ",
-      TypeParameter = " ",
+      File = ' ',
+      Module = ' ',
+      Namespace = ' ',
+      Package = ' ',
+      Class = ' ',
+      Method = ' ',
+      Property = ' ',
+      Field = ' ',
+      Constructor = ' ',
+      Enum = ' ',
+      Interface = ' ',
+      Function = ' ',
+      Variable = ' ',
+      Constant = ' ',
+      String = ' ',
+      Number = ' ',
+      Boolean = ' ',
+      Array = ' ',
+      Object = ' ',
+      Key = ' ',
+      Null = ' ',
+      EnumMember = ' ',
+      Struct = ' ',
+      Event = ' ',
+      Operator = ' ',
+      TypeParameter = ' ',
     },
     vscode = {
-      File = " ",
-      Module = " ",
-      Namespace = " ",
-      Package = " ",
-      Class = " ",
-      Method = " ",
-      Property = " ",
-      Field = " ",
-      Constructor = " ",
-      Enum = " ",
-      Interface = " ",
-      Function = " ",
-      Variable = " ",
-      Constant = " ",
-      String = " ",
-      Number = " ",
-      Boolean = " ",
-      Array = " ",
-      Object = " ",
-      Key = " ",
-      Null = " ",
-      EnumMember = " ",
-      Struct = " ",
-      Event = " ",
-      Operator = " ",
-      TypeParameter = " ",
+      File = ' ',
+      Module = ' ',
+      Namespace = ' ',
+      Package = ' ',
+      Class = ' ',
+      Method = ' ',
+      Property = ' ',
+      Field = ' ',
+      Constructor = ' ',
+      Enum = ' ',
+      Interface = ' ',
+      Function = ' ',
+      Variable = ' ',
+      Constant = ' ',
+      String = ' ',
+      Number = ' ',
+      Boolean = ' ',
+      Array = ' ',
+      Object = ' ',
+      Key = ' ',
+      Null = ' ',
+      EnumMember = ' ',
+      Struct = ' ',
+      Event = ' ',
+      Operator = ' ',
+      TypeParameter = ' ',
     },
   },
 }
@@ -1043,8 +1043,8 @@ M.smart_splits = {
   --- Function to check if kitty is running
   --- and install Smart-Splits kittens if it is.
   build = function()
-    if require("data.func").is_kitty() then
-      return "./kitty/install-kittens.bash"
+    if require('data.func').is_kitty() then
+      return './kitty/install-kittens.bash'
     else
       return false
     end
@@ -1053,13 +1053,13 @@ M.smart_splits = {
 
 --  ───────────────────────────── NeoMiniMap ──────────────────────────
 local extmark_handler = {
-  name = "Todo Comment",
-  mode = "icon",
-  namespace = vim.api.nvim_create_namespace("neominimap_todo_comment"),
+  name = 'Todo Comment',
+  mode = 'icon',
+  namespace = vim.api.nvim_create_namespace('neominimap_todo_comment'),
   init = function() end,
   autocmds = {
     {
-      event = { "TextChanged", "TextChangedI" },
+      event = { 'TextChanged', 'TextChangedI' },
       opts = {
         callback = function(apply, args)
           local bufnr = tonumber(args.buf) ---@cast bufnr integer
@@ -1070,7 +1070,7 @@ local extmark_handler = {
       },
     },
     {
-      event = "WinScrolled",
+      event = 'WinScrolled',
       opts = {
         callback = function(apply)
           local winid = vim.api.nvim_get_current_win()
@@ -1088,22 +1088,22 @@ local extmark_handler = {
     },
   },
   get_annotations = function(bufnr)
-    local ok, _ = pcall(require, "todo-comments")
+    local ok, _ = pcall(require, 'todo-comments')
     if not ok then
       return {}
     end
-    local ns_id = vim.api.nvim_get_namespaces()["todo-comments"]
+    local ns_id = vim.api.nvim_get_namespaces()['todo-comments']
     local extmarks = vim.api.nvim_buf_get_extmarks(bufnr, ns_id, 0, -1, {
       details = true,
     })
     local icons = {
-      FIX = " ",
-      TODO = " ",
-      HACK = " ",
-      WARN = " ",
-      PERF = " ",
-      NOTE = " ",
-      TEST = "⏲ ",
+      FIX = ' ',
+      TODO = ' ',
+      HACK = ' ',
+      WARN = ' ',
+      PERF = ' ',
+      NOTE = ' ',
+      TEST = '⏲ ',
     }
     local id =
       { FIX = 1, TODO = 2, HACK = 3, WARN = 4, PERF = 5, NOTE = 6, TEST = 7 }
@@ -1116,7 +1116,7 @@ local extmark_handler = {
         lnum = extmark[2],
         end_lnum = extmark[2],
         id = id[kind],
-        highlight = "TodoFg" .. kind, --- You can customize the highlight here.
+        highlight = 'TodoFg' .. kind, --- You can customize the highlight here.
         icon = icon,
         priority = detail.priority,
       }
@@ -1130,22 +1130,22 @@ M.minimap = {
   width = 20,
   -- excluded buffer types
   buf = {
-    "nofile",
-    "nowrite",
-    "quickfix",
-    "terminal",
-    "prompt",
-    "alpha",
-    "dashboard",
-    "qalc",
+    'nofile',
+    'nowrite',
+    'quickfix',
+    'terminal',
+    'prompt',
+    'alpha',
+    'dashboard',
+    'qalc',
     -- +general.buf
   },
   -- excluded filetypes
   ft = {
-    "help",
-    "dashboard",
-    "neorg",
-    "qalc",
+    'help',
+    'dashboard',
+    'neorg',
+    'qalc',
   },
 
   --- Function to initialize or manipulate minimap settings
@@ -1153,7 +1153,7 @@ M.minimap = {
     M.setup()
     vim.g.neominimap = {
       auto_enable = true,
-      layout = "float",
+      layout = 'float',
       exclude_filetypes = M.minimap.ft,
       exclude_buftypes = M.minimap.buf,
       x_multiplier = 4,
@@ -1162,28 +1162,28 @@ M.minimap = {
         enabled = true,
       },
       diagnostic = {
-        mode = "icon",
+        mode = 'icon',
         icon = {
-          ERROR = "󰅚 ",
-          WARN = "󰀪 ",
-          INFO = "󰌶 ",
-          HINT = " ",
+          ERROR = '󰅚 ',
+          WARN = '󰀪 ',
+          INFO = '󰌶 ',
+          HINT = ' ',
         },
       },
       git = {
         enabled = true,
-        mode = "sign",
+        mode = 'sign',
         priority = 6,
         icon = {
-          add = "󰐖 ",
-          change = "󰏬 ",
-          delete = "󰍵 ",
+          add = '󰐖 ',
+          change = '󰏬 ',
+          delete = '󰍵 ',
         },
       },
       search = {
         enabled = true,
-        mode = "icon",
-        icon = "󱋞 ",
+        mode = 'icon',
+        icon = '󱋞 ',
       },
       treesitter = {
         enabled = true,
@@ -1191,9 +1191,9 @@ M.minimap = {
       },
       mark = {
         enabled = true,
-        mode = "icon",
+        mode = 'icon',
         priority = 10,
-        key = "m",
+        key = 'm',
         show_builtins = true,
       },
       split = {
@@ -1201,7 +1201,7 @@ M.minimap = {
         fix_width = false,
       },
       float = {
-        window_border = "none",
+        window_border = 'none',
         minimap_width = M.minimap.width,
       },
       handlers = {
@@ -1226,9 +1226,9 @@ M.minimap = {
 
 --- Llama Copilot plugin options
 M.llama_copilot = {
-  host = "localhost",
-  port = "11434",
-  model = "codellama:7b-code",
+  host = 'localhost',
+  port = '11434',
+  model = 'codellama:7b-code',
   max_completion_size = 15, -- use -1 for limitless
   debug = false,
 }
@@ -1260,27 +1260,27 @@ M.trouble = {
       symbols = { -- Configure symbols mode
         focus = true,
         win = {
-          type = "split", -- split window
-          relative = "win", -- relative to current window
-          position = "right", -- right side
+          type = 'split', -- split window
+          relative = 'win', -- relative to current window
+          position = 'right', -- right side
           size = 0.3, -- 30% of the window
         },
       },
     },
     icons = {
       indent = {
-        top = " ",
+        top = ' ',
         -- middle = "├╴",
-        middle = "",
+        middle = '',
         -- last = "└╴",
         -- last = "-╴",
-        last = "╰╴",
-        fold_open = " ",
-        fold_closed = " ",
-        ws = "  ",
+        last = '╰╴',
+        fold_open = ' ',
+        fold_closed = ' ',
+        ws = '  ',
       },
-      folder_closed = " ",
-      folder_open = " ",
+      folder_closed = ' ',
+      folder_open = ' ',
       kinds = M.navic.icons.vscode,
     },
   },
@@ -1290,20 +1290,20 @@ M.trouble = {
 M.barsNlines = {
   enabled = function()
     if
-      require("data.func").check_global_var(
-        "statuscolumn",
-        "barsNlines",
-        "native"
+      require('data.func').check_global_var(
+        'statuscolumn',
+        'barsNlines',
+        'native'
       )
-      or require("data.func").check_global_var(
-        "tabline",
-        "barsNlines",
-        "bufferline"
+      or require('data.func').check_global_var(
+        'tabline',
+        'barsNlines',
+        'bufferline'
       )
-      or require("data.func").check_global_var(
-        "statusline",
-        "barsNlines",
-        "lualine"
+      or require('data.func').check_global_var(
+        'statusline',
+        'barsNlines',
+        'lualine'
       )
     then
       return true
@@ -1311,77 +1311,77 @@ M.barsNlines = {
     return false
   end,
   config = function()
-    require("bars").setup({
+    require('bars').setup({
       exclude_filetypes = M.minimap.ft,
       exclude_buftypes = M.minimap.buf,
       statuscolumn = {
-        enable = require("data.func").check_global_var(
-          "statuscolumn",
-          "barsNlines",
-          "native"
+        enable = require('data.func').check_global_var(
+          'statuscolumn',
+          'barsNlines',
+          'native'
         ),
         parts = {
           {
-            type = "fold",
+            type = 'fold',
             markers = {
               default = {
-                content = { "  " },
+                content = { '  ' },
               },
               open = {
-                { " ", "BarsStatuscolumnFold1" },
+                { ' ', 'BarsStatuscolumnFold1' },
               },
               close = {
-                { "╴", "BarsStatuscolumnFold1" },
+                { '╴', 'BarsStatuscolumnFold1' },
               },
               scope = {
-                { "│ ", "BarsStatuscolumnFold1" },
+                { '│ ', 'BarsStatuscolumnFold1' },
               },
               divider = {
-                { "├╴", "BarsStatuscolumnFold1" },
+                { '├╴', 'BarsStatuscolumnFold1' },
               },
               foldend = {
-                { "╰╼", "BarsStatuscolumnFold1" },
+                { '╰╼', 'BarsStatuscolumnFold1' },
               },
             },
           },
           {
-            type = "number",
-            mode = "hybrid",
-            hl = "LineNr",
-            lnum_hl = "BarsStatusColumnNum",
-            relnum_hl = "LineNr",
-            virtnum_hl = "TablineSel",
-            wrap_hl = "TablineSel",
+            type = 'number',
+            mode = 'hybrid',
+            hl = 'LineNr',
+            lnum_hl = 'BarsStatusColumnNum',
+            relnum_hl = 'LineNr',
+            virtnum_hl = 'TablineSel',
+            wrap_hl = 'TablineSel',
           },
         },
       },
       tabline = {
-        enable = require("data.func").check_global_var(
-          "tabline",
-          "barsNlines",
-          "bufferline"
+        enable = require('data.func').check_global_var(
+          'tabline',
+          'barsNlines',
+          'bufferline'
         ),
         parts = {
           {
             -- Part name
-            type = "bufs",
+            type = 'bufs',
 
             -- Active buffer configuration
             active = {
-              corner_left = { "", "BarsTablineBufActiveSep" },
-              corner_right = { "", "BarsTablineBufActiveSep" },
+              corner_left = { '', 'BarsTablineBufActiveSep' },
+              corner_right = { '', 'BarsTablineBufActiveSep' },
 
-              padding_left = { " ", "BarsTablineBufActive" },
-              padding_right = { " " },
+              padding_left = { ' ', 'BarsTablineBufActive' },
+              padding_right = { ' ' },
             },
 
             -- Inactive buffer configuration
             inactive = {
-              corner_left = { "", "BarsTablineBufInactiveSep" },
-              corner_right = { "", "BarsTablineBufInactiveSep" },
+              corner_left = { '', 'BarsTablineBufInactiveSep' },
+              corner_right = { '', 'BarsTablineBufInactiveSep' },
 
-              padding_left = { " ", "BarsTablineBufInactive" },
-              padding_right = { " " },
+              padding_left = { ' ', 'BarsTablineBufInactive' },
+              padding_right = { ' ' },
             },
 
             -- List of patterns to ignore
@@ -1390,10 +1390,10 @@ M.barsNlines = {
         },
       },
       statusline = {
-        enable = require("data.func").check_global_var(
-          "statusline",
-          "barsNlines",
-          "lualine"
+        enable = require('data.func').check_global_var(
+          'statusline',
+          'barsNlines',
+          'lualine'
         ),
       },
     })
@@ -1401,52 +1401,52 @@ M.barsNlines = {
 }
 
 M.duck = function()
-  local add_km = require("data.func").add_keymap
+  local add_km = require('data.func').add_keymap
   add_km({
-    lhs = "<leader>uD",
-    group = "Duck",
-    icon = { icon = "󰇥", color = "yellow" },
+    lhs = '<leader>uD',
+    group = 'Duck',
+    icon = { icon = '󰇥', color = 'yellow' },
   })
   add_km({
-    "<leader>uDd",
+    '<leader>uDd',
     function()
-      require("duck").hatch()
+      require('duck').hatch()
     end,
-    desc = "Hatch",
+    desc = 'Hatch',
   })
   add_km({
-    "<leader>uDk",
+    '<leader>uDk',
     function()
-      require("duck").cook()
+      require('duck').cook()
     end,
-    desc = "Cook",
+    desc = 'Cook',
   })
   add_km({
-    "<leader>uDa",
+    '<leader>uDa',
     function()
-      require("duck").cook_all()
+      require('duck').cook_all()
     end,
-    desc = "Cook All",
+    desc = 'Cook All',
   })
 end
 
 --- Function to setup Pigeon plugin options
 M.pigeon = function()
-  local platform = require("data.func").get_os("platform")
-  local lazy_installed = pcall(require, "lazy")
-  local packer_installed = pcall(require, "packer_plugins")
+  local platform = require('data.func').get_os('platform')
+  local lazy_installed = pcall(require, 'lazy')
+  local packer_installed = pcall(require, 'packer_plugins')
   local pigeon_enabled = true -- default
-  local plugman = "lazy" -- default package manager
+  local plugman = 'lazy' -- default package manager
   if lazy_installed then
-    plugman = "lazy"
+    plugman = 'lazy'
   elseif packer_installed then
-    plugman = "packer"
-  elseif vim.fn.exists("g:plugs") == 1 then
-    plugman = "vim-plug"
+    plugman = 'packer'
+  elseif vim.fn.exists('g:plugs') == 1 then
+    plugman = 'vim-plug'
   else
-    require("data.func").notify(
-      "Failed to detect package manager.\nPigeon disabled.",
-      "ERROR"
+    require('data.func').notify(
+      'Failed to detect package manager.\nPigeon disabled.',
+      'ERROR'
     )
     pigeon_enabled = false
     return
@@ -1462,7 +1462,7 @@ M.pigeon = function()
     -- more config options here
   }
 
-  require("pigeon").setup(config)
+  require('pigeon').setup(config)
 end
 
 --- Substitute plugin options
@@ -1470,7 +1470,7 @@ M.substitute = {
   yank_substituted_text = false,
   preserve_cursor_position = true,
   on_substitute = function()
-    require("yanky.integration").substitute()
+    require('yanky.integration').substitute()
   end,
 }
 
@@ -1481,10 +1481,10 @@ M.undotree = function()
   -- Set focus to the tree when it's toggled
   vim.g.undotree_SetFocusWhenToggle = 1
   -- Set up tree shape
-  vim.g.undotree_TreeNodeShape = ""
-  vim.g.undotree_TreeVertShape = ""
-  vim.g.undotree_TreeSplitShape = ""
-  vim.g.undotree_TreeReturnShape = ""
+  vim.g.undotree_TreeNodeShape = ''
+  vim.g.undotree_TreeVertShape = ''
+  vim.g.undotree_TreeSplitShape = ''
+  vim.g.undotree_TreeReturnShape = ''
   -- Hide helpline
   vim.g.undotree_HelpLine = 0
   -- Hide diff panel
@@ -1494,7 +1494,7 @@ end
 M.yanky = {
   ring = {
     history_length = 200,
-    storage = "sqlite",
+    storage = 'sqlite',
   },
   system_clipboard = {
     sync_with_ring = true,
@@ -1514,7 +1514,7 @@ M.yanky = {
 
 M.comment = {
   opleader = {
-    line = "gC",
+    line = 'gC',
   },
 }
 
@@ -1524,11 +1524,11 @@ M.mason_lsp_config = { opts = {
 
 --- Hightlight-colors plugin options
 M.hightlight_colors = {
-  render = "virtual",
-  virtual_symbol = "",
-  virtual_symbol_prefix = "",
-  virtual_symbol_suffix = "",
-  virtual_symbol_position = "inline",
+  render = 'virtual',
+  virtual_symbol = '',
+  virtual_symbol_prefix = '',
+  virtual_symbol_suffix = '',
+  virtual_symbol_position = 'inline',
   ---Highlight hex colors, e.g. '#FFFFFF' more text
   enable_hex = true,
   ---Highlight short hex colors e.g. '#fff more text'
@@ -1543,32 +1543,32 @@ M.hightlight_colors = {
   enable_named_colors = true,
   ---Highlight tailwind colors, e.g. 'bg-blue-500 more text'
   enable_tailwind = true,
-  exclude_filetypes = { "lazy", "lazygit" },
+  exclude_filetypes = { 'lazy', 'lazygit' },
   exclude_buftypes = {},
 }
 
 --- Catppuccin options
 M.catppuccin = {
   background = { -- :h background
-    light = "latte",
-    dark = "mocha",
+    light = 'latte',
+    dark = 'mocha',
   },
   integrations = {
     native_lsp = {
       enabled = true,
       virtual_text = {
-        errors = { "italic" },
-        hints = { "italic" },
-        warnings = { "italic" },
-        information = { "italic" },
-        ok = { "italic" },
+        errors = { 'italic' },
+        hints = { 'italic' },
+        warnings = { 'italic' },
+        information = { 'italic' },
+        ok = { 'italic' },
       },
       underlines = {
-        errors = { "underline" },
-        hints = { "underline" },
-        warnings = { "underline" },
-        information = { "underline" },
-        ok = { "underline" },
+        errors = { 'underline' },
+        hints = { 'underline' },
+        warnings = { 'underline' },
+        information = { 'underline' },
+        ok = { 'underline' },
       },
       inlay_hints = {
         background = true,
@@ -1577,14 +1577,14 @@ M.catppuccin = {
     dadbod_ui = true,
     indent_blankline = {
       enabled = true,
-      scope_color = "mauve",
+      scope_color = 'mauve',
       colored_indent_levels = true,
     },
     grug_far = true,
     mason = true,
     mini = {
       enabled = true,
-      indentscope_color = "mauve",
+      indentscope_color = 'mauve',
     },
     neotree = true,
     noice = true,
@@ -1608,22 +1608,22 @@ M.auto_dark_mode = {
   update_interval = 2000,
   --- Function that runs when dark mode is enabled
   set_dark_mode = function()
-    vim.o.background = "dark"
+    vim.o.background = 'dark'
     vim.cmd.colorscheme(
-      require("astral").colortheme or "catppuccin-mocha" or "tokyonight"
+      require('astral').colortheme or 'catppuccin-mocha' or 'tokyonight'
     )
   end,
   --- Function that runs when light mode is enabled
   set_light_mode = function()
-    vim.o.background = "light"
+    vim.o.background = 'light'
     vim.cmd.colorscheme(
-      require("astral").colortheme or "catppuccin-latte" or "tokyonight-day"
+      require('astral').colortheme or 'catppuccin-latte' or 'tokyonight-day'
     )
   end,
 }
 
 --- Image.nvim enabled filetypes
-M.image = "markdown"
+M.image = 'markdown'
 
 --- Noice configuration options
 M.noice = { presets = { inc_rename = true } }
@@ -1633,55 +1633,55 @@ M.todo = {
   opts = {
     keywords = {
       FIX = {
-        icon = " ", -- icon used for the sign, and in search results
-        color = "error", -- can be a hex color, or a named color
+        icon = ' ', -- icon used for the sign, and in search results
+        color = 'error', -- can be a hex color, or a named color
         alt = { -- a set of other keywords that all map to this FIX keywords
-          "FIXME",
-          "BUG",
-          "FIXIT",
-          "ISSUE",
+          'FIXME',
+          'BUG',
+          'FIXIT',
+          'ISSUE',
         },
       },
-      TODO = { icon = " ", color = "info" },
-      HACK = { icon = " ", color = "warning" },
-      WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-      PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-      NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+      TODO = { icon = ' ', color = 'info' },
+      HACK = { icon = ' ', color = 'warning' },
+      WARN = { icon = ' ', color = 'warning', alt = { 'WARNING', 'XXX' } },
+      PERF = { icon = ' ', alt = { 'OPTIM', 'PERFORMANCE', 'OPTIMIZE' } },
+      NOTE = { icon = ' ', color = 'hint', alt = { 'INFO' } },
       BUST = {
-        icon = "󰇷 ",
-        color = "broken",
-        alt = { "BROKEN", "UNAVAILABLE", "POOP" },
+        icon = '󰇷 ',
+        color = 'broken',
+        alt = { 'BROKEN', 'UNAVAILABLE', 'POOP' },
       },
       JUNK = {
-        icon = " ",
-        color = "trash",
-        alt = { "TRASH", "WASTE", "DUMP", "GARBAGE" },
+        icon = ' ',
+        color = 'trash',
+        alt = { 'TRASH', 'WASTE', 'DUMP', 'GARBAGE' },
       },
       TEST = {
-        icon = " ",
-        color = "test",
-        alt = { "TESTING", "PASSED", "FAILED" },
+        icon = ' ',
+        color = 'test',
+        alt = { 'TESTING', 'PASSED', 'FAILED' },
       },
     },
     colors = {
-      error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-      warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
-      info = { "DiagnosticInfo", "#2563EB" },
-      hint = { "DiagnosticHint", "#10B981" },
-      default = { "Identifier", "#7C3AED" },
-      test = { "Identifier", "#FF00FF" },
-      broken = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-      trash = { "DiagnosticUnnecessary", "Comment", "#DC2626" },
+      error = { 'DiagnosticError', 'ErrorMsg', '#DC2626' },
+      warning = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' },
+      info = { 'DiagnosticInfo', '#2563EB' },
+      hint = { 'DiagnosticHint', '#10B981' },
+      default = { 'Identifier', '#7C3AED' },
+      test = { 'Identifier', '#FF00FF' },
+      broken = { 'DiagnosticError', 'ErrorMsg', '#DC2626' },
+      trash = { 'DiagnosticUnnecessary', 'Comment', '#DC2626' },
     },
     search = {
-      command = "rg",
+      command = 'rg',
       args = {
-        "--no-messages",
-        "--color=never",
-        "--no-heading",
-        "--with-filename",
-        "--line-number",
-        "--column",
+        '--no-messages',
+        '--color=never',
+        '--no-heading',
+        '--with-filename',
+        '--line-number',
+        '--column',
       },
       pattern = [[\b(KEYWORDS):]], -- ripgrep regex
     },
@@ -1690,14 +1690,14 @@ M.todo = {
     local config = {
       -- The todo-comments types to show & in what order:
       order = {
-        "TODO",
-        "FIX",
-        "WARN",
-        "BUST",
-        "JUNK",
+        'TODO',
+        'FIX',
+        'WARN',
+        'BUST',
+        'JUNK',
       },
       keywords = M.todo.opts.keywords,
-      when_empty = "",
+      when_empty = '',
     }
     return config
   end,
@@ -1705,16 +1705,16 @@ M.todo = {
 
 --- Colorful Window Separators plugin options
 M.colorful_winsep = {
-  symbols = { "─", "│", "╭", "╮", "╰", "╯" },
+  symbols = { '─', '│', '╭', '╮', '╰', '╯' },
   no_exec_files = {
-    "packer",
-    "TelescopePrompt",
-    "mason",
-    "CompetiTest",
-    "NvimTree",
-    "neotree",
-    "lazy",
-    "neominimap",
+    'packer',
+    'TelescopePrompt',
+    'mason',
+    'CompetiTest',
+    'NvimTree',
+    'neotree',
+    'lazy',
+    'neominimap',
   },
 }
 
@@ -1764,16 +1764,16 @@ M.toggleterm = {
   ---@param term Terminal The terminal object
   ---@return number|nil The terminal size
   size = function(term)
-    if term.direction == "horizontal" then
+    if term.direction == 'horizontal' then
       return 10
-    elseif term.direction == "vertical" then
+    elseif term.direction == 'vertical' then
       return vim.o.columns * 0.4
     end
   end,
   --- Function that runs when terminal is opened
   ---@param term Terminal The ToggleTerm terminal object
   on_open = function(term)
-    vim.wo[term.window].foldmethod = "manual"
+    vim.wo[term.window].foldmethod = 'manual'
   end,
   open_mapping = [[<c-\>]],
   hide_numbers = true,
@@ -1784,14 +1784,14 @@ M.toggleterm = {
   terminal_mappings = true,
   persist_size = true,
   persist_mode = true,
-  direction = "horizontal",
+  direction = 'horizontal',
   close_on_exit = true,
   shell = vim.o.shell,
   auto_scroll = true,
   float_opts = {
-    border = "curved",
+    border = 'curved',
     winblend = 3,
-    title_pos = "center",
+    title_pos = 'center',
   },
   winbar = {
     enabled = true,
@@ -1804,7 +1804,7 @@ M.toggleterm = {
   },
 }
 
-M.ts = { disabled_highlights = { "text" } }
+M.ts = { disabled_highlights = { 'text' } }
 
 local no_highlight = M.ts.disabled_highlights
 
@@ -1824,37 +1824,37 @@ M.treesitter = {
     },
     matchup = {
       enable = true, -- mandatory, false will disable the whole extension
-      disable = { "c", "ruby" }, -- optional, list of language that will be disabled
+      disable = { 'c', 'ruby' }, -- optional, list of language that will be disabled
       -- [options]
     },
     auto_install = true,
     ensure_installed = {
-      "bash",
-      "c",
-      "css",
-      "diff",
-      "html",
-      "javascript",
-      "jsdoc",
-      "json",
-      "jsonc",
-      "lua",
-      "luadoc",
-      "luap",
-      "markdown",
-      "markdown_inline",
-      "printf",
-      "python",
-      "query",
-      "regex",
-      "ssh_config",
-      "toml",
-      "tsx",
-      "typescript",
-      "vim",
-      "vimdoc",
-      "xml",
-      "yaml",
+      'bash',
+      'c',
+      'css',
+      'diff',
+      'html',
+      'javascript',
+      'jsdoc',
+      'json',
+      'jsonc',
+      'lua',
+      'luadoc',
+      'luap',
+      'markdown',
+      'markdown_inline',
+      'printf',
+      'python',
+      'query',
+      'regex',
+      'ssh_config',
+      'toml',
+      'tsx',
+      'typescript',
+      'vim',
+      'vimdoc',
+      'xml',
+      'yaml',
     },
   },
 }
@@ -1863,8 +1863,8 @@ M.twilight = {
   dimming = {
     alpha = 0.25, -- amount of dimming
     -- we try to get the foreground from the highlight groups or fallback color
-    color = { "Normal", "#cdd6f4" },
-    term_bg = "#1e1e2e", -- if guibg=NONE, this will be used to calculate text color
+    color = { 'Normal', '#cdd6f4' },
+    term_bg = '#1e1e2e', -- if guibg=NONE, this will be used to calculate text color
     inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
   },
 }
@@ -1875,12 +1875,12 @@ M.zen = {
     width = 0.9, -- width of the Zen window
     height = 1, -- height of the Zen window
     options = {
-      signcolumn = "no", -- disable signcolumn
+      signcolumn = 'no', -- disable signcolumn
       -- number = false, -- disable number column
       relativenumber = false, -- disable relative numbers
       cursorline = false, -- disable cursorline
       cursorcolumn = false, -- disable cursor column
-      foldcolumn = "0", -- disable fold column
+      foldcolumn = '0', -- disable fold column
       list = false, -- disable whitespace characters
     },
   },
@@ -1900,20 +1900,20 @@ M.zen = {
     tmux = { enabled = false }, -- disables the tmux statusline
     todo = { enabled = false }, -- if set to "true", todo-comments.nvim highlights will be disabled
     kitty = {
-      enabled = require("data.func").is_kitty(),
-      font = "+1", -- font size increment
+      enabled = require('data.func').is_kitty(),
+      font = '+1', -- font size increment
     },
     alacritty = {
-      enabled = require("data.func").is_alacritty(),
-      font = "14", -- font size
+      enabled = require('data.func').is_alacritty(),
+      font = '14', -- font size
     },
     wezterm = {
-      enabled = require("data.func").is_wezterm(),
+      enabled = require('data.func').is_wezterm(),
       -- can be either an absolute font size or the number of incremental steps
-      font = "+1", -- (10% increase per step)
+      font = '+1', -- (10% increase per step)
     },
     neovide = {
-      enabled = require("data.func").is_neovide(),
+      enabled = require('data.func').is_neovide(),
       -- Will multiply the current scale factor by this number
       scale = 1.2,
       -- disable the Neovide animations while in Zen mode
@@ -1923,7 +1923,7 @@ M.zen = {
         neovide_scroll_animation_length = 0,
         neovide_position_animation_length = 0,
         neovide_cursor_animation_length = 0,
-        neovide_cursor_vfx_mode = "",
+        neovide_cursor_vfx_mode = '',
       },
     },
   },

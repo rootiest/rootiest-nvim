@@ -6,57 +6,57 @@
 
 return {
   { -- Octo plugin
-    import = "lazyvim.plugins.extras.util.octo",
+    import = 'lazyvim.plugins.extras.util.octo',
   },
   { -- Gist Tools
-    "Rawnly/gist.nvim",
+    'Rawnly/gist.nvim',
     lazy = true,
-    cmd = require("data.cmd").gist,
-    keys = require("data.keys").gist.func,
+    cmd = require('data.cmd').gist,
+    keys = require('data.keys').gist.func,
     config = true,
   },
   { -- LazyGit
-    "kdheepak/lazygit.nvim",
+    'kdheepak/lazygit.nvim',
     lazy = true,
-    cmd = require("data.cmd").lazygit,
-    keys = require("data.keys").lazygit,
-    dependencies = require("data.deps").lazygit,
+    cmd = require('data.cmd').lazygit,
+    keys = require('data.keys').lazygit,
+    dependencies = require('data.deps').lazygit,
     config = function()
-      require("telescope").load_extension("lazygit")
+      require('telescope').load_extension('lazygit')
     end,
   },
   { -- Thanks/github-stars
-    "jsongerber/thanks.nvim",
+    'jsongerber/thanks.nvim',
     lazy = true,
-    cmd = require("data.cmd").thanks,
-    opts = require("data.types").thanks.opts,
+    cmd = require('data.cmd').thanks,
+    opts = require('data.types').thanks.opts,
   },
   { -- GitLinker
-    "linrongbin16/gitlinker.nvim",
+    'linrongbin16/gitlinker.nvim',
     lazy = true,
-    cmd = require("data.cmd").gitlinker,
+    cmd = require('data.cmd').gitlinker,
     opts = {},
-    keys = require("data.keys").gitlinker,
+    keys = require('data.keys').gitlinker,
   },
   { -- Git Blame
-    "f-person/git-blame.nvim",
-    event = "VeryLazy",
-    opts = require("data.types").gitblame.opts,
+    'f-person/git-blame.nvim',
+    event = 'VeryLazy',
+    opts = require('data.types').gitblame.opts,
   },
   { -- Git Graph
-    "isakbm/gitgraph.nvim",
-    opts = require("data.types").gitgraph.opts,
-    keys = require("data.keys").gitgraph,
+    'isakbm/gitgraph.nvim',
+    opts = require('data.types').gitgraph.opts,
+    keys = require('data.keys').gitgraph,
   },
   { -- Diffview
-    "sindrets/diffview.nvim",
+    'sindrets/diffview.nvim',
     lazy = false,
     opts = {},
   },
   { -- Neogit
-    "NeogitOrg/neogit",
+    'NeogitOrg/neogit',
     opts = {
-      graph_style = "kitty",
+      graph_style = 'kitty',
     },
   },
 }

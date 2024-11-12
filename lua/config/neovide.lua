@@ -3,14 +3,15 @@
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                         Neovide                         │
 --          ╰─────────────────────────────────────────────────────────╯
+
 -- Set GUI font
-vim.opt.guifont = "Iosevka Rootiest V2:#e-subpixelantialias:h12"
+vim.opt.guifont = 'Iosevka Rootiest V2:#e-subpixelantialias:h12'
 -- refresh rate and translucency
 vim.g.neovide_refresh_rate = 120
 vim.g.neovide_transparency = 0.85
 vim.g.neovide_window_blurred = true
 -- cursor fx
-vim.g.neovide_cursor_vfx_mode = "pixiedust"
+vim.g.neovide_cursor_vfx_mode = 'pixiedust'
 vim.g.neovide_cursor_smooth_blink = true
 vim.g.neovide_cursor_vfx_particle_density = 16.0
 vim.g.neovide_cursor_vfx_particle_lifetime = 2.1
@@ -35,26 +36,26 @@ vim.g.neovide_padding_left = 0
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━ Clipboard mappings ━━━━━━━━━━━━━━━━━━━━━━
 
-local modes = { "n", "v", "c", "i" }
+local modes = { 'n', 'v', 'c', 'i' }
 
 -- System clipboard mappings
 for _, mode in ipairs(modes) do
-  if mode == "c" or mode == "i" then
-    vim.keymap.set(mode, "<C-v>", "<C-r>+", { silent = true })
-    vim.keymap.set(mode, "<C-c>", "<C-r>+", { silent = true })
+  if mode == 'c' or mode == 'i' then
+    vim.keymap.set(mode, '<C-v>', '<C-r>+', { silent = true })
+    vim.keymap.set(mode, '<C-c>', '<C-r>+', { silent = true })
   else
-    vim.keymap.set(mode, "<C-v>", ":r !xsel -b<CR>", { silent = true })
-    vim.keymap.set(mode, "<C-c>", ":w !xsel -i -b<CR>", { silent = true })
+    vim.keymap.set(mode, '<C-v>', ':r !xsel -b<CR>', { silent = true })
+    vim.keymap.set(mode, '<C-c>', ':w !xsel -i -b<CR>', { silent = true })
   end
 end
 
 -- Wezterm-style clipboard mappings (Control-Shift)
 for _, mode in ipairs(modes) do
-  if mode == "c" or mode == "i" then
-    vim.keymap.set(mode, "<C-S-v>", "<C-r>+", { silent = true })
-    vim.keymap.set(mode, "<C-S-c>", "<C-r>+", { silent = true })
+  if mode == 'c' or mode == 'i' then
+    vim.keymap.set(mode, '<C-S-v>', '<C-r>+', { silent = true })
+    vim.keymap.set(mode, '<C-S-c>', '<C-r>+', { silent = true })
   else
-    vim.keymap.set(mode, "<C-S-v>", ":r !xsel -b<CR>", { silent = true })
-    vim.keymap.set(mode, "<C-S-c>", ":w !xsel -i -b<CR>", { silent = true })
+    vim.keymap.set(mode, '<C-S-v>', ':r !xsel -b<CR>', { silent = true })
+    vim.keymap.set(mode, '<C-S-c>', ':w !xsel -i -b<CR>', { silent = true })
   end
 end

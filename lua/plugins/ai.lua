@@ -6,57 +6,57 @@
 
 return {
   { -- Neocodeium
-    "monkoose/neocodeium",
-    event = "VeryLazy",
-    opts = require("data.types").neocodeium.opts,
-    keys = require("data.keys").neocodeium,
-    cond = require("data.cond").neocodeium,
+    'monkoose/neocodeium',
+    event = 'VeryLazy',
+    opts = require('data.types').neocodeium.opts,
+    keys = require('data.keys').neocodeium,
+    cond = require('data.cond').neocodeium,
   },
   { -- Codeium
-    import = "lazyvim.plugins.extras.coding.codeium",
-    cond = require("data.cond").codeium,
+    import = 'lazyvim.plugins.extras.coding.codeium',
+    cond = require('data.cond').codeium,
   },
   { -- Copilot
-    import = "lazyvim.plugins.extras.coding.copilot",
-    cond = require("data.cond").copilot,
+    import = 'lazyvim.plugins.extras.coding.copilot',
+    cond = require('data.cond').copilot,
   },
   { -- Tabnine
-    import = "lazyvim.plugins.extras.coding.tabnine",
-    cond = require("data.cond").tabnine,
+    import = 'lazyvim.plugins.extras.coding.tabnine',
+    cond = require('data.cond').tabnine,
   },
   { -- Minuet-AI
-    "milanglacier/minuet-ai.nvim",
-    dependencies = require("data.deps").minuet,
-    opts = { provider = "openai" },
-    cond = require("data.cond").minuet,
+    'milanglacier/minuet-ai.nvim',
+    dependencies = require('data.deps').minuet,
+    opts = { provider = 'openai' },
+    cond = require('data.cond').minuet,
   },
   { -- ChatGPT
-    "jackMort/ChatGPT.nvim",
-    event = "VeryLazy",
-    cond = require("data.cond").chatgpt,
-    keys = require("data.keys").chatgpt.func,
-    opts = require("data.types").chatgpt,
-    dependencies = require("data.deps").chatgpt,
+    'jackMort/ChatGPT.nvim',
+    event = 'VeryLazy',
+    cond = require('data.cond').chatgpt,
+    keys = require('data.keys').chatgpt.func,
+    opts = require('data.types').chatgpt,
+    dependencies = require('data.deps').chatgpt,
   },
   { -- GP
-    "robitx/gp.nvim",
-    cond = require("data.cond").gp,
+    'robitx/gp.nvim',
+    cond = require('data.cond').gp,
     lazy = false,
-    opts = require("data.types").gp,
-    keys = require("data.keys").gp.func,
+    opts = require('data.types').gp,
+    keys = require('data.keys').gp.func,
   },
   { -- Avante
-    "yetone/avante.nvim",
-    cond = require("data.cond").avante,
-    event = "VeryLazy",
+    'yetone/avante.nvim',
+    cond = require('data.cond').avante,
+    event = 'VeryLazy',
     lazy = false,
-    opts = require("data.types").avante,
-    build = "make",
-    dependencies = require("data.deps").avante,
+    opts = require('data.types').avante,
+    build = 'make',
+    dependencies = require('data.deps').avante,
     keys = function()
       -- Add keymaps for Avante group
-      for _, item in ipairs(require("data.keys").group.avante) do
-        require("data.func").add_keymap(item)
+      for _, item in ipairs(require('data.keys').group.avante) do
+        require('data.func').add_keymap(item)
       end
     end,
   },

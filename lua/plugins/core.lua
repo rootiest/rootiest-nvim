@@ -7,18 +7,18 @@
 return {
   -- require("config.rocks").plugin_spec,
   { -- LazyVim
-    "LazyVim/LazyVim",
+    'LazyVim/LazyVim',
     priority = 900,
-    opts = require("data.types").lazyvim.opts,
+    opts = require('data.types').lazyvim.opts,
   },
   { -- Bufferline
-    "akinsho/bufferline.nvim",
-    cond = require("data.types").bufferline.enabled,
-    opts = require("data.types").bufferline.opts,
+    'akinsho/bufferline.nvim',
+    cond = require('data.types').bufferline.enabled,
+    opts = require('data.types').bufferline.opts,
   },
   { -- Which-Key
-    "folke/which-key.nvim",
+    'folke/which-key.nvim',
     lazy = true,
-    opts = require("data.types").whichkey.opts,
+    opts = require('data.types').whichkey.opts,
   },
 }

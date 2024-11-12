@@ -6,25 +6,25 @@
 
 return {
   { -- DAP Core
-    import = "lazyvim.plugins.extras.dap.core",
+    import = 'lazyvim.plugins.extras.dap.core',
   },
   { -- DAP Neovim Lua Adapter
-    import = "lazyvim.plugins.extras.dap.nlua",
+    import = 'lazyvim.plugins.extras.dap.nlua',
   },
   { -- NeoTest
-    import = "lazyvim.plugins.extras.test.core",
+    import = 'lazyvim.plugins.extras.test.core',
   },
   { -- Neotest Plenary
-    "nvim-neotest/neotest-plenary",
+    'nvim-neotest/neotest-plenary',
   },
   { -- Neotest
-    "nvim-neotest/neotest",
+    'nvim-neotest/neotest',
     opts = {
-      adapters = require("data.deps").neotest.adapters,
+      adapters = require('data.deps').neotest.adapters,
     },
-    dependencies = require("data.deps").neotest.deps,
+    dependencies = require('data.deps').neotest.deps,
   },
   { -- Profiling
-    "stevearc/profile.nvim",
+    'stevearc/profile.nvim',
   },
 }
