@@ -16,5 +16,6 @@ if prefix ~= nil then
   if prefix:match('com.termux') then
     vim.g.useimage = false
     vim.g.is_termux = true
+    vim.g.useavante = false
   end
 end
