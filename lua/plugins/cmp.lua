@@ -12,9 +12,7 @@ local function cmp_provider(performance)
   if performance then
     return {
       -- Experiemental cmp performance fork
-      url = 'hrsh7th/nvim-cmp',
-      --url = "iguanacucumber/magazine.nvim",
-      dev = true,
+      url = 'https://github.com/iguanacucumber/magazine.nvim',
     }
   else
     return {
@@ -26,12 +24,64 @@ local function cmp_provider(performance)
 end
 local cmp_repo = cmp_provider(perf)
 
+if vim.g.useblinkcmp then
+  if vim.g.cmp_performance_enabled then
+    vim.g.lazyvim_blink_main = true
+  end
+  return {
+    { -- Blink completion
+      import = 'lazyvim.plugins.extras.coding.blink',
+    },
+    { -- Blink compat
+      'saghen/blink.compat',
+      opts = {},
+    },
+    {
+      'saghen/blink.cmp',
+      opts = {
+        keymap = {
+          preset = 'super-tab',
+          ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+          ['<C-e>'] = { 'hide', 'fallback' },
+
+          ['<Tab>'] = {
+            function(cmp)
+              if cmp.is_in_snippet() then
+                -- If the completion is in a snippet, accept it
+                return cmp.accept()
+              else
+                -- If the completion is not in a snippet, select the next one
+                return cmp.select_next()
+              end
+            end,
+            'snippet_forward',
+            'fallback',
+          },
+          ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+
+          ['<Up>'] = { 'select_prev', 'fallback' },
+          ['<Down>'] = { 'select_next', 'fallback' },
+          ['<C-p>'] = { 'select_prev', 'fallback' },
+          ['<C-n>'] = { 'select_next', 'fallback' },
+
+          ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+          ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+        },
+        windows = {
+          selection = 'manual',
+        },
+      },
+    },
+  }
+end
+
 -- Else use classic cmp
 return { -- cmp
   url = cmp_repo.url,
   build = cmp_repo.build,
   branch = cmp_repo.branch,
   dev = cmp_repo.dev,
+  enabled = not vim.g.useblinkcmp,
   event = 'VeryLazy',
   dependencies = require('data.deps').cmp,
   config = function()
@@ -89,16 +139,21 @@ return { -- cmp
         ['<C-Space>'] = cmp.mapping.complete({}),
         ['<Tab>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
+            -- If the completion popup is visible, select the next item
             cmp.select_next_item()
           elseif luasnip.expand_or_locally_jumpable() then
+            -- If a snippet can be expanded or jump to the next location, do so
             luasnip.expand_or_jump()
           elseif vim.snippet.active({ direction = 1 }) then
+            -- If a snippet is active, jump to the next location
             vim.schedule(function()
               vim.snippet.jump(1)
             end)
           elseif has_words_before() then
+            -- If there are words before the cursor, complete them
             cmp.complete()
           else
+            -- Otherwise, fallback to the default behavior of the Tab key
             fallback()
           end
         end, { 'i', 's' }),
