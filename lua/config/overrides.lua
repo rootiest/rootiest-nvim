@@ -29,9 +29,13 @@ require('data.keys').cmd_mode()
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━ Additional Overrides ━━━━━━━━━━━━━━━━━━━━━
 
+-- Disable NeoMiniMap in Termux
 if vim.g.is_termux then
   if require('data.func').is_installed('neominimap') then
     -- Disable NeoMiniMap
     vim.cmd('Neominimap off')
   end
 end
+
+-- Allow directional motions to wrap to next line
+-- vim.cmd('set whichwrap+=h,l')
