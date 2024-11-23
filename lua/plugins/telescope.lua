@@ -182,6 +182,12 @@ local P = { -- Define Telescope Plugins Specs
       { 'nvim-telescope/telescope-fzy-native.nvim' },
     },
   },
+  { -- Telescope Egrepify
+    'fdschmidt93/telescope-egrepify.nvim',
+    lazy = false,
+    opts = {},
+    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
+  },
 }
 
 if require('data.func').check_global_var('use_telescope', false, true) then

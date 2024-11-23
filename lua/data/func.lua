@@ -1707,6 +1707,14 @@ function M.pick(cmd, provider, options)
   -- Default the command to "files" if not provided
   cmd = cmd or 'files'
 
+  -- Helper function to check if a picker command exists for a given provider
+  local function has_picker(provide, commd)
+    local success, picker = pcall(function()
+      return require(provide)[commd]
+    end)
+    return success and type(picker) == 'function'
+  end
+
   -- Determine the provider if one is not selected
   -- (defaults to fzf-lua if available, else telescope)
   -- Will use vim.g.lazyvim_picker if defined
@@ -1725,7 +1733,9 @@ function M.pick(cmd, provider, options)
     end
   end
 
-  -- Handle special commands
+  --  ━━━━━━━━━━━━━━━━━━━━━━━ Handle special commands ━━━━━━━━━━━━━━━━━━━━━━━
+
+  -- Config files
   if cmd == 'config_files' then
     cmd = 'files'
     options = { cwd = vim.fn.stdpath('config') }
@@ -1734,12 +1744,17 @@ function M.pick(cmd, provider, options)
     cmd = 'find_files'
   end
 
-  -- Helper function to check if a picker command exists for a given provider
-  local function has_picker(provide, commd)
-    local success, picker = pcall(function()
-      return require(provide)[commd]
-    end)
-    return success and type(picker) == 'function'
+  -- Grepping
+  if cmd == 'grep' then
+    if provider == 'telescope' then
+      local telescope = require('telescope')
+      if pcall(telescope.extensions.egrepify.egrepify, {}) then
+        cmd = 'egrepify'
+        telescope.extensions.egrepify.egrepify({})
+        return true
+      end
+    end
+    cmd = 'live_grep'
   end
 
   -- Ensure options is always a table (to avoid errors if nil is passed)
