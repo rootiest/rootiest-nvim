@@ -13,8 +13,8 @@ vim.g.neovide_window_blurred = true
 -- cursor fx
 vim.g.neovide_cursor_vfx_mode = 'pixiedust'
 vim.g.neovide_cursor_smooth_blink = true
-vim.g.neovide_cursor_vfx_particle_density = 16.0
-vim.g.neovide_cursor_vfx_particle_lifetime = 2.1
+vim.g.neovide_cursor_vfx_particle_density = 16.8
+vim.g.neovide_cursor_vfx_particle_lifetime = 2.2
 vim.g.neovide_cursor_vfx_particle_phase = 1.2
 vim.g.neovide_cursor_vfx_particle_curl = 1.0
 vim.g.neovide_cursor_animation_length = 0.13
