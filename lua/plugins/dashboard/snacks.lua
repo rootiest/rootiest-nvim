@@ -66,6 +66,7 @@ return {
             cmd = 'hub status --short --branch --renames',
             padding = 2,
             indent = 3,
+            ttl = 1 * 60, -- Time between git updates
           },
           { section = 'startup' },
         },
