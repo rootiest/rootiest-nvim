@@ -95,6 +95,16 @@ return {
     lazy = true,
     name = 'umbra',
   },
+  { -- Vim-Dim (ANSI16 colors)
+    'jeffkreeftmeijer/vim-dim',
+    lazy = true,
+    name = 'dim',
+  },
+  { -- Vim-noctua (ANSI16 colors)
+    'noahfrederick/vim-noctu',
+    lazy = true,
+    name = 'noctu',
+  },
   { -- Zenbones
     'zenbones-theme/zenbones.nvim',
     name = 'zenbones',
