@@ -1090,7 +1090,7 @@ M.misc = {
   { -- Grep files
     lhs = '<leader>/',
     rhs = function()
-      require('data.func').pick({ cmd = 'live_grep' })
+      require('data.func').pick({ cmd = 'grep' })
     end,
     desc = 'Grep Files',
   },

@@ -19,7 +19,7 @@ local dashboard_buttons = {
   { key = "f", icon = " ", desc =    " Find File",    action = function() require("data.func").pick() end },
   { key = "n", icon = " ", desc =    " New File",     action = function() vim.cmd("ene | startinsert") end },
   { key = "r", icon = " ", desc =   " Recent Files",  action = function() require("data.func").pick("oldfiles") end },
-  { key = "g", icon = " ", desc =    " Grep Text",    action = function() require("data.func").pick("live_grep") end },
+  { key = "g", icon = " ", desc =    " Grep Text",    action = function() require("data.func").pick("grep") end },
   { key = "p", icon = "󰙅 ", desc =    " Pick Tree",    action = function() require("data.func").pick("file_browser", "mini") end },
   { key = "z", icon = " ", desc =    " LazyGit",      action = function() Snacks.lazygit() end },
   { key = "c", icon = " ", desc =    " Config",       action = function() require("data.func").pick("config_files") end },
