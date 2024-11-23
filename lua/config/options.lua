@@ -17,6 +17,8 @@ vim.g.mapleader                 = " "           ---@type string Options: <leader
 vim.g.maplocalleader            = "\\"          ---@type string Options: <localleader>
 -- Set the timeout length for key combinations
 vim.g.timeoutlen                = 1000          ---@type integer Options: <ms>
+-- Allow horizontal motion keys to wrap to next line at start/end of line
+vim.opt.whichwrap:append("h,l,<,>,[,]")
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ LSP ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -46,7 +48,7 @@ vim.g.usewakatime               = true          ---@type boolean Options:  <true
 -- Allow music controls and stats
 vim.g.usemusic                  = false         ---@type boolean Options:  <true|false>
 -- Allow discord presence
-vim.g.usediscord                = false         ---@type boolean Options:  <true|false>
+vim.g.usediscord                = true         ---@type boolean Options:  <true|false>
 -- Enable HardTime on startup
 vim.g.usehardtime               = false         ---@type boolean Options:  <true|false>
 -- Enable Image plugin on compatible terminals
@@ -67,8 +69,6 @@ vim.g.dead_column               = false         ---@type boolean Options: <true|
 vim.g.blinky                    = true          ---@type boolean Options: <true|false>
 -- Enable todo-comments features
 vim.g.usetodo                   = false         ---@type boolean Options: <true|false>
--- Use experimental cmp performance fork
-vim.g.cmp_performance_enabled   = true          ---@type boolean Options: <true|false>
 -- Use dev mode for rootiest plugins
 vim.g.rootiest_dev              = true          ---@type boolean Options: <true|false>
 
@@ -107,8 +107,13 @@ vim.g.useavante                 = true          ---@type boolean Options:  <true
 -- Enable GP plugin for AI chat
 vim.g.usegpai                   = false         ---@type boolean Options:  <true|false>
 
------ Use Blink instead of nvim-cmp -----
+-- Use Blink instead of nvim-cmp
 vim.g.useblinkcmp                = true         ---@type boolean Options:  <true|false>
+-- Use experimental performance fork
+vim.g.cmp_performance_enabled    = false        ---@type boolean Options: <true|false>
+-- When using cmp_performance_enabled with blink, blink will follow main branch
+-- Requires a working rust toolchain
+---@see vim.g.lazyvim_blink_main
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATUS COLUMN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -134,11 +139,11 @@ vim.g.tabline                   = "none"        ---@type string Options: [tablin
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ DASHBOARD ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-vim.g.dashboard                 = "alpha"       ---@type string Options: [dashboard]
+vim.g.dashboard                 = "snacks"      ---@type string Options: [dashboard]
 --        ╭───────────────────────────╮                alpha
 --        │                           │                nvim-dashboard
---        │      Dashboards:          │                none
---        │   Choose a plugin from    │
+--        │      Dashboards:          │                snacks
+--        │   Choose a plugin from    │                none
 --        │      the list            │
 --        │                           │
 --        ╰───────────────────────────╯
