@@ -5,9 +5,6 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 return {
-  { -- none-ls
-    import = 'lazyvim.plugins.extras.lsp.none-ls',
-  },
   { -- JSON
     import = 'lazyvim.plugins.extras.lang.json',
   },
@@ -40,6 +37,9 @@ return {
   },
   { -- Sql
     import = 'lazyvim.plugins.extras.lang.sql',
+  },
+  { -- Rust
+    import = 'lazyvim.plugins.extras.lang.rust',
   },
   { -- Jinja
     'armyers/Vim-Jinja2-Syntax',
