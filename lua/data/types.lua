@@ -237,6 +237,7 @@ M.general = {
   ft = {
     'help',
     'dashboard',
+    'snacks_dashboard',
     'neorg',
   },
 }
@@ -1838,6 +1839,7 @@ M.treesitter = {
       'jsdoc',
       'json',
       'jsonc',
+      'latex',
       'lua',
       'luadoc',
       'luap',
@@ -1910,21 +1912,22 @@ M.zen = {
     wezterm = {
       enabled = require('data.func').is_wezterm(),
       -- can be either an absolute font size or the number of incremental steps
-      font = '+1', -- (10% increase per step)
+      font = '+2', -- (10% increase per step)
     },
     neovide = {
       enabled = require('data.func').is_neovide(),
       -- Will multiply the current scale factor by this number
       scale = 1.2,
       -- disable the Neovide animations while in Zen mode
-      disable_animations = {
-        neovide_animation_length = 0,
-        neovide_cursor_animate_command_line = false,
-        neovide_scroll_animation_length = 0,
-        neovide_position_animation_length = 0,
-        neovide_cursor_animation_length = 0,
-        neovide_cursor_vfx_mode = '',
-      },
+      disable_animations = false,
+      -- disable_animations = {
+      --   neovide_animation_length = 0,
+      --   neovide_cursor_animate_command_line = false,
+      --   neovide_scroll_animation_length = 0,
+      --   neovide_position_animation_length = 0,
+      --   neovide_cursor_animation_length = 0,
+      --   neovide_cursor_vfx_mode = '',
+      -- },
     },
   },
 }
