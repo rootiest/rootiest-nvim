@@ -76,10 +76,22 @@ local function execute_nvim_exec()
   end
 end
 
--- Define an autogroup for the autocmd
+-- Define an autogroup for the NvimExec autocmd
 autogrp('NvimExec', { clear = true })
 -- Define an autocmd to run the function at startup
 autocmd('VimEnter', {
   group = 'NvimExec',
   callback = execute_nvim_exec,
+})
+
+-- Create an autogroup for managing command-line abbreviations
+local abbrev_group = autogrp('LazyAbbreviationGroup', { clear = true })
+-- Create an autocmd for unwrapping the 'lazy' abbreviation
+autocmd('CmdlineEnter', {
+  group = abbrev_group,
+  callback = function()
+    vim.cmd([[
+cnoreabbrev <expr> lazy ((getcmdtype() == ':' && getcmdline() == 'lazy') ? 'Lazy' : 'lazy')
+    ]])
+  end,
 })
