@@ -158,16 +158,4 @@ return {
     'folke/twilight.nvim',
     opts = require('data.types').twilight,
   },
-  -- { -- vim-footprints
-  --   "axlebedev/vim-footprints",
-  --   init = function()
-  --     vim.g.footprintsColor = "#251519"
-  --     vim.g.footprintsTermColor = "208"
-  --     vim.g.footprintsEasingFunction = "linear"
-  --     vim.g.footprintsHistoryDepth = 20
-  --     vim.g.footprintsExcludeFiletypes = { "magit", "nerdtree", "diff" }
-  --     vim.g.footprintsEnabledByDefault = 1
-  --     vim.g.footprintsOnCurrentLine = 0
-  --   end,
-  -- },
 }
