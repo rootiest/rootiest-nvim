@@ -19,3 +19,13 @@ if prefix ~= nil then
     vim.g.useavante = false
   end
 end
+
+-- Define intel_arch
+local intel_arch = { x64 = true, x86 = true }
+local cur_arch = require('data.func').get_system_arch()
+
+-- Check the platform and disable incompatible plugins
+if not intel_arch[cur_arch] then
+  vim.g.useimage = false
+  vim.g.useavante = false
+end
