@@ -2434,5 +2434,23 @@ function M.help_lookup_quoted_visual()
   M.help_lookup_string(M.wrap_in_quotes(selected_text))
 end
 
+function M.get_system_arch()
+  -- Use jit.arch if available
+  if jit and jit.arch then
+    return jit.arch
+  end
+
+  -- Fallback to `uname -m`
+  local handle = io.popen('uname -m')
+  if handle then
+    local result = handle:read('*a'):gsub('%s+', '')
+    handle:close()
+    return result
+  end
+
+  -- If all else fails
+  return 'unknown'
+end
+
 -- Export the module
 return M
