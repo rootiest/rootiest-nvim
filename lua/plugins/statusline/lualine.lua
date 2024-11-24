@@ -84,6 +84,16 @@ local function get_neocodeium_status(ev)
   vim.api.nvim_buf_set_var(ev.buf, 'neocodeium_status', luacodeium)
 end
 
+local function open_git_diff()
+  if vim.g.statusline_clickable_git ~= false then
+    if pcall(require, 'diffview') then
+      require('diffview').open({})
+    else
+      Snacks.lazygit()
+    end
+  end
+end
+
 -- Then only some of event fired we invoked this function
 vim.api.nvim_create_autocmd('User', {
   group = ..., -- set some augroup here
@@ -280,9 +290,7 @@ return { -- Lualine
               removed = icons.git.removed,
               padding = { left = 0, right = 0 },
               on_click = function()
-                if vim.g.statusline_clickable_git ~= false then
-                  require('config.rootiest').toggle_lazygit_float()
-                end
+                open_git_diff()
               end,
             },
             { -- GitSigns
@@ -302,7 +310,7 @@ return { -- Lualine
               padding = { left = 0, right = 0 },
               on_click = function()
                 if vim.g.statusline_clickable_git ~= false then
-                  require('config.rootiest').toggle_lazygit_float()
+                  Snacks.lazygit()
                 end
               end,
             },
@@ -354,6 +362,12 @@ return { -- Lualine
           { -- NeoCodeium Status
             function()
               return vim.b.neocodeium_status or '󰣽 '
+            end,
+            cond = function()
+              if not pcall(require, 'neocodeium') then
+                return false
+              end
+              return true
             end,
             padding = { left = 0, right = 1 },
           },
@@ -426,7 +440,10 @@ return { -- Lualine
           { -- Recording
             require('recorder').recordingStatus,
             cond = function()
-              return pcall(require, 'recorder')
+              if not pcall(require, 'recorder') then
+                return false
+              end
+              return true
             end,
             color = 'CurSearch',
             separator = { left = '', right = '' },
