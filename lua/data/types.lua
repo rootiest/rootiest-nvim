@@ -1594,6 +1594,7 @@ M.catppuccin = {
     octo = true,
     overseer = true,
     rainbow_delimiters = true,
+    snacks = true,
     which_key = true,
     diffview = true,
     flash = true,
