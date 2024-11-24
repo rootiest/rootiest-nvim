@@ -13,4 +13,4 @@ debug/
 profile.json
 rocks.toml
 extras/
-		  		  /home/rootiest/.cache/nvim
+/home/rootiest/.cache/nvim
