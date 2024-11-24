@@ -632,7 +632,7 @@ M.gitblame = {
         padding = { left = 1, right = 0 },
         on_click = function()
           if vim.g.statusline_clickable_git ~= false then
-            require('config.rootiest').toggle_lazygit_float()
+            Snacks.lazygit()
           end
         end,
       })
