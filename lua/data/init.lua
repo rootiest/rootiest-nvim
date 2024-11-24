@@ -13,6 +13,7 @@ data.ft = require('data.ft')
 data.events = require('data.events')
 data.autocmd = require('data.autocmd')
 data.cond = require('data.cond')
+data.vim = require('data.vim')
 
 -- Generic function to iterate over files in a specified directory and load Lua modules
 function data.load_modules_from_dir(directory, module_prefix)
