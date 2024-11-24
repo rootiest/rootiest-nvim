@@ -31,45 +31,74 @@ return {
           keys = require('data.dash').dashboard_nvim.choices,
           header = read_file(require('data.dash').logo),
         },
-        sections = {
-          -- { section = 'header' },
-          {
-            section = 'terminal',
-            cmd = 'pokemon-colorscripts -n porygon-z --no-title',
-            padding = 0,
-            height = 20,
-            indent = 44,
-          },
-          { section = 'keys', gap = 1, padding = 1 },
-          {
-            pane = 2,
-            icon = ' ',
-            title = 'Recent Files',
-            section = 'recent_files',
-            indent = 2,
-            padding = { 2, 20 },
-          },
-          {
-            pane = 2,
-            icon = ' ',
-            title = 'Projects',
-            section = 'projects',
-            indent = 2,
-            padding = 2,
-          },
-          {
-            pane = 2,
-            icon = ' ',
-            title = 'Git Status',
-            section = 'terminal',
-            enabled = require('data.func').is_git_repo(),
-            cmd = 'hub status --short --branch --renames',
-            padding = 2,
-            indent = 3,
-            ttl = 1 * 60, -- Time between git updates
-          },
-          { section = 'startup' },
-        },
+        sections = function()
+          if not require('data.func').is_neovide() then
+            return {
+              -- { section = 'header' },
+              {
+                section = 'terminal',
+                cmd = 'pokemon-colorscripts -n porygon-z --no-title',
+                padding = 0,
+                height = 20,
+                indent = 44,
+              },
+              { section = 'keys', gap = 1, padding = 1 },
+              {
+                pane = 2,
+                icon = ' ',
+                title = 'Recent Files',
+                section = 'recent_files',
+                indent = 2,
+                padding = { 2, 20 },
+              },
+              {
+                pane = 2,
+                icon = ' ',
+                title = 'Projects',
+                section = 'projects',
+                indent = 2,
+                padding = 2,
+              },
+              {
+                pane = 2,
+                icon = ' ',
+                title = 'Git Status',
+                section = 'terminal',
+                enabled = require('data.func').is_git_repo(),
+                cmd = 'hub status --short --branch --renames',
+                padding = 2,
+                indent = 3,
+                ttl = 1 * 60, -- Time between git updates
+              },
+              { section = 'startup' },
+            }
+          else
+            return {
+              {
+                section = 'header',
+                indent = 40,
+              },
+              { section = 'keys', gap = 1, padding = 1 },
+              {
+                pane = 2,
+                icon = ' ',
+                title = 'Recent Files',
+                section = 'recent_files',
+                indent = 2,
+                padding = { 2, 20 },
+              },
+              {
+                pane = 2,
+                icon = ' ',
+                title = 'Projects',
+                section = 'projects',
+                indent = 2,
+                padding = 2,
+              },
+              { section = 'startup' },
+            }
+          end
+        end,
       },
     },
   },
