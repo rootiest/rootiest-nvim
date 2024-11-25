@@ -1335,13 +1335,13 @@ M.barsNlines = {
                 { '╴', 'BarsStatuscolumnFold1' },
               },
               scope = {
-                { '│ ', 'BarsStatuscolumnFold1' },
+                { ' ', 'BarsStatuscolumnFold1' },
               },
               divider = {
-                { '├╴', 'BarsStatuscolumnFold1' },
+                { '╴', 'BarsStatuscolumnFold1' },
               },
               foldend = {
-                { '╰╼', 'BarsStatuscolumnFold1' },
+                { '╼', 'BarsStatuscolumnFold1' },
               },
             },
           },
