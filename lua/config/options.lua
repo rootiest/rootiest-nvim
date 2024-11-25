@@ -61,6 +61,8 @@ vim.g.ignore_no_lazy            = false         ---@type boolean Options:  <true
 vim.g.codesnap                  = true          ---@type boolean Options:  <true|false>
 -- Enable Auto-hiding cursorline
 vim.g.auto_cursorline           = false         ---@type boolean Options: <true|false>
+-- Toggle cursorline (when not auto)
+vim.o.cursorline                = false         ---@type boolean Options: <true|false>
 -- Enable Smart Scrolloff
 vim.g.smart_scrolloff           = false         ---@type boolean Options: <true|false>
 -- Enable Dead Column
@@ -117,10 +119,10 @@ vim.g.cmp_performance_enabled    = false        ---@type boolean Options: <true|
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATUS COLUMN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-vim.g.statuscolumn              = "native"      ---@type string Options: [statuscolumn]
+vim.g.statuscolumn              = "snacks"      ---@type string Options: [statuscolumn]
 --        ╭───────────────────────────╮                barsNlines
---        │                           │                native
---        │      Status Columns:      │
+--        │                           │                snacks
+--        │      Status Columns:      │                native
 --        │   Choose a plugin from    │
 --        │      the list            │
 --        │                           │
