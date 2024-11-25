@@ -1630,6 +1630,35 @@ M.image = 'markdown'
 --- Noice configuration options
 M.noice = { presets = { inc_rename = true } }
 
+--- Smear Cursor
+M.smearcursor = function()
+  --local bg = require('data.func').get_bg_color('Normal') or '#1d1d2d'
+  return {
+    -- Cursor color. Defaults to Normal gui foreground color
+    cursor_color = '#d3cdc3',
+
+    -- Background color. Defaults to Normal gui background color
+    --normal_bg = bg,
+
+    -- Smear cursor when switching buffers
+    smear_between_buffers = true,
+
+    -- Smear cursor when moving within line or to neighbor lines
+    smear_between_neighbor_lines = true,
+
+    -- Use floating windows to display smears outside buffers.
+    -- May have performance issues with other plugins.
+    use_floating_windows = true,
+
+    -- Set to `true` if your font supports legacy computing symbols (block unicode symbols).
+    -- Smears will blend better on all backgrounds.
+    legacy_computing_symbols_support = true,
+
+    -- Attempt to hide the real cursor when smearing.
+    hide_target_hack = true,
+  }
+end
+
 --- Todo-comments plugin options
 M.todo = {
   opts = {
