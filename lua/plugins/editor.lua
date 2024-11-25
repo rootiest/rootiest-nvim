@@ -14,6 +14,17 @@ return {
   { -- Illuminate
     import = 'lazyvim.plugins.extras.editor.illuminate',
   },
+  { -- Illuminate
+    'ehpi/vim-illuminate',
+    opts = {
+      providers = {
+        -- Disable LSP proovider due to deprecation warnings
+        -- 'lsp',
+        'treesitter',
+        'regex',
+      },
+    },
+  },
   { -- Outline
     import = 'lazyvim.plugins.extras.editor.outline',
   },
