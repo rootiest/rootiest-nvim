@@ -32,10 +32,6 @@ if vim.g.useblinkcmp then
     { -- Blink completion
       import = 'lazyvim.plugins.extras.coding.blink',
     },
-    { -- Blink compat
-      'saghen/blink.compat',
-      opts = {},
-    },
     {
       'saghen/blink.cmp',
       opts = {
@@ -45,16 +41,7 @@ if vim.g.useblinkcmp then
           ['<C-e>'] = { 'hide', 'fallback' },
 
           ['<Tab>'] = {
-            function(cmp)
-              if cmp.is_in_snippet() then
-                -- If the completion is in a snippet, accept it
-                return cmp.accept()
-              else
-                -- If the completion is not in a snippet, select the next one
-                return cmp.select_next()
-              end
-            end,
-            'snippet_forward',
+            LazyVim.cmp.map({ 'snippet_forward', 'ai_accept' }),
             'fallback',
           },
           ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
@@ -70,6 +57,19 @@ if vim.g.useblinkcmp then
         windows = {
           selection = 'manual',
         },
+      },
+    },
+    { -- Blink compat
+      'saghen/blink.compat',
+      optional = true, -- make optional so it's only enabled if any extras need it
+      opts = {},
+      version = not vim.g.lazyvim_blink_main and '*',
+    },
+    { -- Catppuccin integration
+      'catppuccin',
+      optional = true,
+      opts = {
+        integrations = { blink_cmp = true },
       },
     },
   }
