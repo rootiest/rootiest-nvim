@@ -41,6 +41,8 @@ then
   -- Add Snacks statuscolumn
   table.insert(P, statuscolumn)
 else
+  -- Use native statuscolumn
+  vim.opt.statuscolumn = '%=%{v:relnum?v:relnum:v:lnum} '
   table.insert(P, nostatuscolumn)
 end
 
