@@ -1635,7 +1635,7 @@ M.smearcursor = function()
   --local bg = require('data.func').get_bg_color('Normal') or '#1d1d2d'
   return {
     -- Cursor color. Defaults to Normal gui foreground color
-    cursor_color = '#d3cdc3',
+    --cursor_color = '#d3cdc3',
 
     -- Background color. Defaults to Normal gui background color
     --normal_bg = bg,
@@ -1653,6 +1653,22 @@ M.smearcursor = function()
     -- Set to `true` if your font supports legacy computing symbols (block unicode symbols).
     -- Smears will blend better on all backgrounds.
     legacy_computing_symbols_support = true,
+
+    -- How fast the smear's head moves towards the target.
+    -- 0: no movement, 1: instantaneous, default: 0.6
+    stiffness = 0.6,
+
+    -- How fast the smear's tail moves towards the head.
+    -- 0: no movement, 1: instantaneous, default: 0.3
+    trailing_stiffness = 0.2,
+
+    -- How much the tail slows down when getting close to the head.
+    -- 0: no slowdown, more: more slowdown, default: 0.1
+    trailing_exponent = 0.1,
+
+    -- Stop animating when the smear's tail is within this distance (in characters) from the target.
+    -- Default: 0.1
+    distance_stop_animating = 0.1,
 
     -- Attempt to hide the real cursor when smearing.
     hide_target_hack = true,

@@ -92,13 +92,6 @@ return {
     opts = require('data.types').zen,
     keys = require('data.keys').zen,
   },
-  { -- SmoothCursor
-    'gen740/SmoothCursor.nvim',
-    event = 'BufEnter',
-    -- lazy = true,
-    opts = require('data.types').smoothcursor,
-    enabled = false,
-  },
   { -- Smart Scrolloff
     'tonymajestro/smart-scrolloff.nvim',
     event = 'VeryLazy',
@@ -169,12 +162,17 @@ return {
     'folke/twilight.nvim',
     opts = require('data.types').twilight,
   },
-  {
+  { -- Smear Cursor
     'sphamba/smear-cursor.nvim',
     event = 'VeryLazy',
     enabled = function()
       return not require('data.func').is_neovide()
     end,
     opts = require('data.types').smearcursor,
+  },
+  { -- Neoscroll
+    'karb94/neoscroll.nvim',
+    event = 'VeryLazy',
+    opts = {},
   },
 }
