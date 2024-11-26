@@ -110,7 +110,7 @@ vim.g.useavante                 = true          ---@type boolean Options:  <true
 vim.g.usegpai                   = false         ---@type boolean Options:  <true|false>
 
 -- Use Blink instead of nvim-cmp
-vim.g.useblinkcmp                = true         ---@type boolean Options:  <true|false>
+vim.g.useblinkcmp                = false         ---@type boolean Options:  <true|false>
 -- Use experimental performance fork
 vim.g.cmp_performance_enabled    = false        ---@type boolean Options: <true|false>
 -- When using cmp_performance_enabled with blink, blink will follow main branch
