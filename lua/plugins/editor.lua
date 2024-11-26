@@ -29,6 +29,7 @@ return {
     import = 'lazyvim.plugins.extras.editor.outline',
   },
   { -- IncRename
+
     import = 'lazyvim.plugins.extras.editor.inc-rename',
   },
   { -- Treesitter-context
@@ -39,6 +40,17 @@ return {
   },
   { -- Refactoring
     import = 'lazyvim.plugins.extras.editor.refactoring',
+  },
+  { -- Grug-Far
+    'MagicDuck/grug-far.nvim',
+    opts = {
+      engines = {
+        astgrep = {
+          path = 'ast-grep',
+        },
+      },
+      engine = 'ripgrep',
+    },
   },
   { -- Trouble
     'folke/trouble.nvim',
@@ -158,7 +170,7 @@ return {
     'nvchad/minty',
     lazy = true,
   },
-  {
+  { -- Twilight
     'folke/twilight.nvim',
     opts = require('data.types').twilight,
   },
