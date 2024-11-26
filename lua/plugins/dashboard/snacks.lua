@@ -34,14 +34,14 @@ return {
         sections = function()
           if not require('data.func').is_neovide() then
             return {
-              {
-                section = 'terminal',
-                cmd = 'pokemon-colorscripts -n porygon-z --no-title',
-                padding = 0,
-                height = 20,
-                indent = 44,
-              },
               { section = 'header', indent = 58 },
+              -- {
+              --   section = 'terminal',
+              --   cmd = 'pokemon-colorscripts -n porygon-z --no-title',
+              --   padding = 0,
+              --   height = 20,
+              --   indent = 44,
+              -- },
               { section = 'keys', gap = 1, padding = 1 },
               {
                 pane = 2,
@@ -49,7 +49,7 @@ return {
                 title = 'Recent Files',
                 section = 'recent_files',
                 indent = 2,
-                padding = { 2, 20 },
+                padding = { 2, 4 },
               },
               {
                 pane = 2,
@@ -70,7 +70,16 @@ return {
                 indent = 3,
                 ttl = 1 * 60, -- Time between git updates
               },
-              { section = 'startup' },
+              { section = 'startup', padding = 2 },
+              {
+                section = 'terminal',
+                cmd = 'kusa rootiest && sleep 0.2',
+                -- cmd = 'gh graph -s github -p %E2%96%88',
+                padding = { 0, 0 },
+                height = 10,
+                width = 106,
+                indent = 8,
+              },
             }
           else
             return {
