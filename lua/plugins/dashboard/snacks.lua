@@ -34,7 +34,6 @@ return {
         sections = function()
           if not require('data.func').is_neovide() then
             return {
-              -- { section = 'header' },
               {
                 section = 'terminal',
                 cmd = 'pokemon-colorscripts -n porygon-z --no-title',
@@ -42,6 +41,7 @@ return {
                 height = 20,
                 indent = 44,
               },
+              { section = 'header', indent = 58 },
               { section = 'keys', gap = 1, padding = 1 },
               {
                 pane = 2,

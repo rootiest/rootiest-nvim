@@ -151,7 +151,7 @@ vim.g.dashboard                 = "snacks"      ---@type string Options: [dashbo
 --        ╰───────────────────────────╯
 
 -- Dashboard logo file
-vim.g.dash_logo                 = "neovim.txt"  ---@type string Options: [dash logo]
+vim.g.dash_logo                 = "mini.txt"  ---@type string Options: [dash logo]
 --  Dashboard header color
 vim.g.DashboardHeaderColor      = "#88fc9a"    ---@type string Options: [hex color]
 
