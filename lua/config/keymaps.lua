@@ -56,3 +56,12 @@ end
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Overrides ━━━━━━━━━━━━━━━━━━━━━━━━━━
 require('config.overrides')
+
+vim.keymap.set('n', 'q', '<nop>', { noremap = true })
+vim.keymap.set('n', 'Q', 'q', { noremap = true, desc = 'Record macro' })
+vim.keymap.set(
+  'n',
+  '<M-q>',
+  'Q',
+  { noremap = true, desc = 'Replay last register' }
+)
