@@ -1353,6 +1353,7 @@ function M.spellcheck(spellcheck, filetypes)
     -- Create an autocommand for the specified filetypes to manage spellcheck
     vim.api.nvim_create_autocmd('FileType', {
       group = 'Spellcheck',
+      ---@diagnostic disable-next-line: assign-type-mismatch
       pattern = filetypes,
       callback = function()
         vim.opt_local.spell = spellcheck
@@ -2447,6 +2448,10 @@ function M.get_system_arch()
     handle:close()
     return result
   end
+
+  require('telescope.builtin').find_files({
+    search_dirs = { '/home/rootiest/projects' },
+  })
 
   -- If all else fails
   return 'unknown'
