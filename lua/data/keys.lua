@@ -1505,6 +1505,42 @@ M.transparent = {
 }
 
 M.yanky = {
+  { -- Yanky put after
+    'P',
+    '<Plug>(YankyPutAfter)',
+    desc = 'Yanky put after',
+    mode = { 'n', 'x' },
+  },
+  { -- Yanky put before
+    'p',
+    '<Plug>(YankyPutBefore)',
+    desc = 'Yanky put before',
+    mode = { 'n', 'x' },
+  },
+  { -- Yanky gput after
+    'gP',
+    '<Plug>(YankyGPutAfter)',
+    desc = 'Yanky gput after',
+    mode = { 'n', 'x' },
+  },
+  { -- Yanky gput before
+    'gp',
+    '<Plug>(YankyGPutBefore)',
+    desc = 'Yanky gput before',
+    mode = { 'n', 'x' },
+  },
+  { -- Yanky previous entry
+    '<c-p>',
+    '<Plug>(YankyPreviousEntry)',
+    desc = 'Yanky previous entry',
+    mode = 'n',
+  },
+  { -- Yanky next entry
+    '<c-n>',
+    '<Plug>(YankyNextEntry)',
+    desc = 'Yanky next entry',
+    mode = 'n',
+  },
   { -- Put indent after linewise
     ']p',
     '<Plug>(YankyPutIndentAfterLinewise)',
@@ -1512,7 +1548,7 @@ M.yanky = {
   },
   { -- Put indent before linewise
     '[p',
-    '<Plug>(YankyPutIndentBeforeLinewise)',
+    '<Plug>(YankyPutIndentBeforeLinewise',
     desc = 'Put indent before linewise',
   },
   { -- Put indent after linewise (uppercase)
@@ -1562,6 +1598,17 @@ M.yanky = {
     end,
     desc = 'Last put',
     mode = { 'x', 'o' },
+  },
+  { -- Open Yank History
+    '<leader>p', -- Left-hand side (key combination)
+    function()
+      if pcall(require, 'telescope') then
+        require('telescope').extensions.yank_history.yank_history()
+      else
+        vim.cmd('YankyRingHistory')
+      end
+    end,
+    desc = 'Yank History',
   },
 }
 
