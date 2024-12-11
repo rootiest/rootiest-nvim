@@ -114,4 +114,9 @@ return {
       })
     end,
   },
+  { -- Treesitter-endwise
+    'RRethy/nvim-treesitter-endwise',
+    lazy = false,
+    priority = 1000,
+  },
 }
