@@ -5,18 +5,6 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 return {
-  -- { -- mini.animate
-  --   import = 'lazyvim.plugins.extras.ui.mini-animate',
-  -- },
-  -- {
-  --   'echasnovski/mini.animate',
-  --   version = false,
-  --   opts = {
-  --     cursor = {
-  --       enable = false,
-  --     },
-  --   },
-  -- },
   {
     'echasnovski/mini.move',
     event = 'VeryLazy',
