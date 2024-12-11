@@ -39,3 +39,9 @@ end
 
 -- Allow directional motions to wrap to next line
 -- vim.cmd('set whichwrap+=h,l')
+
+-- Stop snippet when leaving insert mode
+vim.keymap.set({ 'i', 's' }, '<Esc>', function()
+  vim.snippet.stop()
+  return '<Esc>'
+end, { expr = true, desc = 'Close snippet session' })
