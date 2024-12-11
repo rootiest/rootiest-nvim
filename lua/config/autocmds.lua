@@ -95,3 +95,41 @@ cnoreabbrev <expr> lazy ((getcmdtype() == ':' && getcmdline() == 'lazy') ? 'Lazy
     ]])
   end,
 })
+
+-- change line number based on mode:
+-- for command mode: make it absolute for ranges etc
+-- for normal mode: relative movements <3
+local cmdline_group = vim.api.nvim_create_augroup('CmdlineLinenr', {})
+-- debounce cmdline enter events to make sure we dont have flickering for non user cmdline use
+-- e.g. mappings using : instead of <cmd>
+local cmdline_debounce_timer
+
+autocmd('CmdlineEnter', {
+  group = cmdline_group,
+  callback = function()
+    cmdline_debounce_timer = vim.uv.new_timer()
+    cmdline_debounce_timer:start(
+      100,
+      0,
+      vim.schedule_wrap(function()
+        if vim.o.number then
+          vim.o.relativenumber = false
+          vim.api.nvim__redraw({ statuscolumn = true })
+        end
+      end)
+    )
+  end,
+})
+
+autocmd('CmdlineLeave', {
+  group = cmdline_group,
+  callback = function()
+    if cmdline_debounce_timer then
+      cmdline_debounce_timer:stop()
+      cmdline_debounce_timer = nil
+    end
+    if vim.o.number then
+      vim.o.relativenumber = true
+    end
+  end,
+})
