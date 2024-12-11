@@ -45,3 +45,13 @@ vim.keymap.set({ 'i', 's' }, '<Esc>', function()
   vim.snippet.stop()
   return '<Esc>'
 end, { expr = true, desc = 'Close snippet session' })
+
+-- Swap the behavior of 'p' and 'P' while preserving plugin-defined behaviors
+local opts = { noremap = false, silent = true, remap = true }
+
+vim.keymap.set('n', 'p', 'P', opts)
+vim.keymap.set('n', 'P', 'p', opts)
+vim.keymap.set('n', 'q:', function()
+  require('data.func').pick('command_history')
+end, opts)
+
