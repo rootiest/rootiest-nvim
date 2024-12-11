@@ -172,6 +172,7 @@ return { -- cmp
         end, { 'i', 's' }),
       }),
       sources = {
+        { name = 'ecolog' },
         { name = 'nvim_lsp', priority = 1000 },
         { name = 'luasnip', priority = 750 },
         { name = 'path', priority = 250 },
@@ -195,7 +196,7 @@ return { -- cmp
             path = ' Path',
             buffer = '󰓩 Buffer',
             dotenv = ' Dotenv',
-            cmp_yanky = ' History',
+            cmp_yanky = '󰅍 Yanked',
           }
           local color_item =
             require('nvim-highlight-colors').format(entry, { kind = item.kind })
