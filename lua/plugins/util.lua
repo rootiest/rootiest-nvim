@@ -262,6 +262,11 @@ return {
     'gregorias/coop.nvim',
     lazy = false,
   },
+  {
+    'marcussimonsen/let-it-snow.nvim',
+    cmd = 'LetItSnow', -- Wait with loading until command is run
+    opts = {},
+  },
   { -- yazi
     'mikavilpas/yazi.nvim',
     cmd = 'Yazi',
