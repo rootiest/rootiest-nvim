@@ -1554,6 +1554,7 @@ M.catppuccin = {
     light = 'latte',
     dark = 'mocha',
   },
+  transparent_background = false,
   integrations = {
     native_lsp = {
       enabled = true,
