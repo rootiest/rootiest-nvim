@@ -26,7 +26,6 @@ end
 
 -- Remap Command Mode List
 require('data.keys').cmd_mode()
-
 --  ━━━━━━━━━━━━━━━━━━━━━━━━ Additional Overrides ━━━━━━━━━━━━━━━━━━━━━
 
 -- Disable NeoMiniMap in Termux
@@ -67,3 +66,23 @@ vim.api.nvim_create_user_command('ListLspClients', function()
     print('Attached LSP(s): ' .. table.concat(names, ', '))
   end
 end, {})
+
+-- Statuscolumn Tweaks
+require('config.statuscolumn')
+
+-- Macro recording cursor color
+local api = vim.api
+-- Store current cursor color
+local current_cursor_color = api.nvim_get_hl(0, { name = 'Cursor' }).bg
+
+api.nvim_create_autocmd('RecordingEnter', {
+  callback = function()
+    api.nvim_set_hl(0, 'Cursor', { bg = '#ff5080' })
+  end,
+})
+
+api.nvim_create_autocmd('RecordingLeave', {
+  callback = function()
+    api.nvim_set_hl(0, 'Cursor', { bg = current_cursor_color })
+  end,
+})
