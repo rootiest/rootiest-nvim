@@ -17,6 +17,70 @@ local function read_file(file_path)
   return content_or_error
 end
 
+-- Common sections reused across conditions
+local common_sections = {
+  {
+    section = 'keys',
+    title = 'Shortcuts',
+    icon = '󰌌 ',
+    gap = 0,
+    padding = 1,
+    indent = 2,
+  },
+  {
+    pane = 2,
+    padding = 2,
+  },
+  {
+    pane = 2,
+    icon = ' ',
+    title = 'Recent Files',
+    section = 'recent_files',
+    indent = 2,
+    padding = 1,
+    gap = 0,
+  },
+  {
+    pane = 2,
+    icon = ' ',
+    title = 'Projects',
+    section = 'projects',
+    indent = 2,
+    padding = 2,
+  },
+}
+
+local function create_sections(neovide)
+  local sections = {
+    { section = 'header', indent = neovide and 40 or 60 },
+  }
+
+  -- Add common sections in order
+  for _, common in ipairs(common_sections) do
+    table.insert(sections, common)
+  end
+
+  -- Ensure "startup" is always at the end
+  table.insert(sections, neovide and { section = 'startup' } or {
+    section = 'startup',
+    padding = 2,
+    indent = 60,
+  })
+
+  if not neovide then
+    table.insert(sections, {
+      section = 'terminal',
+      cmd = 'kusa rootiest && sleep 0.2',
+      padding = { 0, 0 },
+      height = 10,
+      width = 106,
+      indent = 8,
+    })
+  end
+
+  return sections
+end
+
 return {
   {
     'folke/snacks.nvim',
@@ -32,81 +96,7 @@ return {
           header = read_file(require('data.dash').logo),
         },
         sections = function()
-          if not require('data.func').is_neovide() then
-            return {
-              { section = 'header', indent = 58 },
-              -- {
-              --   section = 'terminal',
-              --   cmd = 'pokemon-colorscripts -n porygon-z --no-title',
-              --   padding = 0,
-              --   height = 20,
-              --   indent = 44,
-              -- },
-              { section = 'keys', gap = 1, padding = 1 },
-              {
-                pane = 2,
-                icon = ' ',
-                title = 'Recent Files',
-                section = 'recent_files',
-                indent = 2,
-                padding = { 2, 4 },
-              },
-              {
-                pane = 2,
-                icon = ' ',
-                title = 'Projects',
-                section = 'projects',
-                indent = 2,
-                padding = 2,
-              },
-              {
-                pane = 2,
-                icon = ' ',
-                title = 'Git Status',
-                section = 'terminal',
-                enabled = require('data.func').is_git_repo(),
-                cmd = 'hub status --short --branch --renames',
-                padding = 2,
-                indent = 3,
-                ttl = 1 * 60, -- Time between git updates
-              },
-              { section = 'startup', padding = 2 },
-              {
-                section = 'terminal',
-                cmd = 'kusa rootiest && sleep 0.2',
-                -- cmd = 'gh graph -s github -p %E2%96%88',
-                padding = { 0, 0 },
-                height = 10,
-                width = 106,
-                indent = 8,
-              },
-            }
-          else
-            return {
-              {
-                section = 'header',
-                indent = 40,
-              },
-              { section = 'keys', gap = 1, padding = 1 },
-              {
-                pane = 2,
-                icon = ' ',
-                title = 'Recent Files',
-                section = 'recent_files',
-                indent = 2,
-                padding = { 2, 20 },
-              },
-              {
-                pane = 2,
-                icon = ' ',
-                title = 'Projects',
-                section = 'projects',
-                indent = 2,
-                padding = 2,
-              },
-              { section = 'startup' },
-            }
-          end
+          return create_sections(require('data.func').is_neovide())
         end,
       },
     },
