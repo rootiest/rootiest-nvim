@@ -65,7 +65,7 @@ require('config.rocks') -- Bootstrap LuaRocks and initialize plugins
 
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PROFILING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Load profiling package
-require('config.profile') -- Set profiling options with environment variables:
+-- require('config.profile') -- Set profiling options with environment variables:
 --    ╭─────────────────────────────────────────────────────────────────────╮
 --    │   NVIM_PROFILE=1                      Start profiling at startup    │
 --    │   NVIM_PROFILE_MODULE="lualine"       Set profiling target module   │
