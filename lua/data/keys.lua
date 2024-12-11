@@ -997,7 +997,7 @@ M.minifiles = {
     desc = 'Open mini.files (CWD)',
   },
   { -- Mini.files
-    '<leader>.',
+    '<leader>\\',
     function()
       minifiles_toggle(vim.api.nvim_buf_get_name(0), true)
     end,
@@ -1076,7 +1076,7 @@ M.misc = {
     desc = 'Neotree toggle',
   },
   { -- Neotree
-    lhs = '<leader>\\',
+    lhs = '<leader>F',
     rhs = '<cmd>Neotree reveal toggle<cr>',
     desc = 'Neotree toggle',
   },
