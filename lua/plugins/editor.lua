@@ -8,6 +8,7 @@ return {
   { -- Aerial
     import = 'lazyvim.plugins.extras.editor.aerial',
   },
+  { import = 'lazyvim.plugins.extras.ui.smear-cursor' },
   { -- Dial
     import = 'lazyvim.plugins.extras.editor.dial',
   },
@@ -177,14 +178,19 @@ return {
   { -- Smear Cursor
     'sphamba/smear-cursor.nvim',
     event = 'VeryLazy',
-    enabled = function()
+    enabled = function() -- Allow kitty and neovide to use native features
       return not require('data.func').is_neovide()
+        and not require('data.func').is_kitty()
     end,
     opts = require('data.types').smearcursor,
   },
   { -- Neoscroll
     'karb94/neoscroll.nvim',
     event = 'VeryLazy',
+    enabled = function() -- Allow kitty and neovide to use native features
+      return not require('data.func').is_neovide()
+        and not require('data.func').is_kitty()
+    end,
     opts = {},
   },
 }
