@@ -262,4 +262,9 @@ return {
     'gregorias/coop.nvim',
     lazy = false,
   },
+  { -- yazi
+    'mikavilpas/yazi.nvim',
+    cmd = 'Yazi',
+    event = 'VeryLazy',
+  },
 }
