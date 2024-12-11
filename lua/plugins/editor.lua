@@ -5,11 +5,6 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 return {
-  { -- Noice
-    'tris203/noice.nvim',
-    branch = 'mixed_encodings',
-    dev = true,
-  },
   { -- Aerial
     import = 'lazyvim.plugins.extras.editor.aerial',
   },
