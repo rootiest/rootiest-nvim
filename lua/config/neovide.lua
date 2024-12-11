@@ -17,7 +17,7 @@ vim.g.neovide_cursor_vfx_particle_density = 16.8
 vim.g.neovide_cursor_vfx_particle_lifetime = 2.2
 vim.g.neovide_cursor_vfx_particle_phase = 1.2
 vim.g.neovide_cursor_vfx_particle_curl = 1.0
-vim.g.neovide_cursor_animation_length = 0.13
+vim.g.neovide_cursor_animation_length = 0.08
 vim.g.neovide_cursor_trail_size = 0.8
 -- floating shadow
 vim.g.neovide_floating_shadow = true
