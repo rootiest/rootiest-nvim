@@ -595,6 +595,7 @@ M.minifiles = {
     vim.api.nvim_create_autocmd('User', {
       pattern = 'MiniFilesActionRename',
       callback = function(event)
+        ---@diagnostic disable-next-line: undefined-field
         LazyVim.lsp.on_rename(event.data.from, event.data.to)
       end,
     })
@@ -1629,7 +1630,24 @@ M.auto_dark_mode = {
 M.image = 'markdown'
 
 --- Noice configuration options
-M.noice = { presets = { inc_rename = true } }
+M.noice = {
+  presets = {
+    inc_rename = true,
+  },
+  routes = {
+    {
+      filter = {
+        find = 'position_encoding param is required',
+      },
+      opts = { skip = true },
+    },
+  },
+  lsp = {
+    progress = {
+      enabled = false,
+    },
+  },
+}
 
 --- Smear Cursor
 M.smearcursor = function()
