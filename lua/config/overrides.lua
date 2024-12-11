@@ -55,3 +55,15 @@ vim.keymap.set('n', 'q:', function()
   require('data.func').pick('command_history')
 end, opts)
 
+vim.api.nvim_create_user_command('ListLspClients', function()
+  local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+  if #clients == 0 then
+    print('No LSP attached')
+  else
+    local names = {}
+    for _, client in ipairs(clients) do
+      table.insert(names, client.name)
+    end
+    print('Attached LSP(s): ' .. table.concat(names, ', '))
+  end
+end, {})
