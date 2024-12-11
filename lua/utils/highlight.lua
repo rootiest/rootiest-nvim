@@ -7,8 +7,8 @@
 local M = {}
 
 -- Readability functions
-local get_bg_color = require("data.func").get_bg_color
-local get_fg_color = require("data.func").get_fg_color
+local get_bg_color = require('data.func').get_bg_color
+local get_fg_color = require('data.func').get_fg_color
 local set_hl = vim.api.nvim_set_hl
 local sign_def = vim.fn.sign_define
 
@@ -18,23 +18,23 @@ local sign_def = vim.fn.sign_define
 function M.apply_todo_highlights(status_string)
   -- Define patterns and associated highlight groups
   local patterns = {
-    { icon = "", hl = "lualine_c_diagnostics_info_normal" },
-    { icon = "", hl = "lualine_c_diagnostics_warning_normal" },
-    { icon = "", hl = "lualine_c_diagnostics_warning_normal" },
-    { icon = "", hl = "lualine_c_diagnostics_hint_normal" },
-    { icon = "", hl = "lualine_c_diagnostics_hint_normal" },
+    { icon = '', hl = 'lualine_c_diagnostics_info_normal' },
+    { icon = '', hl = 'lualine_c_diagnostics_warning_normal' },
+    { icon = '', hl = 'lualine_c_diagnostics_warning_normal' },
+    { icon = '', hl = 'lualine_c_diagnostics_hint_normal' },
+    { icon = '', hl = 'lualine_c_diagnostics_hint_normal' },
   }
 
   -- Apply the highlights
   for _, pattern in ipairs(patterns) do
     status_string = status_string:gsub(
       vim.pesc(pattern.icon),
-      "%#" .. pattern.hl .. "#" .. pattern.icon
+      '%#' .. pattern.hl .. '#' .. pattern.icon
     )
   end
 
   -- Reset highlight to normal after the string
-  status_string = status_string .. "%#LualineNormal#"
+  status_string = status_string .. '%#LualineNormal#'
 
   return status_string
 end
@@ -42,13 +42,13 @@ end
 function M.setup_minimap_highlight()
   vim.api.nvim_set_hl(
     0,
-    "NeominimapSearchIcon",
-    { link = "NeominimapErrorSign" }
+    'NeominimapSearchIcon',
+    { link = 'NeominimapErrorSign' }
   )
   vim.api.nvim_set_hl(
     0,
-    "NeominimapSearchLine",
-    { link = "NeominimapErrorLine" }
+    'NeominimapSearchLine',
+    { link = 'NeominimapErrorLine' }
   )
 end
 
@@ -56,27 +56,27 @@ end
 ---@return nil
 function M.setup_indent_highlight()
   -- Get the background color of CursorLine
-  local cursorline_bg_hex = get_bg_color("CursorLine")
+  local cursorline_bg_hex = get_bg_color('CursorLine') or '#1d1d2d'
 
   -- Get the foreground color of Error
-  local miniiconsred_fg_hex = get_fg_color("Error")
+  local miniiconsred_fg_hex = get_fg_color('Error') or '#ff5555'
 
   -- Load the ibl plugin
-  if pcall(require, "ibl") then
+  if pcall(require, 'ibl') then
     -- Load the ibl plugin hooks
-    local hooks = require("ibl.hooks")
+    local hooks = require('ibl.hooks')
     -- create the highlight groups in the highlight setup hook
     if cursorline_bg_hex then
       -- Define custom highlight groups for indent
       hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
         set_hl(
           0,
-          "IndentBlanklineIndent",
+          'IndentBlanklineIndent',
           { fg = cursorline_bg_hex, nocombine = true }
         )
         set_hl(
           0,
-          "IndentsScopeHighlight",
+          'IndentsScopeHighlight',
           { fg = miniiconsred_fg_hex, nocombine = true }
         )
       end)
@@ -87,65 +87,65 @@ function M.setup_indent_highlight()
     if vim.g.tab_char then
       tab_char = vim.g.tab_char
     elseif vim.g.tab_char_name then
-      tab_char = require("data.types").ibl.char[vim.g.tab_char_name]
+      tab_char = require('data.types').ibl.char[vim.g.tab_char_name]
     else
-      tab_char = require("data.types").ibl.char.none
+      tab_char = require('data.types').ibl.char.none
     end
     if vim.g.indent_char then
       indent_char = vim.g.indent_char
     elseif vim.g.indent_char_name then
-      indent_char = require("data.types").ibl.char[vim.g.indent_char_name]
+      indent_char = require('data.types').ibl.char[vim.g.indent_char_name]
     else
-      indent_char = require("data.types").ibl.char.none
+      indent_char = require('data.types').ibl.char.none
     end
 
     -- Configure the indent-blankline plugin
-    require("ibl").setup({
+    require('ibl').setup({
       indent = {
         char = indent_char,
         tab_char = tab_char,
         highlight = {
-          "IndentBlanklineIndent",
+          'IndentBlanklineIndent',
         },
       },
       scope = {
         enabled = false,
       },
       exclude = {
-        filetypes = require("data.types").highlights.exclude,
+        filetypes = require('data.types').highlights.exclude,
       },
     })
   end
 
   -- Configure the deadcolumn plugin
-  if pcall(require, "deadcolumn") then
-    require("deadcolumn").setup({
-      scope = "line", ---@type string|fun(): integer
+  if pcall(require, 'deadcolumn') then
+    require('deadcolumn').setup({
+      scope = 'line', ---@type string|fun(): integer
       modes = function(mode)
-        return mode:find("^[ictRss\x13]") ~= nil
+        return mode:find('^[ictRss\x13]') ~= nil
       end,
       blending = {
         threshold = 0.9,
         colorcode = cursorline_bg_hex,
-        hlgroup = { "Normal", "bg" },
+        hlgroup = { 'Normal', 'bg' },
       },
       warning = {
         alpha = 0.4,
         offset = 0,
         colorcode = miniiconsred_fg_hex,
-        hlgroup = { "Error", "bg" },
+        hlgroup = { 'Error', 'bg' },
       },
       extra = {
-        follow_tw = "80",
+        follow_tw = '80',
       },
     })
   end
 
   -- Set NeoCodeium suggestion highlight
-  vim.api.nvim_set_hl(0, "NeoCodeiumSuggestion", { link = "Comment" })
+  vim.api.nvim_set_hl(0, 'NeoCodeiumSuggestion', { link = 'Comment' })
 
   -- Set NeoCodeium label highlight
-  vim.api.nvim_set_hl(0, "NeoCodeiumLabel", { link = "lualine_a_insert" })
+  vim.api.nvim_set_hl(0, 'NeoCodeiumLabel', { link = 'lualine_a_insert' })
 end
 
 --- Function to set up smooth cursor mode highlights
@@ -153,38 +153,38 @@ end
 function M.setup_mode_highlight()
   local current_mode = vim.fn.mode()
   local bg_color -- Define bg_color variable
-  if current_mode == "n" then
-    bg_color = get_bg_color("MiniStatuslineModeNormal")
-    set_hl(0, "SmoothCursor", { fg = bg_color })
-    sign_def("smoothcursor", { text = "" })
-  elseif current_mode == "v" then
-    bg_color = get_bg_color("MiniStatuslineModeVisual")
-    set_hl(0, "SmoothCursor", { fg = bg_color })
-    sign_def("smoothcursor", { text = "" })
-  elseif current_mode == "V" then
-    bg_color = get_bg_color("MiniStatuslineModeVisual")
-    set_hl(0, "SmoothCursor", { fg = bg_color })
-    sign_def("smoothcursor", { text = "" })
-  elseif current_mode == "R" or current_mode == "r" then
-    bg_color = get_bg_color("MiniStatuslineModeReplace")
-    set_hl(0, "SmoothCursor", { fg = bg_color })
-    sign_def("smoothcursor", { text = "" })
-  elseif current_mode == "i" then
-    bg_color = get_bg_color("MiniStatuslineModeInsert")
-    set_hl(0, "SmoothCursor", { fg = bg_color })
-    sign_def("smoothcursor", { text = "" })
+  if current_mode == 'n' then
+    bg_color = get_bg_color('MiniStatuslineModeNormal')
+    set_hl(0, 'SmoothCursor', { fg = bg_color })
+    sign_def('smoothcursor', { text = '' })
+  elseif current_mode == 'v' then
+    bg_color = get_bg_color('MiniStatuslineModeVisual')
+    set_hl(0, 'SmoothCursor', { fg = bg_color })
+    sign_def('smoothcursor', { text = '' })
+  elseif current_mode == 'V' then
+    bg_color = get_bg_color('MiniStatuslineModeVisual')
+    set_hl(0, 'SmoothCursor', { fg = bg_color })
+    sign_def('smoothcursor', { text = '' })
+  elseif current_mode == 'R' or current_mode == 'r' then
+    bg_color = get_bg_color('MiniStatuslineModeReplace')
+    set_hl(0, 'SmoothCursor', { fg = bg_color })
+    sign_def('smoothcursor', { text = '' })
+  elseif current_mode == 'i' then
+    bg_color = get_bg_color('MiniStatuslineModeInsert')
+    set_hl(0, 'SmoothCursor', { fg = bg_color })
+    sign_def('smoothcursor', { text = '' })
   else
-    bg_color = get_bg_color("MiniStatuslineModeNormal")
-    set_hl(0, "SmoothCursor", { fg = bg_color })
-    sign_def("smoothcursor", { text = "" })
+    bg_color = get_bg_color('MiniStatuslineModeNormal')
+    set_hl(0, 'SmoothCursor', { fg = bg_color })
+    sign_def('smoothcursor', { text = '' })
   end
 
   -- Define the custom highlight outside the function
-  local vis_bg_color = get_bg_color("CursorLineNr")
-  local vis_fg_color = get_bg_color("lualine_a_visual")
+  local vis_bg_color = get_bg_color('CursorLineNr')
+  local vis_fg_color = get_bg_color('lualine_a_visual')
   vim.api.nvim_set_hl(
     0,
-    "StatusColumnVisualHighlight",
+    'StatusColumnVisualHighlight',
     { fg = vis_fg_color, bg = vis_bg_color }
   )
 end
@@ -193,55 +193,55 @@ end
 ---@return nil
 function M.setup_dashboard_highlight()
   if not vim.g.DashboardHeaderColor then
-    local dash_color = get_fg_color("Error")
-    set_hl(0, "DashboardHeader", { fg = dash_color })
+    local dash_color = get_fg_color('Error')
+    set_hl(0, 'DashboardHeader', { fg = dash_color })
   else
-    set_hl(0, "DashboardHeader", { fg = vim.g.DashboardHeaderColor })
+    set_hl(0, 'DashboardHeader', { fg = vim.g.DashboardHeaderColor })
   end
 end
 
 --- Function to set up transparency of the editor
 ---@return nil
 function M.setup_transparency()
-  if require("data.func").is_kitty() and not vim.g.disable_transparency then
-    vim.cmd("TransparentEnable")
+  if require('data.func').is_kitty() and not vim.g.disable_transparency then
+    vim.cmd('TransparentEnable')
   else
-    vim.cmd("TransparentDisable")
+    vim.cmd('TransparentDisable')
   end
 end
 
 function M.setup_avante_highlights()
   -- Apply highlights for title
-  set_hl(0, "AvanteTitle", { link = "lualine_a_command" })
-  set_hl(0, "AvanteReversedTitle", {
-    bg = get_bg_color("Normal"),
-    fg = get_bg_color("lualine_a_command"),
+  set_hl(0, 'AvanteTitle', { link = 'lualine_a_command' })
+  set_hl(0, 'AvanteReversedTitle', {
+    bg = get_bg_color('Normal'),
+    fg = get_bg_color('lualine_a_command'),
   })
   -- Apply highlights for subtitle
-  set_hl(0, "AvanteSubtitle", { link = "lualine_a_replace" })
-  set_hl(0, "AvanteReversedSubtitle", {
-    bg = get_bg_color("Normal"),
-    fg = get_bg_color("lualine_a_replace"),
+  set_hl(0, 'AvanteSubtitle', { link = 'lualine_a_replace' })
+  set_hl(0, 'AvanteReversedSubtitle', {
+    bg = get_bg_color('Normal'),
+    fg = get_bg_color('lualine_a_replace'),
   })
   -- Apply highlights for prompt
-  set_hl(0, "AvanteThirdTitle", { link = "lualine_a_insert" })
-  set_hl(0, "AvanteReversedThirdTitle", {
-    bg = get_bg_color("Normal"),
-    fg = get_bg_color("lualine_a_insert"),
+  set_hl(0, 'AvanteThirdTitle', { link = 'lualine_a_insert' })
+  set_hl(0, 'AvanteReversedThirdTitle', {
+    bg = get_bg_color('Normal'),
+    fg = get_bg_color('lualine_a_insert'),
   })
   -- Apply highlights for hints
-  set_hl(0, "AvanteInlineHint", { link = "LspDiagnosticsVirtualTextHint" })
-  set_hl(0, "AvantePopupHint", { link = "DiagnosticVirtualTextHint" })
+  set_hl(0, 'AvanteInlineHint', { link = 'LspDiagnosticsVirtualTextHint' })
+  set_hl(0, 'AvantePopupHint', { link = 'DiagnosticVirtualTextHint' })
 end
 
 function M.setup_multi_cursor_highlight()
   -- Customize how cursors look.
-  vim.api.nvim_set_hl(0, "MultiCursorCursor", { link = "Cursor" })
-  vim.api.nvim_set_hl(0, "MultiCursorVisual", { link = "Visual" })
-  vim.api.nvim_set_hl(0, "MultiCursorSign", { link = "GitSignsAdd" })
-  vim.api.nvim_set_hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
-  vim.api.nvim_set_hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
-  vim.api.nvim_set_hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
+  vim.api.nvim_set_hl(0, 'MultiCursorCursor', { link = 'Cursor' })
+  vim.api.nvim_set_hl(0, 'MultiCursorVisual', { link = 'Visual' })
+  vim.api.nvim_set_hl(0, 'MultiCursorSign', { link = 'GitSignsAdd' })
+  vim.api.nvim_set_hl(0, 'MultiCursorDisabledCursor', { link = 'Visual' })
+  vim.api.nvim_set_hl(0, 'MultiCursorDisabledVisual', { link = 'Visual' })
+  vim.api.nvim_set_hl(0, 'MultiCursorDisabledSign', { link = 'SignColumn' })
 end
 
 --- Function to set up autocommands
@@ -251,12 +251,12 @@ function M.setup_autocommands()
   local autocmd = vim.api.nvim_create_autocmd
 
   -- List of filetypes to exclude
-  local excluded_filetypes = require("data.types").highlights.exclude
+  local excluded_filetypes = require('data.types').highlights.exclude
 
   -- Create a new augroup for the IndentHighlight
-  local IndentGroup = autogrp("IndentHighlight", { clear = true })
+  local IndentGroup = autogrp('IndentHighlight', { clear = true })
   -- Autocommand to trigger setup on FileType
-  autocmd("FileType", {
+  autocmd('FileType', {
     group = IndentGroup,
     callback = function()
       local filetype = vim.bo.filetype
@@ -266,8 +266,8 @@ function M.setup_autocommands()
         M.setup_avante_highlights()
         M.setup_multi_cursor_highlight()
       else
-        if pcall(require, "auto-cursorline") then
-          require("auto-cursorline").disable({
+        if pcall(require, 'auto-cursorline') then
+          require('auto-cursorline').disable({
             buffer = true,
           })
         end
@@ -276,10 +276,10 @@ function M.setup_autocommands()
   })
 
   -- Create a new augroup for the dashboard
-  local dashboardGroup = autogrp("DashboardColors", { clear = true })
+  local dashboardGroup = autogrp('DashboardColors', { clear = true })
   -- Autocommand to trigger setup on FileType
-  autocmd("FileType", {
-    pattern = "*",
+  autocmd('FileType', {
+    pattern = '*',
     group = dashboardGroup,
     callback = function()
       M.setup_dashboard_highlight()
