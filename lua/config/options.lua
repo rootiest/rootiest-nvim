@@ -70,7 +70,7 @@ vim.g.dead_column               = false         ---@type boolean Options: <true|
 -- Animate blinky cursor
 vim.g.blinky                    = true          ---@type boolean Options: <true|false>
 -- Enable todo-comments features
-vim.g.usetodo                   = false         ---@type boolean Options: <true|false>
+vim.g.usetodo                   = true          ---@type boolean Options: <true|false>
 -- Use dev mode for rootiest plugins
 vim.g.rootiest_dev              = true          ---@type boolean Options: <true|false>
 
@@ -110,7 +110,7 @@ vim.g.useavante                 = true          ---@type boolean Options:  <true
 vim.g.usegpai                   = false         ---@type boolean Options:  <true|false>
 
 -- Use Blink instead of nvim-cmp
-vim.g.useblinkcmp                = false         ---@type boolean Options:  <true|false>
+vim.g.useblinkcmp                = false        ---@type boolean Options:  <true|false>
 -- Use experimental performance fork
 vim.g.cmp_performance_enabled    = false        ---@type boolean Options: <true|false>
 -- When using cmp_performance_enabled with blink, blink will follow main branch
