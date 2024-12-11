@@ -1632,10 +1632,12 @@ M.noice = { presets = { inc_rename = true } }
 
 --- Smear Cursor
 M.smearcursor = function()
-  --local bg = require('data.func').get_bg_color('Normal') or '#1d1d2d'
+  local bg = require('data.func').get_bg_color('Normal') or '#1d1d2d'
+
   return {
     -- Cursor color. Defaults to Normal gui foreground color
     --cursor_color = '#d3cdc3',
+    cursor_color = 'none',
 
     -- Background color. Defaults to Normal gui background color
     --normal_bg = bg,
@@ -1653,6 +1655,7 @@ M.smearcursor = function()
     -- Set to `true` if your font supports legacy computing symbols (block unicode symbols).
     -- Smears will blend better on all backgrounds.
     legacy_computing_symbols_support = true,
+    transparent_bg_fallback_color = bg,
 
     -- How fast the smear's head moves towards the target.
     -- 0: no movement, 1: instantaneous, default: 0.6
@@ -1863,6 +1866,7 @@ M.treesitter = {
           return true
         end
         local max_filesize = 1000 * 1024 -- 1 MB
+        ---@diagnostic disable-next-line undefined-field
         local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
         if ok and stats and stats.size > max_filesize then
           return true
