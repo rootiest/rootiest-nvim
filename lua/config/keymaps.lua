@@ -57,11 +57,10 @@ end
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Overrides ━━━━━━━━━━━━━━━━━━━━━━━━━━
 require('config.overrides')
 
-vim.keymap.set('n', 'q', '<nop>', { noremap = true })
-vim.keymap.set('n', 'Q', 'q', { noremap = true, desc = 'Record macro' })
+-- Keymap to swap buffer positions
 vim.keymap.set(
   'n',
-  '<M-q>',
-  'Q',
-  { noremap = true, desc = 'Replay last register' }
+  '<leader>bs',
+  require('data.func').swap_buffers,
+  { noremap = true, silent = true, desc = 'Swap buffer' }
 )
