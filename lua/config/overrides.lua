@@ -55,7 +55,8 @@ vim.keymap.set('n', 'q:', function()
 end, opts)
 
 vim.api.nvim_create_user_command('ListLspClients', function()
-  local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+  local clients =
+    vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })
   if #clients == 0 then
     print('No LSP attached')
   else
@@ -86,3 +87,19 @@ api.nvim_create_autocmd('RecordingLeave', {
     api.nvim_set_hl(0, 'Cursor', { bg = current_cursor_color })
   end,
 })
+
+-- Remap 'q' to 'Q' to reduce accidental macros
+vim.keymap.set('n', 'q', '<nop>', { noremap = true })
+require('which-key').add({
+  lhs = 'q',
+  rhs = '<nop>',
+  mode = 'n',
+  hidden = true,
+})
+vim.keymap.set('n', 'Q', 'q', { noremap = true, desc = 'Record macro' })
+vim.keymap.set(
+  'n',
+  '<M-q>',
+  'Q',
+  { noremap = true, desc = 'Replay last register' }
+)
