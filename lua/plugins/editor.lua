@@ -73,6 +73,7 @@ return {
   },
   { -- indent-blankline
     'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
     lazy = true,
   },
   ---@module "neominimap.config.meta"
@@ -183,6 +184,16 @@ return {
         and not require('data.func').is_kitty()
     end,
     opts = require('data.types').smearcursor,
+    specs = {
+      -- disable mini.animate cursor
+      {
+        'echasnovski/mini.animate',
+        optional = true,
+        opts = {
+          cursor = { enable = false },
+        },
+      },
+    },
   },
   { -- Neoscroll
     'karb94/neoscroll.nvim',
@@ -192,5 +203,9 @@ return {
         and not require('data.func').is_kitty()
     end,
     opts = {},
+  },
+  { -- Unimpaired
+    'tpope/vim-unimpaired',
+    config = true,
   },
 }
