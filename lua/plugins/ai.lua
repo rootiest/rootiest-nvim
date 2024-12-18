@@ -11,6 +11,7 @@ return {
     opts = require('data.types').neocodeium.opts,
     keys = require('data.keys').neocodeium,
     cond = require('data.cond').neocodeium,
+    dependencies = { 'hrsh7th/nvim-cmp' },
   },
   { -- Codeium
     import = 'lazyvim.plugins.extras.coding.codeium',
