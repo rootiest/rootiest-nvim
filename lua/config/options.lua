@@ -103,11 +103,11 @@ vim.g.aitool                    = "neocodeium"  ---@type string Options: [ai too
 --        │                           │                ollama
 --        ╰───────────────────────────╯                none
 -- Enable ChatGPT plugin for AI chat
-vim.g.usechatgpt                = false         ---@type boolean Options:  <true|false>
+vim.g.usechatgpt                 = false        ---@type boolean Options:  <true|false>
 -- Enable Avante plugin for AI chat
-vim.g.useavante                 = true          ---@type boolean Options:  <true|false>
+vim.g.useavante                  = true         ---@type boolean Options:  <true|false>
 -- Enable GP plugin for AI chat
-vim.g.usegpai                   = false         ---@type boolean Options:  <true|false>
+vim.g.usegpai                    = false        ---@type boolean Options:  <true|false>
 
 -- Use Blink instead of nvim-cmp
 vim.g.useblinkcmp                = false        ---@type boolean Options:  <true|false>
