@@ -2435,6 +2435,7 @@ function M.help_lookup_quoted_visual()
   M.help_lookup_string(M.wrap_in_quotes(selected_text))
 end
 
+-- Function to get the system architecture
 function M.get_system_arch()
   -- Use jit.arch if available
   if jit and jit.arch then
@@ -2455,6 +2456,66 @@ function M.get_system_arch()
 
   -- If all else fails
   return 'unknown'
+end
+
+---@class SplitListOpts Options for the get_open_splits function
+---@field types? string 'named' or 'all' (optional)
+---@field filter? string Filter string (optional)
+
+-- Function to get all open splits and their details
+---@param opts? SplitListOpts Optional options
+---@return table splits Table containing details of open splits
+function M.get_open_splits(opts)
+  local types = ''
+  local filter = ''
+  if opts then
+    types = opts.types or ''
+    filter = opts.filter or ''
+  end
+  local splits = {}
+  local all_wins = vim.api.nvim_tabpage_list_wins(0)
+
+  for _, win in ipairs(all_wins) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    local buf_name = vim.api.nvim_buf_get_name(buf)
+    local buf_title = vim.fn.fnamemodify(buf_name, ':t') -- Extract the filename
+    if types == 'named' then
+      if buf_title ~= '' then
+        if filter ~= '' then
+          if buf_title:match(filter) then
+            table.insert(splits, { win_id = win, title = buf_title })
+          end
+        else
+          table.insert(splits, { win_id = win, title = buf_title })
+        end
+      end
+    else
+      if filter ~= '' then
+        if buf_title:match(filter) then
+          table.insert(splits, { win_id = win, title = buf_title })
+        end
+      else
+        table.insert(splits, { win_id = win, title = buf_title })
+      end
+    end
+  end
+
+  return splits
+end
+
+-- Function to swap the current buffer with the previous one
+function M.swap_buffers()
+  local current_win = vim.api.nvim_get_current_win()
+  local all_wins = vim.api.nvim_tabpage_list_wins(0)
+  for _, win in ipairs(all_wins) do
+    if win ~= current_win then
+      local current_buf = vim.api.nvim_win_get_buf(current_win)
+      local other_buf = vim.api.nvim_win_get_buf(win) -- Set buffers
+      vim.api.nvim_win_set_buf(current_win, other_buf)
+      vim.api.nvim_win_set_buf(win, current_buf)
+      break
+    end
+  end
 end
 
 -- Export the module
