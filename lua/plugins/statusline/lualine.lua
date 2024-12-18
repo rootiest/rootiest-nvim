@@ -10,6 +10,8 @@
 local wakatime_stats = require('utils.wakatime_stats')
 local music_stats = require('utils.music_stats')
 
+local get_fg = require('snacks').util.color
+
 -- Setup NeoMiniMap extension
 -- local minimap_extension = require("neominimap.statusline").lualine_default
 local neominimap = require('neominimap.statusline')
@@ -111,6 +113,7 @@ vim.api.nvim_create_autocmd('User', {
 
 return { -- Lualine
   'nvim-lualine/lualine.nvim',
+  lazy = false,
   cond = require('data.func').check_global_var(
     'statusline',
     'lualine',
@@ -168,7 +171,7 @@ return { -- Lualine
             function()
               return require('data.types').mode.current.lualine()
             end,
-            padding = { left = 1, right = 0 },
+            padding = { left = 0, right = 0 },
             separator = { left = '', right = '' },
           },
           { -- MultiCursors
@@ -268,19 +271,19 @@ return { -- Lualine
             function() return require("noice").api.status.command.get() end,
             ---@diagnostic disable-next-line: undefined-field
             cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-            color = function() return LazyVim.ui.fg("Statement") end,
+            color = function() return { fg = get_fg("Statement") } end,
           },
           -- stylua: ignore
           { -- DAP Status
             function() return "  " .. require("dap").status() end,
             cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-            color = function() return LazyVim.ui.fg("Debug") end,
+            color = function() return { fg = get_fg("Debug") } end,
           },
           -- stylua: ignore
           { -- Lazy Status
             require("lazy.status").updates,
             cond = require("lazy.status").has_updates,
-            color = function() return LazyVim.ui.fg("Special") end,
+            color = function() return { fg = get_fg("Special") } end,
           },
           { -- Diff
             'diff',
@@ -402,9 +405,9 @@ return { -- Lualine
             cond = function()
               return require('data.func').is_window_wide_enough(40)
             end,
-            on_click = function()
-              vim.cmd('Telescope grep_string')
-            end,
+            -- on_click = function()
+            --   vim.cmd('Telescope grep_string')
+            -- end,
           },
           { -- Selection
             'selection_count',
@@ -470,19 +473,19 @@ return { -- Lualine
         },
       },
       extensions = {
-        'neo-tree',
-        'lazy',
-        'aerial',
-        'fugitive',
-        'fzf',
-        'mason',
-        'overseer',
-        'toggleterm',
-        'nvim-dap-ui',
-        'quickfix',
-        'symbols-outline',
-        'trouble',
-        minimap_extension,
+        -- 'neo-tree',
+        -- 'lazy',
+        -- 'aerial',
+        -- 'fugitive',
+        -- 'fzf',
+        -- 'mason',
+        -- 'overseer',
+        -- 'toggleterm',
+        -- 'nvim-dap-ui',
+        -- 'quickfix',
+        -- 'symbols-outline',
+        -- 'trouble',
+        -- minimap_extension,
       },
     }
 
