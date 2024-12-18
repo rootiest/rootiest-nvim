@@ -617,7 +617,7 @@ M.gitblame = {
   opts = function()
     if vim.g.statusline == 'lualine' or vim.g.statusline == nil then
       -- Get the current lualine configuration
-      local config = require('lualine').get_config()
+      local config = require('lualine').get_config() or {}
       local git_blame = require('gitblame')
       local funcs = require('data.func')
       -- Define the width limit for displaying the Git blame component
@@ -629,7 +629,9 @@ M.gitblame = {
           return git_blame.is_blame_text_available()
             and funcs.is_window_wide_enough(width_limit)
         end,
-        color = { fg = funcs.get_fg_color('GitSignsCurrentLineBlame') },
+        color = {
+          fg = require('snacks').util.color('GitSignsCurrentLineBlame'),
+        },
         padding = { left = 1, right = 0 },
         on_click = function()
           if vim.g.statusline_clickable_git ~= false then
@@ -1664,6 +1666,8 @@ M.smearcursor = function()
     -- Smear cursor when switching buffers
     smear_between_buffers = true,
 
+    scroll_buffer_space = false,
+
     -- Smear cursor when moving within line or to neighbor lines
     smear_between_neighbor_lines = true,
 
@@ -1690,7 +1694,7 @@ M.smearcursor = function()
 
     -- Stop animating when the smear's tail is within this distance (in characters) from the target.
     -- Default: 0.1
-    distance_stop_animating = 0.1,
+    distance_stop_animating = 0.25,
 
     -- Attempt to hide the real cursor when smearing.
     hide_target_hack = true,
