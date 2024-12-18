@@ -90,4 +90,42 @@ M.minifiles = {
   end,
 }
 
+-- Create an autogroup for the TermInsertMode autocmds
+local TermInsertMode = augroup('TermInsertMode', { clear = true })
+
+-- Start terminal in insert mode
+autocmd({ 'TermOpen' }, {
+  group = TermInsertMode,
+  pattern = { '*' },
+  callback = function()
+    if vim.opt.buftype:get() == 'terminal' then
+      -- if filetype does not contain 'dashboard'
+      if not string.find(vim.opt.filetype:get(), 'dashboard') then
+        -- If window is editable
+        if vim.opt.modifiable:get() then
+          vim.cmd(':startinsert')
+        end
+      end
+    end
+  end,
+})
+
+-- When entering a terminal buffer auto switch to insert mode
+-- I could use TermEnter event but it does not work when switching between window splits
+autocmd({ 'BufEnter' }, {
+  group = TermInsertMode,
+  pattern = { '*' },
+  callback = function()
+    if vim.opt.buftype:get() == 'terminal' then
+      -- if filetype does not contain 'dashboard'
+      if not string.find(vim.opt.filetype:get(), 'dashboard') then
+        -- If window is editable
+        if vim.opt.modifiable:get() then
+          vim.cmd(':startinsert')
+        end
+      end
+    end
+  end,
+})
+
 return M
