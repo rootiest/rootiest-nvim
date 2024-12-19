@@ -1745,6 +1745,16 @@ function M.pick(cmd, provider, options)
     cmd = 'find_files'
   end
 
+  -- Smart-open
+  if cmd == 'smart_open' then
+    local telescope = require('telescope')
+    if pcall(telescope.extensions.smart_open.smart_open) then
+      cmd = 'smart_open'
+      telescope.extensions.smart_open.smart_open()
+      return true
+    end
+  end
+
   -- Grepping
   if cmd == 'grep' then
     if provider == 'telescope' then
