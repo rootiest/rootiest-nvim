@@ -48,7 +48,7 @@ vim.g.usewakatime               = true          ---@type boolean Options:  <true
 -- Allow music controls and stats
 vim.g.usemusic                  = false         ---@type boolean Options:  <true|false>
 -- Allow discord presence
-vim.g.usediscord                = true         ---@type boolean Options:  <true|false>
+vim.g.usediscord                = true          ---@type boolean Options:  <true|false>
 -- Enable HardTime on startup
 vim.g.usehardtime               = false         ---@type boolean Options:  <true|false>
 -- Enable Image plugin on compatible terminals
@@ -72,7 +72,7 @@ vim.g.blinky                    = true          ---@type boolean Options: <true|
 -- Enable todo-comments features
 vim.g.usetodo                   = true          ---@type boolean Options: <true|false>
 -- Use dev mode for rootiest plugins
-vim.g.rootiest_dev              = true          ---@type boolean Options: <true|false>
+vim.g.rootiest_dev              = true         ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PICKER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -94,7 +94,7 @@ vim.g.use_fzf_lua               = true          ---@type boolean Options: <true|
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ AI TOOL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 --  Configure the AI completion provider
-vim.g.aitool                    = "neocodeium"  ---@type string Options: [ai tool]
+vim.g.aitool                    = "codeium"  ---@type string Options: [ai tool]
 --        ╭───────────────────────────╮                neocodeium
 --        │                           │                codeium
 --        │         AI Tools:         │                copilot
@@ -110,13 +110,12 @@ vim.g.useavante                  = true         ---@type boolean Options:  <true
 vim.g.usegpai                    = false        ---@type boolean Options:  <true|false>
 
 -- Use Blink instead of nvim-cmp
-vim.g.useblinkcmp                = false        ---@type boolean Options:  <true|false>
+vim.g.useblinkcmp                = true         ---@type boolean Options:  <true|false>
 -- Use experimental performance fork
 vim.g.cmp_performance_enabled    = false        ---@type boolean Options: <true|false>
 -- When using cmp_performance_enabled with blink, blink will follow main branch
 -- Requires a working rust toolchain
 ---@see vim.g.lazyvim_blink_main
-
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATUS COLUMN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 vim.g.statuscolumn              = "snacks"      ---@type string Options: [statuscolumn]
