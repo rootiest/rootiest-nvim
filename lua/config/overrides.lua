@@ -89,13 +89,16 @@ api.nvim_create_autocmd('RecordingLeave', {
 })
 
 -- Remap 'q' to 'Q' to reduce accidental macros
-vim.keymap.set('n', 'q', '<nop>', { noremap = true })
-require('which-key').add({
-  lhs = 'q',
-  rhs = '<nop>',
-  mode = 'n',
-  hidden = true,
-})
+if pcall(require, 'which-key') then
+  require('which-key').add({
+    lhs = 'q',
+    rhs = '<nop>',
+    mode = 'n',
+    hidden = true,
+  })
+else
+  vim.keymap.set('n', 'q', '<nop>', { noremap = true })
+end
 vim.keymap.set('n', 'Q', 'q', { noremap = true, desc = 'Record macro' })
 vim.keymap.set(
   'n',
