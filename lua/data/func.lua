@@ -756,7 +756,8 @@ function M.open_floating_terminal()
 
   -- Now that the floating window is ready, we run the terminal shell in the created buffer
   -- Open the terminal in the buffer when we're sure the buffer is set up in the float
-  vim.fn.termopen(vim.o.shell, {
+  vim.fn.jobstart(vim.o.shell, {
+    term = true, -- Indicates that the job should start in a terminal
     on_exit = function()
       -- Safety measure: Ensure the window still exists before trying to close it
       if vim.api.nvim_win_is_valid(win) then
