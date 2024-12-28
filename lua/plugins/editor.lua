@@ -164,14 +164,6 @@ return {
     'tamton-aquib/duck.nvim',
     config = require('data.types').duck,
   },
-  { -- Volt
-    'rootiest/volt',
-    lazy = true,
-  },
-  { -- Minty
-    'nvchad/minty',
-    lazy = true,
-  },
   { -- Twilight
     'folke/twilight.nvim',
     opts = require('data.types').twilight,
