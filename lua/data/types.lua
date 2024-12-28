@@ -776,11 +776,13 @@ M.lspconfig = {
 --- Which-Key configuration options
 M.whichkey = {
   opts = {
-    preset = 'modern',
+    preset = 'helix',
     win = {
       wo = {
         winblend = 10,
       },
+      col = vim.fn.floor(vim.o.columns * 0.82),
+      height = { min = 4, max = vim.fn.floor(vim.o.lines * 0.90) },
     },
     triggers = {
       { '<auto>', mode = { 'n', 'x' } },
