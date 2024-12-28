@@ -125,11 +125,20 @@ return {
       'hrsh7th/nvim-cmp', -- Optional, for autocompletion support
     },
     -- Optionally reccommend adding keybinds (I use them personally)
-    keys = {
-      { '<leader>qge', '<cmd>EcologGoto<cr>', desc = 'Go to env file' },
-      { '<leader>qes', '<cmd>EcologSelect<cr>', desc = 'Switch env file' },
-      { '<leader>qep', '<cmd>EcologPeek<cr>', desc = 'Ecolog peek variable' },
-    },
+    keys = function()
+      if pcall(require, 'which-key') then
+        require('which-key').add({ lhs = '<leader>qe', group = 'Ecolog' })
+        return {
+          { '<leader>qeg', '<cmd>EcologGoto<cr>', desc = 'Go to env file' },
+          { '<leader>qes', '<cmd>EcologSelect<cr>', desc = 'Switch env file' },
+          {
+            '<leader>qep',
+            '<cmd>EcologPeek<cr>',
+            desc = 'Ecolog peek variable',
+          },
+        }
+      end
+    end,
     lazy = false,
     opts = {
       -- Enables shelter mode for sensitive values
