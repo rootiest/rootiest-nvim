@@ -36,32 +36,18 @@ if vim.g.useblinkcmp then
     {
       'saghen/blink.cmp',
       opts = {
-        keymap = {
-          preset = 'super-tab',
-          ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-          ['<C-e>'] = { 'hide', 'fallback' },
-
-          ['<C-y>'] = {
-            LazyVim.cmp.map({ 'select_and_accept', 'ai_accept' }),
-            'fallback',
+        enabled = function()
+          return not vim.tbl_contains({ 'minifiles' }, vim.bo.filetype)
+            and vim.bo.buftype ~= 'prompt'
+            and vim.b.completion ~= false
+        end,
+        completion = {
+          menu = {
+            auto_show = function(ctx)
+              return ctx.mode ~= 'cmdline'
+                or not vim.tbl_contains({ '/', '?' }, vim.fn.getcmdtype())
+            end,
           },
-
-          ['<Tab>'] = {
-            'snippet_forward',
-            'fallback',
-          },
-          ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
-
-          ['<Up>'] = { 'select_prev', 'fallback' },
-          ['<Down>'] = { 'select_next', 'fallback' },
-          ['<C-p>'] = { 'select_prev', 'fallback' },
-          ['<C-n>'] = { 'select_next', 'fallback' },
-
-          ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-          ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
-        },
-        windows = {
-          selection = 'manual',
         },
       },
     },
