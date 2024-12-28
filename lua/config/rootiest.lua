@@ -139,6 +139,8 @@ end
 
 --- Set up rootiest module
 function M.setup()
+  -- Early interventions
+  require('config.early')
   -- Setup OS variables
   setup_os_vars()
   -- Setup neovide
