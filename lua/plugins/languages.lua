@@ -59,7 +59,7 @@ return {
     },
     ft = { 'markdown', 'Avante' },
   },
-  {
+  { -- MarkView
     'OXY2DEV/markview.nvim',
     ft = { 'markdown', 'Avante' },
     opts = function()
@@ -82,7 +82,7 @@ return {
     'gonstoll/wezterm-types',
     dev = true,
   },
-  {
+  { -- Flutter-tools
     'akinsho/flutter-tools.nvim',
     lazy = false,
     dependencies = {
