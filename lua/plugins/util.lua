@@ -40,12 +40,6 @@ return {
     dependencies = require('data.deps').gx,
     config = true,
   },
-  { -- Ripgrep substitute
-    'chrisgrieser/nvim-rip-substitute',
-    event = 'InsertEnter',
-    cmd = require('data.cmd').ripsub,
-    keys = require('data.keys').ripsub,
-  },
   { -- Unception
     'samjwill/nvim-unception',
     init = function()
