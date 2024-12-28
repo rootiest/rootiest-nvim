@@ -1656,11 +1656,12 @@ M.noice = {
 --- Smear Cursor
 M.smearcursor = function()
   local bg = require('data.func').get_bg_color('Normal') or '#1d1d2d'
+  local fg = require('data.func').get_fg_color('Normal') or '#d3cdc3'
 
   return {
     -- Cursor color. Defaults to Normal gui foreground color
-    --cursor_color = '#d3cdc3',
-    cursor_color = 'none',
+    cursor_color = fg,
+    -- cursor_color = 'none',
 
     -- Background color. Defaults to Normal gui background color
     --normal_bg = bg,
@@ -1671,7 +1672,7 @@ M.smearcursor = function()
     scroll_buffer_space = false,
 
     -- Smear cursor when moving within line or to neighbor lines
-    smear_between_neighbor_lines = true,
+    smear_between_neighbor_lines = false,
 
     -- Use floating windows to display smears outside buffers.
     -- May have performance issues with other plugins.
