@@ -200,4 +200,16 @@ return {
     'tpope/vim-unimpaired',
     config = true,
   },
+  { -- Vim-dirtytalk
+    'psliwka/vim-dirtytalk',
+    build = ':DirtytalkUpdate',
+    init = function()
+      vim.cmd('set spelllang=en,programming')
+    end,
+  },
+  { -- Academic
+    'ficcdaf/academic.nvim',
+    -- optional: only load for certain filetypes
+    ft = { 'markdown', 'tex' },
+  },
 }
