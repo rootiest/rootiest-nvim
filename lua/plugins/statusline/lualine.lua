@@ -96,6 +96,26 @@ local function open_git_diff()
   end
 end
 
+local function codeium_status()
+  local status = require('codeium.virtual_text').status()
+
+  if status.state == 'idle' then
+    -- Output was cleared, for example when leaving insert mode
+    return ' '
+  end
+
+  if status.state == 'waiting' then
+    -- Waiting for response
+    return 'Waiting...'
+  end
+
+  if status.state == 'completions' and status.total > 0 then
+    return string.format('%d/%d', status.current, status.total)
+  end
+
+  return ' 0 '
+end
+
 -- Then only some of event fired we invoked this function
 vim.api.nvim_create_autocmd('User', {
   group = ..., -- set some augroup here
@@ -367,13 +387,19 @@ return { -- Lualine
               return vim.b.neocodeium_status or '󰣽 '
             end,
             cond = function()
-              if not pcall(require, 'neocodeium') then
-                return false
-              end
-              return true
+              return require('data.cond').neocodeium()
             end,
             padding = { left = 0, right = 1 },
           },
+          -- { -- Codeium Status
+          --   function()
+          --     return codeium_status()
+          --   end,
+          --   cond = function()
+          --     return require('data.cond').codeium()
+          --   end,
+          --   padding = { left = 0, right = 1 },
+          -- },
           { -- Wordcount
             function()
               return vim.fn.wordcount().words
