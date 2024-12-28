@@ -14,15 +14,20 @@ return {
     dependencies = { 'hrsh7th/nvim-cmp' },
   },
   { -- Codeium
-    import = 'lazyvim.plugins.extras.coding.codeium',
+    import = 'lazyvim.plugins.extras.ai.codeium',
     cond = require('data.cond').codeium,
+    opts = function()
+      require('codeium.virtual_text').set_statusbar_refresh(function()
+        require('lualine').refresh()
+      end)
+    end,
   },
   { -- Copilot
-    import = 'lazyvim.plugins.extras.coding.copilot',
+    import = 'lazyvim.plugins.extras.ai.copilot',
     cond = require('data.cond').copilot,
   },
   { -- Tabnine
-    import = 'lazyvim.plugins.extras.coding.tabnine',
+    import = 'lazyvim.plugins.extras.ai.tabnine',
     cond = require('data.cond').tabnine,
   },
   { -- Minuet-AI
