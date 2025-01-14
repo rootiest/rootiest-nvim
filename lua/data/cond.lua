@@ -84,6 +84,11 @@ M.copilot = function()
   return vim.g.aitool == 'copilot'
 end
 
+--- FloatingHelp conditional options
+M.floating_help = function()
+  return func.check_global_var('usefloatinghelp', true, false)
+end
+
 --- HardTime conditional options
 M.hardtime = function()
   return func.check_global_var('usehardtime', true, false)
@@ -102,6 +107,36 @@ M.image = function()
     return false
   end
   return not vim.g.neovide
+end
+
+M.lualine = function()
+  -- List of excluded buffer names
+  local excluded_buffers = require('data.types').general.buf
+
+  -- List of excluded filetypes
+  local excluded_filetypes = require('data.types').general.ft
+  -- Check buffer name
+  local bufname = vim.api.nvim_buf_get_name(0)
+  for _, name in ipairs(excluded_buffers) do
+    if string.find(bufname, name) then
+      return false
+    end
+  end
+
+  -- Check filetype
+  local filetype = vim.bo.filetype
+  for _, ft in ipairs(excluded_filetypes) do
+    if filetype == ft then
+      return false
+    end
+  end
+
+  -- Default: load for all other buffers
+  return require('data.func').check_global_var(
+    'statusline',
+    'lualine',
+    'lualine'
+  )
 end
 
 --- LuaRocks conditional options
@@ -149,9 +184,11 @@ end
 
 M.todo = function()
   if func.check_global_var('usetodo', true, true) then
-    if vim.bo.readonly == false then
-      if func.dir_is_git_repo(vim.fn.expand('%:p:h')) then
-        return true
+    if not func.is_neovide() then
+      if vim.bo.readonly == false then
+        if func.dir_is_git_repo(vim.fn.expand('%:p:h')) then
+          return true
+        end
       end
     end
   end
