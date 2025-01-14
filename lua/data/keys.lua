@@ -1397,6 +1397,13 @@ M.overrides = {
     desc = 'Surround',
     mode = { 'n', 'x' },
   },
+  { -- Stop snippet when leaving insert mode
+    lhs = '<Esc>',
+    rhs = function()
+      vim.snippet.stop()
+      return '<Esc>'
+    end,
+  },
 }
 
 M.telescope = {
