@@ -36,7 +36,7 @@ M.minialign = { 'InsertEnter' }
 M.minisplitjoin = { 'InsertEnter' }
 
 --- Discord Presence events
-M.presence = { 'BufReadPre' }
+M.presence = { 'LazyFile' }
 
 --- RipGrep Substitute events
 M.ripsub = { 'InsertEnter' }
