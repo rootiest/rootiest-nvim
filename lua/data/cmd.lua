@@ -19,6 +19,23 @@ M.codesnap = {
   'CodeSnapASCII',
 }
 
+--- DiffView plugin cmds
+M.diffview = {
+  'DiffviewOpen',
+  'DiffviewClose',
+  'DiffviewToggleFiles',
+  'DiffviewFocusFiles',
+  'DiffviewRefresh',
+  'DiffviewFileHistory',
+}
+
+--- FloatingHelp plugin cmds
+M.floating_help = {
+  'FloatingHelp',
+  'FloatingHelpClose',
+  'FloatingHelpToggle',
+}
+
 --- Gists plugin cmds
 M.gist = {
   'GistCreate',
@@ -29,6 +46,13 @@ M.gist = {
 --- Gx plugin cmds
 M.gx = {
   'Browse',
+}
+
+--- ImgClip plugin cmds
+M.imgclip = {
+  'ImgClipEmbed',
+  'PasteImage',
+  'ImgClipConfig',
 }
 
 --- Kitty-Scrollback plugin cmds
@@ -44,6 +68,13 @@ M.lazygit = {
   'LazyGitCurrentFile',
   'LazyGitFilter',
   'LazyGitFilterCurrentFile',
+}
+
+--- Markdown-preview plguin cmds
+M.markdown_preview = {
+  'MarkdownPreviewToggle',
+  'MarkdownPreview',
+  'MarkdownPreviewStop',
 }
 
 --- Nekifoch plugin cmds
@@ -74,8 +105,17 @@ M.ripsub = {
   'RipSubstitute',
 }
 
+--- Spell Errors plugin cmds
 M.spell_errors = {
   'Telescope spell_errors',
+}
+
+--- Symbols plugin cmds
+M.symbols = {
+  'Symbols',
+  'SymbolsToggle',
+  'SymbolsOpen',
+  'SymbolsClose',
 }
 
 --- Suda plugin cmds
