@@ -26,6 +26,46 @@ local statuscolumn = {
   },
 }
 
+local indentscope = {
+  'folke/snacks.nvim',
+  opts = {
+    indent = {
+      indent = {
+        enabled = false,
+        only_scope = true,
+      },
+      animate = {
+        enabled = vim.fn.has('nvim-0.10') == 1,
+        style = 'up_down',
+      },
+      scope = {
+        enabled = true, -- enable highlighting the current scope
+        priority = 200,
+        char = '│',
+        underline = false, -- underline the start of the scope
+        only_current = false, -- only show scope in the current window
+        hl = 'SnacksIndentScope', ---@type string|string[] hl group for scopes
+      },
+      chunk = {
+        -- when enabled, scopes will be rendered as chunks, except for the
+        -- top-level scope which will be rendered as a scope.
+        enabled = true,
+        -- only show chunk scopes in the current window
+        only_current = false,
+        priority = 200,
+        hl = 'SnacksIndentChunk', ---@type string|string[] hl group for chunk scopes
+        char = {
+          corner_top = '╭',
+          corner_bottom = '',
+          horizontal = '─',
+          vertical = '│',
+          arrow = '',
+        },
+      },
+    },
+  },
+}
+
 local nostatuscolumn = {
   'folke/snacks.nvim',
   opts = {
@@ -45,5 +85,7 @@ else
   vim.opt.statuscolumn = '%=%{v:relnum?v:relnum:v:lnum} '
   table.insert(P, nostatuscolumn)
 end
+
+table.insert(P, indentscope)
 
 return P
