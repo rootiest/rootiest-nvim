@@ -55,6 +55,8 @@ return {
   },
   { -- Trouble
     'folke/trouble.nvim',
+    lazy = true,
+    event = 'LazyFile',
     cmd = require('data.cmd').trouble,
     opts = require('data.types').trouble.opts,
   },
@@ -66,16 +68,21 @@ return {
   { -- NeoTree
     'nvim-neo-tree/neo-tree.nvim',
     opts = require('data.types').neotree.opts,
+    cond = require('data.cond').neotree,
   },
   { -- Arrow
     'otavioschwanck/arrow.nvim',
+    lazy = true,
+    event = 'LazyFile',
     opts = require('data.types').arrow,
   },
-  { -- indent-blankline
-    'lukas-reineke/indent-blankline.nvim',
-    main = 'ibl',
-    lazy = true,
-  },
+  -- { -- indent-blankline
+  --   'lukas-reineke/indent-blankline.nvim',
+  --   main = 'ibl',
+  --   lazy = true,
+  --   event = 'LazyFile',
+  --   cond = require('data.cond').lualine,
+  -- },
   ---@module "neominimap.config.meta"
   { -- NeoMiniMap
     'Isrothy/neominimap.nvim',
@@ -100,15 +107,10 @@ return {
     opts = {},
     keys = require('data.keys').precog,
   },
-  { -- Zen Mode
-    'folke/zen-mode.nvim',
-    lazy = true,
-    opts = require('data.types').zen,
-    keys = require('data.keys').zen,
-  },
   { -- Smart Scrolloff
     'tonymajestro/smart-scrolloff.nvim',
-    event = 'VeryLazy',
+    lazy = true,
+    event = 'LazyFile',
     cond = require('data.func').check_global_var('smart_scrolloff', true, true),
     opts = require('data.types').smartscrolloff,
   },
@@ -164,10 +166,6 @@ return {
     'tamton-aquib/duck.nvim',
     config = require('data.types').duck,
   },
-  { -- Twilight
-    'folke/twilight.nvim',
-    opts = require('data.types').twilight,
-  },
   { -- Smear Cursor
     'sphamba/smear-cursor.nvim',
     event = 'VeryLazy',
@@ -186,15 +184,6 @@ return {
         },
       },
     },
-  },
-  { -- Neoscroll
-    'karb94/neoscroll.nvim',
-    event = 'VeryLazy',
-    enabled = function() -- Allow kitty and neovide to use native features
-      return not require('data.func').is_neovide()
-        and not require('data.func').is_kitty()
-    end,
-    opts = {},
   },
   { -- Unimpaired
     'tpope/vim-unimpaired',

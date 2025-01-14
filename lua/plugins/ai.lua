@@ -16,6 +16,8 @@ return {
   { -- Codeium
     import = 'lazyvim.plugins.extras.ai.codeium',
     cond = require('data.cond').codeium,
+    event = 'VeryLazy',
+    lazy = true,
     opts = function()
       require('codeium.virtual_text').set_statusbar_refresh(function()
         require('lualine').refresh()
@@ -25,6 +27,9 @@ return {
   { -- Copilot
     import = 'lazyvim.plugins.extras.ai.copilot',
     cond = require('data.cond').copilot,
+  },
+  { -- Copilot
+    import = 'lazyvim.plugins.extras.ai.copilot-chat',
   },
   { -- Tabnine
     import = 'lazyvim.plugins.extras.ai.tabnine',
@@ -54,8 +59,7 @@ return {
   { -- Avante
     'yetone/avante.nvim',
     cond = require('data.cond').avante,
-    event = 'VeryLazy',
-    lazy = false,
+    lazy = true,
     opts = require('data.types').avante,
     build = 'make',
     dependencies = require('data.deps').avante,
@@ -65,5 +69,6 @@ return {
         require('data.func').add_keymap(item)
       end
     end,
+    cmd = 'Avante',
   },
 }

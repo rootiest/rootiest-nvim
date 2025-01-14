@@ -74,7 +74,7 @@ return {
   },
   { -- ToggleTerm
     'akinsho/toggleterm.nvim',
-    event = 'VeryLazy',
+    event = 'TermOpen',
     keys = require('data.keys').toggleterm,
     config = function()
       require('toggleterm').setup(require('data.types').toggleterm)
@@ -119,5 +119,11 @@ return {
       return require('tmux').setup()
     end,
     cond = require('data.func').is_tmux(),
+  },
+  { -- Ghostyy
+    'isak102/ghostty.nvim',
+    config = function()
+      require('ghostty').setup()
+    end,
   },
 }

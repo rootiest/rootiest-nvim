@@ -72,7 +72,7 @@ return {
   },
   { -- Markdown Preview
     'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    cmd = require('data.cmd').markdown_preview,
     ft = { 'markdown' },
     build = function()
       vim.fn['mkdp#util#install']()

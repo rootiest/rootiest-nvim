@@ -40,7 +40,8 @@ return {
   },
   { -- Git Blame
     'f-person/git-blame.nvim',
-    event = 'VeryLazy',
+    event = 'LazyFile',
+    cond = require('data.cond').lualine,
     opts = require('data.types').gitblame.opts,
   },
   { -- Git Graph
@@ -50,7 +51,8 @@ return {
   },
   { -- Diffview
     'sindrets/diffview.nvim',
-    lazy = false,
+    lazy = true,
+    cmd = require('data.cmd').diffview,
     opts = {},
   },
   { -- Neogit

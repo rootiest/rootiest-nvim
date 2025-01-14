@@ -13,6 +13,12 @@ return {
   },
   { -- Env file no diagnostics
     'nvim-treesitter/nvim-treesitter',
+    lazy = true,
+    event = 'LazyFile',
+    cond = function()
+      -- Only load for editable buffers
+      return vim.bo.buftype == '' and not vim.bo.readonly
+    end,
     opts = function(_)
       vim.api.nvim_create_augroup('EnvFileDiagnostics', { clear = true })
 
@@ -62,7 +68,10 @@ return {
   },
   { -- Hardtime
     'm4xshen/hardtime.nvim',
-    lazy = false,
+    lazy = true,
+    event = 'LazyFile',
+    cond = require('data.func').check_global_var('usehardtime', true, true),
+    build = 'make',
     dependencies = require('data.deps').hardtime,
     opts = function()
       return { enabled = vim.g.usehardtime }
@@ -84,6 +93,7 @@ return {
   },
   { -- Qalc
     'Apeiros-46B/qalc.nvim',
+    lazy = true,
     cmd = require('data.cmd').qalc,
     keys = require('data.keys').qalc,
     opts = {
@@ -121,13 +131,10 @@ return {
     cmd = require('data.cmd').suda,
     config = require('data.types').suda,
   },
-  -- { -- Pigeon
-  --   "Pheon-Dev/pigeon",
-  --   config = require('data.types').pigeon,
-  -- },
   { -- Discord Presence
     'IogaMaster/neocord',
     event = 'VeryLazy',
+    lazy = true,
     cond = require('data.func').check_global_var('usediscord', true, true),
     opts = {
       logo = 'https://raw.githubusercontent.com/rootiest/rootiest-nvim/b949af32e72db9fc35c18e14e2088710dc36dd15/logo/icon.png',
@@ -138,17 +145,14 @@ return {
   },
   { -- Floating Help
     'Tyler-Barham/floating-help.nvim',
+    lazy = true,
     opts = {
       width = 0.8, -- Whole numbers are columns/rows
       height = 0.9, -- Decimals are a percentage of the editor
       position = 'C', -- NW,N,NW,W,C,E,SW,S,SE (C==center)
       border = 'rounded', -- rounded,double,single
     },
-    cmd = {
-      'FloatingHelp',
-      'FloatingHelpClose',
-      'FloatingHelpToggle',
-    },
+    cmd = require('data.cmd').floating_help,
     init = function()
       vim.g.floating_help = true
       -- Only replace cmds, not search; only replace the first instance
@@ -174,10 +178,12 @@ return {
   },
   { -- Timer
     'alex-popov-tech/timer.nvim',
+    lazy = true,
   },
   { -- Image-Clip
     'HakonHarnes/img-clip.nvim',
-    event = 'VeryLazy',
+    lazy = true,
+    cmd = require('data.cmd').imgclip,
     opts = {
       default = {
         embed_image_as_base64 = false,
@@ -193,6 +199,8 @@ return {
   { -- Multicursor
     'jake-stewart/multicursor.nvim',
     branch = '1.0',
+    lazy = true,
+    event = 'LazyFile',
     config = function()
       local mc = require('multicursor-nvim')
 
@@ -206,23 +214,10 @@ return {
       })
     end,
   },
-  {
-    'itsvinayak/nvim-notes.nvim',
-    dependencies = {
-      'nvim-telescope/telescope.nvim', -- Add Telescope as a dependency
-      'folke/which-key.nvim', -- Add WhichKey as a dependency
-    },
-    config = function()
-      require('notes').setup({
-        -- Optional configurations
-        path = '~/.my_notes', -- Custom path for notes
-        log_enabled = true, -- Enable logging
-        log_level = 'INFO', -- Set log level to INFO
-      })
-    end,
-  },
   { -- FloatTerm
     'voldikss/vim-floaterm',
+    lazy = true,
+    event = 'TermOpen',
   },
   { -- bufferlist
     'EL-MASTOR/bufferlist.nvim',
@@ -232,6 +227,7 @@ return {
   },
   { -- showkeys
     'nvchad/showkeys',
+    lazy = true,
     cmd = 'ShowkeysToggle',
     opts = {
       timeout = 1,
@@ -241,9 +237,9 @@ return {
   },
   {
     'stevearc/oil.nvim',
-    ---@module 'oil'
-    ---@type oil.SetupOpts
     opts = {},
+    lazy = true,
+    cond = require('data.func').check_global_var('useoil', true, true),
     -- Optional dependencies
     dependencies = { { 'echasnovski/mini.icons', opts = {} } },
     -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
@@ -278,18 +274,20 @@ return {
   -- when the profiler is running
   {
     'nvim-lualine/lualine.nvim',
+    cond = require('data.cond').lualine,
     opts = function(_, opts)
       table.insert(opts.sections.lualine_x, Snacks.profiler.status())
     end,
   },
   {
     'marcussimonsen/let-it-snow.nvim',
+    lazy = true,
     cmd = 'LetItSnow', -- Wait with loading until command is run
     opts = {},
   },
   { -- yazi
     'mikavilpas/yazi.nvim',
+    lazy = true,
     cmd = 'Yazi',
-    event = 'VeryLazy',
   },
 }

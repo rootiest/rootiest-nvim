@@ -5,7 +5,6 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 return {
-  -- { import = "lazyvim.plugins.extras.coding.blink" },
   { -- Mason-lspconfig
     'williamboman/mason-lspconfig.nvim',
     opts = require('data.types').mason_lsp_config.opts,
@@ -16,6 +15,12 @@ return {
   { -- nvim-treesitter
     'nvim-treesitter/nvim-treesitter',
     opts = require('data.types').treesitter.opts,
+    lazy = true,
+    event = 'LazyFile',
+    cond = function()
+      -- Only load for editable buffers
+      return vim.bo.buftype == '' and not vim.bo.readonly
+    end,
   },
   { -- nvim-lspconfig
     'neovim/nvim-lspconfig',
@@ -93,7 +98,7 @@ return {
   },
   {
     'oskarrrrrrr/symbols.nvim',
-    cmd = { 'Symbols', 'SymbolsToggle', 'SymbolsOpen', 'SymbolsClose' },
+    cmd = require('data.cmd').symbols,
     config = function()
       local r = require('symbols.recipes')
       require('symbols').setup(r.DefaultFilters, r.AsciiSymbols, {
@@ -118,44 +123,5 @@ return {
     'RRethy/nvim-treesitter-endwise',
     lazy = false,
     priority = 1000,
-  },
-  {
-    'philosofonusus/ecolog.nvim',
-    dependencies = {
-      'hrsh7th/nvim-cmp', -- Optional, for autocompletion support
-    },
-    -- Optionally reccommend adding keybinds (I use them personally)
-    keys = function()
-      if pcall(require, 'which-key') then
-        require('which-key').add({ lhs = '<leader>qe', group = 'Ecolog' })
-        return {
-          { '<leader>qeg', '<cmd>EcologGoto<cr>', desc = 'Go to env file' },
-          { '<leader>qes', '<cmd>EcologSelect<cr>', desc = 'Switch env file' },
-          {
-            '<leader>qep',
-            '<cmd>EcologPeek<cr>',
-            desc = 'Ecolog peek variable',
-          },
-        }
-      end
-    end,
-    lazy = false,
-    opts = {
-      -- Enables shelter mode for sensitive values
-      shelter = {
-        configuration = {
-          partial_mode = false, -- Disables partial mode see shelter configuration below
-          mask_char = '*', -- Character used for masking
-        },
-        modules = {
-          cmp = true, -- Mask values in completion
-          peek = false, -- Mask values in peek view
-          files = false, -- Mask values in files
-          telescope = false, -- Mask values in telescope
-        },
-      },
-      path = vim.fn.getcwd(), -- Path to search for .env files
-      preferred_environment = 'development', -- Optional: prioritize specific env files
-    },
   },
 }
