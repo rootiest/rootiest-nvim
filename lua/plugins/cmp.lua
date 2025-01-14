@@ -48,8 +48,109 @@ if vim.g.useblinkcmp then
                 or not vim.tbl_contains({ '/', '?' }, vim.fn.getcmdtype())
             end,
           },
+          list = {
+            selection = {
+              preselect = function(ctx)
+                return ctx.mode ~= 'cmdline'
+                  and not require('blink.cmp').snippet_active({ direction = 1 })
+              end,
+              auto_insert = true,
+            },
+          },
+        },
+        snippets = {
+          preset = 'luasnip',
+        },
+        sources = {
+          -- default = {
+          --   'digraphs',
+          --   -- 'cmp_yanky',
+          --   'emoji',
+          --   'dictionary',
+          --   'snippets',
+          -- },
+          -- providers = {
+          --   digraphs = {
+          --     name = 'digraphs',
+          --     module = 'blink.compat.source',
+          --     score_offset = -3,
+          --     opts = {
+          --       cache_digraphs_on_start = true,
+          --     },
+          --   },
+          --   -- cmp_yanky = {
+          --   --   name = 'cmp_yanky',
+          --   --   module = 'blink.compat.source',
+          --   --   score_offset = -3,
+          --   --   opts = {
+          --   --     -- only suggest items which match the current filetype
+          --   --     onlyCurrentFiletype = false,
+          --   --     -- only suggest items with a minimum length
+          --   --     minLength = 3,
+          --   --   },
+          --   -- },
+          --   emoji = {
+          --     module = 'blink-emoji',
+          --     name = 'Emoji',
+          --     score_offset = 15, -- Tune by preference
+          --     opts = { insert = true }, -- Insert emoji (default) or complete its name
+          --   },
+          --   dictionary = {
+          --     module = 'blink-cmp-dictionary',
+          --     name = 'Dict',
+          --     opts = {
+          --       get_command = {
+          --         'rg', -- make sure this command is available in your system
+          --         '--color=never',
+          --         '--no-line-number',
+          --         '--no-messages',
+          --         '--no-filename',
+          --         '--ignore-case',
+          --         '--',
+          --         '${prefix}', -- this will be replaced by the result of 'get_prefix' function
+          --         vim.fn.expand('~/.config/nvim/dict/en_dict.txt'), -- where you dictionary is
+          --       },
+          --       documentation = {
+          --         enable = true, -- enable documentation to show the definition of the word
+          --         get_command = {
+          --           'dict', -- make sure this command is available in your system
+          --           '${word}', -- this will be replaced by the word to search
+          --           ' -s lev',
+          --         },
+          --       },
+          --     },
+          --   },
+          -- },
+          cmdline = function()
+            local type = vim.fn.getcmdtype()
+            -- Search forward and backward
+            if type == '/' or type == '?' then
+              return { 'buffer' }
+            end
+            -- Commands
+            if type == ':' or type == '@' then
+              return { 'cmdline' }
+            end
+            return {}
+          end,
+        },
+        keymap = {
+          preset = 'enter',
+          ['<C-y>'] = { 'select_and_accept' },
+          cmdline = {
+            preset = 'enter',
+            ['<C-y>'] = { 'select_and_accept' },
+            ['<S-Tab>'] = { 'select_prev', 'fallback' },
+            ['<Tab>'] = { 'select_next', 'fallback' },
+          },
         },
       },
+      -- dependencies = {
+      --   { 'dmitmel/cmp-digraphs' },
+      --   { 'chrisgrieser/cmp_yanky' },
+      --   { 'moyiz/blink-emoji.nvim' },
+      --   { 'Kaiser-Yang/blink-cmp-dictionary' },
+      -- },
     },
     { -- Blink compat
       'saghen/blink.compat',
@@ -67,7 +168,7 @@ if vim.g.useblinkcmp then
   }
 end
 
--- Else use classic cmp
+-- Else use nvim-cmp
 return {
   { import = 'lazyvim.plugins.extras.coding.nvim-cmp' },
   { -- cmp
@@ -166,7 +267,7 @@ return {
           end, { 'i', 's' }),
         }),
         sources = {
-          { name = 'ecolog' },
+          -- { name = 'ecolog' },
           { name = 'nvim_lsp', priority = 1000 },
           { name = 'luasnip', priority = 750 },
           { name = 'path', priority = 250 },
