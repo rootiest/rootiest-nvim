@@ -71,8 +71,10 @@ vim.g.dead_column               = false         ---@type boolean Options: <true|
 vim.g.blinky                    = true          ---@type boolean Options: <true|false>
 -- Enable todo-comments features
 vim.g.usetodo                   = true          ---@type boolean Options: <true|false>
+-- Use Floating help window
+vim.g.usefloatinghelp           = false         ---@type boolean Options: <true|false>
 -- Use dev mode for rootiest plugins
-vim.g.rootiest_dev              = true         ---@type boolean Options: <true|false>
+vim.g.rootiest_dev              = true          ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PICKER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -90,6 +92,10 @@ vim.g.lazyvim_picker            = "fzf"         ---@type string Options: [picker
 vim.g.use_telescope             = true          ---@type boolean Options: <true|false>
 -- Use the Fzf plugin
 vim.g.use_fzf_lua               = true          ---@type boolean Options: <true|false>
+-- Use oil file manager
+vim.g.useoil                    = false         ---@type boolean Options: <true|false>
+-- Use NeoTree file manager
+vim.g.useneotree                = false         ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ AI TOOL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
