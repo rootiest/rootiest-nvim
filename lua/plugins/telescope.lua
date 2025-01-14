@@ -73,6 +73,8 @@ local P = { -- Define Telescope Plugins Specs
   },
   { -- UndoTree Telescope extension
     'nvim-telescope/telescope.nvim',
+    lazy = true,
+    event = 'VeryLazy',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'debugloop/telescope-undo.nvim',
@@ -112,51 +114,6 @@ local P = { -- Define Telescope Plugins Specs
     end,
     keys = require('data.keys').telescope.filebrowser,
   },
-  { -- Cheatsheet
-    'doctorfree/cheatsheet.nvim',
-    event = 'VeryLazy',
-    dependencies = {
-      { 'nvim-telescope/telescope.nvim' },
-      { 'nvim-lua/popup.nvim' },
-      { 'nvim-lua/plenary.nvim' },
-    },
-    cmd = 'Cheatsheet',
-    config = function()
-      local ctactions = require('cheatsheet.telescope.actions')
-      require('cheatsheet').setup({
-        bundled_cheetsheets = {
-          enabled = {
-            'default',
-            'lua',
-            'markdown',
-            'regex',
-            'netrw',
-            'unicode',
-          },
-          disabled = { 'nerd-fonts' },
-        },
-        bundled_plugin_cheatsheets = {
-          enabled = {
-            'auto-session',
-            'goto-preview',
-            'octo.nvim',
-            'telescope.nvim',
-            'vim-easy-align',
-            'vim-sandwich',
-          },
-          disabled = { 'gitsigns' },
-        },
-        include_only_installed_plugins = true,
-        telescope_mappings = {
-          ['<CR>'] = ctactions.select_or_fill_commandline,
-          ['<A-CR>'] = ctactions.select_or_execute,
-          ['<C-Y>'] = ctactions.copy_cheat_value,
-          ['<C-E>'] = ctactions.edit_user_cheatsheet,
-        },
-      })
-      require('telescope').load_extension('cheatsheet')
-    end,
-  },
   { -- Telescope Git Diffs
     'paopaol/telescope-git-diffs.nvim',
     requires = {
@@ -170,30 +127,14 @@ local P = { -- Define Telescope Plugins Specs
       'telescope',
       fzf_colors = true,
       oldfiles = {
-        -- In Telescope, when I used <leader>fr, it would load old buffers.
-        -- fzf lua does the same, but by default buffers visited in the current
-        -- session are not included. I use <leader>fr all the time to switch
-        -- back to buffers I was just in. If you missed this from Telescope,
-        -- give it a try.
         include_current_session = true,
       },
       previewers = {
         builtin = {
-          -- fzf-lua is very fast, but it really struggled to preview a couple files
-          -- in a repo. Those files were very big JavaScript files (1MB, minified, all on a single line).
-          -- It turns out it was Treesitter having trouble parsing the files.
-          -- With this change, the previewer will not add syntax highlighting to files larger than 100KB
-          -- (Yes, I know you shouldn't have 100KB minified files in source control.)
           syntax_limit_b = 1024 * 100, -- 100KB
         },
       },
       grep = {
-        -- One thing I missed from Telescope was the ability to live_grep and the
-        -- run a filter on the filenames.
-        -- Ex: Find all occurrences of "enable" but only in the "plugins" directory.
-        -- With this change, I can sort of get the same behaviour in live_grep.
-        -- ex: > enable --*/plugins/*
-        -- I still find this a bit cumbersome. There's probably a better way of doing this.
         rg_glob = true, -- enable glob parsing
         glob_flag = '--iglob', -- case insensitive globs
         glob_separator = '%s%-%-', -- query separator pattern (lua): ' --'
@@ -242,7 +183,8 @@ if require('data.func').check_global_var('use_fzf_lua', true, false) then
   table.insert(P, 1, { import = 'lazyvim.plugins.extras.editor.fzf' })
   table.insert(P, 2, {
     'ibhagwan/fzf-lua',
-    lazy = false,
+    lazy = true,
+    event = 'VeryLazy',
     opts = {
       previewers = {
         builtin = {
