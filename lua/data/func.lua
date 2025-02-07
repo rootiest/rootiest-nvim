@@ -1683,7 +1683,7 @@ function M.is_git_repo(cwd, pwd)
 end
 
 ---@function Select and run a picker command based on the given parameters.
---- If no provider is provided, it will use fzf-lua if available, else telescope.
+--- If no provider is provided, it will use snacks.picker if available, else fzf-lua or telescope.
 --- The default provider can also be set with the `vim.g.lazyvim_picker` variable.
 ---@param cmd string|table? Command to run or a table with fields {cmd, provider, options} (optional)
 ---   When cmd is a table, it is destructured and the other fields are ignored
@@ -1691,9 +1691,10 @@ end
 ---   Special values for cmd:
 ---     "FILES": Open files using the file picker even if inside a git repo
 ---     "config_files": Open neovim config files using the files/git_files picker
----@param provider string? Name of the provider, either "fzf-lua" or "telescope" (optional)
+---@param provider string? Name of the provider, can be "snacks", "fzf-lua" or "telescope" (optional)
 ---   If provider is nil, it will default to the value of `vim.g.lazyvim_picker`
----   If 'vim.g.lazyvim_picker' is not set, it will default to 'fzf-lua'
+---   If 'vim.g.lazyvim_picker' is not set, it will default to 'snacks'
+---   If snacks is not available, it will default to 'fzf-lua'
 ---   If 'fzf-lua' is not available, it will default to 'telescope'
 ---@param options table? Additional options to pass to the provider's function (optional)
 ---   This allows passing additional options to the provider function
