@@ -1721,16 +1721,24 @@ function M.pick(cmd, provider, options)
   -- (defaults to fzf-lua if available, else telescope)
   -- Will use vim.g.lazyvim_picker if defined
   if provider == nil then
-    if vim.g.lazyvim_picker == 'fzf' then
-      provider = 'fzf-lua'
-    elseif vim.g.lazyvim_picker == 'telescope' then
-      provider = 'telescope'
+    if vim.g.use_snacks_picker == true then
+      provider = 'snacks'
     else
-      local has_fzf, _ = pcall(require, 'fzf-lua')
-      if has_fzf then
+      if vim.g.lazyvim_picker == 'fzf' then
         provider = 'fzf-lua'
-      else
+      elseif vim.g.lazyvim_picker == 'telescope' then
         provider = 'telescope'
+      elseif vim.g.lazyvim_picker == 'snacks' then
+        provider = 'snacks'
+      elseif vim.g.lazyvim_picker == 'auto' then
+        provider = LazyVim.pick.want()
+      else
+        local has_fzf, _ = pcall(require, 'fzf-lua')
+        if has_fzf then
+          provider = 'fzf-lua'
+        else
+          provider = 'telescope'
+        end
       end
     end
   end
@@ -1765,8 +1773,9 @@ function M.pick(cmd, provider, options)
         telescope.extensions.egrepify.egrepify({})
         return true
       end
+    elseif provider == 'fzf' or provider == 'fzf-lua' then
+      cmd = 'live_grep'
     end
-    cmd = 'live_grep'
   end
 
   -- Ensure options is always a table (to avoid errors if nil is passed)
@@ -1780,6 +1789,8 @@ function M.pick(cmd, provider, options)
   for _, current_provider in ipairs(providers) do
     if current_provider == 'telescope' then
       current_provider = 'telescope.builtin'
+    elseif current_provider == 'snacks' then
+      current_provider = 'snacks.picker'
     end
 
     if has_picker(current_provider, cmd) then
