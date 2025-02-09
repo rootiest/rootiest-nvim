@@ -1142,17 +1142,17 @@ M.misc = {
     end,
     desc = 'File Explorer',
   },
-  { -- Telescope Find Files
+  { -- Smart Pick Files
     lhs = '<leader><leader>',
     rhs = function()
-      require('data.func').pick()
+      Pick('smart')
     end,
     desc = 'Find Files',
   },
   { -- Grep files
     lhs = '<leader>/',
     rhs = function()
-      require('data.func').pick({ cmd = 'grep' })
+      Pick({ cmd = 'grep' })
     end,
     desc = 'Grep Files',
   },
