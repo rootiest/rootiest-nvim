@@ -26,9 +26,9 @@ return {
     'folke/lazydev.nvim',
     opts = require('data.types').lazydev.opts,
   },
-  { -- G-code
-    'wilriker/gcode.vim',
-  },
+  -- { -- G-code
+  --   'wilriker/gcode.vim',
+  -- },
   { -- Alternate
     'ton/vim-alternate',
     lazy = true,
@@ -51,10 +51,10 @@ return {
     'numToStr/Comment.nvim',
     opts = require('data.types').comment,
   },
-  { -- Fast Action
-    'Chaitanyabsprip/fastaction.nvim',
-    opts = {},
-  },
+  -- { -- Fast Action
+  --   'Chaitanyabsprip/fastaction.nvim',
+  --   opts = {},
+  -- },
   { -- Matchup
     'andymass/vim-matchup',
     setup = function()
@@ -64,38 +64,28 @@ return {
   },
   { -- EasyAlign
     'junegunn/vim-easy-align',
+    lazy = true,
     keys = require('data.keys').easyalign,
   },
-  { -- Vim-Shebang
-    'vitalk/vim-shebang',
-    lazy = false,
-  },
   {
-    'oskarrrrrrr/symbols.nvim',
-    cmd = require('data.cmd').symbols,
     config = function()
-      local r = require('symbols.recipes')
-      require('symbols').setup(r.DefaultFilters, r.AsciiSymbols, {
-        sidebar = {
-          auto_peek = false,
-          show_guide_lines = true,
-          chars = {
-            folded = '',
-            unfolded = '',
-            guide_vert = '',
-            guide_middle_item = '',
-            guide_last_item = '',
-          },
-          preview = {
-            show_always = true,
           },
         },
       })
     end,
   },
-  { -- Treesitter-endwise
-    'RRethy/nvim-treesitter-endwise',
-    lazy = false,
-    priority = 1000,
-  },
+  -- { -- Vim-Shebang
+  --   'vitalk/vim-shebang',
+  --   lazy = true,
+  -- },
+  -- {
+  --   'oskarrrrrrr/symbols.nvim',
+  --   lazy = true,
+  --   cmd = require('data.cmd').symbols,
+  --   config = require('data.types').symbols.config,
+  -- },
+  -- { -- Treesitter-endwise
+  --   'RRethy/nvim-treesitter-endwise',
+  --   lazy = true,
+  -- },
 }
