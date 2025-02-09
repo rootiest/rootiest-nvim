@@ -437,6 +437,15 @@ M.codesnap = {
   code_font_size = 12,
 }
 
+M.neocord = {
+  opts = {
+    logo = 'https://raw.githubusercontent.com/rootiest/rootiest-nvim/b949af32e72db9fc35c18e14e2088710dc36dd15/logo/icon.png',
+    main_image = 'logo',
+    blacklist = { 'bin: No such file or directory' },
+    file_assets = {},
+  },
+}
+
 --- Flash configuration options
 M.flash = {
   modes = { char = { jump_labels = true } },
