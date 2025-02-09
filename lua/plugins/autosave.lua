@@ -9,5 +9,6 @@ return {
     event = { 'InsertLeave', 'TextChanged' },
     opts = require('data.types').autosave,
     cond = require('data.cond').autosave,
+    keys = require('data.keys').autosave,
   },
 }
