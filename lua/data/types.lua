@@ -451,6 +451,37 @@ M.flash = {
   modes = { char = { jump_labels = true } },
 }
 
+M.floating_help = {
+  opts = {
+    width = 0.8, -- Whole numbers are columns/rows
+    height = 0.9, -- Decimals are a percentage of the editor
+    position = 'C', -- NW,N,NW,W,C,E,SW,S,SE (C==center)
+    border = 'rounded', -- rounded,double,single
+  },
+  init = function()
+    vim.g.floating_help = true
+    -- Only replace cmds, not search; only replace the first instance
+    --- Replace commands in the form of 'cabbr <abbrev> <expansion>'
+    ---@param abbrev string The abbreviation to replace
+    ---@param expansion string The expansion to replace it with
+    local function cmd_abbrev(abbrev, expansion)
+      local cmd = 'cabbr '
+        .. abbrev
+        .. ' <c-r>=(getcmdpos() == 1 && getcmdtype() == ":" ? "'
+        .. expansion
+        .. '" : "'
+        .. abbrev
+        .. '")<CR>'
+      vim.cmd(cmd)
+    end
+    -- Replace native help commands with floating help
+    cmd_abbrev('h', 'FloatingHelp')
+    cmd_abbrev('help', 'FloatingHelp')
+    cmd_abbrev('helpc', 'FloatingHelpClose')
+    cmd_abbrev('helpclose', 'FloatingHelpClose')
+  end,
+}
+
 --- Smart-Scrolloff configuration options
 M.smartscrolloff = { scrolloff_percentage = 0.25 }
 
