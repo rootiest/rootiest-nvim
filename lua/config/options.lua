@@ -28,7 +28,8 @@ vim.g.loaded_perl_provider      = 0             ---@type integer Options: <0|1>
 vim.g.loaded_ruby_provider      = 0             ---@type integer Options: <0|1>
 -- Prefer basedpyright for python
 vim.g.lazyvim_python_lsp        = "pyright"     ---@type string Options: [python lsp]
--- Open all folds by default
+-- Use tiny-inline-diagnostic
+vim.g.usetinyinline             = true          ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ FORMAT AND SAVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
