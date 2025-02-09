@@ -30,24 +30,25 @@ for _, item in ipairs(require('data.keys').telescope.symbols) do
   add_keymap(item)
 end
 
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ Resizing splits ━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- Add keymaps for resizing splits
-for _, map in ipairs(require('data.keys').splits.resize) do
-  add_keymap(map[1], map[2], map[3], require('data.types').all_modes)
-end
+if require('data.cond').use_splits() then
+  --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ Resizing splits ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  -- Add keymaps for resizing splits
+  for _, map in ipairs(require('data.keys').splits.resize) do
+    add_keymap(map[1], map[2], map[3], require('data.types').all_modes)
+  end
 
---  ━━━━━━━━━━━━━━━━━━━━━━━━ Moving between splits ━━━━━━━━━━━━━━━━━━━━━━━━
--- Add keymaps for moving between splits
-for _, map in ipairs(require('data.keys').splits.move) do
-  add_keymap(map[1], map[2], map[3], require('data.types').all_modes)
-end
+  --  ━━━━━━━━━━━━━━━━━━━━━━━━ Moving between splits ━━━━━━━━━━━━━━━━━━━━━━━━
+  -- Add keymaps for moving between splits
+  for _, map in ipairs(require('data.keys').splits.move) do
+    add_keymap(map[1], map[2], map[3], require('data.types').all_modes)
+  end
 
---  ━━━━━━━━━━━━━━━━━━ Swapping buffers between windows ━━━━━━━━━━━━━━━
--- Add keymaps for swapping buffers
-for _, map in ipairs(require('data.keys').splits.swap) do
-  add_keymap(map[1], map[2], map[3], require('data.types').all_modes)
+  --  ━━━━━━━━━━━━━━━━━━ Swapping buffers between windows ━━━━━━━━━━━━━━━
+  -- Add keymaps for swapping buffers
+  for _, map in ipairs(require('data.keys').splits.swap) do
+    add_keymap(map[1], map[2], map[3], require('data.types').all_modes)
+  end
 end
-
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ MultiCursor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Add keymaps for multicursor
 for _, item in ipairs(require('data.keys').multicursor) do
