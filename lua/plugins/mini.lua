@@ -10,11 +10,11 @@ return {
     event = 'VeryLazy',
     opts = {},
   },
+  -- { -- Mini Indentscope
+  --   'echasnovski/mini.indentscope',
+  --   opts = require('data.types').miniindentscope.opts,
+  --   init = require('data.types').miniindentscope.init,
   -- },
-  { -- Mini Indentscope
-    'echasnovski/mini.indentscope',
-    opts = require('data.types').miniindentscope.opts,
-    init = require('data.types').miniindentscope.init,
   },
   { -- mini.align
     'echasnovski/mini.align',

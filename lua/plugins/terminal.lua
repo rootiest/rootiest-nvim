@@ -72,14 +72,14 @@ return {
       return not vim.g.neovide
     end,
   },
-  { -- ToggleTerm
-    'akinsho/toggleterm.nvim',
-    event = 'TermOpen',
-    keys = require('data.keys').toggleterm,
-    config = function()
-      require('toggleterm').setup(require('data.types').toggleterm)
-    end,
-  },
+  -- { -- ToggleTerm
+  --   'akinsho/toggleterm.nvim',
+  --   event = 'TermOpen',
+  --   keys = require('data.keys').toggleterm,
+  --   config = function()
+  --     require('toggleterm').setup(require('data.types').toggleterm)
+  --   end,
+  -- },
   { -- Kitty-Runner
     'jghauser/kitty-runner.nvim',
     cond = require('data.func').is_kitty(),
@@ -120,10 +120,11 @@ return {
     end,
     cond = require('data.func').is_tmux(),
   },
-  { -- Ghostyy
-    'isak102/ghostty.nvim',
-    config = function()
-      require('ghostty').setup()
-    end,
-  },
+  -- { -- Ghostyy
+  --   'isak102/ghostty.nvim',
+  --   cond = require('data.func').is_ghostty(),
+  --   config = function()
+  --     require('ghostty').setup()
+  --   end,
+  -- },
 }

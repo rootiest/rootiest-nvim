@@ -40,12 +40,12 @@ return {
     dependencies = require('data.deps').gx,
     config = true,
   },
-  { -- Unception
-    'samjwill/nvim-unception',
-    init = function()
-      vim.g.unception_block_while_host_edits = true
-    end,
-  },
+  -- { -- Unception
+  --   'samjwill/nvim-unception',
+  --   init = function()
+  --     vim.g.unception_block_while_host_edits = true
+  --   end,
+  -- },
   { -- Codesnap
     'mistricky/codesnap.nvim',
     cond = require('data.func').check_global_var('codesnap', true, true),
@@ -127,7 +127,7 @@ return {
   },
   { -- Discord Presence
     'IogaMaster/neocord',
-    event = 'VeryLazy',
+    event = 'LazyFile',
     lazy = true,
     cond = require('data.func').check_global_var('usediscord', true, true),
     opts = {
@@ -170,26 +170,17 @@ return {
       cmd_abbrev('helpclose', 'FloatingHelpClose')
     end,
   },
-  { -- Timer
-    'alex-popov-tech/timer.nvim',
-    lazy = true,
   },
-  { -- Image-Clip
-    'HakonHarnes/img-clip.nvim',
-    lazy = true,
-    cmd = require('data.cmd').imgclip,
-    opts = {
-      default = {
-        embed_image_as_base64 = false,
-        prompt_for_file_name = false,
-        drag_and_drop = {
-          insert_mode = true,
-        },
-        -- required for Windows users
-        use_absolute_path = true,
-      },
-    },
-  },
+  -- { -- Timer
+  --   'alex-popov-tech/timer.nvim',
+  --   lazy = true,
+  -- },
+  -- { -- Image-Clip
+  --   'HakonHarnes/img-clip.nvim',
+  --   lazy = true,
+  --   cmd = require('data.cmd').imgclip,
+  --   opts = require('data.types').imgclip.opts,
+  -- },
   { -- Multicursor
     'jake-stewart/multicursor.nvim',
     branch = '1.0',
@@ -208,17 +199,18 @@ return {
       })
     end,
   },
-  { -- FloatTerm
-    'voldikss/vim-floaterm',
-    lazy = true,
-    event = 'TermOpen',
   },
-  { -- bufferlist
-    'EL-MASTOR/bufferlist.nvim',
-    lazy = true,
-    keys = { { '<Leader>bl', desc = 'Open bufferlist' } }, -- keymap to load the plugin, it should be the same as keymap.open_buflist
-    opts = {},
-  },
+  -- { -- FloatTerm
+  --   'voldikss/vim-floaterm',
+  --   lazy = true,
+  --   event = 'TermOpen',
+  -- },
+  -- { -- bufferlist
+  --   'EL-MASTOR/bufferlist.nvim',
+  --   lazy = true,
+  --   keys = { { '<Leader>bl', desc = 'Open bufferlist' } }, -- keymap to load the plugin, it should be the same as keymap.open_buflist
+  --   opts = {},
+  -- },
   { -- showkeys
     'nvchad/showkeys',
     lazy = true,
@@ -242,46 +234,25 @@ return {
     'jrop/u.nvim',
     lazy = true,
   },
-  { -- Co-op (Neovim Co-routines Framework)
-    'gregorias/coop.nvim',
-    lazy = false,
-  },
-  {
-    'folke/snacks.nvim',
-    opts = function()
-      -- Toggle the profiler
-      Snacks.toggle.profiler():map('<leader>qp')
-      -- Toggle the profiler highlights
-      Snacks.toggle.profiler_highlights():map('<leader>qh')
-    end,
-    keys = {
-      {
-        '<leader>qb',
-        function()
-          Snacks.profiler.scratch()
-        end,
-        desc = 'Profiler Scratch Bufer',
-      },
-    },
-  },
-  -- optional lualine component to show captured events
-  -- when the profiler is running
-  {
-    'nvim-lualine/lualine.nvim',
-    cond = require('data.cond').lualine,
-    opts = function(_, opts)
-      table.insert(opts.sections.lualine_x, Snacks.profiler.status())
-    end,
-  },
-  {
-    'marcussimonsen/let-it-snow.nvim',
-    lazy = true,
-    cmd = 'LetItSnow', -- Wait with loading until command is run
-    opts = {},
-  },
+  -- { -- Co-op (Neovim Co-routines Framework)
+  --   'gregorias/coop.nvim',
+  --   lazy = false,
+  -- },
+  -- {
+  --   'marcussimonsen/let-it-snow.nvim',
+  --   lazy = true,
+  --   cmd = 'LetItSnow', -- Wait with loading until command is run
+  --   opts = {},
+  -- },
   { -- yazi
     'mikavilpas/yazi.nvim',
     lazy = true,
     cmd = 'Yazi',
   },
+  -- { -- TyprStats
+  --   'nvzone/typr',
+  --   cmd = 'TyprStats',
+  --   dependencies = 'nvzone/volt',
+  --   opts = {},
+  -- },
 }

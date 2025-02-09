@@ -46,13 +46,13 @@ return {
     'gonstoll/wezterm-types',
     dev = true,
   },
-  { -- Flutter-tools
-    'akinsho/flutter-tools.nvim',
-    lazy = false,
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'stevearc/dressing.nvim', -- optional for vim.ui.select
-    },
-    opts = {},
-  },
+  -- { -- Flutter-tools
+  --   'akinsho/flutter-tools.nvim',
+  --   lazy = false,
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     'stevearc/dressing.nvim', -- optional for vim.ui.select
+  --   },
+  --   opts = {},
+  -- },
 }

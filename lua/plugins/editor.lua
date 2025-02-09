@@ -33,20 +33,14 @@ return {
   { -- Arrow
     'otavioschwanck/arrow.nvim',
     lazy = true,
-    event = 'LazyFile',
+    event = 'User LazyFileOpen',
     opts = require('data.types').arrow,
   },
-  -- { -- indent-blankline
-  --   'lukas-reineke/indent-blankline.nvim',
-  --   main = 'ibl',
-  --   lazy = true,
-  --   event = 'LazyFile',
-  --   cond = require('data.cond').lualine,
-  -- },
   ---@module "neominimap.config.meta"
   { -- NeoMiniMap
     'Isrothy/neominimap.nvim',
     lazy = false,
+    -- event = 'User LazyFileOpen',
     keys = require('data.keys').minimap.func,
     init = require('data.types').minimap.init(),
     cond = require('data.types').minimap.cond(),
@@ -76,9 +70,8 @@ return {
   },
   { -- Recorder
     'chrisgrieser/nvim-recorder',
-    event = 'VeryLazy',
+    lazy = true,
     dependencies = require('data.deps').recorder,
-    opts = {},
     keys = require('data.keys').recorder,
   },
   { -- Comment Box
@@ -91,16 +84,16 @@ return {
     cond = require('data.cond').todo,
     enabled = true,
   },
-  { -- Rainbow Delimeters
-    'HiPhish/rainbow-delimiters.nvim',
-  },
-  { -- Colorful window separators
-    'nvim-zh/colorful-winsep.nvim',
-    enabled = false,
-    lazy = true,
-    opts = require('data.types').winsep,
-    event = { 'WinLeave' },
-  },
+  -- { -- Rainbow Delimeters
+  --   'HiPhish/rainbow-delimiters.nvim',
+  -- },
+  -- { -- Colorful window separators
+  --   'nvim-zh/colorful-winsep.nvim',
+  --   enabled = false,
+  --   lazy = true,
+  --   opts = require('data.types').winsep,
+  --   event = { 'WinLeave' },
+  -- },
   { -- Auto Cursorline
     'delphinus/auto-cursorline.nvim',
     cond = require('data.func').check_global_var('auto_cursorline', true, true),
@@ -123,10 +116,10 @@ return {
     optional = true,
     opts = require('data.types').noice,
   },
-  { -- Duck
-    'tamton-aquib/duck.nvim',
-    config = require('data.types').duck,
-  },
+  -- { -- Duck
+  --   'tamton-aquib/duck.nvim',
+  --   config = require('data.types').duck,
+  -- },
   { -- Smear Cursor
     'sphamba/smear-cursor.nvim',
     event = 'VeryLazy',
@@ -135,31 +128,24 @@ return {
         and not require('data.func').is_kitty()
     end,
     opts = require('data.types').smearcursor,
-    specs = {
-      -- disable mini.animate cursor
-      {
-        'echasnovski/mini.animate',
-        optional = true,
-        opts = {
-          cursor = { enable = false },
-        },
-      },
-    },
+    keys = require('data.keys').smearcursor,
   },
-  { -- Unimpaired
-    'tpope/vim-unimpaired',
-    config = true,
-  },
-  { -- Vim-dirtytalk
-    'psliwka/vim-dirtytalk',
-    build = ':DirtytalkUpdate',
-    init = function()
-      vim.cmd('set spelllang=en,programming')
-    end,
-  },
-  { -- Academic
-    'ficcdaf/academic.nvim',
-    -- optional: only load for certain filetypes
-    ft = { 'markdown', 'tex' },
-  },
+  -- { -- Unimpaired
+  --   'tpope/vim-unimpaired',
+  --   config = true,
+  -- },
+  -- { -- Vim-dirtytalk
+  --   'psliwka/vim-dirtytalk',
+  --   build = ':DirtytalkUpdate',
+  --   init = require('data.types').dirtytalk.init,
+  -- },
+  -- { -- Academic
+  --   'ficcdaf/academic.nvim',
+  --   -- optional: only load for certain filetypes
+  --   ft = require('data.ft').academic,
+  -- },
+  -- { -- Vim-cool
+  --   'romainl/vim-cool',
+  --   lazy = false,
+  -- },
 }
