@@ -1315,6 +1315,17 @@ M.smearcursor = function()
     })
     :map('<leader>uW')
 end
+
+M.snacksterm = {
+  -- { -- Toggle Terminal
+  --   lhs = '<C-/>',
+  --   rhs = function()
+  --     require('snacks.terminal').toggle()
+  --   end,
+  --   desc = 'Toggle Terminal',
+  -- },
+}
+
 M.splitjoin = {
   toggle = 'gJ',
 }
