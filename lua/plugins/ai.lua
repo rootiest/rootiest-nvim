@@ -34,6 +34,13 @@ return {
     opts = require('data.types').gp,
     keys = require('data.keys').gp.func,
   },
+  { -- Code-Companion
+    'olimorris/codecompanion.nvim',
+    dependencies = require('data.deps').codecompanion,
+    opts = require('data.types').codecompanion.opts,
+    cond = require('data.cond').codecompanion,
+    cmd = require('data.cmd').codecompanion,
+  },
   { -- Avante
     'yetone/avante.nvim',
     cond = require('data.cond').avante,
