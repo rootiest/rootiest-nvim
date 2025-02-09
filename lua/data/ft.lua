@@ -5,6 +5,8 @@
 --          ╰─────────────────────────────────────────────────────────╯
 local M = {}
 
+M.academic = { 'markdown', 'tex' }
+
 M.helpview = 'help'
 
 return M
