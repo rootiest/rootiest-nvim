@@ -1290,6 +1290,11 @@ M.qalc = {
   },
 }
 
+M.recorder = {
+  { 'q', desc = ' Start Recording' },
+  { 'Q', desc = ' Play Recording' },
+}
+
 M.ripsub = {
   { -- Rip Substitute
     '<leader>fs',

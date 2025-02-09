@@ -1810,6 +1810,17 @@ M.auto_dark_mode = {
   end,
 }
 
+M.illuminate = {
+  opts = {
+    providers = {
+      -- Disable LSP proovider due to deprecation warnings
+      -- 'lsp',
+      'treesitter',
+      'regex',
+    },
+  },
+}
+
 --- Image.nvim enabled filetypes
 M.image = 'markdown'
 
@@ -1830,6 +1841,17 @@ M.noice = {
     progress = {
       enabled = false,
     },
+  },
+}
+
+M.grug_far = {
+  opts = {
+    engines = {
+      astgrep = {
+        path = 'ast-grep',
+      },
+    },
+    engine = 'ripgrep',
   },
 }
 

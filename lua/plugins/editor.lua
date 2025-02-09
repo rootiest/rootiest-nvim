@@ -7,25 +7,11 @@
 return {
   { -- Illuminate
     'ehpi/vim-illuminate',
-    opts = {
-      providers = {
-        -- Disable LSP proovider due to deprecation warnings
-        -- 'lsp',
-        'treesitter',
-        'regex',
-      },
-    },
+    opts = require('data.types').illuminate.opts,
   },
   { -- Grug-Far
     'MagicDuck/grug-far.nvim',
-    opts = {
-      engines = {
-        astgrep = {
-          path = 'ast-grep',
-        },
-      },
-      engine = 'ripgrep',
-    },
+    opts = require('data.types').grug_far.opts,
   },
   { -- Trouble
     'folke/trouble.nvim',
@@ -93,6 +79,7 @@ return {
     event = 'VeryLazy',
     dependencies = require('data.deps').recorder,
     opts = {},
+    keys = require('data.keys').recorder,
   },
   { -- Comment Box
     'LudoPinelli/comment-box.nvim',
