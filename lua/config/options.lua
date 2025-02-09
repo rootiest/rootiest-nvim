@@ -101,6 +101,8 @@ vim.g.use_fzf_lua               = false         ---@type boolean Options: <true|
 vim.g.useoil                    = false         ---@type boolean Options: <true|false>
 -- Use NeoTree file manager
 vim.g.useneotree                = false         ---@type boolean Options: <true|false>
+-- Use Yazy file manager
+vim.g.useyazi                   = true          ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ AI TOOL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
