@@ -68,11 +68,11 @@ return {
     keys = require('data.keys').easyalign,
   },
   {
-    config = function()
-          },
-        },
-      })
-    end,
+    'rachartier/tiny-inline-diagnostic.nvim',
+    event = 'VeryLazy', -- Or `LspAttach`
+    priority = 1000, -- needs to be loaded in first
+    cond = require('data.cond').tiny_inline_diagnostic,
+    config = require('data.types').tiny_inline_diagnostic.config,
   },
   -- { -- Vim-Shebang
   --   'vitalk/vim-shebang',

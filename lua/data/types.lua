@@ -1906,6 +1906,31 @@ M.symbols = {
   end,
 }
 
+-- Tiny Inline Diagnostic config
+M.tiny_inline_diagnostic = {
+  config = function()
+    require('tiny-inline-diagnostic').setup({
+      -- Style preset for diagnostic messages
+      -- Available options:
+      -- "modern", "classic", "minimal", "powerline",
+      -- "ghost", "simple", "nonerdfont", "amongus"
+      preset = 'modern',
+      options = {
+        overflow = {
+          -- Trigger wrapping to occur this many characters earlier when mode == "wrap".
+          -- Increase this value appropriately if you notice that the last few characters
+          -- of wrapped diagnostics are sometimes obscured.
+          padding = 20,
+        },
+      },
+    })
+    vim.api.nvim_create_autocmd('LspAttach', {
+      callback = function()
+        vim.diagnostic.config({ virtual_text = false }) -- Only if needed in your configuration, if you already have native LSP diagnostics
+      end,
+    })
+  end,
+}
 --- Todo-comments plugin options
 M.todo = {
   opts = {
