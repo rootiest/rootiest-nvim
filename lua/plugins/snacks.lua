@@ -188,6 +188,17 @@ local picker = {
   },
 }
 
+local image = {
+  {
+    'folke/snacks.nvim',
+    opts = {
+      image = {
+        enabled = true,
+      },
+    },
+  },
+}
+
 if
   require('data.func').check_global_var('statuscolumn', 'snacks', 'native')
 then
@@ -204,5 +215,7 @@ table.insert(P, indentscope)
 table.insert(P, profiler)
 
 table.insert(P, picker)
+
+table.insert(P, image)
 
 return P
