@@ -398,6 +398,34 @@ M.bufferline = {
   },
 }
 
+-- Code-Coompanion configuration options
+M.codecompanion = {
+  opts = {
+    adapters = {
+      openai = function()
+        return require('codecompanion.adapters').extend('openai', {
+          env = {
+            api_key = 'cmd: echo $OPENAI_API_KEY',
+          },
+          schema = {
+            model = {
+              default = 'gpt-4o-mini',
+            },
+          },
+        })
+      end,
+    },
+    strategies = {
+      chat = {
+        adapter = 'openai',
+      },
+      inline = {
+        adapter = 'copilot',
+      },
+    },
+  },
+}
+
 --- CodeSnap configuration options
 M.codesnap = {
   save_path = '~/Pictures/Screenshots/',
