@@ -11,6 +11,14 @@ M.autosave = {
   'ASToggle',
 }
 
+--- CodeCompanion plugin cmds
+M.codecompanion = {
+  'CodeCompanion',
+  'CodeCompanionChat',
+  'CodeCompanionActions',
+  'CodeCompanionCmd',
+}
+
 --- Codesnap plugin cmds
 M.codesnap = {
   'CodeSnap',
