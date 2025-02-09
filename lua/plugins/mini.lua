@@ -15,6 +15,13 @@ return {
   --   opts = require('data.types').miniindentscope.opts,
   --   init = require('data.types').miniindentscope.init,
   -- },
+  -- disable mini.animate cursor
+  {
+    'echasnovski/mini.animate',
+    optional = true,
+    opts = {
+      cursor = { enable = false },
+    },
   },
   { -- mini.align
     'echasnovski/mini.align',
