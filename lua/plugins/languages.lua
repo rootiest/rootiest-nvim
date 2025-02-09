@@ -30,7 +30,9 @@ return {
       local presets = require('markview.presets')
       return {
         checkboxes = presets.checkboxes.nerd,
-        headings = presets.headings.simple,
+        markdown = {
+          headings = presets.headings.simple,
+        },
       }
     end,
   },
