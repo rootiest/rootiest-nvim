@@ -165,7 +165,7 @@ local picker = {
           },
         },
         layouts = {
-          -- default = default_layout,
+          -- default = vscode_layout,
           vscode = vscode_layout,
           left = { preset = 'sidebar', layout = { position = 'left' } },
           right = { preset = 'sidebar', layout = { position = 'right' } },
