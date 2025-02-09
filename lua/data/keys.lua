@@ -1126,15 +1126,21 @@ M.misc = {
     rhs = '<cmd>norm ggVG<cr>',
     desc = 'Select all',
   },
-  { -- Neotree
+  { -- Explorer
     lhs = '|',
-    rhs = '<cmd>Neotree reveal toggle<cr>',
-    desc = 'Neotree toggle',
+    rhs = '<cmd>lua Snacks.picker.explorer()<cr>',
+    desc = 'Toggle Snacks Explorer',
   },
-  { -- Neotree
+  { -- Explorer
     lhs = '<leader>F',
-    rhs = '<cmd>Neotree reveal toggle<cr>',
-    desc = 'Neotree toggle',
+    rhs = function()
+      if require('data.cond').neotree() then
+        vim.cmd('Neotree reveal toggle')
+      else
+        Pick('explorer')
+      end
+    end,
+    desc = 'File Explorer',
   },
   { -- Telescope Find Files
     lhs = '<leader><leader>',
