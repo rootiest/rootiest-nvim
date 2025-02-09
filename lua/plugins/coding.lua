@@ -16,10 +16,6 @@ return {
     event = 'LazyFile',
     cond = require('data.cond').treesitter,
   },
-  { -- nvim-lspconfig
-    'neovim/nvim-lspconfig',
-    opts = require('data.types').lspconfig.opts,
-  },
   { -- Yanky
     'gbprod/yanky.nvim',
     requires = { 'kkharji/sqlite.lua' },

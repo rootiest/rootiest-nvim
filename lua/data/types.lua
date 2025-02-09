@@ -934,17 +934,6 @@ M.thanks = {
   },
 }
 
---- LSPConfig configuration options
-M.lspconfig = {
-  opts = {
-    setup = {
-      clangd = function(_, opts)
-        opts.capabilities.offsetEncoding = { 'utf-16' }
-      end,
-    },
-  },
-}
-
 --- Which-Key configuration options
 M.whichkey = {
   opts = {
