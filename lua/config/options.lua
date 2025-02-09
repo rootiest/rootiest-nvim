@@ -78,8 +78,8 @@ vim.g.rootiest_dev              = true          ---@type boolean Options: <true|
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PICKER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
--- Select default picker
-vim.g.lazyvim_picker            = "fzf"         ---@type string Options: [picker]
+-- Select default fallback picker
+vim.g.lazyvim_picker            = "auto"       ---@type string Options: [picker]
 --        ╭───────────────────────────╮                auto
 --        │                           │                telescope
 --        │          Pickers:         │                fzf
@@ -88,10 +88,12 @@ vim.g.lazyvim_picker            = "fzf"         ---@type string Options: [picker
 --        │                           │
 --        ╰───────────────────────────╯
 
+-- Use snacks picker by default
+vim.g.use_snacks_picker         = true          ---@type boolean Options: <true|false>
 -- Use the Telescope plugin
-vim.g.use_telescope             = true          ---@type boolean Options: <true|false>
+vim.g.use_telescope             = false         ---@type boolean Options: <true|false>
 -- Use the Fzf plugin
-vim.g.use_fzf_lua               = true          ---@type boolean Options: <true|false>
+vim.g.use_fzf_lua               = false         ---@type boolean Options: <true|false>
 -- Use oil file manager
 vim.g.useoil                    = false         ---@type boolean Options: <true|false>
 -- Use NeoTree file manager
