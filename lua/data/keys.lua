@@ -52,6 +52,29 @@ M.autosave = function()
     :map('<leader>uW')
 end
 
+M.blink = function()
+  require('snacks.toggle')
+    .new({
+      name = 'Completion',
+      which_key = true,
+      get = function()
+        if vim.g.cmp_auto_show == false then
+          return false
+        end
+        return true
+      end,
+
+      set = function(state)
+        if state then
+          vim.g.cmp_auto_show = true
+        else
+          vim.g.cmp_auto_show = false
+        end
+      end,
+    })
+    :map('<leader>uB')
+end
+
 M.capsword = {
   {
     '<C-s>',
