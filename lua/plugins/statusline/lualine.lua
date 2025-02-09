@@ -72,7 +72,7 @@ vim.api.nvim_create_autocmd('User', {
 return { -- Lualine
   'nvim-lualine/lualine.nvim',
   lazy = true,
-  event = 'LazyFile',
+  event = 'User LazyFileOpen',
   cond = require('data.cond').lualine,
 
   dependencies = require('data.deps').lualine,
@@ -157,7 +157,7 @@ return { -- Lualine
             end,
             padding = { left = 1, right = 0 },
             on_click = function()
-              vim.cmd('TodoTelescope')
+              Pick('todo_comments')
             end,
           },
           { -- Arrow
@@ -345,7 +345,7 @@ return { -- Lualine
             end,
             padding = { left = 0, right = 1 },
             on_click = function()
-              vim.cmd('Telescope current_buffer_fuzzy_find')
+              Pick('grep_buffers')
             end,
           },
           { -- Progress
@@ -357,7 +357,7 @@ return { -- Lualine
             end,
             icon = '',
             on_click = function()
-              vim.cmd('Telescope grep_string')
+              Pick('grep')
             end,
           },
           { -- Location
@@ -366,9 +366,6 @@ return { -- Lualine
             cond = function()
               return require('data.func').is_window_wide_enough(40)
             end,
-            -- on_click = function()
-            --   vim.cmd('Telescope grep_string')
-            -- end,
           },
           { -- Selection
             'selection_count',
@@ -396,7 +393,7 @@ return { -- Lualine
             separator = '',
             icon = '󱁻',
             on_click = function()
-              vim.cmd('Telescope oldfiles')
+              Pick('recent')
             end,
           },
         },
@@ -418,7 +415,7 @@ return { -- Lualine
             separator = { left = '', right = '' },
             icon = '󰍉 ',
             on_click = function()
-              vim.cmd('Telescope current_buffer_fuzzy_find')
+              Pick('grep_buffers')
             end,
           },
           { -- Time
@@ -427,7 +424,7 @@ return { -- Lualine
             icon = ' ',
             padding = { left = 0, right = 1 },
             on_click = function()
-              vim.cmd('Telescope buffers')
+              Pick('buffers')
             end,
             separator = { left = '', right = '' },
           },
