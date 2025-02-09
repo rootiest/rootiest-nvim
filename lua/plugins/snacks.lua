@@ -5,7 +5,6 @@
 local P = {}
 
 -- Snacks statuscolumn
-
 local statuscolumn = {
   'folke/snacks.nvim',
   opts = {
@@ -26,6 +25,17 @@ local statuscolumn = {
   },
 }
 
+-- No StatusColumn
+local nostatuscolumn = {
+  'folke/snacks.nvim',
+  opts = {
+    statuscolumn = {
+      enabled = false,
+    },
+  },
+}
+
+-- Snacks IndentScope
 local indentscope = {
   'folke/snacks.nvim',
   opts = {
@@ -66,11 +76,114 @@ local indentscope = {
   },
 }
 
-local nostatuscolumn = {
-  'folke/snacks.nvim',
-  opts = {
-    statuscolumn = {
-      enabled = false,
+-- Snacks Profiler
+local profiler = {
+  {
+    'folke/snacks.nvim',
+    opts = function()
+      -- Toggle the profiler
+      Snacks.toggle.profiler():map('<leader>qp')
+      -- Toggle the profiler highlights
+      Snacks.toggle.profiler_highlights():map('<leader>qh')
+    end,
+    keys = {
+      {
+        '<leader>qb',
+        function()
+          Snacks.profiler.scratch()
+        end,
+        desc = 'Profiler Scratch Bufer',
+      },
+    },
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    optional = true,
+    cond = require('data.cond').lualine,
+    opts = function(_, opts)
+      table.insert(opts.sections.lualine_x, Snacks.profiler.status())
+    end,
+  },
+}
+
+---@function flash_on_picker
+---Use the flash.nvim plugin in Snacks picker
+---@param picker table: The picker instance to interact with.
+local flash_on_picker = function(picker)
+  require('flash').jump({
+    pattern = '^',
+    label = { after = { 0, 0 } },
+    search = {
+      mode = 'search',
+      exclude = {
+        function(win)
+          return vim.bo[vim.api.nvim_win_get_buf(win)].filetype
+            ~= 'snacks_picker_list'
+        end,
+      },
+    },
+    action = function(match)
+      local idx = picker.list:row2idx(match.pos[1])
+      picker.list:_move(idx, true, true)
+      -- you can also add auto confirm here
+    end,
+  })
+end
+
+local vscode_layout = {
+  preview = true,
+  layout = {
+    backdrop = false,
+    row = 1,
+    width = 0.5,
+    min_width = 80,
+    height = 0.8,
+    border = 'none',
+    box = 'vertical',
+    {
+      win = 'input',
+      height = 1,
+      border = 'rounded',
+      title = '{source} {live} {flags}',
+      title_pos = 'center',
+    },
+    { win = 'list', border = 'hpad' },
+    { win = 'preview', title = '{preview}', border = 'rounded' },
+  },
+}
+
+local picker = {
+  {
+    'folke/snacks.nvim',
+    opts = {
+      picker = {
+        sources = {
+          explorer = {
+            jump = { close = true },
+            auto_close = true,
+            layout = { preset = 'sidebar' },
+          },
+        },
+        layouts = {
+          -- default = default_layout,
+          vscode = vscode_layout,
+          left = { preset = 'sidebar', layout = { position = 'left' } },
+          right = { preset = 'sidebar', layout = { position = 'right' } },
+          top = { preset = 'ivy', layout = { position = 'top' } },
+          bottom = { preset = 'ivy', layout = { position = 'bottom' } },
+        },
+        actions = {
+          flash = flash_on_picker,
+        },
+        win = {
+          input = {
+            keys = {
+              ['<a-s>'] = { 'flash', mode = { 'n', 'i' } },
+              ['s'] = { 'flash' },
+            },
+          },
+        },
+      },
     },
   },
 }
@@ -87,5 +200,9 @@ else
 end
 
 table.insert(P, indentscope)
+
+table.insert(P, profiler)
+
+table.insert(P, picker)
 
 return P
