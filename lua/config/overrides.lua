@@ -51,10 +51,10 @@ local opts = { noremap = false, silent = true, remap = true }
 vim.keymap.set('n', 'p', 'P', opts)
 vim.keymap.set('n', 'P', 'p', opts)
 vim.keymap.set('n', 'q:', function()
-  require('data.func').pick('command_history')
+  Pick('command_history')
 end, opts)
 
-vim.api.nvim_create_user_command('ListLspClients', function()
+vim.api.nvim_create_user_command('LspListClients', function()
   local clients =
     vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })
   if #clients == 0 then
@@ -105,4 +105,12 @@ vim.keymap.set(
   '<M-q>',
   'Q',
   { noremap = true, desc = 'Replay last register' }
+)
+
+-- Keymap to swap buffer positions
+vim.keymap.set(
+  'n',
+  '<leader>bs',
+  require('data.func').swap_buffers,
+  { noremap = true, silent = true, desc = 'Swap buffer' }
 )
