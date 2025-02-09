@@ -19,6 +19,11 @@ M.chatgpt = {
   'nvim-telescope/telescope.nvim',
 }
 
+M.codecompanion = {
+  'nvim-lua/plenary.nvim',
+  'nvim-treesitter/nvim-treesitter',
+}
+
 --- nvim-cmp dependencies
 ---@return table The nvim-cmp dependencies
 M.cmp = {
