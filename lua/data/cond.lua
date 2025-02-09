@@ -36,14 +36,17 @@ M.barsNlines = function()
   return false
 end
 
+--- Avante conditional options
 M.avante = function()
   return func.check_global_var('useavante', true, false)
 end
 
+--- ChatGPT conditional options
 M.chatgpt = function()
   return func.check_global_var('usechatgpt', true, false)
 end
 
+--- GP conditional options
 M.gp = function()
   return func.check_global_var('usegpai', true, false)
 end
@@ -77,6 +80,11 @@ M.bufferline = function()
     return true
   end
   return false
+end
+
+-- Code-Companion conditional options
+M.codecompanion = function()
+  return func.check_global_var('usecodecomp', true, false)
 end
 
 --- CoPilot conditional options
@@ -172,14 +180,27 @@ M.nekifoch = function()
   return func.is_kitty()
 end
 
---- Tabnine conditional options
 --- Codeium conditional options
 M.neocodeium = function()
   return func.check_global_var('aitool', 'neocodeium', 'neocodeium')
 end
 
+M.neotree = function()
+  return func.check_global_var('useneotree', true, true)
+end
+
+M.treesitter = function()
+  -- Only load for editable buffers
+  return vim.bo.buftype == '' and not vim.bo.readonly
+end
+
+--- Tabnine conditional options
 M.tabnine = function()
   return func.check_global_var('aitool', 'tabnine', 'neocodeium')
+end
+
+M.tiny_inline_diagnostic = function()
+  return func.check_global_var('usetinyinline', true, false)
 end
 
 M.todo = function()
@@ -200,6 +221,12 @@ M.tmux = function()
   return func.is_tmux()
 end
 
+--- Use Smart-splits conditional
+M.use_splits = function()
+  -- return not func.is_ghostty()
+  return true
+end
+
 --- WakaTime conditional options
 M.wakatime = function()
   return vim.g.usewakatime
@@ -208,6 +235,11 @@ end
 --- WezTerm conditional options
 M.wezterm = function()
   return func.is_wezterm()
+end
+
+--- Yazi conditional options
+M.yazi = function()
+  return func.check_global_var('useyazi', true, false)
 end
 
 return M
