@@ -58,6 +58,16 @@ function M.is_wezterm()
   return false
 end
 
+---@function Check if the terminal is ghostty
+---@return boolean condition true if the terminal is ghostty, false otherwise
+function M.is_ghostty()
+  local gterm = os.getenv('TERM_PROGRAM')
+  if gterm and string.find(gterm, 'ghostty') then
+    return true
+  end
+  return false
+end
+
 ---@function Check if the terminal is neovide
 ---@return boolean condition true if the terminal is neovide, false otherwise
 function M.is_neovide()
