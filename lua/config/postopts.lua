@@ -33,5 +33,13 @@ local function setup()
   end
 end
 
+local function define_globals()
+  -- Define Pick function
+  Pick = require('data.func').pick
+end
+
 -- Run Setup function
 setup()
+
+-- Define Global Functions
+define_globals()
