@@ -19,6 +19,39 @@ M.alternate = {
   },
 }
 
+M.autosave = function()
+  local group = vim.api.nvim_create_augroup('autosave', {})
+
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'AutoSaveEnable',
+    group = group,
+    callback = function()
+      vim.g.auto_save_enabled = true
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'AutoSaveDisable',
+    group = group,
+    callback = function()
+      vim.g.auto_save_enabled = false
+    end,
+  })
+
+  require('snacks.toggle')
+    .new({
+      id = 'autosave',
+      name = 'Auto-Write',
+      get = function()
+        return vim.g.auto_save_enabled
+      end,
+      set = function()
+        require('auto-save').toggle()
+      end,
+    })
+    :map('<leader>uW')
+end
+
 M.capsword = {
   {
     '<C-s>',
