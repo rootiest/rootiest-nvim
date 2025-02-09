@@ -9,9 +9,11 @@ return {
     'mrjones2014/smart-splits.nvim',
     lazy = false,
     build = require('data.types').smart_splits.build(),
+    -- cond = not require('data.func').is_ghostty(),
   },
   { -- Image Renderer
     '3rd/image.nvim',
+    lazy = true,
     ft = require('data.types').image,
     config = function()
       require('image').setup({
