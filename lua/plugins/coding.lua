@@ -14,10 +14,7 @@ return {
     opts = require('data.types').treesitter.opts,
     lazy = true,
     event = 'LazyFile',
-    cond = function()
-      -- Only load for editable buffers
-      return vim.bo.buftype == '' and not vim.bo.readonly
-    end,
+    cond = require('data.cond').treesitter,
   },
   { -- nvim-lspconfig
     'neovim/nvim-lspconfig',
