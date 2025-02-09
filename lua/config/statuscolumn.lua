@@ -2,9 +2,9 @@
 
 -- Table to hold hex color values for easy reference
 local colors = {
-  statusLineNrCurrent = "#b3befe",
-  statusLineNrDefault = "#444659",
-  fallbackColor = "#808080" -- Fallback gray if the group doesn't exist
+  statusLineNrCurrent = '#b3befe',
+  statusLineNrDefault = '#444659',
+  fallbackColor = '#808080', -- Fallback gray if the group doesn't exist
 }
 
 --- Calculate a color gradient between two colors.
@@ -52,7 +52,11 @@ end
 -- @param base_color (string) The starting color for the gradient.
 -- @param group_name_prefix (string) The prefix for the highlight group names.
 -- @param max_steps (number) The total number of steps for the gradient.
-local function setup_gradient_highlights(base_color, group_name_prefix, max_steps)
+local function setup_gradient_highlights(
+  base_color,
+  group_name_prefix,
+  max_steps
+)
   local target_color = get_highlight_fg('StatusLineNrDefault') -- Get the default color for interpolation
   for step = 1, max_steps do
     local color = calculate_gradient(base_color, target_color, max_steps, step) -- Get the gradient color
@@ -65,8 +69,16 @@ local function setup_gradient_highlights(base_color, group_name_prefix, max_step
 end
 
 -- Define highlight groups for current and default status line numbers
-vim.api.nvim_set_hl(0, 'StatusLineNrCurrent', { fg = colors.statusLineNrCurrent, bg = 'NONE', bold = true })
-vim.api.nvim_set_hl(0, 'StatusLineNrDefault', { fg = colors.statusLineNrDefault, bg = 'NONE' })
+vim.api.nvim_set_hl(
+  0,
+  'StatusLineNrCurrent',
+  { fg = colors.statusLineNrCurrent, bg = 'NONE', bold = true }
+)
+vim.api.nvim_set_hl(
+  0,
+  'StatusLineNrDefault',
+  { fg = colors.statusLineNrDefault, bg = 'NONE' }
+)
 
 -- Set up gradient highlights for lines above and below the cursor
 setup_gradient_highlights(colors.statusLineNrCurrent, 'StatusLineNrAbove', 10)
