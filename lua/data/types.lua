@@ -482,6 +482,70 @@ M.floating_help = {
   end,
 }
 
+M.gx = {
+  init = function()
+    vim.g.netrw_nogx = 1
+  end,
+}
+
+M.hardtime = {
+  opts = function()
+    return { enabled = vim.g.usehardtime }
+  end,
+}
+
+M.imgclip = {
+  opts = {
+    default = {
+      embed_image_as_base64 = false,
+      prompt_for_file_name = false,
+      drag_and_drop = {
+        insert_mode = true,
+      },
+      -- required for Windows users
+      use_absolute_path = true,
+    },
+  },
+}
+
+M.multicursor = {
+  config = function()
+    local mc = require('multicursor-nvim')
+
+    mc.setup({
+      -- set to true if you want multicursor undo history
+      -- to clear when clearing cursors
+      shallowUndo = false,
+
+      -- set to empty table to disable signs
+      signs = { '⎸', '󰇀', '⎹' },
+    })
+  end,
+}
+
+M.qalc = {
+  opts = {
+    bufname = 'qalc',
+    set_ft = 'qalc',
+    yank_default_register = '+',
+    diagnostics = {
+      underline = true,
+      virtual_text = true,
+      signs = true,
+      update_in_insert = true,
+      severity_sort = true,
+    },
+  },
+}
+
+M.showkeys = {
+  opts = {
+    timeout = 1,
+    maxkeys = 5,
+    -- more opts
+  },
+}
+
 --- Smart-Scrolloff configuration options
 M.smartscrolloff = { scrolloff_percentage = 0.25 }
 
@@ -499,6 +563,26 @@ M.suda = function()
   vim.cmd("let g:suda#prompt = '   Enter Sudo Password  '")
 end
 
+M.treesitter = {
+  opts = function(opts)
+    vim.api.nvim_create_augroup('EnvFileDiagnostics', { clear = true })
+
+    vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+      group = 'EnvFileDiagnostics',
+      pattern = { '*.env', '*.env.*' },
+      callback = function()
+        vim.diagnostic.enable(false)
+      end,
+    })
+  end,
+}
+
+M.tokyonight = {
+  opts = {
+    style = 'night',
+  },
+}
+
 --- Autosave configuration options
 M.autosave = {}
 
@@ -510,10 +594,24 @@ M.kulala = {
 --- LazyVim configuration options
 M.lazyvim = {
   opts = {
-    colorscheme = vim.g.my_colorscheme or 'catppuccin-mocha',
+    colorscheme = 'catppuccin-mocha',
     news = {
       lazyvim = true,
       neovim = true,
+    },
+  },
+}
+
+M.lazydev = {
+  opts = {
+    library = {
+      { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+      { path = 'LazyVim', words = { 'LazyVim' } },
+      { path = 'snacks.nvim', words = { 'Snacks' } },
+      { path = 'lazy.nvim', words = { 'LazyVim' } },
+      -- Load the wezterm types when the `wezterm` module is required
+      -- Needs `justinsgithub/wezterm-types` to be installed
+      { path = 'wezterm-types', mods = { 'wezterm' } },
     },
   },
 }
@@ -726,6 +824,12 @@ M.chatgpt = {
   openai_params = {
     model = 'gpt-4o-mini',
   },
+}
+
+M.dirtytalk = {
+  init = function()
+    vim.cmd('set spelllang=en,programming')
+  end,
 }
 
 -- GP ChatBot configuration options
@@ -1001,6 +1105,25 @@ M.ibl = {
       '󰌛',
     },
   },
+}
+
+M.miniicons = {
+  opts = {
+    file = {
+      ['.keep'] = { glyph = '󰊢', hl = 'MiniIconsGrey' },
+      ['devcontainer.json'] = { glyph = '', hl = 'MiniIconsAzure' },
+    },
+    filetype = {
+      dotenv = { glyph = '', hl = 'MiniIconsYellow' },
+    },
+  },
+  init = function()
+    ---@diagnostic disable-next-line: duplicate-set-field
+    package.preload['nvim-web-devicons'] = function()
+      require('mini.icons').mock_nvim_web_devicons()
+      return package.loaded['nvim-web-devicons']
+    end
+  end,
 }
 
 --- Mini.Indentscope configuration options
@@ -1568,7 +1691,7 @@ end
 M.yanky = {
   ring = {
     history_length = 200,
-    storage = 'sqlite',
+    -- storage = 'sqlite',
   },
   system_clipboard = {
     sync_with_ring = true,
@@ -1771,6 +1894,28 @@ M.smearcursor = function()
     hide_target_hack = true,
   }
 end
+
+M.symbols = {
+  config = function()
+    local r = require('symbols.recipes')
+    require('symbols').setup(r.DefaultFilters, r.AsciiSymbols, {
+      sidebar = {
+        auto_peek = false,
+        show_guide_lines = true,
+        chars = {
+          folded = '',
+          unfolded = '',
+          guide_vert = '',
+          guide_middle_item = '',
+          guide_last_item = '',
+        },
+        preview = {
+          show_always = true,
+        },
+      },
+    })
+  end,
+}
 
 --- Todo-comments plugin options
 M.todo = {
