@@ -1301,6 +1301,20 @@ M.ripsub = {
   },
 }
 
+M.smearcursor = function()
+  require('snacks.toggle')
+    .new({
+      id = 'smearcursor',
+      name = 'Smear-Cursor',
+      get = function()
+        return require('smear_cursor').enabled
+      end,
+      set = function()
+        require('smear_cursor').toggle()
+      end,
+    })
+    :map('<leader>uW')
+end
 M.splitjoin = {
   toggle = 'gJ',
 }
