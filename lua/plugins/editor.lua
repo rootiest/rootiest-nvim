@@ -5,16 +5,6 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 return {
-  { -- Aerial
-    import = 'lazyvim.plugins.extras.editor.aerial',
-  },
-  { import = 'lazyvim.plugins.extras.ui.smear-cursor' },
-  { -- Dial
-    import = 'lazyvim.plugins.extras.editor.dial',
-  },
-  { -- Illuminate
-    import = 'lazyvim.plugins.extras.editor.illuminate',
-  },
   { -- Illuminate
     'ehpi/vim-illuminate',
     opts = {
@@ -25,22 +15,6 @@ return {
         'regex',
       },
     },
-  },
-  { -- Outline
-    import = 'lazyvim.plugins.extras.editor.outline',
-  },
-  { -- IncRename
-
-    import = 'lazyvim.plugins.extras.editor.inc-rename',
-  },
-  { -- Treesitter-context
-    import = 'lazyvim.plugins.extras.ui.treesitter-context',
-  },
-  { -- Navic
-    import = 'lazyvim.plugins.extras.editor.navic',
-  },
-  { -- Refactoring
-    import = 'lazyvim.plugins.extras.editor.refactoring',
   },
   { -- Grug-Far
     'MagicDuck/grug-far.nvim',

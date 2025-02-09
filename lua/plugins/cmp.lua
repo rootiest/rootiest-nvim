@@ -30,9 +30,6 @@ if vim.g.useblinkcmp then
     vim.g.lazyvim_blink_main = true
   end
   return {
-    { -- Blink completion
-      import = 'lazyvim.plugins.extras.coding.blink',
-    },
     {
       'saghen/blink.cmp',
       opts = {
@@ -170,7 +167,6 @@ end
 
 -- Else use nvim-cmp
 return {
-  { import = 'lazyvim.plugins.extras.coding.nvim-cmp' },
   { -- cmp
     url = cmp_repo.url,
     build = cmp_repo.build,

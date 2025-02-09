@@ -6,11 +6,6 @@
 
 return {
   -- require("config.rocks").plugin_spec,
-  { -- LazyVim
-    'LazyVim/LazyVim',
-    priority = 900,
-    opts = require('data.types').lazyvim.opts,
-  },
   { -- Bufferline
     'akinsho/bufferline.nvim',
     cond = require('data.types').bufferline.enabled,

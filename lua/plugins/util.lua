@@ -5,12 +5,6 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 return {
-  { -- Chezmoi
-    import = 'lazyvim.plugins.extras.util.chezmoi',
-  },
-  { -- Dotfiles plugins
-    import = 'lazyvim.plugins.extras.util.dot',
-  },
   { -- Env file no diagnostics
     'nvim-treesitter/nvim-treesitter',
     lazy = true,

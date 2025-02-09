@@ -5,15 +5,6 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 return {
-  { -- DAP Core
-    import = 'lazyvim.plugins.extras.dap.core',
-  },
-  { -- DAP Neovim Lua Adapter
-    import = 'lazyvim.plugins.extras.dap.nlua',
-  },
-  { -- NeoTest
-    import = 'lazyvim.plugins.extras.test.core',
-  },
   { -- Neotest Plenary
     'nvim-neotest/neotest-plenary',
   },

@@ -13,28 +13,6 @@ return {
     cond = require('data.cond').neocodeium,
     dependencies = { 'hrsh7th/nvim-cmp' },
   },
-  { -- Codeium
-    import = 'lazyvim.plugins.extras.ai.codeium',
-    cond = require('data.cond').codeium,
-    event = 'VeryLazy',
-    lazy = true,
-    opts = function()
-      require('codeium.virtual_text').set_statusbar_refresh(function()
-        require('lualine').refresh()
-      end)
-    end,
-  },
-  { -- Copilot
-    import = 'lazyvim.plugins.extras.ai.copilot',
-    cond = require('data.cond').copilot,
-  },
-  { -- Copilot
-    import = 'lazyvim.plugins.extras.ai.copilot-chat',
-  },
-  { -- Tabnine
-    import = 'lazyvim.plugins.extras.ai.tabnine',
-    cond = require('data.cond').tabnine,
-  },
   { -- Minuet-AI
     'milanglacier/minuet-ai.nvim',
     dependencies = require('data.deps').minuet,

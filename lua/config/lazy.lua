@@ -20,13 +20,18 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PLUGINS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 local plugin_specs = {
+  { -- LazyVim
+    'LazyVim/LazyVim',
+    priority = 900,
+    opts = require('data.types').lazyvim.opts,
+  },
   {
-    'LazyVim/LazyVim', -- LazyVim
     import = 'lazyvim.plugins', -- LazyVim Core Plugins
   },
   { -- VSCode
     import = 'lazyvim.plugins.extras.vscode',
   },
+  { import = 'lvplugs' }, -- LazyVim Plugins
   { import = 'plugins' }, -- General Plugins
 }
 
@@ -53,7 +58,12 @@ require('lazy').setup({
   },
   install = {
     missing = true,
-    colorscheme = { 'catppuccin-mocha', 'tokyonight', 'default' },
+    colorscheme = {
+      -- 'ex-catppuccin-mocha',
+      'catppuccin-mocha',
+      'tokyonight',
+      'default',
+    },
   },
   defaults = {
     lazy = true,

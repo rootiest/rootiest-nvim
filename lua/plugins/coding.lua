@@ -9,9 +9,6 @@ return {
     'williamboman/mason-lspconfig.nvim',
     opts = require('data.types').mason_lsp_config.opts,
   },
-  { -- luasnip
-    import = 'lazyvim.plugins.extras.coding.luasnip',
-  },
   { -- nvim-treesitter
     'nvim-treesitter/nvim-treesitter',
     opts = require('data.types').treesitter.opts,
@@ -27,16 +24,10 @@ return {
     opts = require('data.types').lspconfig.opts,
   },
   { -- Yanky
-    import = 'lazyvim.plugins.extras.coding.yanky',
-  },
-  { -- Yanky
     'gbprod/yanky.nvim',
     requires = { 'kkharji/sqlite.lua' },
     opts = require('data.types').yanky,
     keys = require('data.keys').yanky,
-  },
-  { -- Neogen
-    import = 'lazyvim.plugins.extras.coding.neogen',
   },
   {
     'folke/lazydev.nvim',

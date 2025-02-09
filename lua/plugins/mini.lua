@@ -10,8 +10,6 @@ return {
     event = 'VeryLazy',
     opts = {},
   },
-  -- { -- Mini.Indentscope
-  --   import = 'lazyvim.plugins.extras.ui.mini-indentscope',
   -- },
   { -- Mini Indentscope
     'echasnovski/mini.indentscope',
@@ -35,9 +33,6 @@ return {
   { -- mini.surround
     'echasnovski/mini.surround',
     opts = {},
-  },
-  { -- mini.files
-    import = 'lazyvim.plugins.extras.editor.mini-files',
   },
   { -- mini.files
     'echasnovski/mini.files',

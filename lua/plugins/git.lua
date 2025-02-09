@@ -5,9 +5,6 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 return {
-  { -- Octo plugin
-    import = 'lazyvim.plugins.extras.util.octo',
-  },
   { -- Gist Tools
     'Rawnly/gist.nvim',
     lazy = true,

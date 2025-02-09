@@ -175,31 +175,32 @@ local P = { -- Define Telescope Plugins Specs
   },
 }
 
-if require('data.func').check_global_var('use_telescope', false, true) then
-  P = { { import = 'lazyvim.plugins.extras.editor.fzf' } }
-end
 
-if require('data.func').check_global_var('use_fzf_lua', true, false) then
-  table.insert(P, 1, { import = 'lazyvim.plugins.extras.editor.fzf' })
-  table.insert(P, 2, {
-    'ibhagwan/fzf-lua',
-    lazy = true,
-    event = 'VeryLazy',
-    opts = {
-      previewers = {
-        builtin = {
-          extensions = {
-            -- neovim terminal only supports `viu` block output
-            ['png'] = { 'viu', '-b' },
-            -- by default the filename is added as last argument
-            -- if required, use `{file}` for argument positioning
-            ['svg'] = { 'viu', '-b' },
-            ['jpg'] = { 'viu', '-b' },
-          },
-        },
-      },
-    },
-  })
-end
+-- if require('data.func').check_global_var('use_fzf_lua', true, false) then
+--   P = { { import = 'lazyvim.plugins.extras.editor.fzf' } }
+-- end
+--
+-- if require('data.func').check_global_var('use_fzf_lua', true, false) then
+--   table.insert(P, 1, { import = 'lazyvim.plugins.extras.editor.fzf' })
+--   table.insert(P, 2, {
+--     'ibhagwan/fzf-lua',
+--     lazy = true,
+--     event = 'VeryLazy',
+--     opts = {
+--       previewers = {
+--         builtin = {
+--           extensions = {
+--             -- neovim terminal only supports `viu` block output
+--             ['png'] = { 'viu', '-b' },
+--             -- by default the filename is added as last argument
+--             -- if required, use `{file}` for argument positioning
+--             ['svg'] = { 'viu', '-b' },
+--             ['jpg'] = { 'viu', '-b' },
+--           },
+--         },
+--       },
+--     },
+--   })
+-- end
 
 return P
