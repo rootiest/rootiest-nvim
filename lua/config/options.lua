@@ -118,7 +118,9 @@ vim.g.aitool                    = "codeium"  ---@type string Options: [ai tool]
 -- Enable ChatGPT plugin for AI chat
 vim.g.usechatgpt                 = false        ---@type boolean Options:  <true|false>
 -- Enable Avante plugin for AI chat
-vim.g.useavante                  = true         ---@type boolean Options:  <true|false>
+vim.g.useavante                  = false        ---@type boolean Options:  <true|false>
+-- Enable Code-Companion plugin for AI chat
+vim.g.usecodecomp                = true         ---@type boolean Options:  <true|false>
 -- Enable GP plugin for AI chat
 vim.g.usegpai                    = false        ---@type boolean Options:  <true|false>
 
