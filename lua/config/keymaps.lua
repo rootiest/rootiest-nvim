@@ -55,13 +55,11 @@ for _, item in ipairs(require('data.keys').multicursor) do
   add_keymap(item)
 end
 
---  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Overrides ━━━━━━━━━━━━━━━━━━━━━━━━━━
-require('config.overrides')
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Terminal ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Snacks Terminal
+for _, item in ipairs(require('data.keys').snacksterm) do
+  add_keymap(item)
+end
 
--- Keymap to swap buffer positions
-vim.keymap.set(
-  'n',
-  '<leader>bs',
-  require('data.func').swap_buffers,
-  { noremap = true, silent = true, desc = 'Swap buffer' }
-)
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Overrides ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+require('config.overrides')
