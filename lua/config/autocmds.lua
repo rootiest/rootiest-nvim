@@ -17,43 +17,41 @@ local autocmd = vim.api.nvim_create_autocmd
 -- end
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━ Set up Qalc keymappings ━━━━━━━━━━━━━━━━━━━━━━━
-if pcall(require, 'qalc') then
-  -- Create a group for filetype-specific mappings
-  autogrp('QalcFileTypeMappings', { clear = true })
+-- Create a group for filetype-specific mappings
+autogrp('QalcFileTypeMappings', { clear = true })
 
-  -- Create an autocommand for the qalc filetype
-  autocmd('FileType', {
-    pattern = 'qalc',
-    group = 'QalcFileTypeMappings',
-    callback = function()
-      -- Set the key mapping: 'y' to run the :QalcYank command in normal mode
-      vim.keymap.set( -- Yank Result
-        'n',
-        'y',
-        ':QalcYank +<CR>',
-        { noremap = true, silent = true }
-      )
-      -- Set the key mapping: 'q' to run the :QalcClose command in normal mode
-      vim.keymap.set( -- Close Qalc
-        'n',
-        'q',
-        ':QalcClose<CR>',
-        { noremap = true, silent = true }
-      )
-    end,
-  })
+-- Create an autocommand for the qalc filetype
+autocmd('FileType', {
+  pattern = 'qalc',
+  group = 'QalcFileTypeMappings',
+  callback = function()
+    -- Set the key mapping: 'y' to run the :QalcYank command in normal mode
+    vim.keymap.set( -- Yank Result
+      'n',
+      'y',
+      ':QalcYank +<CR>',
+      { noremap = true, silent = true }
+    )
+    -- Set the key mapping: 'q' to run the :QalcClose command in normal mode
+    vim.keymap.set( -- Close Qalc
+      'n',
+      'q',
+      ':QalcClose<CR>',
+      { noremap = true, silent = true }
+    )
+  end,
+})
 
-  -- Define a custom command to close the Qalc buffer
-  vim.api.nvim_create_user_command('QalcClose', function()
-    local buf_name = vim.api.nvim_buf_get_name(0)
-    if buf_name ~= '' then
-      vim.cmd('bd!')
-    else
-      -- If the buffer has no name, just remove it without invoking :bd!
-      vim.api.nvim_buf_delete(0, { force = true })
-    end
-  end, { bang = true })
-end
+-- Define a custom command to close the Qalc buffer
+vim.api.nvim_create_user_command('QalcClose', function()
+  local buf_name = vim.api.nvim_buf_get_name(0)
+  if buf_name ~= '' then
+    vim.cmd('bd!')
+  else
+    -- If the buffer has no name, just remove it without invoking :bd!
+    vim.api.nvim_buf_delete(0, { force = true })
+  end
+end, { bang = true })
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━ Set up highlights ━━━━━━━━━━━━━━━━━━━━━━━━━━
 local load_highlight = require('utils.highlight')
