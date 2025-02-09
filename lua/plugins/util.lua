@@ -5,38 +5,18 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 return {
-  { -- Env file no diagnostics
-    'nvim-treesitter/nvim-treesitter',
-    lazy = true,
-    event = 'LazyFile',
-    cond = function()
-      -- Only load for editable buffers
-      return vim.bo.buftype == '' and not vim.bo.readonly
-    end,
-    opts = function(_)
-      vim.api.nvim_create_augroup('EnvFileDiagnostics', { clear = true })
-
-      vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-        group = 'EnvFileDiagnostics',
-        pattern = { '*.env', '*.env.*' },
-        callback = function()
-          vim.diagnostic.enable(false)
-        end,
-      })
-    end,
-  },
   { -- Wakatime
     'wakatime/vim-wakatime',
     cond = vim.g.usewakatime,
+    lazy = true,
+    event = 'LazyFile',
   },
   { -- Link following
     'chrishrb/gx.nvim',
     lazy = true,
     cmd = require('data.cmd').gx,
     keys = require('data.keys').gx,
-    init = function()
-      vim.g.netrw_nogx = 1
-    end,
+    init = require('data.types').gx.init,
     dependencies = require('data.deps').gx,
     config = true,
   },
@@ -67,9 +47,7 @@ return {
     cond = require('data.func').check_global_var('usehardtime', true, true),
     build = 'make',
     dependencies = require('data.deps').hardtime,
-    opts = function()
-      return { enabled = vim.g.usehardtime }
-    end,
+    opts = require('data.types').hardtime.opts,
   },
   { -- CapsWord
     'dmtrKovalenko/caps-word.nvim',
@@ -90,18 +68,7 @@ return {
     lazy = true,
     cmd = require('data.cmd').qalc,
     keys = require('data.keys').qalc,
-    opts = {
-      bufname = 'qalc',
-      set_ft = 'qalc',
-      yank_default_register = '+',
-      diagnostics = {
-        underline = true,
-        virtual_text = true,
-        signs = true,
-        update_in_insert = true,
-        severity_sort = true,
-      },
-    },
+    opts = require('data.types').qalc.opts,
   },
   { -- Remote-nvim
     'amitds1997/remote-nvim.nvim',
@@ -122,6 +89,7 @@ return {
   },
   { -- Suda
     'lambdalisue/vim-suda',
+    lazy = true,
     cmd = require('data.cmd').suda,
     config = require('data.types').suda,
   },
@@ -130,46 +98,15 @@ return {
     event = 'LazyFile',
     lazy = true,
     cond = require('data.func').check_global_var('usediscord', true, true),
-    opts = {
-      logo = 'https://raw.githubusercontent.com/rootiest/rootiest-nvim/b949af32e72db9fc35c18e14e2088710dc36dd15/logo/icon.png',
-      main_image = 'logo',
-      blacklist = { 'bin: No such file or directory' },
-      file_assets = {},
-    },
+    opts = require('data.types').neocord.opts,
   },
   { -- Floating Help
     'Tyler-Barham/floating-help.nvim',
     lazy = true,
-    opts = {
-      width = 0.8, -- Whole numbers are columns/rows
-      height = 0.9, -- Decimals are a percentage of the editor
-      position = 'C', -- NW,N,NW,W,C,E,SW,S,SE (C==center)
-      border = 'rounded', -- rounded,double,single
-    },
+    opts = require('data.types').floating_help.opts,
     cmd = require('data.cmd').floating_help,
-    init = function()
-      vim.g.floating_help = true
-      -- Only replace cmds, not search; only replace the first instance
-      --- Replace commands in the form of 'cabbr <abbrev> <expansion>'
-      ---@param abbrev string The abbreviation to replace
-      ---@param expansion string The expansion to replace it with
-      local function cmd_abbrev(abbrev, expansion)
-        local cmd = 'cabbr '
-          .. abbrev
-          .. ' <c-r>=(getcmdpos() == 1 && getcmdtype() == ":" ? "'
-          .. expansion
-          .. '" : "'
-          .. abbrev
-          .. '")<CR>'
-        vim.cmd(cmd)
-      end
-      -- Replace native help commands with floating help
-      cmd_abbrev('h', 'FloatingHelp')
-      cmd_abbrev('help', 'FloatingHelp')
-      cmd_abbrev('helpc', 'FloatingHelpClose')
-      cmd_abbrev('helpclose', 'FloatingHelpClose')
-    end,
-  },
+    init = require('data.types').floating_help.init,
+    cond = require('data.cond').floating_help,
   },
   -- { -- Timer
   --   'alex-popov-tech/timer.nvim',
@@ -185,20 +122,8 @@ return {
     'jake-stewart/multicursor.nvim',
     branch = '1.0',
     lazy = true,
-    event = 'LazyFile',
-    config = function()
-      local mc = require('multicursor-nvim')
-
-      mc.setup({
-        -- set to true if you want multicursor undo history
-        -- to clear when clearing cursors
-        shallowUndo = false,
-
-        -- set to empty table to disable signs
-        signs = { '⎸', '󰇀', '⎹' },
-      })
-    end,
-  },
+    event = 'User LazyFileOpen',
+    config = require('data.types').multicursor.config,
   },
   -- { -- FloatTerm
   --   'voldikss/vim-floaterm',
@@ -215,11 +140,7 @@ return {
     'nvchad/showkeys',
     lazy = true,
     cmd = 'ShowkeysToggle',
-    opts = {
-      timeout = 1,
-      maxkeys = 5,
-      -- more opts
-    },
+    opts = require('data.types').showkeys.opts,
   },
   {
     'stevearc/oil.nvim',
@@ -228,9 +149,8 @@ return {
     cond = require('data.func').check_global_var('useoil', true, true),
     -- Optional dependencies
     dependencies = { { 'echasnovski/mini.icons', opts = {} } },
-    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
   },
-  { -- Utlitities Framework
+  { -- Utlities Framework
     'jrop/u.nvim',
     lazy = true,
   },
@@ -248,6 +168,7 @@ return {
     'mikavilpas/yazi.nvim',
     lazy = true,
     cmd = 'Yazi',
+    cond = require('data.cond').yazi,
   },
   -- { -- TyprStats
   --   'nvzone/typr',
