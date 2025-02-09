@@ -29,6 +29,7 @@ if vim.g.useblinkcmp then
   if vim.g.cmp_performance_enabled then
     vim.g.lazyvim_blink_main = true
   end
+
   return {
     {
       'saghen/blink.cmp',
@@ -41,8 +42,11 @@ if vim.g.useblinkcmp then
         completion = {
           menu = {
             auto_show = function(ctx)
-              return ctx.mode ~= 'cmdline'
-                or not vim.tbl_contains({ '/', '?' }, vim.fn.getcmdtype())
+              if vim.g.cmp_auto_show ~= false then
+                return ctx.mode ~= 'cmdline'
+                  or not vim.tbl_contains({ '/', '?' }, vim.fn.getcmdtype())
+              end
+              return false
             end,
           },
           list = {
@@ -59,65 +63,6 @@ if vim.g.useblinkcmp then
           preset = 'luasnip',
         },
         sources = {
-          -- default = {
-          --   'digraphs',
-          --   -- 'cmp_yanky',
-          --   'emoji',
-          --   'dictionary',
-          --   'snippets',
-          -- },
-          -- providers = {
-          --   digraphs = {
-          --     name = 'digraphs',
-          --     module = 'blink.compat.source',
-          --     score_offset = -3,
-          --     opts = {
-          --       cache_digraphs_on_start = true,
-          --     },
-          --   },
-          --   -- cmp_yanky = {
-          --   --   name = 'cmp_yanky',
-          --   --   module = 'blink.compat.source',
-          --   --   score_offset = -3,
-          --   --   opts = {
-          --   --     -- only suggest items which match the current filetype
-          --   --     onlyCurrentFiletype = false,
-          --   --     -- only suggest items with a minimum length
-          --   --     minLength = 3,
-          --   --   },
-          --   -- },
-          --   emoji = {
-          --     module = 'blink-emoji',
-          --     name = 'Emoji',
-          --     score_offset = 15, -- Tune by preference
-          --     opts = { insert = true }, -- Insert emoji (default) or complete its name
-          --   },
-          --   dictionary = {
-          --     module = 'blink-cmp-dictionary',
-          --     name = 'Dict',
-          --     opts = {
-          --       get_command = {
-          --         'rg', -- make sure this command is available in your system
-          --         '--color=never',
-          --         '--no-line-number',
-          --         '--no-messages',
-          --         '--no-filename',
-          --         '--ignore-case',
-          --         '--',
-          --         '${prefix}', -- this will be replaced by the result of 'get_prefix' function
-          --         vim.fn.expand('~/.config/nvim/dict/en_dict.txt'), -- where you dictionary is
-          --       },
-          --       documentation = {
-          --         enable = true, -- enable documentation to show the definition of the word
-          --         get_command = {
-          --           'dict', -- make sure this command is available in your system
-          --           '${word}', -- this will be replaced by the word to search
-          --           ' -s lev',
-          --         },
-          --       },
-          --     },
-          --   },
-          -- },
           cmdline = function()
             local type = vim.fn.getcmdtype()
             -- Search forward and backward
@@ -134,6 +79,7 @@ if vim.g.useblinkcmp then
         keymap = {
           preset = 'enter',
           ['<C-y>'] = { 'select_and_accept' },
+          ['<CR>'] = { 'fallback' },
           cmdline = {
             preset = 'enter',
             ['<C-y>'] = { 'select_and_accept' },
@@ -142,12 +88,7 @@ if vim.g.useblinkcmp then
           },
         },
       },
-      -- dependencies = {
-      --   { 'dmitmel/cmp-digraphs' },
-      --   { 'chrisgrieser/cmp_yanky' },
-      --   { 'moyiz/blink-emoji.nvim' },
-      --   { 'Kaiser-Yang/blink-cmp-dictionary' },
-      -- },
+      keys = require('data.keys').blink,
     },
     { -- Blink compat
       'saghen/blink.compat',
