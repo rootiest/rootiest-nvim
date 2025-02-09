@@ -76,6 +76,8 @@ vim.g.usetodo                   = true          ---@type boolean Options: <true|
 vim.g.usefloatinghelp           = false         ---@type boolean Options: <true|false>
 -- Use dev mode for rootiest plugins
 vim.g.rootiest_dev              = true          ---@type boolean Options: <true|false>
+-- Enable luarocks package manager
+vim.g.use_luarocks              = false         ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PICKER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
