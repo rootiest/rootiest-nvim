@@ -41,6 +41,14 @@ return {
     cond = require('data.cond').codecompanion,
     cmd = require('data.cmd').codecompanion,
   },
+  { -- Codeium
+    'Exafunction/codeium.vim',
+    cond = require('data.cond').codeium,
+    lazy = true,
+    opts = require('data.types').codeium,
+    keys = require('data.keys').codeium,
+    dependencies = require('data.deps').codeium,
+  },
   { -- Avante
     'yetone/avante.nvim',
     cond = require('data.cond').avante,
