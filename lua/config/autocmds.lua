@@ -131,3 +131,17 @@ autocmd('CmdlineLeave', {
     end
   end,
 })
+
+autogrp('RootyCustomEvent', { clear = true })
+
+autocmd({ 'BufReadPost', 'BufNewFile' }, {
+  group = 'RootyCustomEvent',
+  callback = function(args)
+    local ignored_filetypes = require('data.types').general.ft
+    local ft = vim.bo[args.buf].filetype
+
+    if not vim.tbl_contains(ignored_filetypes, ft) then
+      vim.api.nvim_exec_autocmds('User', { pattern = 'LazyFileOpen' })
+    end
+  end,
+})
