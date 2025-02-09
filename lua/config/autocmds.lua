@@ -7,14 +7,14 @@ local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 -- LazyGit root detection
-if pcall(require, 'lazygit.utils') then
-  autocmd('BufEnter', {
-    pattern = '*',
-    callback = function()
-      require('lazygit.utils').project_root_dir()
-    end,
-  })
-end
+-- if pcall(require, 'lazygit.utils') then
+--   autocmd('BufEnter', {
+--     pattern = '*',
+--     callback = function()
+--       require('lazygit.utils').project_root_dir()
+--     end,
+--   })
+-- end
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━ Set up Qalc keymappings ━━━━━━━━━━━━━━━━━━━━━━━
 if pcall(require, 'qalc') then
