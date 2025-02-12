@@ -1127,7 +1127,7 @@ M.misc = {
     desc = 'Select all',
   },
   { -- Explorer
-    lhs = '|',
+    lhs = '<C-S-\\>',
     rhs = '<cmd>lua Snacks.picker.explorer()<cr>',
     desc = 'Toggle Snacks Explorer',
   },
@@ -1141,6 +1141,16 @@ M.misc = {
       end
     end,
     desc = 'File Explorer',
+  },
+  { -- Split Window Vertically
+    lhs = '\\',
+    rhs = '<C-W>v',
+    desc = 'Split Window Right',
+  },
+  { -- Split Window Vertically
+    lhs = '|',
+    rhs = '<C-W>v',
+    desc = 'Split Window Right',
   },
   { -- Smart Pick Files
     lhs = '<leader><leader>',
