@@ -132,7 +132,7 @@ end
 
 -- Perform setup
 M.setup = function()
-  if not vim.g.is_termux then
+  if vim.g.use_luarocks and not vim.g.is_termux then
     M.bootstrap()
     M.ensure_luarocks()
     M.load_rocks()
