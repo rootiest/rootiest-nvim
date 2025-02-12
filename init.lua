@@ -51,6 +51,10 @@
 -- ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 --                       The rootiest NeoVim configuration!
 
+---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PROFILING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- Load profiling package if startup profiler triggered
+require('config.profiler')
+
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROOTIEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Rootiest Configuration
 require('config.rootiest').setup() -- Set up Rootiest options
@@ -62,18 +66,6 @@ require('config.lazy') -- Bootstrap lazy.nvim and initialize plugins
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ROCKS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Load LuaRocks package manager and plugins
 require('config.rocks') -- Bootstrap LuaRocks and initialize plugins
-
----━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PROFILING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- Load profiling package
-require('config.profile') -- Set profiling options with environment variables:
---    ╭─────────────────────────────────────────────────────────────────────╮
---    │   NVIM_PROFILE=1                      Start profiling at startup    │
---    │   NVIM_PROFILE_MODULE="lualine"       Set profiling target module   │
---    │   NVIM_PROFILE_MODULE="*"            Set profiling to all modules   │
---    │                                                                     │
---    │   ex:     NVIM_PROFILE=1 NVIM_PROFILE_MODULE="lualine" nvim         │
---    │           :lua require("profile").start("lualine")                  │
---    ╰─────────────────────────────────────────────────────────────────────╯
 
 --          ╔═════════════════════════════════════════════════════════╗
 --          ║                 CONFIGURATION STRUCTURE                 ║
