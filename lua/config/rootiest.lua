@@ -152,7 +152,7 @@ function M.setup()
   -- Setup types data
   require('data.types').setup()
   -- Setup indentor
-  require('utils.indentor')
+  -- require('utils.indentor')
 end
 
 return M
