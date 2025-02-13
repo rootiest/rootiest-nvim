@@ -1142,11 +1142,11 @@ M.misc = {
     end,
     desc = 'File Explorer',
   },
-  { -- Split Window Vertically
-    lhs = '\\',
-    rhs = '<C-W>v',
-    desc = 'Split Window Right',
-  },
+  -- { -- Split Window Vertically
+  --   lhs = '\\',
+  --   rhs = '<C-W>v',
+  --   desc = 'Split Window Right',
+  -- },
   { -- Split Window Vertically
     lhs = '|',
     rhs = '<C-W>v',
