@@ -62,8 +62,14 @@ if vim.g.useblinkcmp then
         snippets = {
           preset = 'luasnip',
         },
-        sources = {
-          cmdline = function()
+        keymap = {
+          preset = 'enter',
+          ['<C-y>'] = { 'select_and_accept' },
+          ['<CR>'] = { 'fallback' },
+        },
+        cmdline = {
+          enabled = true,
+          sources = function()
             local type = vim.fn.getcmdtype()
             -- Search forward and backward
             if type == '/' or type == '?' then
@@ -75,12 +81,7 @@ if vim.g.useblinkcmp then
             end
             return {}
           end,
-        },
-        keymap = {
-          preset = 'enter',
-          ['<C-y>'] = { 'select_and_accept' },
-          ['<CR>'] = { 'fallback' },
-          cmdline = {
+          keymap = {
             preset = 'enter',
             ['<C-y>'] = { 'select_and_accept' },
             ['<S-Tab>'] = { 'select_prev', 'fallback' },
