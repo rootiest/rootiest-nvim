@@ -118,8 +118,10 @@ function M.is_linux()
   return false
 end
 
+---@alias FormatType "verbose"|"short"|"code"|"platform"
+
 ---@function Get the name of the OS.
----@param format string The format of the OS name.
+---@param format FormatType The format of the OS name.
 ---                    Possible values:
 ---                    - "verbose": Returns the full name of the OS.
 ---                    - "short": Returns a short name or abbreviation.
@@ -226,6 +228,14 @@ function M.get_os(format)
       return 'Unknown OS'
     end
   end
+end
+
+---@func Wraps a value in a table.
+---@generic T
+---@param value T The value to wrap.
+---@return T[] A table containing the value.
+function M.wrap(value)
+  return { value }
 end
 
 ---@function Function to check if CWD is a git repo
@@ -1742,7 +1752,7 @@ function M.pick(cmd, provider, options)
       elseif vim.g.lazyvim_picker == 'snacks' then
         provider = 'snacks'
       elseif vim.g.lazyvim_picker == 'auto' then
-        provider = LazyVim.pick.want()
+        provider = LazyVim.pick.picker.name
       else
         local has_fzf, _ = pcall(require, 'fzf-lua')
         if has_fzf then
@@ -1854,12 +1864,19 @@ function M.convert_path(path)
   end
 end
 
+---@func Gets the character in a given position
+---@param pos table The position to retrieve the character from
+---@return string char The character found at the position
 function M.char_on_pos(pos)
   pos = pos or vim.fn.getpos('.')
   return tostring(vim.fn.getline(pos[1])):sub(pos[2], pos[2])
 end
 
--- From: https://neovim.discourse.group/t/how-do-you-work-with-strings-with-multibyte-characters-in-lua/2437/4
+---@func Gets the character byte count of a given character
+--- From: https://neovim.discourse.group/t/how-do-you-work-with-strings-with-multibyte-characters-in-lua/2437/4
+---@param s string The character
+---@param i integer? The number of characters when using a multibyte character
+---@return integer? count The number of bytes in the character
 function M.char_byte_count(s, i)
   if not s or s == '' then
     return 1
@@ -1879,6 +1896,8 @@ function M.char_byte_count(s, i)
   end
 end
 
+---@func Gets the range of a visual selection
+---@return table range The range of the selection
 function M.get_visual_range()
   local sr, sc = unpack(vim.fn.getpos('v'), 2, 3)
   local er, ec = unpack(vim.fn.getpos('.'), 2, 3)
@@ -1901,11 +1920,8 @@ function M.get_visual_range()
   return range
 end
 
-function M.to_api_range(range)
-  local sr, sc, er, ec = unpack(range)
-  return sr - 1, sc, er - 1, ec
-end
-
+---@func Generates a basic numberline
+---@return string numln Numberline string
 function M.number()
   local nu = vim.opt.number:get()
   local rnu = vim.opt.relativenumber:get()
@@ -1951,7 +1967,7 @@ function M.number()
   return '%s' .. v_hl .. line_display
 end
 
---- Function to search for the provided filetypes with pickers
+---@func Function to search for the provided filetypes with pickers
 ---@param filetypes table A list of filetypes to search for
 function M.pick_filetypes(filetypes)
   if not pcall(require, 'telescope') then
@@ -2178,6 +2194,7 @@ local function base64_encode(input)
   return table.concat(output):sub(1, -1 - #padding) .. padding
 end
 
+--- Function to encode visual selection with base64 encoding
 function M.base64_encode_visual()
   local Range = require('u.range')
   local range = Range.from_vtext()
@@ -2188,7 +2205,7 @@ function M.base64_encode_visual()
   range:replace(encoded_text)
 end
 
--- Function to encode the current line
+-- Function to encode the current line with base64 encoding
 function M.base64_encode_text()
   -- Get the current line where the cursor is
   local current_line = vim.api.nvim_get_current_line()
@@ -2200,7 +2217,9 @@ function M.base64_encode_text()
   vim.api.nvim_set_current_line(encoded_line)
 end
 
--- Function to base64 decode a string
+---@func Function to base64 decode a string
+---@param input string The string to be decoded
+---@return string output The decoded string
 local function base64_decode(input)
   local b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
   local output = {}
@@ -2304,9 +2323,9 @@ function M.rot47_visual()
   range:replace(transformed_text)
 end
 
---- Converts a given string into its hexadecimal representation while preserving newlines.
--- @param input_string The string to be transformed into hexadecimal.
--- @return The hexadecimal encoded string, preserving the original structure.
+---@func Converts a given string into its hexadecimal representation while preserving newlines.
+---@param input_string string The string to be transformed into hexadecimal.
+---@return string output_string The hexadecimal encoded string, preserving the original structure.
 local function hex_encode(input_string)
   local result = {}
 
@@ -2328,8 +2347,8 @@ local function hex_encode(input_string)
 end
 
 --- Decodes a given hexadecimal encoded string back to its original form while preserving newlines.
--- @param hex_string The hexadecimal encoded string to be decoded.
--- @return The decoded string, preserving the original structure.
+---@param hex_string string The hexadecimal encoded string to be decoded.
+---@return string decoded_text The decoded string, preserving the original structure.
 local function hex_decode(hex_string)
   local result = {}
   local i = 1
@@ -2468,7 +2487,8 @@ function M.help_lookup_quoted_visual()
   M.help_lookup_string(M.wrap_in_quotes(selected_text))
 end
 
--- Function to get the system architecture
+---@func Function to get the system architecture
+---@return string arch The architecture
 function M.get_system_arch()
   -- Use jit.arch if available
   if jit and jit.arch then
