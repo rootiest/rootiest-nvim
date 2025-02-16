@@ -31,6 +31,13 @@ vim.g.lazyvim_python_lsp        = "pyright"     ---@type string Options: [python
 -- Use tiny-inline-diagnostic
 vim.g.usetinyinline             = true          ---@type boolean Options: <true|false>
 
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ GIT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+-- Highlight lines with git changes
+vim.g.git_line_hl               = false         ---@type boolean Options: <true|false>
+-- Highlight words with git changes
+vim.g.git_word_hl               = false         ---@type boolean Options: <true|false>
+
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ FORMAT AND SAVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 vim.opt.foldlevel               = 99            ---@type integer Options: <0-99>
@@ -40,7 +47,6 @@ vim.g.autoformat                = true          ---@type boolean Options: <true|
 vim.g.autosave                  = true          ---@type boolean Options: <true|false>
 -- Enable encouraging feedback
 vim.g.encourage_me              = true          ---@type boolean Options:  <true|false>
-
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ MISCELLANEOUS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

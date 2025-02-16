@@ -12,20 +12,6 @@ return {
     keys = require('data.keys').gist.func,
     config = true,
   },
-  -- { -- LazyGit
-  --   'kdheepak/lazygit.nvim',
-  --   lazy = true,
-  --   cmd = require('data.cmd').lazygit,
-  --   keys = require('data.keys').lazygit,
-  --   dependencies = require('data.deps').lazygit,
-  --   config = function()
-  --     if
-  --       require('data.func').check_global_var('use_telescope', true, false)
-  --     then
-  --       require('telescope').load_extension('lazygit')
-  --     end
-  --   end,
-  -- },
   { -- Thanks/github-stars
     'jsongerber/thanks.nvim',
     lazy = true,
@@ -54,12 +40,21 @@ return {
     'sindrets/diffview.nvim',
     lazy = true,
     cmd = require('data.cmd').diffview,
-    opts = {},
+    opts = require('data.types').diffview.opts,
   },
   { -- Neogit
     'NeogitOrg/neogit',
     opts = {
       graph_style = 'kitty',
     },
+  },
+  { -- GitSigns
+    'lewis6991/gitsigns.nvim',
+    opts = function()
+      local myopts = {}
+      myopts.linehl = vim.g.git_line_hl or false
+      myopts.word_diff = vim.g.git_word_hl or false
+      return myopts
+    end,
   },
 }
