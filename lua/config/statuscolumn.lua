@@ -92,6 +92,40 @@ _G.CustomStatusColumn = function()
 
   -- Use the plugin's original status column
   local original_statuscolumn = require('snacks.statuscolumn').get()
+  -- local original_statuscolumn = [[%=%{v:relnum?v:relnum:v:lnum}]]
+  -- local original_statuscolumn =
+  --   [[%#NonText#%{&nu?v:lnum:""}%=%{&rnu&&(v:lnum%2)?"\ ".v:relnum:""}%#LineNr#%{&rnu&&!(v:lnum%2)?"\ ".v:relnum:""}]]
+  -- -- Obtain the current buffer explicitly
+  -- local bufnr = vim.api.nvim_get_current_buf() -- Correctly get the current buffer
+  --
+  -- -- Get gitstatus
+  -- local git_status = 'none'
+  -- if lnum then
+  --   git_status = check_git_signs(lnum, bufnr) -- Pass the buffer number to the function
+  -- end
+
+  -- Check for diagnostics on the current line
+  local diagnostics = vim.diagnostic.get(0, { lnum = lnum - 1 }) -- Get diagnostics for the current line (subtract 1 for 0-based index)
+  local highlight_group = nil
+
+  -- Loop through diagnostics to determine highlight group based on severity
+  for _, diagnostic in ipairs(diagnostics) do
+    if diagnostic.severity == vim.diagnostic.severity.ERROR then
+      highlight_group = 'DiagnosticSignError'
+      break
+    elseif diagnostic.severity == vim.diagnostic.severity.WARN then
+      highlight_group = 'DiagnosticSignWarn'
+    elseif diagnostic.severity == vim.diagnostic.severity.INFO then
+      highlight_group = 'DiagnosticSignInfo'
+    elseif diagnostic.severity == vim.diagnostic.severity.HINT then
+      highlight_group = 'DiagnosticSignHint'
+    end
+  end
+
+  -- Highlight for lines with diagnostics
+  if highlight_group then
+    return '%#' .. highlight_group .. '#' .. original_statuscolumn .. '%*' -- Use the corresponding highlight for this line
+  end
 
   -- Highlight for the current line
   if lnum == cursor_lnum then
