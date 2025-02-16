@@ -106,11 +106,3 @@ vim.keymap.set(
   'Q',
   { noremap = true, desc = 'Replay last register' }
 )
-
--- Keymap to swap buffer positions
-vim.keymap.set(
-  'n',
-  '<leader>bs',
-  require('data.func').swap_buffers,
-  { noremap = true, silent = true, desc = 'Swap buffer' }
-)
