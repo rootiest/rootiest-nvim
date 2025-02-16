@@ -586,6 +586,17 @@ M.tokyonight = {
 --- Autosave configuration options
 M.autosave = {}
 
+--- DiffView configuration options
+M.diffview = {
+  opts = {
+    view = {
+      merge_tool = {
+        layout = 'diff3_mixed',
+      },
+    },
+  },
+}
+
 --- Kulala plugin types
 M.kulala = {
   ft = { 'http', 'https', 'ftp', 'ftps' },
