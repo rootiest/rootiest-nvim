@@ -7,7 +7,7 @@
 -- Define a namespace for utility functions
 local M = {}
 
----@function Check if the terminal is kitty
+--- Check if the terminal is kitty
 ---@return boolean condition true if the terminal is kitty, false otherwise
 function M.is_kitty()
   local term = os.getenv('TERM') or ''
@@ -15,7 +15,7 @@ function M.is_kitty()
   return kit ~= nil
 end
 
----@function Check if using kitty-scrollback
+--- Check if using kitty-scrollback
 ---@return boolean condition true if using kitty-scrollback, false otherwise
 function M.is_kitty_scrollback()
   if vim.env.KITTY_SCROLLBACK_NVIM == 'true' then
@@ -24,7 +24,7 @@ function M.is_kitty_scrollback()
   return false
 end
 
----@function Check if the terminal is alacritty
+--- Check if the terminal is alacritty
 ---@return boolean condition true if the terminal is alacritty, false otherwise
 function M.is_alacritty()
   local term = os.getenv('TERM') or ''
@@ -32,7 +32,7 @@ function M.is_alacritty()
   return alc ~= nil
 end
 
----@function Check if the terminal is tmux
+--- Check if the terminal is tmux
 ---@return boolean condition true if the terminal is tmux, false otherwise
 function M.is_tmux()
   local tterm = os.getenv('TERM')
@@ -48,7 +48,7 @@ function M.is_tmux()
   return false
 end
 
----@function Check if the terminal is wezterm
+--- Check if the terminal is wezterm
 ---@return boolean condition true if the terminal is wezterm, false otherwise
 function M.is_wezterm()
   local wterm = os.getenv('TERM_PROGRAM')
@@ -58,7 +58,7 @@ function M.is_wezterm()
   return false
 end
 
----@function Check if the terminal is ghostty
+--- Check if the terminal is ghostty
 ---@return boolean condition true if the terminal is ghostty, false otherwise
 function M.is_ghostty()
   local gterm = os.getenv('TERM_PROGRAM')
@@ -68,7 +68,7 @@ function M.is_ghostty()
   return false
 end
 
----@function Check if the terminal is neovide
+--- Check if the terminal is neovide
 ---@return boolean condition true if the terminal is neovide, false otherwise
 function M.is_neovide()
   local neovide = vim.g.neovide
@@ -78,7 +78,7 @@ function M.is_neovide()
   return false
 end
 
----@function Check if the terminal is ssh
+--- Check if the terminal is ssh
 ---@return boolean condition true if the terminal is ssh, false otherwise
 function M.is_ssh()
   local ssh = os.getenv('SSH_TTY') or false
@@ -88,7 +88,7 @@ function M.is_ssh()
   return false
 end
 
----@function Check if OS is Windows
+--- Check if OS is Windows
 ---@return boolean condition true if the OS is Windows, false otherwise
 function M.is_windows()
   local win = vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1
@@ -98,7 +98,7 @@ function M.is_windows()
   return false
 end
 
----@function Check if OS is macOS
+--- Check if OS is macOS
 ---@return boolean condition true if the OS is macOS, false otherwise
 function M.is_mac()
   local mac = vim.fn.has('macunix')
@@ -108,7 +108,7 @@ function M.is_mac()
   return false
 end
 
----@function Check if OS is Linux
+--- Check if OS is Linux
 ---@return boolean condition true if the OS is Linux, false otherwise
 function M.is_linux()
   local lin = vim.fn.has('unix')
@@ -120,7 +120,7 @@ end
 
 ---@alias FormatType "verbose"|"short"|"code"|"platform"
 
----@function Get the name of the OS.
+--- Get the name of the OS.
 ---@param format FormatType The format of the OS name.
 ---                    Possible values:
 ---                    - "verbose": Returns the full name of the OS.
@@ -230,7 +230,7 @@ function M.get_os(format)
   end
 end
 
----@func Wraps a value in a table.
+--- Wraps a value in a table.
 ---@generic T
 ---@param value T The value to wrap.
 ---@return T[] A table containing the value.
@@ -238,7 +238,7 @@ function M.wrap(value)
   return { value }
 end
 
----@function Function to check if CWD is a git repo
+--- Function to check if CWD is a git repo
 ---@param dir? string The directory to check, defaults to CWD
 ---@return boolean is_git_repo true if working directory is a git repository, false otherwise
 function M.dir_is_git_repo(dir)
@@ -251,7 +251,7 @@ function M.dir_is_git_repo(dir)
   return result.code == 0 -- returns true if the command succeeded
 end
 
----@function Function to send a notification
+--- Function to send a notification
 ---@param message string The message to send
 ---@param level string|nil The level of the notification (default: "info")
 ---@param title string|nil The title of the notification
@@ -266,7 +266,7 @@ function M.notify(message, level, title)
   return true
 end
 
----@function Function to generate a y/n confirmation prompt
+--- Function to generate a y/n confirmation prompt
 ---@param prompt string The prompt text to display
 ---@param action function|string The action to execute if the user confirms the prompt, or a Vim command as a string
 ---@return boolean condition true if the user confirms the prompt, false otherwise
@@ -346,7 +346,7 @@ function M.ConfirmPrompt(prompt, action)
   return false
 end
 
----@function Function to generate an input prompt
+--- Function to generate an input prompt
 ---@param prompt string The prompt text to display
 ---@param callback function The function to call with the user input
 function M.InputPrompt(prompt, callback)
@@ -399,7 +399,7 @@ function M.InputPrompt(prompt, callback)
     return input
   end
 
-  ---@function Function to return user input
+  --- Function to return user input
   local function yes()
     local user_input = handle_input() -- Get the input from the buffer
     exit_win()
@@ -408,7 +408,7 @@ function M.InputPrompt(prompt, callback)
     end
   end
 
-  ---@function Function to cancel user input
+  --- Function to cancel user input
   local function no()
     exit_win()
     if callback then
@@ -437,7 +437,7 @@ function M.InputPrompt(prompt, callback)
   end
 end
 
----@function Function to move blocks of text up and down
+--- Function to move blocks of text up and down
 ---@param up? boolean Whether to move the blocks up or down
 ---  Ex: Move selected block of text up: move_visual(true)
 ---      Move selected block of text down: move_visual(false)
@@ -487,7 +487,7 @@ function M.move_visual(up, multiplier)
   vim.cmd('norm gv')
 end
 
----@function Function to paste over text with overwrite
+--- Function to paste over text with overwrite
 ---@return nil
 function M.paste_overwrite()
   -- Get the register contents and type
@@ -524,7 +524,7 @@ function M.paste_overwrite()
   )
 end
 
----@function Function to dump the current buffer to a register and format as a Lua table
+--- Function to dump the current buffer to a register and format as a Lua table
 ---@param register string? The name of the register to dump the buffer to (defaults to unnamed register if nil)
 ---@return nil
 function M.dump_buffer_to_table(register)
@@ -547,7 +547,7 @@ function M.dump_buffer_to_table(register)
   vim.fn.setreg(register, output)
 end
 
----@function Function to reload the user's Neovim configuration
+--- Function to reload the user's Neovim configuration
 ---@return nil
 function M.reload_config()
   -- Notify the user about the reload process
@@ -588,7 +588,7 @@ function M.reload_config()
   M.notify('Configuration reloaded successfully!', 'INFO', 'Reloaded Config')
 end
 
----@function Function to reload all plugins.
+--- Function to reload all plugins.
 --- This is a messy operation. It's not recommended to use it.
 --- If you do, please define the exclusion list in your config.lua file.
 --- Suggested defaults:
@@ -651,7 +651,7 @@ function M.reload_all_plugins()
   end
 end
 
----@function Check if a plugin is installed.
+--- Check if a plugin is installed.
 ---@param plugins string|table The name of the plugin module(s) to check.
 ---  Options:
 ---   - string: The name of the plugin module to check.
@@ -732,7 +732,7 @@ function M.is_installed(plugins, opts)
   return is_single and installed_plugins[plugins[1]] or installed_plugins
 end
 
----@function Function to create a floating terminal window
+--- Function to create a floating terminal window
 function M.open_floating_terminal()
   -- Create a scratch buffer specifically for the terminal
   local buf = vim.api.nvim_create_buf(false, true) -- Create an unnamed, non-file, scratch buffer
@@ -794,7 +794,7 @@ function M.open_floating_terminal()
   vim.cmd('startinsert!') -- Automatically enter insert mode within the terminal
 end
 
----@function Helper function to add keymaps with common properties
+--- Helper function to add keymaps with common properties
 ---@param lhs string|table The keybind (or list of keybinds)
 --- This field can be the following:
 --- - A string representing the keybind
@@ -977,7 +977,7 @@ function M.add_keymap(
   end
 end
 
----@function Helper function to remove keymaps
+--- Helper function to remove keymaps
 ---@param lhs string The keybind
 ---@param mode string|nil The mode in which the keybind should be removed (optional)
 ---@param bufnr number|nil The buffer number to remove the keymap from (optional)
@@ -1020,7 +1020,7 @@ function M.rm_keymap(
   return false -- Indicate that the keymap did not exist
 end
 
----@function Helper function to add a mark
+--- Helper function to add a mark
 ---@param mark string The mark to add
 ---@param line integer The line to add the mark to
 ---@param col integer The column to add the mark to
@@ -1031,7 +1031,7 @@ function M.add_mark(mark, line, col)
   return true -- Indicate that the mark was successfully added
 end
 
----@function Helper function to remove a mark
+--- Helper function to remove a mark
 ---@param mark string The mark to remove
 ---@return boolean condition true if the mark was removed, false otherwise
 function M.rm_mark(mark)
@@ -1048,25 +1048,25 @@ function M.rm_mark(mark)
   return false -- Indicate that the mark did not exist
 end
 
----@function Function to check if buffer is modified
+--- Function to check if buffer is modified
 ---@return boolean condition true if buffer is modified, false otherwise
 function M.is_buffer_modified()
   return vim.bo.modified
 end
 
----@function Function to check if buffer is empty
+--- Function to check if buffer is empty
 ---@return boolean condition true if buffer is empty, false otherwise
 function M.is_buffer_empty()
   return vim.fn.empty(vim.fn.expand('%:t')) == 1
 end
 
----@function Function to check if buffer is read-only
+--- Function to check if buffer is read-only
 ---@return boolean condition true if buffer is read-only, false otherwise
 function M.is_buffer_readonly()
   return vim.bo.readonly
 end
 
----@function Function to check if file exists
+--- Function to check if file exists
 ---@param filepath string The path to the file
 ---@return boolean condition true if file exists, false otherwise
 function M.file_exists(filepath)
@@ -1077,7 +1077,7 @@ function M.file_exists(filepath)
   return f ~= nil
 end
 
----@function Function to get the current git branch
+--- Function to get the current git branch
 ---@return string branch git branch name or "No branch"
 function M.get_git_branch()
   local branch = vim.fn.systemlist('git rev-parse --abbrev-ref HEAD')[1]
@@ -1088,7 +1088,7 @@ function M.get_git_branch()
   end
 end
 
----@function Function to get the current git commit hash
+--- Function to get the current git commit hash
 ---@return string The current git commit hash or "No commit hash"
 function M.get_git_commit_hash()
   local commit_hash = vim.fn.systemlist('git rev-parse --short HEAD')[1]
@@ -1099,7 +1099,7 @@ function M.get_git_commit_hash()
   end
 end
 
----@function Function to run a shell command
+--- Function to run a shell command
 ---@param cmd string The command to run
 ---@return string|nil result The output of the command
 function M.run_shell_command(cmd)
@@ -1115,7 +1115,7 @@ function M.run_shell_command(cmd)
   end
 end
 
----@function Function to get the dimensions of the current window
+--- Function to get the dimensions of the current window
 ---@param format string The format of the dimensions
 ---@return string|table dimensions dimensions of the current window
 function M.get_ws_dimensions(format)
@@ -1140,7 +1140,7 @@ function M.get_ws_dimensions(format)
   end
 end
 
----@function Function to get the cursor position
+--- Function to get the cursor position
 ---@return integer row The current line number
 ---@return integer col The current column number
 function M.get_cursor_position()
@@ -1148,7 +1148,7 @@ function M.get_cursor_position()
   return row, col
 end
 
----@function Function to check if a global variable is set
+--- Function to check if a global variable is set
 ---@param var_name string The name of the global variable
 ---@param expected_value any The expected value of the global variable
 ---@param default_value any The default value of the global variable
@@ -1165,7 +1165,7 @@ function M.check_global_var(var_name, expected_value, default_value)
   return actual_value == expected_value
 end
 
----@function Function to split a string
+--- Function to split a string
 ---@param inputstr string The string to split
 ---@param sep string The separator
 ---@return table output The split string
@@ -1180,14 +1180,14 @@ function M.split_string(inputstr, sep)
   return output
 end
 
----@function Function to convert RGB to hexadecimal
+--- Function to convert RGB to hexadecimal
 ---@param rgb table The RGB color
 ---@return string hex The hexadecimal color
 function M.rgb_to_hex(rgb)
   return string.format('#%02x%02x%02x', rgb[1], rgb[2], rgb[3])
 end
 
----@function Function to get the foreground color of a highlight group
+--- Function to get the foreground color of a highlight group
 ---@param hlgroup string The name of the highlight group
 ---@return string|nil hex The foreground color of the highlight group
 function M.get_fg_color(hlgroup)
@@ -1203,7 +1203,7 @@ function M.get_fg_color(hlgroup)
   return nil
 end
 
----@function Function to get the background color of a highlight group
+--- Function to get the background color of a highlight group
 ---@param hlgroup string The name of the highlight group
 ---@return string|nil hex The background color of the highlight group
 function M.get_bg_color(hlgroup)
@@ -1219,7 +1219,7 @@ function M.get_bg_color(hlgroup)
   return nil
 end
 
----@function Function to get the appropriate ordinal suffix for a given number.
+--- Function to get the appropriate ordinal suffix for a given number.
 ---@param number number The number to check for the ordinal suffix.
 ---@return string The number with its ordinal suffix.
 function M.get_ordinal_suffix(number)
@@ -1239,7 +1239,7 @@ function M.get_ordinal_suffix(number)
   return tostring(number) .. suffix
 end
 
----@function Function to check if the window is wide enough
+--- Function to check if the window is wide enough
 ---@param width_limit number The minimum width of the window
 ---@return boolean condition true if the window is wide enough, false otherwise
 function M.is_window_wide_enough(width_limit)
@@ -1247,7 +1247,7 @@ function M.is_window_wide_enough(width_limit)
   return width >= width_limit
 end
 
----@function Function to check if the window is tall enough
+--- Function to check if the window is tall enough
 ---@param height_limit number The minimum height of the window
 ---@return boolean condition true if the window is tall enough, false otherwise
 function M.is_window_tall_enough(height_limit)
@@ -1255,19 +1255,19 @@ function M.is_window_tall_enough(height_limit)
   return height >= height_limit
 end
 
----@function Function to get the current date
+--- Function to get the current date
 ---@return string|osdate date The current date
 function M.get_date()
   return os.date('%Y-%m-%d')
 end
 
----@function Function to exit neovim
+--- Function to exit neovim
 ---@return nil
 function M.exit()
   vim.api.nvim_command('wqall')
 end
 
----@function Function to render the MultiCursor statusline
+--- Function to render the MultiCursor statusline
 ---@return table status The MultiCursor status object
 function M.mc_statusline()
   -- Define the default status object
@@ -1325,7 +1325,7 @@ end
 
 --- Configure conditional spellchecking
 
----@function This function conditionally enables spellcheck based on the provided parameters.
+--- This function conditionally enables spellcheck based on the provided parameters.
 ---@param spellcheck? boolean Whether to enable spellcheck (default: true)
 ---@param filetypes? table|boolean A list of filetypes to enable/disable spellcheck in
 ---  (default: nil)
@@ -1387,7 +1387,7 @@ function M.spellcheck(spellcheck, filetypes)
   end
 end
 
----@function This function swaps the behavior of `p` and `P`
+--- This function swaps the behavior of `p` and `P`
 ---@param default? boolean Whether to use the default behavior (default: true)
 ---    - true: swap the behavior of `p` and `P`
 ---    - false: revert the behavior of `p` and `P`
@@ -1425,7 +1425,7 @@ function M.swap_paste(default)
   end
 end
 
----@function This function extracts text between two marked positions in a buffer,
+--- This function extracts text between two marked positions in a buffer,
 ---          removes empty lines, and trims indentation from the left.
 ---@return string? text The extracted and trimmed text
 ---          - nil if there is no text in the specified range
@@ -1476,7 +1476,7 @@ function M.trim_yank()
   return table.concat(lines, '\n')
 end
 
----@function Function to open the lazygit popup in a floaterm
+--- Function to open the lazygit popup in a floaterm
 ---@return nil
 function M.open_lazygit_popup()
   -- Set floaterm border characters
@@ -1512,7 +1512,7 @@ function M.open_lazygit_popup()
   vim.cmd('startinsert')
 end
 
----@function Function to replace '...' with '…' (ellipsis)
+--- Function to replace '...' with '…' (ellipsis)
 ---@return boolean condition true if the replacement was successful, false otherwise
 function M.replace_ellipsis()
   -- Get the current line and the cursor position
@@ -1536,7 +1536,7 @@ function M.replace_ellipsis()
   return false
 end
 
----@function Function to automate replacing '...' with '…' (ellipsis)
+--- Function to automate replacing '...' with '…' (ellipsis)
 ---@param enable? boolean whether to enable the replacement on InsertLeave
 ---@return boolean result true if the replacement was enabled, false otherwise
 function M.setup_replace_ellipsis(enable)
@@ -1702,7 +1702,7 @@ function M.is_git_repo(cwd, pwd)
   return false
 end
 
----@function Select and run a picker command based on the given parameters.
+--- Select and run a picker command based on the given parameters.
 --- If no provider is provided, it will use snacks.picker if available, else fzf-lua or telescope.
 --- The default provider can also be set with the `vim.g.lazyvim_picker` variable.
 ---@param cmd string|table? Command to run or a table with fields {cmd, provider, options} (optional)
@@ -1864,7 +1864,7 @@ function M.convert_path(path)
   end
 end
 
----@func Gets the character in a given position
+--- Gets the character in a given position
 ---@param pos table The position to retrieve the character from
 ---@return string char The character found at the position
 function M.char_on_pos(pos)
@@ -1872,7 +1872,7 @@ function M.char_on_pos(pos)
   return tostring(vim.fn.getline(pos[1])):sub(pos[2], pos[2])
 end
 
----@func Gets the character byte count of a given character
+--- Gets the character byte count of a given character
 --- From: https://neovim.discourse.group/t/how-do-you-work-with-strings-with-multibyte-characters-in-lua/2437/4
 ---@param s string The character
 ---@param i integer? The number of characters when using a multibyte character
@@ -1896,7 +1896,7 @@ function M.char_byte_count(s, i)
   end
 end
 
----@func Gets the range of a visual selection
+--- Gets the range of a visual selection
 ---@return table range The range of the selection
 function M.get_visual_range()
   local sr, sc = unpack(vim.fn.getpos('v'), 2, 3)
@@ -1920,7 +1920,7 @@ function M.get_visual_range()
   return range
 end
 
----@func Generates a basic numberline
+--- Generates a basic numberline
 ---@return string numln Numberline string
 function M.number()
   local nu = vim.opt.number:get()
@@ -1967,7 +1967,7 @@ function M.number()
   return '%s' .. v_hl .. line_display
 end
 
----@func Function to search for the provided filetypes with pickers
+--- Function to search for the provided filetypes with pickers
 ---@param filetypes table A list of filetypes to search for
 function M.pick_filetypes(filetypes)
   if not pcall(require, 'telescope') then
@@ -2217,7 +2217,7 @@ function M.base64_encode_text()
   vim.api.nvim_set_current_line(encoded_line)
 end
 
----@func Function to base64 decode a string
+--- Function to base64 decode a string
 ---@param input string The string to be decoded
 ---@return string output The decoded string
 local function base64_decode(input)
@@ -2323,7 +2323,7 @@ function M.rot47_visual()
   range:replace(transformed_text)
 end
 
----@func Converts a given string into its hexadecimal representation while preserving newlines.
+--- Converts a given string into its hexadecimal representation while preserving newlines.
 ---@param input_string string The string to be transformed into hexadecimal.
 ---@return string output_string The hexadecimal encoded string, preserving the original structure.
 local function hex_encode(input_string)
@@ -2487,7 +2487,7 @@ function M.help_lookup_quoted_visual()
   M.help_lookup_string(M.wrap_in_quotes(selected_text))
 end
 
----@func Function to get the system architecture
+--- Function to get the system architecture
 ---@return string arch The architecture
 function M.get_system_arch()
   -- Use jit.arch if available

@@ -88,7 +88,7 @@ function M.setup_script()
   return false
 end
 
----@function Function to force the script to reset
+--- Function to force the script to reset
 ---        This will kill the script if it's running and delete the lock file.
 ---        Optionally the cache files will be deleted if wipe is true.
 ---        By default, the cache files will not be deleted.

@@ -1028,7 +1028,7 @@ M.lazygit = {
   },
 }
 
----@function Helper function to toggle mini.files explorer
+--- Helper function to toggle mini.files explorer
 ---@param ... any Optional arguments to pass to mini.files.open
 local minifiles_toggle = function(...)
   if not require('mini.files').close() then

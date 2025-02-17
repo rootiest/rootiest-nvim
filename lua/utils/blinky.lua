@@ -35,7 +35,7 @@ function M.disable()
   return false
 end
 
----@function Function to setup blinky cursor option
+--- Function to setup blinky cursor option
 ---@param enable boolean|nil enable blinky cursor option
 function M.setup(enable)
   if enable then

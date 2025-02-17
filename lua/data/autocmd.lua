@@ -21,7 +21,7 @@ M.cpp_picker = function()
 end
 
 M.minifiles = {
-  ---@function Function to dynamically resize the preview window
+  --- Function to dynamically resize the preview window
   dynamic_resize = function()
     local function update_width_preview()
       local multiplier = 0.25

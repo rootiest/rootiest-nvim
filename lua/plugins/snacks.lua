@@ -106,7 +106,7 @@ local profiler = {
   },
 }
 
----@function flash_on_picker
+--- flash_on_picker
 ---Use the flash.nvim plugin in Snacks picker
 ---@param picker table: The picker instance to interact with.
 local flash_on_picker = function(picker)
