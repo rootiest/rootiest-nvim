@@ -20,12 +20,6 @@ return {
     dependencies = require('data.deps').gx,
     config = true,
   },
-  -- { -- Unception
-  --   'samjwill/nvim-unception',
-  --   init = function()
-  --     vim.g.unception_block_while_host_edits = true
-  --   end,
-  -- },
   { -- Codesnap
     'mistricky/codesnap.nvim',
     cond = require('data.func').check_global_var('codesnap', true, true),
@@ -108,16 +102,6 @@ return {
     init = require('data.types').floating_help.init,
     cond = require('data.cond').floating_help,
   },
-  -- { -- Timer
-  --   'alex-popov-tech/timer.nvim',
-  --   lazy = true,
-  -- },
-  -- { -- Image-Clip
-  --   'HakonHarnes/img-clip.nvim',
-  --   lazy = true,
-  --   cmd = require('data.cmd').imgclip,
-  --   opts = require('data.types').imgclip.opts,
-  -- },
   { -- Multicursor
     'jake-stewart/multicursor.nvim',
     branch = '1.0',
@@ -125,17 +109,6 @@ return {
     event = 'User LazyFileOpen',
     config = require('data.types').multicursor.config,
   },
-  -- { -- FloatTerm
-  --   'voldikss/vim-floaterm',
-  --   lazy = true,
-  --   event = 'TermOpen',
-  -- },
-  -- { -- bufferlist
-  --   'EL-MASTOR/bufferlist.nvim',
-  --   lazy = true,
-  --   keys = { { '<Leader>bl', desc = 'Open bufferlist' } }, -- keymap to load the plugin, it should be the same as keymap.open_buflist
-  --   opts = {},
-  -- },
   { -- showkeys
     'nvchad/showkeys',
     lazy = true,
@@ -154,26 +127,10 @@ return {
     'jrop/u.nvim',
     lazy = true,
   },
-  -- { -- Co-op (Neovim Co-routines Framework)
-  --   'gregorias/coop.nvim',
-  --   lazy = false,
-  -- },
-  -- {
-  --   'marcussimonsen/let-it-snow.nvim',
-  --   lazy = true,
-  --   cmd = 'LetItSnow', -- Wait with loading until command is run
-  --   opts = {},
-  -- },
   { -- yazi
     'mikavilpas/yazi.nvim',
     lazy = true,
     cmd = 'Yazi',
     cond = require('data.cond').yazi,
   },
-  -- { -- TyprStats
-  --   'nvzone/typr',
-  --   cmd = 'TyprStats',
-  --   dependencies = 'nvzone/volt',
-  --   opts = {},
-  -- },
 }

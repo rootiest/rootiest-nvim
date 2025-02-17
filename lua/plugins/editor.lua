@@ -84,16 +84,6 @@ return {
     cond = require('data.cond').todo,
     enabled = true,
   },
-  -- { -- Rainbow Delimeters
-  --   'HiPhish/rainbow-delimiters.nvim',
-  -- },
-  -- { -- Colorful window separators
-  --   'nvim-zh/colorful-winsep.nvim',
-  --   enabled = false,
-  --   lazy = true,
-  --   opts = require('data.types').winsep,
-  --   event = { 'WinLeave' },
-  -- },
   { -- Auto Cursorline
     'delphinus/auto-cursorline.nvim',
     cond = require('data.func').check_global_var('auto_cursorline', true, true),
@@ -116,10 +106,6 @@ return {
     optional = true,
     opts = require('data.types').noice,
   },
-  -- { -- Duck
-  --   'tamton-aquib/duck.nvim',
-  --   config = require('data.types').duck,
-  -- },
   { -- Smear Cursor
     'sphamba/smear-cursor.nvim',
     event = 'VeryLazy',
@@ -130,22 +116,4 @@ return {
     opts = require('data.types').smearcursor,
     keys = require('data.keys').smearcursor,
   },
-  -- { -- Unimpaired
-  --   'tpope/vim-unimpaired',
-  --   config = true,
-  -- },
-  -- { -- Vim-dirtytalk
-  --   'psliwka/vim-dirtytalk',
-  --   build = ':DirtytalkUpdate',
-  --   init = require('data.types').dirtytalk.init,
-  -- },
-  -- { -- Academic
-  --   'ficcdaf/academic.nvim',
-  --   -- optional: only load for certain filetypes
-  --   ft = require('data.ft').academic,
-  -- },
-  -- { -- Vim-cool
-  --   'romainl/vim-cool',
-  --   lazy = false,
-  -- },
 }

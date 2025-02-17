@@ -27,9 +27,6 @@ return {
     opts = require('data.types').lazydev.opts,
     dependencies = require('data.deps').lazydev,
   },
-  -- { -- G-code
-  --   'wilriker/gcode.vim',
-  -- },
   { -- Alternate
     'ton/vim-alternate',
     lazy = true,
@@ -52,10 +49,6 @@ return {
     'numToStr/Comment.nvim',
     opts = require('data.types').comment,
   },
-  -- { -- Fast Action
-  --   'Chaitanyabsprip/fastaction.nvim',
-  --   opts = {},
-  -- },
   { -- Matchup
     'andymass/vim-matchup',
     setup = function()
@@ -75,18 +68,4 @@ return {
     cond = require('data.cond').tiny_inline_diagnostic,
     config = require('data.types').tiny_inline_diagnostic.config,
   },
-  -- { -- Vim-Shebang
-  --   'vitalk/vim-shebang',
-  --   lazy = true,
-  -- },
-  -- {
-  --   'oskarrrrrrr/symbols.nvim',
-  --   lazy = true,
-  --   cmd = require('data.cmd').symbols,
-  --   config = require('data.types').symbols.config,
-  -- },
-  -- { -- Treesitter-endwise
-  --   'RRethy/nvim-treesitter-endwise',
-  --   lazy = true,
-  -- },
 }

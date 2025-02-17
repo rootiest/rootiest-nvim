@@ -10,13 +10,7 @@ return {
     event = 'VeryLazy',
     opts = {},
   },
-  -- { -- Mini Indentscope
-  --   'echasnovski/mini.indentscope',
-  --   opts = require('data.types').miniindentscope.opts,
-  --   init = require('data.types').miniindentscope.init,
-  -- },
-  -- disable mini.animate cursor
-  {
+  { -- disable mini.animate cursor
     'echasnovski/mini.animate',
     optional = true,
     opts = {

@@ -125,23 +125,6 @@ return {
   --   dependencies = require('data.deps').zenbones,
   -- },
   --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ UTILITIES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  -- { -- Transparent
-  --   'xiyaowong/transparent.nvim',
-  --   lazy = true,
-  --   keys = require('data.keys').transparent,
-  --   cmd = require('data.cmd').transparent,
-  -- },
-  -- { -- Auto Dark Mode
-  --   'f-person/auto-dark-mode.nvim',
-  --   lazy = true,
-  --   opts = require('data.types').auto_dark_mode,
-  --   cond = require('data.cond').auto_dark_mode,
-  -- },
-  -- { -- Highlight colors
-  --   'brenoprata10/nvim-highlight-colors',
-  --   event = 'BufReadPre',
-  --   opts = require('data.types').hightlight_colors,
-  -- },
   { -- Auto Dark Mode
     'f-person/auto-dark-mode.nvim',
     lazy = true,
