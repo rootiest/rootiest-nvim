@@ -142,4 +142,10 @@ return {
   --   event = 'BufReadPre',
   --   opts = require('data.types').hightlight_colors,
   -- },
+  { -- Auto Dark Mode
+    'f-person/auto-dark-mode.nvim',
+    lazy = true,
+    opts = require('data.types').auto_dark_mode,
+    cond = require('data.cond').auto_dark_mode,
+  },
 }

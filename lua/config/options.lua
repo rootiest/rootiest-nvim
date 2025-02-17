@@ -211,7 +211,7 @@ vim.o.background                = "dark"        ---@type string Options: <dark|l
 -- Disable Transparency
 vim.g.disable_transparency      = true          ---@type boolean Options: <true|false>
 -- Auto Dark-mode
-vim.g.autodarkmode              = true          ---@type boolean Options: <true|false>
+vim.g.autodarkmode              = false         ---@type boolean Options: <true|false>
 -- Set colorcolumn
 --vim.opt.colorcolumn           = "120"         ---@type string|table Options: [column]
 --Use Astral colorscheme management
