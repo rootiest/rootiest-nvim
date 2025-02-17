@@ -33,6 +33,8 @@ vim.g.usetinyinline             = true          ---@type boolean Options: <true|
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ GIT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+-- Github username for dashboard and other customizations
+vim.g.gitname                   = 'rootiest'    ---@type string Options: <github username>
 -- Highlight lines with git changes
 vim.g.git_line_hl               = false         ---@type boolean Options: <true|false>
 -- Highlight words with git changes

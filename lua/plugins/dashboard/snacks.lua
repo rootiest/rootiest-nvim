@@ -68,9 +68,10 @@ local function create_sections(neovide)
   })
 
   if not neovide then
+    local usrname = vim.g.gitname or 'rootiest'
     table.insert(sections, {
       section = 'terminal',
-      cmd = 'kusa rootiest && sleep 0.2',
+      cmd = 'kusa ' .. usrname .. ' && sleep 0.2',
       padding = { 0, 0 },
       height = 10,
       width = 106,
