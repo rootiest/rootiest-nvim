@@ -5,12 +5,6 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 return {
-  -- { -- Tokyonight
-  --   'folke/tokyonight.nvim',
-  --   lazy = true, -- Override
-  --   name = 'tokyonight',
-  --   opts = require('data.types').tokyonight.opts,
-  -- },
   { -- Catppuccin
     'catppuccin/nvim',
     lazy = false, -- Override
@@ -18,6 +12,13 @@ return {
     name = 'catppuccin',
     opts = require('data.types').catppuccin,
   },
+  --  ━━━━━━━━━━━━━━━━━━━━━━━━━━ Alternate Themes ━━━━━━━━━━━━━━━━━━━━━━━
+  -- { -- Tokyonight
+  --   'folke/tokyonight.nvim',
+  --   lazy = true, -- Override
+  --   name = 'tokyonight',
+  --   opts = require('data.types').tokyonight.opts,
+  -- },
   -- { -- Monoglow
   --   'wnkz/monoglow.nvim',
   --   lazy = false,
