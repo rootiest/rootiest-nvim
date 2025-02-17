@@ -97,6 +97,11 @@ M.hardtime = {
   'nvim-lua/plenary.nvim',
 }
 
+--- LazyDev plugin dependencies
+M.lazydev = {
+  'gonstoll/wezterm-types',
+}
+
 --- LazyGit plugin dependencies
 M.lazygit = {
   'nvim-lua/plenary.nvim',

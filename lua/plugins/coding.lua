@@ -25,6 +25,7 @@ return {
   {
     'folke/lazydev.nvim',
     opts = require('data.types').lazydev.opts,
+    dependencies = require('data.deps').lazydev,
   },
   -- { -- G-code
   --   'wilriker/gcode.vim',
