@@ -44,8 +44,4 @@ return {
       vim.fn['mkdp#util#install']()
     end,
   },
-  { -- WezTerm Types
-    'gonstoll/wezterm-types',
-    dev = true,
-  },
 }
