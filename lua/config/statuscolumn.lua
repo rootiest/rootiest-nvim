@@ -92,17 +92,6 @@ _G.CustomStatusColumn = function()
 
   -- Use the plugin's original status column
   local original_statuscolumn = require('snacks.statuscolumn').get()
-  -- local original_statuscolumn = [[%=%{v:relnum?v:relnum:v:lnum}]]
-  -- local original_statuscolumn =
-  --   [[%#NonText#%{&nu?v:lnum:""}%=%{&rnu&&(v:lnum%2)?"\ ".v:relnum:""}%#LineNr#%{&rnu&&!(v:lnum%2)?"\ ".v:relnum:""}]]
-  -- -- Obtain the current buffer explicitly
-  -- local bufnr = vim.api.nvim_get_current_buf() -- Correctly get the current buffer
-  --
-  -- -- Get gitstatus
-  -- local git_status = 'none'
-  -- if lnum then
-  --   git_status = check_git_signs(lnum, bufnr) -- Pass the buffer number to the function
-  -- end
 
   -- Check for diagnostics on the current line
   local diagnostics = vim.diagnostic.get(0, { lnum = lnum - 1 }) -- Get diagnostics for the current line (subtract 1 for 0-based index)
