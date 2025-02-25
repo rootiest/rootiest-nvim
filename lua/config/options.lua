@@ -113,9 +113,8 @@ vim.g.useneotree                = false         ---@type boolean Options: <true|
 vim.g.useyazi                   = true          ---@type boolean Options: <true|false>
 
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ AI TOOL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 --  Configure the AI completion provider
-vim.g.aitool                    = "codeium"  ---@type string Options: [ai tool]
+vim.g.aitool                    = "copilot"  ---@type string Options: [ai tool]
 --        ╭───────────────────────────╮                neocodeium
 --        │                           │                codeium
 --        │         AI Tools:         │                copilot
