@@ -13,6 +13,14 @@ return {
     opts = require('data.types').catppuccin,
   },
   --  ━━━━━━━━━━━━━━━━━━━━━━━━━━ Alternate Themes ━━━━━━━━━━━━━━━━━━━━━━━
+
+  { -- E-Ink
+    'alexxGmZ/e-ink.nvim',
+    priority = 1000,
+    opts = {
+      -- Changes light/dark mode based on vim.o.background
+    },
+  },
   -- { -- Tokyonight
   --   'folke/tokyonight.nvim',
   --   lazy = true, -- Override
