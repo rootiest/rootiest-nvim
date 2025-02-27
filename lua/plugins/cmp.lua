@@ -69,6 +69,7 @@ if vim.g.useblinkcmp then
         },
         cmdline = {
           enabled = true,
+          completion = { menu = { auto_show = true } },
           sources = function()
             local type = vim.fn.getcmdtype()
             -- Search forward and backward
@@ -86,6 +87,7 @@ if vim.g.useblinkcmp then
             ['<C-y>'] = { 'select_and_accept' },
             ['<S-Tab>'] = { 'select_prev', 'fallback' },
             ['<Tab>'] = { 'select_next', 'fallback' },
+            ['<Enter>'] = { 'accept_and_enter', 'fallback' },
           },
         },
       },
