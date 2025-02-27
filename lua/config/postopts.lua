@@ -36,6 +36,11 @@ end
 local function define_globals()
   -- Define Pick function
   Pick = require('data.func').pick
+
+  -- Define Pick command
+  vim.api.nvim_create_user_command('Pick', function(opts)
+    Pick(unpack(opts.fargs))
+  end, { nargs = '*' })
 end
 
 -- Run Setup function
