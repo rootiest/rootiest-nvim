@@ -69,7 +69,10 @@ if vim.g.useblinkcmp then
         },
         cmdline = {
           enabled = true,
-          completion = { menu = { auto_show = true } },
+          completion = {
+            menu = { auto_show = true },
+            ghost_text = { enabled = true },
+          },
           sources = function()
             local type = vim.fn.getcmdtype()
             -- Search forward and backward
@@ -88,6 +91,21 @@ if vim.g.useblinkcmp then
             ['<S-Tab>'] = { 'select_prev', 'fallback' },
             ['<Tab>'] = { 'select_next', 'fallback' },
             ['<Enter>'] = { 'accept_and_enter', 'fallback' },
+          },
+        },
+        sources = {
+          providers = {
+            cmdline = {
+              min_keyword_length = function(ctx)
+                -- when typing a command, only show when the keyword is 2 characters or longer
+                if
+                  ctx.mode == 'cmdline' and string.find(ctx.line, ' ') == nil
+                then
+                  return 2
+                end
+                return 0
+              end,
+            },
           },
         },
       },
