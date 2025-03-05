@@ -133,7 +133,6 @@ autocmd('CmdlineLeave', {
 })
 
 autogrp('RootyCustomEvent', { clear = true })
-
 autocmd({ 'BufReadPost', 'BufNewFile' }, {
   group = 'RootyCustomEvent',
   callback = function(args)
@@ -143,5 +142,13 @@ autocmd({ 'BufReadPost', 'BufNewFile' }, {
     if not vim.tbl_contains(ignored_filetypes, ft) then
       vim.api.nvim_exec_autocmds('User', { pattern = 'LazyFileOpen' })
     end
+  end,
+})
+
+-- Don't comment next line when using `o`
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    vim.opt_local.formatoptions:remove({ 'o' })
   end,
 })
