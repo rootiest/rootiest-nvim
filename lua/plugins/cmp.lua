@@ -225,7 +225,6 @@ return {
           end, { 'i', 's' }),
         }),
         sources = {
-          -- { name = 'ecolog' },
           { name = 'nvim_lsp', priority = 1000 },
           { name = 'luasnip', priority = 750 },
           { name = 'path', priority = 250 },
