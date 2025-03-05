@@ -35,6 +35,8 @@ vim.g.usetinyinline             = true          ---@type boolean Options: <true|
 
 -- Github username for dashboard and other customizations
 vim.g.gitname                   = 'rootiest'    ---@type string Options: <github username>
+-- Show GitHub Contributions on dashboard
+vim.g.show_github_contrib       = true          ---@type boolean Options: <true|false>
 -- Highlight lines with git changes
 vim.g.git_line_hl               = false         ---@type boolean Options: <true|false>
 -- Highlight words with git changes

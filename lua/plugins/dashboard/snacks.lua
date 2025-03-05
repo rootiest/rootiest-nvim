@@ -4,6 +4,12 @@
 
 local fallback_logo = require('data.dash').fallback_logo
 
+local function get_window_size()
+  local width = vim.api.nvim_win_get_width(0)
+  local height = vim.api.nvim_win_get_height(0)
+  return width, height
+end
+
 local function read_file(file_path)
   local success, content_or_error = pcall(function()
     local file = assert(io.open(file_path, 'r')) -- Open the file in read mode
@@ -67,16 +73,19 @@ local function create_sections(neovide)
     indent = 60,
   })
 
-  if not neovide then
+  if vim.g.show_github_contrib and not neovide then
+    local w, h = get_window_size()
     local usrname = vim.g.gitname or 'rootiest'
-    table.insert(sections, {
-      section = 'terminal',
-      cmd = 'kusa ' .. usrname .. ' && sleep 0.2',
-      padding = { 0, 0 },
-      height = 10,
-      width = 106,
-      indent = 8,
-    })
+    if w > 130 and h > 30 then
+      table.insert(sections, {
+        section = 'terminal',
+        cmd = 'kusa ' .. usrname .. ' && sleep 0.2',
+        padding = { 0, 0 },
+        height = 10,
+        width = 106,
+        indent = 8,
+      })
+    end
   end
 
   return sections
