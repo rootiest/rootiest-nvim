@@ -189,11 +189,6 @@ M.neotree = function()
   return func.check_global_var('useneotree', true, true)
 end
 
-M.treesitter = function()
-  -- Only load for editable buffers
-  return vim.bo.buftype == '' and not vim.bo.readonly
-end
-
 --- Tabnine conditional options
 M.tabnine = function()
   return func.check_global_var('aitool', 'tabnine', 'neocodeium')

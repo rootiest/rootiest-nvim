@@ -12,9 +12,6 @@ return {
   { -- nvim-treesitter
     'nvim-treesitter/nvim-treesitter',
     opts = require('data.types').treesitter.opts,
-    lazy = true,
-    event = 'LazyFile',
-    cond = require('data.cond').treesitter,
   },
   { -- Yanky
     'gbprod/yanky.nvim',
