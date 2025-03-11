@@ -364,7 +364,7 @@ M.minimap = {
   end,
   keys = {
     { -- Toggle minimap
-      '<leader>nt',
+      '<leader>um',
       '<cmd>Neominimap toggle<cr>',
       desc = 'Toggle minimap',
     },
@@ -414,7 +414,7 @@ M.minimap = {
       desc = 'Disable minimap for current window',
     },
     { -- Toggle minimap for current buffer
-      '<leader>nbt',
+      '<leader>uM',
       '<cmd>Neominimap bufToggle<cr>',
       desc = 'Toggle minimap for current buffer',
     },
