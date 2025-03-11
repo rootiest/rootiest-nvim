@@ -299,7 +299,11 @@ return { -- Lualine
               return require('nvim_updater').get_statusline().icon_text
             end,
             color = function()
-              return require('nvim_updater').get_statusline().color
+              local fg = require('data.func').get_fg_color(
+                require('nvim_updater').get_statusline().color
+              )
+              local bg = require('data.func').get_bg_color('lualine_x')
+              return { fg = fg, bg = bg }
             end,
             on_click = function()
               require('nvim_updater').show_new_commits({
