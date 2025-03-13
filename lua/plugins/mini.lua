@@ -47,4 +47,18 @@ return {
     opts = require('data.types').miniicons.opts,
     init = require('data.types').miniicons.init,
   },
+  { -- mini.hipatterns
+    'echasnovski/mini.hipatterns',
+    version = false,
+    event = 'VeryLazy',
+    opts = function()
+      local hipatterns = require('mini.hipatterns')
+      return {
+        highlighters = {
+          -- Highlight hex color strings (`#rrggbb`) using that color
+          hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
+      }
+    end,
+  },
 }
