@@ -132,10 +132,13 @@ return {
       return vim.g.useblinkcmp
     end,
   },
-  {
+  { -- Nvim-cmp
     import = 'lazyvim.plugins.extras.coding.nvim-cmp',
     cond = function()
       return not vim.g.useblinkcmp
     end,
+  },
+  { -- Project
+    import = 'lazyvim.plugins.extras.util.project',
   },
 }
