@@ -50,7 +50,7 @@ end
 require('lazy').setup({
   spec = plugin_specs,
   rocks = {
-    hererocks = true,
+    hererocks = vim.g.use_luarocks,
   },
   ---@diagnostic disable-next-line: assign-type-mismatch
   dev = {
