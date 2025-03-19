@@ -115,7 +115,7 @@ return {
     cmd = 'ShowkeysToggle',
     opts = require('data.types').showkeys.opts,
   },
-  {
+  { -- Oil
     'stevearc/oil.nvim',
     opts = {},
     lazy = true,

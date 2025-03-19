@@ -5,7 +5,7 @@
 --          ╰─────────────────────────────────────────────────────────╯
 
 return {
-  {
+  { -- mini.move
     'echasnovski/mini.move',
     event = 'VeryLazy',
     opts = {},

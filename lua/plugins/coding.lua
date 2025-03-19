@@ -19,7 +19,7 @@ return {
     opts = require('data.types').yanky,
     keys = require('data.keys').yanky,
   },
-  {
+  { -- LazyDev
     'folke/lazydev.nvim',
     opts = require('data.types').lazydev.opts,
     dependencies = require('data.deps').lazydev,
@@ -58,7 +58,7 @@ return {
     lazy = true,
     keys = require('data.keys').easyalign,
   },
-  {
+  { -- TinyInlineDiagnostic
     'rachartier/tiny-inline-diagnostic.nvim',
     event = 'VeryLazy', -- Or `LspAttach`
     priority = 1000, -- needs to be loaded in first

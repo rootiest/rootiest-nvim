@@ -100,9 +100,13 @@ return {
   { -- mini.files
     import = 'lazyvim.plugins.extras.editor.mini-files',
   },
-  { import = 'lazyvim.plugins.extras.editor.snacks_picker' },
-  { import = 'lazyvim.plugins.extras.editor.snacks_explorer' },
-  {
+  { -- snacks.picker
+    import = 'lazyvim.plugins.extras.editor.snacks_picker',
+  },
+  { -- snacks.explorer
+    import = 'lazyvim.plugins.extras.editor.snacks_explorer',
+  },
+  { -- Fzf-Lua
     import = 'lazyvim.plugins.extras.editor.fzf',
     cond = function()
       return require('data.func').check_global_var('use_fzf_lua', true, false)
@@ -125,8 +129,5 @@ return {
     cond = function()
       return not vim.g.useblinkcmp
     end,
-  },
-  { -- Project
-    import = 'lazyvim.plugins.extras.util.project',
   },
 }
