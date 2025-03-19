@@ -40,9 +40,6 @@ return {
   { -- Dial
     import = 'lazyvim.plugins.extras.editor.dial',
   },
-  { -- Illuminate
-    import = 'lazyvim.plugins.extras.editor.illuminate',
-  },
   { -- Snacks Picker
     import = 'lazyvim.plugins.extras.editor.snacks_picker',
   },
