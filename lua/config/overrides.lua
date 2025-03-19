@@ -124,6 +124,10 @@ local function scroll(direction)
   local count = vim.v.count > 0 and vim.v.count or last_scroll_count
   -- Remember the count for next time
   last_scroll_count = count
+
+  -- To remove the memory feature, uncomment the following line
+  -- count = vim.v.count > 0 and vim.v.count or 1  -- Use current count or default to 1
+
   -- Calculate the number of lines in a half-screen
   local half_screen = math.floor(vim.api.nvim_win_get_height(0) / 2)
   -- Generate the key sequence
