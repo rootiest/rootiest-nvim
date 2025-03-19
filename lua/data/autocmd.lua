@@ -128,4 +128,40 @@ autocmd({ 'BufEnter' }, {
   end,
 })
 
+-- Update OSC7 in fish shell
+local function update_osc7()
+  local cwd = vim.fn.getcwd()
+  local uri = 'file://' .. vim.fn.hostname() .. cwd
+  io.stdout:write('\27]7;' .. uri .. '\27\\')
+end
+
+-- Save CWD where we can access it
+local function save_cwd()
+  local cwd = vim.fn.getcwd()
+  local file = io.open(os.getenv('HOME') .. '/.nvim_last_dir', 'w')
+  if file then
+    file:write(cwd)
+    file:close()
+  end
+end
+
+-- Update OSC7 and file on directory change
+autocmd('DirChanged', {
+  callback = function()
+    save_cwd()
+    update_osc7()
+  end,
+})
+
+-- Save on exit
+autocmd('VimLeavePre', {
+  callback = save_cwd,
+})
+
+-- Send OSC 7 on startup
+update_osc7()
+
+-- Save CWD on startup
+save_cwd()
+
 return M
