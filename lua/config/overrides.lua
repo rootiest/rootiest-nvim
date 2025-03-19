@@ -106,3 +106,42 @@ vim.keymap.set(
   'Q',
   { noremap = true, desc = 'Replay last register' }
 )
+
+---------------------------------------------------------------------------
+--          ╓─────────────────────────────────────────────────────────╖
+--          ║  Scroll half a screen with <C-d> and <C-u>              ║
+--          ║           (with count and memory)                       ║
+--          ╙─────────────────────────────────────────────────────────╜
+local last_scroll_count = 1 -- Store the last used count
+
+-- Define the ScrollDirection type
+---@alias ScrollDirection 'up'|'down'
+
+--- Scroll half a screen up or down
+---@param direction ScrollDirection The direction to scroll in
+local function scroll(direction)
+  -- Set the count to the provided count or the last used count
+  local count = vim.v.count > 0 and vim.v.count or last_scroll_count
+  -- Remember the count for next time
+  last_scroll_count = count
+  -- Calculate the number of lines in a half-screen
+  local half_screen = math.floor(vim.api.nvim_win_get_height(0) / 2)
+  -- Generate the key sequence
+  local keys = count * half_screen .. (direction == 'down' and '\x04' or '\x15')
+
+  -- Execute the key sequence
+  vim.api.nvim_feedkeys(
+    vim.api.nvim_replace_termcodes(keys, true, false, true),
+    'n',
+    false
+  )
+end
+
+-- Map the scroll functions to <C-d> and <C-u>
+vim.keymap.set('n', '<C-d>', function()
+  scroll('down')
+end, { silent = true })
+vim.keymap.set('n', '<C-u>', function()
+  scroll('up')
+end, { silent = true })
+---------------------------------------------------------------------------
