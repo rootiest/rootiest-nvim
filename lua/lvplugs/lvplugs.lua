@@ -36,9 +36,6 @@ return {
   { -- NeoTest
     import = 'lazyvim.plugins.extras.test.core',
   },
-  -- { -- Aerial
-  --   import = 'lazyvim.plugins.extras.editor.aerial',
-  -- },
   { import = 'lazyvim.plugins.extras.ui.smear-cursor' },
   { -- Dial
     import = 'lazyvim.plugins.extras.editor.dial',
@@ -49,9 +46,6 @@ return {
   { -- Snacks Picker
     import = 'lazyvim.plugins.extras.editor.snacks_picker',
   },
-  -- { -- Outline
-  --   import = 'lazyvim.plugins.extras.editor.outline',
-  -- },
   { -- IncRename
     import = 'lazyvim.plugins.extras.editor.inc-rename',
   },
@@ -64,9 +58,6 @@ return {
   { -- Refactoring
     import = 'lazyvim.plugins.extras.editor.refactoring',
   },
-  -- {
-  --   import = 'lazyvim.plugins.extras.editor.harpoon2',
-  -- },
   { -- Octo plugin
     import = 'lazyvim.plugins.extras.util.octo',
   },
