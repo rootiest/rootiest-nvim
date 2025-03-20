@@ -1331,15 +1331,15 @@ M.smearcursor = function()
     :map('<leader>uW')
 end
 
-M.snacksterm = {
-  -- { -- Toggle Terminal
-  --   lhs = '<C-/>',
-  --   rhs = function()
-  --     require('snacks.terminal').toggle()
-  --   end,
-  --   desc = 'Toggle Terminal',
-  -- },
-}
+M.smart_splits = function()
+  -- Configure smart-splits keymaps
+  vim.keymap.set('n', '<C-h>', require('smart-splits').move_cursor_left)
+  vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down)
+  vim.keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up)
+  vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
+end
+
+M.snacksterm = {}
 
 M.splitjoin = {
   toggle = 'gJ',

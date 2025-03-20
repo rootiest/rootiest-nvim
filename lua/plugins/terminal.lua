@@ -10,6 +10,9 @@ return {
     lazy = false,
     build = require('data.types').smart_splits.build(),
     -- cond = not require('data.func').is_ghostty(),
+    keys = function()
+      require('data.keys').smart_splits()
+    end,
   },
   { -- Kitty-Runner
     'jghauser/kitty-runner.nvim',
