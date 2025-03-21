@@ -116,4 +116,27 @@ return {
     opts = require('data.types').smearcursor,
     keys = require('data.keys').smearcursor,
   },
+  { -- nvim-colorizer
+    'catgoose/nvim-colorizer.lua',
+    event = 'BufReadPre',
+    lazy = true,
+    opts = {
+      lazy_load = true,
+      user_default_options = {
+        names = true,
+        RGB = true, -- #RGB hex codes
+        RGBA = true, -- #RGBA hex codes
+        RRGGBB = true, -- #RRGGBB hex codes
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        AARRGGBB = true, -- 0xAARRGGBB hex codes
+        rgb_fn = true, -- CSS rgb() and rgba() functions
+        hsl_fn = true, -- CSS hsl() and hsla() functions
+        css = true,
+        css_fn = true,
+        tailwind = true, -- Enable tailwind colors
+        tailwind_opts = { update_names = true },
+        sass = { enable = true, parsers = { 'css' } }, -- Enable sass colors
+      },
+    },
+  },
 }
