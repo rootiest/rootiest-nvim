@@ -33,6 +33,9 @@ if vim.g.useblinkcmp then
   return {
     {
       'saghen/blink.cmp',
+      dependencies = {
+        'mikavilpas/blink-ripgrep.nvim',
+      },
       opts = {
         enabled = function()
           return not vim.tbl_contains({ 'minifiles' }, vim.bo.filetype)
@@ -106,6 +109,29 @@ if vim.g.useblinkcmp then
                 return 0
               end,
             },
+            ripgrep = {
+              module = 'blink-ripgrep',
+              name = 'Ripgrep',
+              opts = {
+                search_casing = '--smart-case',
+              },
+              transform_items = function(_, items)
+                for _, item in ipairs(items) do
+                  -- example: append a description to easily distinguish rg results
+                  item.labelDetails = {
+                    description = '󰡦 ',
+                  }
+                end
+                return items
+              end,
+            },
+          },
+          default = {
+            'lsp',
+            'path',
+            'snippets',
+            'buffer',
+            'ripgrep',
           },
         },
       },
