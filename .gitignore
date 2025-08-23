@@ -16,3 +16,5 @@ extras/
 /home/rootiest/.cache/nvim
 qalc
 test.lua
+.cache/
+deprecated/
