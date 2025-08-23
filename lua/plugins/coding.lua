@@ -65,4 +65,19 @@ return {
     cond = require('data.cond').tiny_inline_diagnostic,
     config = require('data.types').tiny_inline_diagnostic.config,
   },
+  {
+    'neovim/nvim-lspconfig',
+    init = function() end,
+    opts = {
+      servers = {
+        yamlls = {
+          settings = {
+            yaml = {
+              customTags = vim.g.custom_yaml_tags,
+            },
+          },
+        },
+      },
+    },
+  },
 }

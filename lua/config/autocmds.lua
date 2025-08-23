@@ -152,3 +152,20 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.formatoptions:remove({ 'o' })
   end,
 })
+
+-- Run async commands with output to split
+vim.api.nvim_create_user_command('RunAsync', function(async_opts)
+  -- Save current buffer first
+  vim.cmd('w')
+
+  -- Construct the full command
+  local cmd = table.concat(async_opts.fargs, ' ')
+
+  -- Open a horizontal split with the terminal running the command
+  vim.cmd('belowright split | terminal ' .. cmd)
+
+  -- Optional: return focus to original window
+  vim.cmd('wincmd p')
+end, {
+  nargs = '+', -- Require at least one argument
+})

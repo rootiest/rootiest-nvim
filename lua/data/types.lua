@@ -1750,6 +1750,13 @@ M.catppuccin = {
     light = 'latte',
     dark = 'mocha',
   },
+  -- color_overrides = { -- OLED black background
+  --   mocha = {
+  --     base = '#000000',
+  --     mantle = '#000000',
+  --     crust = '#000000',
+  --   },
+  -- },
   transparent_background = false,
   integrations = {
     native_lsp = {
@@ -1780,6 +1787,7 @@ M.catppuccin = {
     },
     grug_far = true,
     mason = true,
+    markview = true,
     mini = {
       enabled = true,
       indentscope_color = 'mauve',
@@ -1857,8 +1865,26 @@ M.noice = {
 
 M.grug_far = {
   opts = {
+    showCompactInputs = true,
+    showInputsTopPadding = false,
+    showInputsBottomPadding = false,
+    helpLine = {
+      enabled = false,
+    },
+    enabledEngines = { 'ripgrep', 'astgrep' },
     engines = {
       astgrep = {
+        path = 'ast-grep',
+        placeholders = {
+          enabled = false,
+        },
+      },
+      ripgrep = {
+        placeholders = {
+          enabled = false,
+        },
+      },
+      ['astgrep-rules'] = {
         path = 'ast-grep',
       },
     },
@@ -1869,15 +1895,14 @@ M.grug_far = {
 --- Smear Cursor
 M.smearcursor = function()
   local bg = require('data.func').get_bg_color('Normal') or '#1d1d2d'
-  local fg = require('data.func').get_fg_color('Normal') or '#d3cdc3'
+  local fg = require('data.func').get_fg_color('Normal') or '#f7e0dc'
 
   return {
     -- Cursor color. Defaults to Normal gui foreground color
     cursor_color = fg,
-    -- cursor_color = 'none',
 
     -- Background color. Defaults to Normal gui background color
-    --normal_bg = bg,
+    normal_bg = bg,
 
     -- Smear cursor when switching buffers
     smear_between_buffers = true,

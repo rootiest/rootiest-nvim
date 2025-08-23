@@ -8,7 +8,7 @@
 vim.opt.guifont = 'Iosevka Rootiest V2:#e-subpixelantialias:h12'
 -- refresh rate and translucency
 vim.g.neovide_refresh_rate = 120
-vim.g.neovide_transparency = 0.85
+vim.g.neovide_opacity = 0.85
 vim.g.neovide_window_blurred = true
 vim.g.neovide_floating_blur_amount_x = 2.0
 vim.g.neovide_floating_blur_amount_y = 2.0

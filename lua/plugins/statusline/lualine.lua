@@ -285,40 +285,40 @@ return { -- Lualine
             end,
             padding = { left = 0, right = 1 },
           },
-          { -- Music
-            function()
-              return music_stats.get_icon_with_text()
-            end,
-            cond = function()
-              return require('data.func').is_window_wide_enough(100)
-            end,
-            padding = { left = 0, right = 1 },
-          },
-          { -- Neovim Updater Status
-            function()
-              return require('nvim_updater').get_statusline().icon_text
-            end,
-            color = function()
-              local fg = require('data.func').get_fg_color(
-                require('nvim_updater').get_statusline().color
-              )
-              local bg = require('data.func').get_bg_color('lualine_x')
-              return { fg = fg, bg = bg }
-            end,
-            on_click = function()
-              require('nvim_updater').show_new_commits({
-                isupdate = true,
-                short = false,
-              })
-            end,
-            padding = { left = 1, right = 1 },
-            cond = function()
-              if not pcall(require, 'nvim_updater') then
-                return false
-              end
-              return not string.find(vim.bo.filetype, 'neovim_updater_term')
-            end,
-          },
+          -- { -- Music
+          --   function()
+          --     return music_stats.get_icon_with_text()
+          --   end,
+          --   cond = function()
+          --     return require('data.func').is_window_wide_enough(100)
+          --   end,
+          --   padding = { left = 0, right = 1 },
+          -- },
+          -- { -- Neovim Updater Status
+          --   function()
+          --     return require('nvim_updater').get_statusline().icon_text
+          --   end,
+          --   color = function()
+          --     local fg = require('data.func').get_fg_color(
+          --       require('nvim_updater').get_statusline().color
+          --     )
+          --     local bg = require('data.func').get_bg_color('lualine_x')
+          --     return { fg = fg, bg = bg }
+          --   end,
+          --   on_click = function()
+          --     require('nvim_updater').show_new_commits({
+          --       isupdate = true,
+          --       short = false,
+          --     })
+          --   end,
+          --   padding = { left = 1, right = 1 },
+          --   cond = function()
+          --     if not pcall(require, 'nvim_updater') then
+          --       return false
+          --     end
+          --     return not string.find(vim.bo.filetype, 'neovim_updater_term')
+          --   end,
+          -- },
         },
         lualine_y = {
           { -- NeoCodeium Status

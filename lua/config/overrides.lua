@@ -107,6 +107,13 @@ vim.keymap.set(
   { noremap = true, desc = 'Replay last register' }
 )
 
+-- Duplicate and comment lines
+vim.keymap.set('n', 'ycc', function()
+  vim.cmd('normal! ' .. vim.v.count1 .. 'yy')
+  vim.cmd('normal ' .. vim.v.count1 .. 'gcc')
+  vim.cmd("normal! ']$p")
+end, { desc = 'Duplicate and comment lines' })
+
 ---------------------------------------------------------------------------
 --          ╓─────────────────────────────────────────────────────────╖
 --          ║  Scroll half a screen with <C-d> and <C-u>              ║
@@ -148,4 +155,28 @@ end, { silent = true })
 vim.keymap.set('n', '<C-u>', function()
   scroll('up')
 end, { silent = true })
+---------------------------------------------------------------------------
+
+-- Dump floating window info to file
+vim.keymap.set(
+  'n',
+  '<leader>fd',
+  require('data.func').dump_floating_window_info,
+  { desc = 'Dump floating window info to file' }
+)
+
+---------------------------------------------------------------------------
+-- Obsidian Project Configuration:
+local function run_obsidian_config()
+  -- Reduce conceallevel for Obsidian UI
+  vim.o.conceallevel = 2
+  vim.cmd('Neominimap off')
+end
+
+vim.api.nvim_create_augroup('obsidian_config', { clear = true })
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead', 'BufEnter' }, {
+  group = 'obsidian_config',
+  pattern = vim.fn.expand('~') .. '/vaults/Rootiest Notes/**',
+  callback = run_obsidian_config,
+})
 ---------------------------------------------------------------------------

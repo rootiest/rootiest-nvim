@@ -44,4 +44,8 @@ return {
       vim.fn['mkdp#util#install']()
     end,
   },
+  { -- CookLang
+    'luizribeiro/vim-cooklang',
+    lazy = false,
+  },
 }

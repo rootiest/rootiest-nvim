@@ -22,6 +22,7 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 local plugin_specs = {
   { -- LazyVim
     'LazyVim/LazyVim',
+    -- dev = true,
     priority = 900,
     opts = require('data.types').lazyvim.opts,
   },
@@ -35,19 +36,9 @@ local plugin_specs = {
   { import = 'plugins' }, -- General Plugins
 }
 
--- Automatically import all subdirectories of `lua/plugins`
-local plugin_dirs = vim.fn.glob('~/.config/nvim/lua/plugins/*', true, true)
-for _, dir in ipairs(plugin_dirs) do
-  if vim.fn.isdirectory(dir) == 1 then
-    table.insert( -- Add directory to the plugin import table
-      plugin_specs,
-      { import = 'plugins.' .. vim.fn.fnamemodify(dir, ':t') }
-    )
-  end
-end
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━ Lazy Configuration ━━━━━━━━━━━━━━━━━━━━━━
 
--- Initialize Lazy plugin manager
-require('lazy').setup({
+local lazy_spec = {
   spec = plugin_specs,
   rocks = {
     hererocks = vim.g.use_luarocks,
@@ -100,4 +91,22 @@ require('lazy').setup({
     border = 'rounded',
     title = ' Plugin Manager ',
   },
-})
+}
+
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ Import Plugins ━━━━━━━━━━━━━━━━━━━━━━━━
+
+-- Automatically import all subdirectories of `lua/plugins`
+local plugin_dirs = vim.fn.glob('~/.config/nvim/lua/plugins/*', true, true)
+for _, dir in ipairs(plugin_dirs) do
+  if vim.fn.isdirectory(dir) == 1 then
+    table.insert( -- Add directory to the plugin import table
+      plugin_specs,
+      { import = 'plugins.' .. vim.fn.fnamemodify(dir, ':t') }
+    )
+  end
+end
+
+--  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Setup Lazy ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+-- Initialize Lazy plugin manager
+require('lazy').setup(lazy_spec)

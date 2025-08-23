@@ -106,9 +106,16 @@ local profiler = {
   },
 }
 
+---@class PickerList
+---@field row2idx fun(self: PickerList, row: integer): integer
+---@field _move fun(self: PickerList, index: integer, a: boolean, b: boolean): nil
+
+---@class SnacksPicker
+---@field list PickerList
+
 --- flash_on_picker
 ---Use the flash.nvim plugin in Snacks picker
----@param picker table: The picker instance to interact with.
+---@param picker SnacksPicker The picker instance to interact with.
 local flash_on_picker = function(picker)
   require('flash').jump({
     pattern = '^',
@@ -162,11 +169,36 @@ local picker = {
             jump = { close = true },
             auto_close = true,
             layout = { preset = 'sidebar' },
+            -- ignored = true, -- Show .ignore/.gitignore files
+            -- hidden = true, -- Show hidden files
           },
         },
         layouts = {
           -- default = vscode_layout,
           vscode = vscode_layout,
+          ivy = {
+            layout = {
+              box = 'vertical',
+              backdrop = false,
+              row = -1,
+              width = 0.8,
+              height = 0.4,
+              border = 'top',
+              title = ' {title} {live} {flags}',
+              title_pos = 'left',
+              { win = 'input', height = 1, border = 'bottom' },
+              {
+                box = 'horizontal',
+                { win = 'list', width = 0.4, border = 'none' },
+                {
+                  win = 'preview',
+                  title = '{preview}',
+                  width = 0.6,
+                  border = 'left',
+                },
+              },
+            },
+          },
           left = { preset = 'sidebar', layout = { position = 'left' } },
           right = { preset = 'sidebar', layout = { position = 'right' } },
           top = { preset = 'ivy', layout = { position = 'top' } },

@@ -9,6 +9,12 @@ return {
     'ehpi/vim-illuminate',
     opts = require('data.types').illuminate.opts,
   },
+  { -- Nvim-notify
+    'rcarriga/nvim-notify',
+    opts = {
+      fps = 144, -- your monitor refresh rate
+    },
+  },
   { -- Grug-Far
     'MagicDuck/grug-far.nvim',
     opts = require('data.types').grug_far.opts,

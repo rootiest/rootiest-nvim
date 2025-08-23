@@ -14,6 +14,10 @@ return {
     import = 'lazyvim.plugins.extras.ai.copilot',
     cond = require('data.cond').copilot,
   },
+  { -- Copilot Chat
+    import = 'lazyvim.plugins.extras.ai.copilot-chat',
+    cond = require('data.cond').copilot,
+  },
   { -- Tabnine
     import = 'lazyvim.plugins.extras.ai.tabnine',
     cond = require('data.cond').tabnine,

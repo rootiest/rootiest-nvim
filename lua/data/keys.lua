@@ -1243,6 +1243,12 @@ M.misc = {
     desc = 'Yank buffer',
     mode = 'n',
   },
+  { -- Pick keymaps
+    lhs = '<leader>fk',
+    rhs = '<cmd>Pick keymaps<cr>',
+    desc = 'Pick keymaps',
+    mode = 'n',
+  },
 }
 
 M.nekifoch = {

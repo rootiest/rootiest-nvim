@@ -2571,5 +2571,84 @@ function M.swap_buffers()
   end
 end
 
+--- Get relative window width
+---@param fraction number fraction of the main window width
+---@return number width the relative width in columns
+function M.get_relative_win_width(fraction)
+  -- Validate param types
+  vim.validate({
+    fraction = { fraction, 'number', true },
+  })
+  -- Catch out-of-range parameters
+  if fraction < 0 then
+    return 0
+  elseif fraction > 1 then
+    return 1
+  end
+  -- Get window width
+  local win_width = vim.api.nvim_win_get_width(0)
+  -- Round relative width to nearest whole number
+  return math.floor(win_width * fraction + 0.5)
+end
+
+--- Testing truncated width
+---@param fraction number fraction of the main window width
+function M.trunc_test(fraction)
+  local trunc_width = (M.get_relative_win_width(fraction))
+  Snacks.picker.files({ formatters = { file = { truncate = trunc_width } } })
+end
+
+--- Function to get identifying information for all current floating windows
+---@return table info A table of floating windows and their info
+function M.get_floating_window_info()
+  local info = {}
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local config = vim.api.nvim_win_get_config(win)
+    if config.relative ~= '' then
+      local buf = vim.api.nvim_win_get_buf(win)
+      table.insert(info, {
+        win_id = win,
+        bufname = vim.api.nvim_buf_get_name(buf),
+        filetype = vim.api.nvim_get_option_value('filetype', { buf = buf }),
+        width = vim.api.nvim_win_get_width(win),
+        height = vim.api.nvim_win_get_height(win),
+      })
+    end
+  end
+  return info
+end
+
+--- Function to get identifying information for all current
+---  floating windows and dump that info to a temporary file
+---@param path string? The path to the file (optional)
+function M.dump_floating_window_info(path)
+  local float_info = M.get_floating_window_info()
+  local output = {}
+
+  for _, win in ipairs(float_info) do
+    table.insert(
+      output,
+      string.format(
+        'Win ID: %d\n  Buffer: %s\n  Filetype: %s\n  Width: %d\n  Height: %d\n---',
+        win.win_id,
+        win.bufname ~= '' and win.bufname or '[No Name]',
+        win.filetype,
+        win.width,
+        win.height
+      )
+    )
+  end
+
+  if not path then
+    path = vim.fn.stdpath('cache') .. '/float_dump.txt'
+  end
+
+  local f = assert(io.open(path, 'w'))
+  f:write(table.concat(output, '\n'))
+  f:close()
+
+  print('Floating window info written to ' .. path)
+end
+
 -- Export the module
 return M

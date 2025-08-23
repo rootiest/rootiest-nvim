@@ -30,11 +30,16 @@ if vim.g.useblinkcmp then
     vim.g.lazyvim_blink_main = true
   end
 
-  return {
-    {
+  return { -- Blink.cmp
+    { -- Overide the lazy-load event to include CmdlineEnter
+      'saghen/blink.cmp',
+      event = { 'InsertEnter', 'CmdlineEnter' },
+    },
+    { -- Load blink.cmp configuration
       'saghen/blink.cmp',
       dependencies = {
         'mikavilpas/blink-ripgrep.nvim',
+        'archie-judd/blink-cmp-words',
       },
       opts = {
         enabled = function()
@@ -64,6 +69,15 @@ if vim.g.useblinkcmp then
         },
         snippets = {
           preset = 'luasnip',
+        },
+        fuzzy = {
+          implementation = 'prefer_rust',
+          use_frecency = true,
+          sorts = {
+            'exact',
+            'score',
+            'sort_text',
+          },
         },
         keymap = {
           preset = 'enter',
@@ -113,7 +127,11 @@ if vim.g.useblinkcmp then
               module = 'blink-ripgrep',
               name = 'Ripgrep',
               opts = {
-                search_casing = '--smart-case',
+                backend = {
+                  ripgrep = {
+                    search_casing = '--smart-case',
+                  },
+                },
               },
               transform_items = function(_, items)
                 for _, item in ipairs(items) do
@@ -125,13 +143,53 @@ if vim.g.useblinkcmp then
                 return items
               end,
             },
+            -- Use the thesaurus source
+            thesaurus = {
+              name = 'blink-cmp-words',
+              module = 'blink-cmp-words.thesaurus',
+              -- All available options
+              opts = {
+                -- A score offset applied to returned items.
+                -- By default the highest score is 0 (item 1 has a score of -1, item 2 of -2 etc..).
+                score_offset = 0,
+
+                -- Default pointers define the lexical relations listed under each definition,
+                -- see Pointer Symbols below.
+                -- Default is as below ("antonyms", "similar to" and "also see").
+                pointer_symbols = { '!', '&', '^' },
+              },
+            },
+            -- Use the dictionary source
+            dictionary = {
+              name = 'blink-cmp-words',
+              module = 'blink-cmp-words.dictionary',
+              -- All available options
+              opts = {
+                -- The number of characters required to trigger completion.
+                -- Set this higher if completion is slow, 3 is default.
+                dictionary_search_threshold = 3,
+
+                -- See above
+                score_offset = 0,
+
+                -- See above
+                pointer_symbols = { '!', '&', '^' },
+              },
+            },
           },
           default = {
             'lsp',
             'path',
+            'lazydev',
             'snippets',
             'buffer',
             'ripgrep',
+            'thesaurus',
+          },
+          -- Setup completion by filetype
+          per_filetype = {
+            text = { 'dictionary' },
+            markdown = { 'thesaurus' },
           },
         },
       },

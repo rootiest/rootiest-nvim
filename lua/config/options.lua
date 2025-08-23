@@ -192,7 +192,7 @@ vim.g.statusline                = "lualine"     ---@type string Options: [status
 -- Click git components on statusline to open LazyGit
 vim.g.statusline_clickable_git  = true          ---@type boolean Options: <true|false>
 -- Show wakatime stats on statusline
-vim.g.stats_wakatime            = true          ---@type boolean Options: <true|false>
+vim.g.stats_wakatime            = false          ---@type boolean Options: <true|false>
 -- Show music stats on statusline
 vim.g.stats_music               = true          ---@type boolean Options: <true|false>
 -- Ignored player sources for music stats
