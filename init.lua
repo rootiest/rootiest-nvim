@@ -86,10 +86,10 @@ require('config.rocks') -- Bootstrap LuaRocks and initialize plugins
 --  Neovim options are configured in the lua/config/options.lua file
 
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ KEYMAPS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
---  Custom keymaps and plugin keys are configured in the lua/data/keys.lua file
+--  Keymaps are configured in the lua/data/keys.lua file
 
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ AUTOCOMMANDS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- Custom autocommands are configured in the lua/config/autocmds.lua file
+-- Autocommands are configured in the lua/config/autocmds.lua file
 
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ UTILITY FUNCTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Utility functions can be found in the lua/data/func.lua file
@@ -97,17 +97,17 @@ require('config.rocks') -- Bootstrap LuaRocks and initialize plugins
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PLUGINS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Plugin specs are defined in the lua/config/plugins.lua file
 -- Plugin keys, cmds, dependencies, and opts/config tables are
--- defined in the lua/data/*.lua files. This allows all plugin configurations
--- to be defined in a centralized location and keeps them organised.
+-- defined in the lua/data/*.lua files. All plugin configurations
+-- are defined in a centralized location to keep them organised.
 
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ COMMANDS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- Plugin cmds are configured in the lua/data/cmds.lua file
+-- User and plugin commands are configured in the lua/data/cmds.lua file
 
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ DASHBOARDS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Dashboard configurations can be found in the lua/data/dash.lua file
 
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ TYPES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- Plugin configuration tables are configured in the lua/data/types.lua file
+-- Plugin configuration tables are located in the lua/data/types.lua file
 
 ---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ DEPENDENCIES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- Plugin depenendencies are configured in the lua/data/deps.lua file
+-- Plugin depenendencies are defined in the lua/data/deps.lua file
