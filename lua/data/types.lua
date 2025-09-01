@@ -8,6 +8,24 @@
 
 local M = {}
 
+--  ━━━━━━━━━━━━━━━━━━━━━━━━ Get color theme data ━━━━━━━━━━━━━━━━━━━━━
+-- File path to the theme.txt file
+local theme_file = vim.fn.expand('~/.config/wezterm/changer/theme.txt')
+
+-- A variable to hold the colorscheme name
+local colorscheme_name = 'catppuccin-mocha' -- Default to Mocha
+
+-- Try to read the theme name from the file
+local file = io.open(theme_file, 'r')
+if file then
+  local content = file:read('*a')
+  file:close()
+  if content then
+    -- Trim leading/trailing whitespace and newlines from the string
+    colorscheme_name = content:gsub('^%s*(.-)%s*$', '%1')
+  end
+end
+
 --  ━━━━━━━━━━━━━━━━━━━━━━━━━━━ Mode Indicators ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 --- A collection of functions that return icons and names for
 --- the current mode.
@@ -605,7 +623,8 @@ M.kulala = {
 --- LazyVim configuration options
 M.lazyvim = {
   opts = {
-    colorscheme = 'catppuccin-mocha',
+    colorscheme = colorscheme_name,
+    -- colorscheme = 'catppuccin-mocha',
     news = {
       lazyvim = true,
       neovim = true,
