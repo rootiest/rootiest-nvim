@@ -6,43 +6,43 @@
 
 return {
   { -- mini.move
-    'echasnovski/mini.move',
+    'nvim-mini/mini.move',
     event = 'VeryLazy',
     opts = {},
   },
   { -- disable mini.animate cursor
-    'echasnovski/mini.animate',
+    'nvim-mini/mini.animate',
     optional = true,
     opts = {
       cursor = { enable = false },
     },
   },
   { -- mini.align
-    'echasnovski/mini.align',
+    'nvim-mini/mini.align',
     event = 'InsertEnter',
     config = function()
       require('mini.align').setup()
     end,
   },
   { -- mini.splitjoin
-    'echasnovski/mini.splitjoin',
+    'nvim-mini/mini.splitjoin',
     event = 'InsertEnter',
     opts = {
       mappings = require('data.keys').splitjoin,
     },
   },
   { -- mini.surround
-    'echasnovski/mini.surround',
+    'nvim-mini/mini.surround',
     opts = {},
   },
   { -- mini.files
-    'echasnovski/mini.files',
+    'nvim-mini/mini.files',
     opts = require('data.types').minifiles.opts,
     keys = require('data.keys').minifiles,
     config = require('data.types').minifiles.config,
   },
   { -- mini.icons
-    'echasnovski/mini.icons',
+    'nvim-mini/mini.icons',
     lazy = true,
     opts = require('data.types').miniicons.opts,
     init = require('data.types').miniicons.init,

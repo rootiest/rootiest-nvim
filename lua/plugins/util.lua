@@ -121,7 +121,7 @@ return {
     lazy = true,
     cond = require('data.func').check_global_var('useoil', true, true),
     -- Optional dependencies
-    dependencies = { { 'echasnovski/mini.icons', opts = {} } },
+    dependencies = { { 'nvim-mini/mini.icons', opts = {} } },
   },
   { -- Utlities Framework
     'jrop/u.nvim',
